@@ -1,0 +1,102 @@
+//
+// Copyright (c) BTG. All rights reserved.
+//
+
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace BTG
+{
+	/// <summary>
+	/// GearboundSentinel
+	/// </summary>
+	public class RustedMarionette : MonoBehaviour, IDamagable, IBoss
+	{
+		public event Action OnHitTaken;
+
+		[field:SerializeField]
+		public CircleSpawner CircleSpawner { get; private set; }
+
+		[field:SerializeField]
+		public LineRotater LineRotater { get; private set; }
+
+		[field:SerializeField]
+		public CircleExpander CircleExpander { get; private set; }
+
+		[field:SerializeField]
+		public Animator AnimatorLowPart { get; private set; }
+
+		[field:SerializeField]
+		public Animator AnimatorHighPart { get; private set; }
+
+		[field:SerializeField]
+		public float MaxHealth { get; private set; }
+
+
+		private Player _player;
+
+		private readonly FiniteStateMachine<RustedMarionetteState> _fsm = new();
+
+		public readonly Dictionary<RustedMarionetteState, RMBaseState> _states = new();
+
+		public float CurrentHealth { get; private set; }
+
+		public enum RustedMarionetteState
+		{
+			Death,
+			CircleStorm,
+			Idle,
+			CirclingLines,
+			StringMaze,
+		}
+
+		private void Start()
+		{
+			_player = FindFirstObjectByType<Player>();
+			int death = Animator.StringToHash(nameof(RustedMarionetteState.Death));
+			int spin = Animator.StringToHash("Spin");
+			CurrentHealth = MaxHealth;
+
+			_states.Add(RustedMarionetteState.Idle, new RMIdleState(_fsm, this, spin, spin));
+			_states.Add(RustedMarionetteState.Death, new RMDeathState(_fsm, this, death, death));
+			_states.Add(RustedMarionetteState.CircleStorm, new RMCircleStormState(_fsm, this, spin, spin));
+			_states.Add(RustedMarionetteState.CirclingLines, new RMSpinningLinesState(_fsm, this, spin, spin));
+			_states.Add(RustedMarionetteState.StringMaze, new RMStringMazeState(_fsm, this, spin, spin));
+
+			_fsm.Initialize(_states[RustedMarionetteState.CirclingLines]);
+		}
+
+		public void TakeDamage(float damage)
+		{
+			// Ignore hit if in maze state and player far from target
+			if (_fsm.CurrentState.GetType() == typeof(RMStringMazeState) &&Vector2.Distance(_player.transform.position, transform.position) > 3f)
+			{
+				foreach (HitFlash hitFlash in GetComponentsInChildren<HitFlash>())
+				{
+					hitFlash.SetFlashColor(Color.blue);
+					hitFlash.HitFlashRoutine();
+				}
+				return;
+			}
+
+			foreach (HitFlash hitFlash in GetComponentsInChildren<HitFlash>())
+			{
+				hitFlash.SetFlashColor(Color.red);
+				hitFlash.HitFlashRoutine();
+			}
+			CurrentHealth = Mathf.Max(0f, CurrentHealth - damage);
+
+			if (CurrentHealth == 0)
+			{
+				Elevator.Instance.ActivateElevator();
+			}
+			OnHitTaken?.Invoke();
+		}
+
+		protected void Update()
+		{
+			_fsm.CurrentState.OnFrameUpdate();
+		}
+	}
+}

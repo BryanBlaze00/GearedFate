@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &498861168332447621
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2704256205340334142}
+  - component: {fileID: 188883571556731}
+  m_Layer: 0
+  m_Name: ObjectPoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2704256205340334142
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498861168332447621}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &188883571556731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498861168332447621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6aa8be8fcd46174d8853638d0868ea3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectsToPoolList:
+  - <ObjectToPoolInfo>k__BackingField:
+      <ObjectToPool>k__BackingField: {fileID: 1383841989581517533, guid: 04c0a4a57cbb98845afcfe5eb6ccc960, type: 3}
+      <AmountToPool>k__BackingField: 15
+      <ShouldExpand>k__BackingField: 1
+    <ObjectType>k__BackingField: 5
+  - <ObjectToPoolInfo>k__BackingField:
+      <ObjectToPool>k__BackingField: {fileID: 4196588579980422680, guid: 94923703a43c53745a35f9434eb9ee48, type: 3}
+      <AmountToPool>k__BackingField: 10
+      <ShouldExpand>k__BackingField: 1
+    <ObjectType>k__BackingField: 0
+  - <ObjectToPoolInfo>k__BackingField:
+      <ObjectToPool>k__BackingField: {fileID: 3335227813822203145, guid: c1502f5d257e4f54f84f15e12334f026, type: 3}
+      <AmountToPool>k__BackingField: 15
+      <ShouldExpand>k__BackingField: 1
+    <ObjectType>k__BackingField: 2
+  - <ObjectToPoolInfo>k__BackingField:
+      <ObjectToPool>k__BackingField: {fileID: 4102006067047943577, guid: fdb971344bff37340ad6b4cd8fed6f12, type: 3}
+      <AmountToPool>k__BackingField: 15
+      <ShouldExpand>k__BackingField: 1
+    <ObjectType>k__BackingField: 3
+  - <ObjectToPoolInfo>k__BackingField:
+      <ObjectToPool>k__BackingField: {fileID: 3261062417506110934, guid: 48c0e525f7c931b42a0a3b674419ef34, type: 3}
+      <AmountToPool>k__BackingField: 15
+      <ShouldExpand>k__BackingField: 1
+    <ObjectType>k__BackingField: 4
+  - <ObjectToPoolInfo>k__BackingField:
+      <ObjectToPool>k__BackingField: {fileID: 6486166121307253231, guid: 51fe32dd12e4fab46949a5de760949d3, type: 3}
+      <AmountToPool>k__BackingField: 15
+      <ShouldExpand>k__BackingField: 1
+    <ObjectType>k__BackingField: 6
+  - <ObjectToPoolInfo>k__BackingField:
+      <ObjectToPool>k__BackingField: {fileID: 4196588579980422680, guid: fb199bda76c5f9a4d9c3814acf9162c0, type: 3}
+      <AmountToPool>k__BackingField: 15
+      <ShouldExpand>k__BackingField: 1
+    <ObjectType>k__BackingField: 8
+  - <ObjectToPoolInfo>k__BackingField:
+      <ObjectToPool>k__BackingField: {fileID: 7481787785307734997, guid: 2352820a529a77c4c9f34c16d7fd9727, type: 3}
+      <AmountToPool>k__BackingField: 10
+      <ShouldExpand>k__BackingField: 1
+    <ObjectType>k__BackingField: 9
+  - <ObjectToPoolInfo>k__BackingField:
+      <ObjectToPool>k__BackingField: {fileID: 6990676325267754049, guid: 90e6fc0ed1212554eba7893fa242ef8e, type: 3}
+      <AmountToPool>k__BackingField: 25
+      <ShouldExpand>k__BackingField: 1
+    <ObjectType>k__BackingField: 10
+  - <ObjectToPoolInfo>k__BackingField:
+      <ObjectToPool>k__BackingField: {fileID: 4933677871721408514, guid: 5c2726160de74764f8503f4d3c019598, type: 3}
+      <AmountToPool>k__BackingField: 6
+      <ShouldExpand>k__BackingField: 1
+    <ObjectType>k__BackingField: 11
+  - <ObjectToPoolInfo>k__BackingField:
+      <ObjectToPool>k__BackingField: {fileID: 9164973382555214756, guid: a1ff2d8c8db925e44b03bac83fda7542, type: 3}
+      <AmountToPool>k__BackingField: 12
+      <ShouldExpand>k__BackingField: 1
+    <ObjectType>k__BackingField: 12

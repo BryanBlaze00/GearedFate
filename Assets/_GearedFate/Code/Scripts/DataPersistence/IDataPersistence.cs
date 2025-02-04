@@ -1,0 +1,11 @@
+using UnityEngine;
+
+namespace BTG
+{
+    public interface IDataPersistence
+    {
+        public void LoadData(GameData data);
+
+        public void SaveData(ref GameData data);
+    }
+}

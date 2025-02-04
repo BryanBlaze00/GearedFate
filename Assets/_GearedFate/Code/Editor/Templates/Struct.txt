@@ -1,0 +1,13 @@
+//
+// Copyright (c) BTG. All rights reserved.
+//
+
+   #ROOTNAMESPACEBEGIN#
+/// <summary>
+/// #NAME#
+/// </summary>
+public struct #SCRIPTNAME# 
+{
+   #NOTRIM#
+}
+#ROOTNAMESPACEEND#

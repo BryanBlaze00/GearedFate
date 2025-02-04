@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: Pipe-Valve-Cold
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 1067473767430913164, guid: ce49454b7e051574dbca3d0fe40f119e, type: 3}
+  - {fileID: -2223919774222880274, guid: ce49454b7e051574dbca3d0fe40f119e, type: 3}
+  - {fileID: 226311533, guid: ce49454b7e051574dbca3d0fe40f119e, type: 3}
+  - {fileID: 643848052, guid: ce49454b7e051574dbca3d0fe40f119e, type: 3}
+  - {fileID: -704940375, guid: ce49454b7e051574dbca3d0fe40f119e, type: 3}
+  - {fileID: 1156376714, guid: ce49454b7e051574dbca3d0fe40f119e, type: 3}
+  - {fileID: -94430523, guid: ce49454b7e051574dbca3d0fe40f119e, type: 3}
+  - {fileID: 270719864, guid: ce49454b7e051574dbca3d0fe40f119e, type: 3}
+  m_MinSpeed: 5
+  m_MaxSpeed: 5
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0
+  m_TileAnimationFlags: 0

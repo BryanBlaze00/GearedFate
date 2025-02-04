@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4433118354193877908
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 602964492329898844, guid: e30501ba3c054144588622ae7c454860, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 602964492329898844, guid: e30501ba3c054144588622ae7c454860, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 602964492329898844, guid: e30501ba3c054144588622ae7c454860, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 602964492329898844, guid: e30501ba3c054144588622ae7c454860, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 602964492329898844, guid: e30501ba3c054144588622ae7c454860, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 602964492329898844, guid: e30501ba3c054144588622ae7c454860, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 602964492329898844, guid: e30501ba3c054144588622ae7c454860, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 602964492329898844, guid: e30501ba3c054144588622ae7c454860, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 602964492329898844, guid: e30501ba3c054144588622ae7c454860, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 602964492329898844, guid: e30501ba3c054144588622ae7c454860, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4842249973753422874, guid: e30501ba3c054144588622ae7c454860, type: 3}
+      propertyPath: _startingSpriteIndex
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6286750395324395876, guid: e30501ba3c054144588622ae7c454860, type: 3}
+      propertyPath: _startingSpriteIndex
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6662683513597727669, guid: e30501ba3c054144588622ae7c454860, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 128943691, guid: 15e724718fec19e4fa88365531cabde9, type: 3}
+    - target: {fileID: 7435960381107077345, guid: e30501ba3c054144588622ae7c454860, type: 3}
+      propertyPath: m_Name
+      value: Can128GearDB1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e30501ba3c054144588622ae7c454860, type: 3}

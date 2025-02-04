@@ -1,0 +1,18 @@
+//
+// Copyright (c) BTG. All rights reserved.
+//
+
+using UnityEngine;
+
+   #ROOTNAMESPACEBEGIN#
+/// <summary>
+/// #NAME#
+/// </summary>
+public class #SCRIPTNAME# : MonoBehaviour
+{
+   private void Start()
+   {
+      #NOTRIM#
+   }
+}
+#ROOTNAMESPACEEND#

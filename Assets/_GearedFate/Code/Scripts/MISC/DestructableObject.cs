@@ -1,0 +1,79 @@
+//
+// Copyright (c) BTG. All rights reserved.
+//
+
+using NavMeshPlus.Components;
+using UnityEngine;
+using UnityEngine.AI;
+
+namespace BTG
+{
+   /// <summary>
+   /// DestructableObject class to provide destructible object functionality.
+   /// </summary>
+   [RequireComponent(typeof(Collider2D))]
+   public class DestructableObject : MonoBehaviour, IDamagable
+   {
+      [SerializeField] private float _maxHealth = 10f;
+      [SerializeField] private GameObject _destroyEffect;
+
+      [Header("Randomization Settings")]
+      [SerializeField][Range(0, 3)] private int _minAmountToDrop = 1;
+      [SerializeField][Range(0, 3)] private int _maxAmountToDrop = 3;
+      [SerializeField][Range(1, 100)] private int _chanceToDrop = 30;
+
+      // ObjectBreakAnim _objectBreakAnim; TODO: FIX ME
+      private float _currentHealth;
+
+      private void Awake()
+      {
+         // _objectBreakAnim = GetComponent<ObjectBreakAnim>(); TODO: FIX ME
+         _currentHealth = _maxHealth;
+      }
+
+      public void TakeDamage(float damage)
+      {
+         _currentHealth -= damage;
+
+         if (_currentHealth <= 0)
+         {
+            if (_destroyEffect != null)
+            {
+               Instantiate(_destroyEffect, transform.position, Quaternion.identity); // Instantiate the destroy effect
+            }
+
+            RandomizedItemDrop();
+            // doesn't work to update navmesh:
+            //GameObject.FindObjectsByType<NavMeshSurface>(FindObjectsSortMode.None).ForEach(x => x.UpdateNavMesh(x.navMeshData));
+            Destroy(gameObject); // Destroy the object
+         }
+      }
+
+      /// <summary>
+      /// Randomized scrap amount and type to drop when destructible object is destroyed.
+      /// </summary>
+      private void RandomizedItemDrop()
+      {
+         int randAmount = RandomUtilily.RandomInt(_minAmountToDrop, _maxAmountToDrop); /// Randomized scrap amount.
+
+         for (int i = 0; i < randAmount; i++)
+         {
+            int randObj = RandomUtilily.RandomInt(1, 2); // Randomized object to drop
+            bool randChance = RandomUtilily.Chance(_chanceToDrop); // Randomized chance to drop object
+
+            if (randObj == 1 && randChance)
+            {
+               GameObject obj = ObjectPool.Instance.GetPooledObject(PooledObjectType.Fuel_Scrap);
+               obj.transform.position = transform.position;
+               obj.SetActive(true);
+            }
+            else if (randObj == 2 && randChance)
+            {
+               GameObject obj = ObjectPool.Instance.GetPooledObject(PooledObjectType.Health_Scrap);
+               obj.transform.position = transform.position;
+               obj.SetActive(true);
+            }
+         }
+      }
+   }
+}

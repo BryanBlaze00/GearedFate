@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: ForgeLeftSideTop
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 1474770677, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: 1229060744, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: -1127893978, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: -707246569, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: 1845700745, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: 178523949, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: -875777856, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: -637832694, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: -1284317940, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: -1299509806, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: 1069899215, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: 1069899215, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: -1299509806, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: -1284317940, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: -637832694, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: -875777856, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: 178523949, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: 1845700745, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: -707246569, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: -1127893978, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: 1229060744, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  - {fileID: 1474770677, guid: 8ebced4c379c76145b14fb4ddacb1a26, type: 3}
+  m_MinSpeed: 10
+  m_MaxSpeed: 10
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0
+  m_TileAnimationFlags: 0

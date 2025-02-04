@@ -1,0 +1,109 @@
+using System.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.AI;
+
+namespace BTG
+{
+    public class GCRunAwayState : GCBaseState
+    {
+
+        public GCRunAwayState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId) : base(fsm,
+            enemy, animId)
+        {
+        }
+
+        public override void OnEnter()
+        {
+            PlayAnimation();
+        }
+
+        public override void OnExit()
+        {
+        }
+
+        public override void OnFrameUpdate()
+        {
+            GreatCreator.SetAnimationMoveParameters(GreatCreator.Agent.velocity);
+            if (GreatCreator.DistanceToTarget > GreatCreator.SafeDistance)
+            {
+                fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
+            }
+            else
+            {
+                if (IsReadyToSpawn() && GreatCreator.Stage == 0)
+                {
+                    fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Swarm]);
+                    return;
+                }
+
+                if (GoingToCenter)
+                {
+                    return;
+                }
+
+                bool canMoveAway = CanMoveAwayFromPlayer(out Vector2 AwayPosition);
+
+                if (canMoveAway)
+                {
+                    GreatCreator.Agent.SetDestination(AwayPosition);
+                }
+                else if (!canMoveAway && GreatCreator.Stage == 0)
+                {
+                    fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Dash]);
+                }
+                else if (!canMoveAway && GreatCreator.Stage > 0)
+                {
+                    GreatCreator.StartCoroutine(GoToCenter());
+                }
+            }
+        }
+
+
+        public override void OnPhysicsUpdate()
+        {
+        }
+
+        public void SetAnimation(int animId)
+        {
+            SetAnimationId(animId);
+        }
+
+        private bool CanMoveAwayFromPlayer(out Vector2 targetPosition)
+        {
+            // Calculate the target position
+            targetPosition= (Vector2)GreatCreator.Target.position + GreatCreator.DirectionToTarget * GreatCreator.SafeDistance;
+
+            // Find a valid NavMesh position close to the target
+            if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, 3, NavMesh.AllAreas))
+            {
+                return true;
+            }
+            else
+            {
+                Debug.LogWarning("Failed to find a valid NavMesh position away from the point.");
+                return false;
+            }
+        }
+
+        private void MoveOnSidePlayer()
+        {
+            Vector2 side = Vector2.Perpendicular(GreatCreator.DirectionToTarget);
+            Vector3 targetPosition = (Vector2)GreatCreator.Target.position - GreatCreator.DirectionToTarget * GreatCreator.SafeDistance + side;
+
+            // Find a valid NavMesh position close to the target
+            if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, 3, NavMesh.AllAreas))
+            {
+                GreatCreator.Agent.SetDestination(hit.position);
+            }
+
+            targetPosition = (Vector2)GreatCreator.Target.position - GreatCreator.DirectionToTarget * GreatCreator.SafeDistance - side;
+
+            // Find a valid NavMesh position close to the target
+            if (NavMesh.SamplePosition(targetPosition, out hit, 3, NavMesh.AllAreas))
+            {
+                GreatCreator.Agent.SetDestination(hit.position);
+            }
+        }
+
+    }
+}

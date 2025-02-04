@@ -1,0 +1,36 @@
+//
+// Copyright (c) BTG. All rights reserved.
+//
+
+   #ROOTNAMESPACEBEGIN#
+/// <summary>
+/// #NAME#
+/// </summary>
+public class #SCRIPTNAME# 
+{
+   public override void OnEnter()
+   {
+	  #NOTRIM#
+   }
+  
+   public override void OnExit()
+   {
+      #NOTRIM#
+   }
+  
+   public override void OnFrameUpdate()
+   {
+	  #NOTRIM#
+   }
+  
+   public override void OnPhysicsUpdate()
+   {
+      #NOTRIM#
+   }
+  
+   public void OnCheck()
+   {
+	  #NOTRIM#
+   }
+}
+#ROOTNAMESPACEEND#

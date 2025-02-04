@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63584910b92c08549b07ec62ce02852b, type: 3}
+  m_Name: GSData
+  m_EditorClassIdentifier: 
+  <BaseMoveSpeed>k__BackingField: 7
+  <BurrowSpeedMultiplier>k__BackingField: 0.3
+  <BurrowDamage>k__BackingField: 40
+  <MaxHealth>k__BackingField: 350
+  <BaseDistanceGoal>k__BackingField: 4.5
+  <StageTransitionHealthPercentage>k__BackingField:
+  - 0.75
+  - 0.333
+  <Stage0ShotgunSpreadDegrees>k__BackingField: 60
+  <Stage0ShotgunProjCount>k__BackingField: 3
+  <Stage1ShotgunSpreadDegrees>k__BackingField: 90
+  <Stage1ShotgunProjCount>k__BackingField: 7
+  <Stage2Spray360ProjPerRotation>k__BackingField: 16
+  <Stage2Spray360RotationsPerSecond>k__BackingField: 3
+  <Stage2Spray360NumRotations>k__BackingField: 2
