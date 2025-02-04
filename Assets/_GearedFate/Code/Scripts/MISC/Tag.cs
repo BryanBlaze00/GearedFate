@@ -12,6 +12,6 @@ namespace BTG
     [CreateAssetMenu(fileName = "newTag", menuName = "Data/Tag", order = 0)]
     public class Tag : ScriptableObject
     {
-        public string Name => name;
+        public string Name => this.name;
     }
 }

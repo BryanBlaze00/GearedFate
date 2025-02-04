@@ -36,23 +36,23 @@ namespace BTG
 
         protected virtual void Awake()
         {
-            rb = GetComponent<Rigidbody2D>();
-            agent = GetComponent<NavMeshAgent>();
-            NMAgentSetup();
-            target = FindAnyObjectByType<Player>().transform;
+            this.rb = this.GetComponent<Rigidbody2D>();
+            this.agent = this.GetComponent<NavMeshAgent>();
+            this.NMAgentSetup();
+            this.target = FindAnyObjectByType<Player>().transform;
         }
 
         protected virtual void Start()
         {
-            attackTimer = attackCooldown;
+            this.attackTimer = this.attackCooldown;
         }
 
         protected virtual void Update()
         {
-            if (target != null)
+            if (this.target != null)
             {
-                MoveToTarget(target);
-                HandleAttack();
+                this.MoveToTarget(this.target);
+                this.HandleAttack();
             }
         }
 
@@ -60,45 +60,44 @@ namespace BTG
 
         protected virtual void HandleAttack()
         {
-            attackTimer -= Time.deltaTime;
-            if (attackTimer <= 0 && Vector3.Distance(transform.position, target.position) <= attackRange)
+            this.attackTimer -= Time.deltaTime;
+            if (this.attackTimer <= 0 && Vector3.Distance(this.transform.position, this.target.position) <= this.attackRange)
             {
-                Attack();
-                attackTimer = attackCooldown;
+                this.Attack();
+                this.attackTimer = this.attackCooldown;
             }
         }
 
         protected virtual void MoveToTarget(Transform target)
         {
-            if (target != null && agent.enabled)
-                agent.SetDestination(target.position);
+            if (target != null && this.agent.enabled) this.agent.SetDestination(target.position);
         }
 
         /// No need to make it virtual as the task is always gonna be same
         public void TakeDamage(float amount)
         {
-            Debug.Log("Ouch! from " + name + " for " + amount + " damage.");
-            health -= amount;
-            if (health <= 0) Die();
+            Debug.Log("Ouch! from " + this.name + " for " + amount + " damage.");
+            this.health -= amount;
+            if (this.health <= 0) this.Die();
         }
 
         protected void OnEnable()
         {
-            agent.enabled = true;
+            this.agent.enabled = true;
         }
 
         protected virtual void Die()
         {
-            agent.enabled = false;
-            Instantiate(explosionEffect, transform.position, Quaternion.identity);
-            gameObject.SetInactive(destroyWaitTime);
+            this.agent.enabled = false;
+            Instantiate(this.explosionEffect, this.transform.position, Quaternion.identity);
+            this.gameObject.SetInactive(this.destroyWaitTime);
         }
 
         protected virtual void NMAgentSetup()
         {
-            agent.speed = speed;
-            agent.updateRotation = false;
-            agent.updateUpAxis = false;
+            this.agent.speed = this.speed;
+            this.agent.updateRotation = false;
+            this.agent.updateUpAxis = false;
         }
     }
 }

@@ -30,46 +30,48 @@ namespace BTG
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         {
-            _target = FindFirstObjectByType<Player>().transform;
-            _line.CurrentCamera = FindFirstObjectByType<Camera>();
+            this._target = FindFirstObjectByType<Player>().transform;
+            this._line.CurrentCamera = FindFirstObjectByType<Camera>();
         }
 
         // Update is called once per frame
         private void Update()
         {
-            _angle += _rotationSpeed * Time.deltaTime;
+            this._angle += this._rotationSpeed * Time.deltaTime;
 
-            if (Time.time > _nextRotationTime)
+            if (Time.time > this._nextRotationTime)
             {
-                _nextRotationTime = Time.time + _rotatingTime;
-                _angle += _rotationSpeed * _rotatingTime;
-                _line.Points[0] = new Vector2(Mathf.Cos(_angle) * _radius, Mathf.Sin(_angle) * _radius);
-                _line.Points[1] = -new Vector2(Mathf.Cos(_angle) * _radius, Mathf.Sin(_angle) * _radius);
-                _line.ApplyPointPositionChanges();
-                _line.RefreshMaterial();
+                this._nextRotationTime = Time.time + this._rotatingTime;
+                this._angle += this._rotationSpeed * this._rotatingTime;
+                this._line.Points[0] = new Vector2(Mathf.Cos(this._angle) * this._radius, Mathf.Sin(this._angle) * this._radius);
+                this._line.Points[1] = -new Vector2(Mathf.Cos(this._angle) * this._radius, Mathf.Sin(this._angle) * this._radius);
+                this._line.ApplyPointPositionChanges();
+                this._line.RefreshMaterial();
             }
 
-            IsOnLine();
+            this.IsOnLine();
         }
 
         public void SetAngle(float angle)
         {
-            _angle = angle;
+            this._angle = angle;
         }
 
         public void SetSpeed(float speed)
         {
-            _rotationSpeed = speed;
+            this._rotationSpeed = speed;
         }
 
         private void IsOnLine()
         {
-            var closestPointOnLine = GetClosestPointOnLine(_line.Points[0] + (Vector2)transform.parent.position,
-                _line.Points[1] + (Vector2)transform.parent.position, _target.position);
-            if (Vector2.Distance(closestPointOnLine, _target.position) < _tolerance)
+            var closestPointOnLine = GetClosestPointOnLine(
+                this._line.Points[0] + (Vector2)this.transform.parent.position,
+                this._line.Points[1] + (Vector2)this.transform.parent.position,
+                this._target.position);
+            if (Vector2.Distance(closestPointOnLine, this._target.position) < this._tolerance)
             {
-                _target.GetComponent<Player>().TakeDamage(_damage);
-                _target.GetComponent<Player>().Knockback.GetKnockedBack(closestPointOnLine, _knockback);
+                this._target.GetComponent<Player>().TakeDamage(this._damage);
+                this._target.GetComponent<Player>().Knockback.GetKnockedBack(closestPointOnLine, this._knockback);
             }
         }
 

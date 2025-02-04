@@ -15,45 +15,45 @@ namespace BTG
         protected RMBaseState(FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm,
             RustedMarionette marionette, int highAnimId, int lowAnimId) : base(fsm)
         {
-            Marionette = marionette;
-            Marionette.OnHitTaken += HandleHitTaken;
+            this.Marionette = marionette;
+            this.Marionette.OnHitTaken += this.HandleHitTaken;
             _phase = 0;
-            _lowAnimId = lowAnimId;
-            _highAnimId = highAnimId;
+            this._lowAnimId = lowAnimId;
+            this._highAnimId = highAnimId;
         }
 
         private void HandleHitTaken()
         {
-            if (Marionette.CurrentHealth == 0)
+            if (this.Marionette.CurrentHealth == 0)
             {
                 Debug.Log("dead marionette");
-                fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.Death]);
+                this.fsm.SwitchState(this.Marionette._states[RustedMarionette.RustedMarionetteState.Death]);
                 return;
             }
 
-            if (Marionette.CurrentHealth / Marionette.MaxHealth < 0.7f && _phase == 0)
+            if (this.Marionette.CurrentHealth / this.Marionette.MaxHealth < 0.7f && _phase == 0)
             {
                 Debug.Log("go full maze");
                 _phase++;
-                fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.StringMaze]);
+                this.fsm.SwitchState(this.Marionette._states[RustedMarionette.RustedMarionetteState.StringMaze]);
             }
 
-            if (Marionette.CurrentHealth / Marionette.MaxHealth < 0.4f && _phase == 1)
+            if (this.Marionette.CurrentHealth / this.Marionette.MaxHealth < 0.4f && _phase == 1)
             {
                 Debug.Log("go full maze");
                 _phase++;
-                fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.StringMaze]);
+                this.fsm.SwitchState(this.Marionette._states[RustedMarionette.RustedMarionetteState.StringMaze]);
             }
         }
 
         protected void PlayAnimationHighBodyPart()
         {
-            Marionette.AnimatorHighPart.Play(_highAnimId);
+            this.Marionette.AnimatorHighPart.Play(this._highAnimId);
         }
 
         protected void PlayAnimationLowBodyPart()
         {
-            Marionette.AnimatorHighPart.Play(_lowAnimId);
+            this.Marionette.AnimatorHighPart.Play(this._lowAnimId);
         }
 
         public abstract override void OnEnter();

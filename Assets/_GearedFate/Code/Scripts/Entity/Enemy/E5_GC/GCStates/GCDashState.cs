@@ -11,8 +11,8 @@ namespace BTG
             int animId) : base(fsm,
             enemy, animId)
         {
-            var smb = GreatCreator.Animator.GetBehaviours<MultiStepSmb>().First(x => x.Id == "Dash");
-            smb.OnStepReached += HandleDashStepReached;
+            var smb = this.GreatCreator.Animator.GetBehaviours<MultiStepSmb>().First(x => x.Id == "Dash");
+            smb.OnStepReached += this.HandleDashStepReached;
         }
 
         private void HandleDashStepReached(int step)
@@ -20,50 +20,49 @@ namespace BTG
             switch (step)
             {
                 case 0:
-                    HandleStartDash();
+                    this.HandleStartDash();
                     break;
                 case 1:
-                    HandleEndDash();
+                    this.HandleEndDash();
                     break;
                 case 2:
-                    HandleAnimationEnd();
+                    this.HandleAnimationEnd();
                     break;
             }
         }
 
         private void HandleAnimationEnd()
         {
-            GreatCreator.Agent.isStopped = false;
-            fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
+            this.GreatCreator.Agent.isStopped = false;
+            this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
         }
 
         private void HandleEndDash()
         {
-            GreatCreator.Rigidbody.linearVelocity = Vector2.zero;
+            this.GreatCreator.Rigidbody.linearVelocity = Vector2.zero;
         }
 
         private void HandleStartDash()
         {
-            _dashStartingPosition = GreatCreator.transform.position;
-            GreatCreator.SetAnimationMoveParameters(-GreatCreator.DirectionToTarget);
-            GreatCreator.Rigidbody.AddForce(-GreatCreator.DashForce * GreatCreator.DirectionToTarget);
+            this._dashStartingPosition = this.GreatCreator.transform.position;
+            this.GreatCreator.SetAnimationMoveParameters(-this.GreatCreator.DirectionToTarget);
+            this.GreatCreator.Rigidbody.AddForce(-this.GreatCreator.DashForce * this.GreatCreator.DirectionToTarget);
         }
 
         public override void OnEnter()
         {
-            PlayAnimation();
-            GreatCreator.Agent.isStopped = true;
-            GreatCreator.Rigidbody.bodyType = RigidbodyType2D.Dynamic;
+            this.PlayAnimation();
+            this.GreatCreator.Agent.isStopped = true;
+            this.GreatCreator.Rigidbody.bodyType = RigidbodyType2D.Dynamic;
         }
 
         public override void OnExit()
         {
             Debug.Log(
-                $"distance from start to end dash {Vector2.Distance(_dashStartingPosition, GreatCreator.transform.position)}");
-            if (Vector2.Distance(_dashStartingPosition, GreatCreator.transform.position) < 2)
-                GreatCreator.StartCoroutine(GoToCenter());
+                $"distance from start to end dash {Vector2.Distance(this._dashStartingPosition, this.GreatCreator.transform.position)}");
+            if (Vector2.Distance(this._dashStartingPosition, this.GreatCreator.transform.position) < 2) this.GreatCreator.StartCoroutine(this.GoToCenter());
 
-            GreatCreator.Rigidbody.bodyType = RigidbodyType2D.Kinematic;
+            this.GreatCreator.Rigidbody.bodyType = RigidbodyType2D.Kinematic;
         }
 
         public override void OnFrameUpdate()

@@ -36,7 +36,7 @@ namespace UnityUtils
         /// </summary>
         protected virtual void Awake()
         {
-            InitializeSingleton();
+            this.InitializeSingleton();
         }
 
         protected virtual void InitializeSingleton()
@@ -49,7 +49,7 @@ namespace UnityUtils
             }
             else
             {
-                if (instance != this) Destroy(gameObject);
+                if (instance != this) Destroy(this.gameObject);
             }
         }
     }

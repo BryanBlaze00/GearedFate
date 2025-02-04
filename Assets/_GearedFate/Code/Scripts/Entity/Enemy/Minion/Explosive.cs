@@ -18,14 +18,14 @@ namespace BTG
         public async void Explode(float afterTime)
         {
             await Task.Delay((int)afterTime * 1000);
-            Instantiate(_explosionEffect, transform.position, Quaternion.identity);
-            gameObject.SetInactive(_destroyWaitTime);
-            var results = Physics2D.CircleCastAll(transform.position, _explosionRadius, Vector2.up, 0f);
+            Instantiate(this._explosionEffect, this.transform.position, Quaternion.identity);
+            this.gameObject.SetInactive(this._destroyWaitTime);
+            var results = Physics2D.CircleCastAll(this.transform.position, this._explosionRadius, Vector2.up, 0f);
             foreach (var result in results)
                 if (result.collider.TryGetComponent(out Player player))
                 {
-                    player.GetComponent<Knockback>().GetKnockedBack(transform, explodeKnockBack);
-                    player.TakeDamage(explosionDamage);
+                    player.GetComponent<Knockback>().GetKnockedBack(this.transform, this.explodeKnockBack);
+                    player.TakeDamage(this.explosionDamage);
                 }
         }
     }

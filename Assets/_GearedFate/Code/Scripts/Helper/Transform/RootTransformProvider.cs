@@ -13,22 +13,22 @@ namespace BTG
         {
             get
             {
-                if (rootTransform == null)
+                if (this.rootTransform == null)
                 {
-                    if (transform.parent != null) // Check if there's a parent
+                    if (this.transform.parent != null) // Check if there's a parent
                     {
-                        rootTransform = transform.parent; // Assign the immediate parent
+                        this.rootTransform = this.transform.parent; // Assign the immediate parent
                     }
                     else
                     {
                         Debug.LogWarning("This GameObject has no parent!");
-                        rootTransform = transform; // Or rootTransform = null;
+                        this.rootTransform = this.transform; // Or rootTransform = null;
                     }
                 }
 
-                return rootTransform;
+                return this.rootTransform;
             }
-            private set => rootTransform = value;
+            private set => this.rootTransform = value;
         }
     }
 }

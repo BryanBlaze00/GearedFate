@@ -27,7 +27,7 @@ namespace BTG
             if (other.CompareTag("MovableCollider") &&
                 other.TryGetComponent(out RootTransformProvider rootTransformProvider))
                 if (rootTransformProvider.RootTransform)
-                    _entitiesToMove.Add(rootTransformProvider.RootTransform);
+                    this._entitiesToMove.Add(rootTransformProvider.RootTransform);
         }
 
         protected void OnTriggerExit2D(Collider2D other)
@@ -35,7 +35,7 @@ namespace BTG
             if (other.CompareTag("MovableCollider") &&
                 other.TryGetComponent(out RootTransformProvider rootTransformProvider))
                 if (rootTransformProvider.RootTransform)
-                    _entitiesToMove.Remove(rootTransformProvider.RootTransform);
+                    this._entitiesToMove.Remove(rootTransformProvider.RootTransform);
         }
 
         protected void OnTriggerStay2D(Collider2D other)
@@ -43,12 +43,12 @@ namespace BTG
             if (other.CompareTag("MovableCollider") &&
                 other.TryGetComponent(out RootTransformProvider rootTransformProvider))
                 if (rootTransformProvider.RootTransform)
-                    _entitiesToMove.Add(rootTransformProvider.RootTransform);
+                    this._entitiesToMove.Add(rootTransformProvider.RootTransform);
         }
 
         protected void MoveEntities()
         {
-            foreach (var entity in _entitiesToMove) MoveEntity(entity);
+            foreach (var entity in this._entitiesToMove) this.MoveEntity(entity);
         }
     }
 }

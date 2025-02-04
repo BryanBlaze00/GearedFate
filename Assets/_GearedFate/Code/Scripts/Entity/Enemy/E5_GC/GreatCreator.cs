@@ -67,11 +67,11 @@ namespace BTG
 
         public int AnimMoveX { get; private set; }
 
-        public float DistanceToTarget => Vector2.Distance(_player.position, transform.position);
+        public float DistanceToTarget => Vector2.Distance(this._player.position, this.transform.position);
 
-        public Transform Target => _player;
+        public Transform Target => this._player;
 
-        public Vector2 DirectionToTarget => (transform.position - _player.position).normalized;
+        public Vector2 DirectionToTarget => (this.transform.position - this._player.position).normalized;
 
 
         private readonly FiniteStateMachine<GreatCreatorState> _fsm = new();
@@ -84,51 +84,51 @@ namespace BTG
 
         private void Start()
         {
-            Agent.updateRotation = false;
-            Agent.updateUpAxis = false;
-            _player = FindFirstObjectByType<Player>().transform;
+            this.Agent.updateRotation = false;
+            this.Agent.updateUpAxis = false;
+            this._player = FindFirstObjectByType<Player>().transform;
 
-            States.Add(GreatCreatorState.Idle,
-                new GCIdleState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Idle))));
-            States.Add(GreatCreatorState.Swarm,
-                new GCSwarmState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Swarm))));
-            States.Add(GreatCreatorState.RunAway, new GCRunAwayState(_fsm, this, Animator.StringToHash("Walk")));
-            States.Add(GreatCreatorState.Dash,
-                new GCDashState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Dash))));
-            States.Add(GreatCreatorState.Transform,
-                new GCTransformationState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Transform))));
-            States.Add(GreatCreatorState.Spin,
-                new GCSpinState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Spin))));
-            States.Add(GreatCreatorState.Death,
-                new GCDeathState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Death))));
+            this.States.Add(GreatCreatorState.Idle,
+                new GCIdleState(this._fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Idle))));
+            this.States.Add(GreatCreatorState.Swarm,
+                new GCSwarmState(this._fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Swarm))));
+            this.States.Add(GreatCreatorState.RunAway, new GCRunAwayState(this._fsm, this, Animator.StringToHash("Walk")));
+            this.States.Add(GreatCreatorState.Dash,
+                new GCDashState(this._fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Dash))));
+            this.States.Add(GreatCreatorState.Transform,
+                new GCTransformationState(this._fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Transform))));
+            this.States.Add(GreatCreatorState.Spin,
+                new GCSpinState(this._fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Spin))));
+            this.States.Add(GreatCreatorState.Death,
+                new GCDeathState(this._fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Death))));
 
-            _fsm.Initialize(States[GreatCreatorState.Idle]);
-            Stage = 0;
-            CurrentHealth = MaxHealth;
+            this._fsm.Initialize(this.States[GreatCreatorState.Idle]);
+            this.Stage = 0;
+            this.CurrentHealth = this.MaxHealth;
 
-            AnimMoveX = Animator.StringToHash("MoveX");
-            AnimMoveY = Animator.StringToHash("MoveY");
+            this.AnimMoveX = Animator.StringToHash("MoveX");
+            this.AnimMoveY = Animator.StringToHash("MoveY");
         }
 
         private void Update()
         {
-            _fsm.CurrentState.OnFrameUpdate();
+            this._fsm.CurrentState.OnFrameUpdate();
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.collider.CompareTag("Player"))
             {
-                collision.collider.GetComponent<Player>().Knockback.GetKnockedBack(transform, 1f);
-                if (_fsm.CurrentState.GetType() == typeof(GCDashState))
+                collision.collider.GetComponent<Player>().Knockback.GetKnockedBack(this.transform, 1f);
+                if (this._fsm.CurrentState.GetType() == typeof(GCDashState))
                     collision.collider.GetComponent<Player>().TakeDamage(10f);
             }
         }
 
         public void SetAnimationMoveParameters(Vector2 Move)
         {
-            Animator.SetFloat(AnimMoveX, Move.x);
-            Animator.SetFloat(AnimMoveY, Move.y);
+            this.Animator.SetFloat(this.AnimMoveX, Move.x);
+            this.Animator.SetFloat(this.AnimMoveY, Move.y);
         }
 
         public void SpawnMinions(int amount)
@@ -138,7 +138,7 @@ namespace BTG
                 var obj = ObjectPool.Instance.GetPooledObject(Random.Range(0f, 1f) > 0.5f
                     ? PooledObjectType.BombMinion
                     : PooledObjectType.DrillMinion);
-                obj.transform.position = (Vector2)_spawnPos.position + Random.insideUnitCircle * 0.1f;
+                obj.transform.position = (Vector2)this._spawnPos.position + Random.insideUnitCircle * 0.1f;
                 obj.SetActive(true);
             }
         }
@@ -146,39 +146,38 @@ namespace BTG
 
         public void TakeDamage(float damage)
         {
-            CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
-            GetComponent<HitFlash>().HitFlashRoutine();
+            this.CurrentHealth = Mathf.Max(this.CurrentHealth - damage, 0);
+            this.GetComponent<HitFlash>().HitFlashRoutine();
 
-            if (Stage < StageTransitionHealthPercentage.Count &&
-                CurrentHealth < MaxHealth * StageTransitionHealthPercentage[Stage])
+            if (this.Stage < this.StageTransitionHealthPercentage.Count && this.CurrentHealth < this.MaxHealth * this.StageTransitionHealthPercentage[this.Stage])
             {
-                Stage++;
-                if (Stage == 1)
+                this.Stage++;
+                if (this.Stage == 1)
                 {
-                    _fsm.SwitchState(States[GreatCreatorState.Transform]);
-                    ((GCRunAwayState)States[GreatCreatorState.RunAway]).SetAnimation(
+                    this._fsm.SwitchState(this.States[GreatCreatorState.Transform]);
+                    ((GCRunAwayState)this.States[GreatCreatorState.RunAway]).SetAnimation(
                         Animator.StringToHash("WalkPhase2FourArms"));
-                    ((GCSpinState)States[GreatCreatorState.Swarm]).SetAnimation(Animator.StringToHash("Spin"));
+                    ((GCSpinState)this.States[GreatCreatorState.Swarm]).SetAnimation(Animator.StringToHash("Spin"));
                 }
 
-                if (Stage == 2)
+                if (this.Stage == 2)
                 {
-                    ((GCRunAwayState)States[GreatCreatorState.RunAway]).SetAnimation(
+                    ((GCRunAwayState)this.States[GreatCreatorState.RunAway]).SetAnimation(
                         Animator.StringToHash("WalkPhase2ThreeArms"));
-                    _fsm.SwitchState(States[GreatCreatorState.RunAway]);
+                    this._fsm.SwitchState(this.States[GreatCreatorState.RunAway]);
                 }
 
-                if (Stage == 3)
+                if (this.Stage == 3)
                 {
-                    ((GCRunAwayState)States[GreatCreatorState.RunAway]).SetAnimation(
+                    ((GCRunAwayState)this.States[GreatCreatorState.RunAway]).SetAnimation(
                         Animator.StringToHash("WalkPhase2TwoArms"));
-                    _fsm.SwitchState(States[GreatCreatorState.RunAway]);
+                    this._fsm.SwitchState(this.States[GreatCreatorState.RunAway]);
                 }
             }
 
-            if (CurrentHealth == 0) Elevator.Instance.ActivateElevator();
+            if (this.CurrentHealth == 0) Elevator.Instance.ActivateElevator();
 
-            OnHitTaken?.Invoke();
+            this.OnHitTaken?.Invoke();
         }
 
         public IEnumerator ShootProjectiles()
@@ -188,7 +187,7 @@ namespace BTG
             {
                 var laser = ObjectPool.Instance.GetPooledObject(PooledObjectType.LaserProjectile);
                 laser.GetComponent<Projectile>().SetUnaffectedLayer(LayerMask.NameToLayer("Enemy"));
-                laser.transform.position = transform.position;
+                laser.transform.position = this.transform.position;
 
                 laser.SetActive(true);
                 laser.GetComponent<Rigidbody2D>().linearVelocity = start * 5;
@@ -205,7 +204,7 @@ namespace BTG
                 laser.GetComponent<Projectile>().SetUnaffectedLayer(LayerMask.NameToLayer("Enemy"));
 
                 laser.SetActive(true);
-                laser.transform.position = transform.position;
+                laser.transform.position = this.transform.position;
                 laser.GetComponent<Rigidbody2D>().linearVelocity = start * 5;
                 start = Quaternion.AngleAxis(30, Vector3.forward) * start;
             }

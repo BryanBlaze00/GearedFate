@@ -26,9 +26,9 @@ namespace BTG
         {
             sprite = null;
 
-            if (index < _gearSprites.Length && index >= 0)
+            if (index < this._gearSprites.Length && index >= 0)
             {
-                sprite = _gearSprites[index];
+                sprite = this._gearSprites[index];
                 return true;
             }
 
@@ -39,9 +39,9 @@ namespace BTG
         {
 #if UNITY_EDITOR
             // Load all sprites from the sprite sheet and order them by the end number in the name.
-            _gearSprites = AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GetAssetPath(_gearSpriteSheet))
+            this._gearSprites = AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GetAssetPath(this._gearSpriteSheet))
                 .OfType<Sprite>()
-                .OrderBy(sprite => ExtractNumberFromName(sprite.name))
+                .OrderBy(sprite => this.ExtractNumberFromName(sprite.name))
                 .ToArray();
 #endif
         }

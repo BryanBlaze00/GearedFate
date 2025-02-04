@@ -26,59 +26,58 @@ namespace BTG
 
         private void Start()
         {
-            _dataHandler = new FileDataHandler(Application.persistentDataPath, _saveFileName);
-            LoadGame();
+            this._dataHandler = new FileDataHandler(Application.persistentDataPath, this._saveFileName);
+            this.LoadGame();
         }
 
         private void OnApplicationQuit()
         {
-            SaveGame();
+            this.SaveGame();
         }
 
         // TODO : Call that from a menu "Start" button
         public void NewGame()
         {
-            _gameData = new GameData();
+            this._gameData = new GameData();
         }
 
         // TODO : Call that from a menu "Continue" button
         public void LoadGame()
         {
-            _gameData = _dataHandler.Load();
-            if (_gameData == null) NewGame();
+            this._gameData = this._dataHandler.Load();
+            if (this._gameData == null) this.NewGame();
 
-            foreach (var pair in _gameData.AssetToInstantiates)
+            foreach (var pair in this._gameData.AssetToInstantiates)
                 for (var i = 0; i < pair.Value; i++)
                 {
                     var obj = ObjectPool.Instance.GetPooledObject(pair.Key);
                     obj.SetActive(true);
                 }
 
-            FindAllDataPersistence();
+            this.FindAllDataPersistence();
 
-            foreach (var dataPersistenceObject in _dataPersistencesObjects) dataPersistenceObject.LoadData(_gameData);
+            foreach (var dataPersistenceObject in this._dataPersistencesObjects) dataPersistenceObject.LoadData(this._gameData);
 
-            _gameData.CleanAfterLoad();
+            this._gameData.CleanAfterLoad();
         }
 
         // TODO : Call that from a menu "Save" button or Save from time to time (checkpoints ?)
         public void SaveGame()
         {
-            FindAllDataPersistence();
-            foreach (var dataPersistenceObject in _dataPersistencesObjects)
+            this.FindAllDataPersistence();
+            foreach (var dataPersistenceObject in this._dataPersistencesObjects)
             {
                 // Instance that need to be saved register in the game data using their pooled object type.
-                if (dataPersistenceObject is ISaveableInstance saveableInstance)
-                    _gameData.AddAssetIndexToInstantiate(saveableInstance.PooledObjectType);
-                dataPersistenceObject.SaveData(ref _gameData);
+                if (dataPersistenceObject is ISaveableInstance saveableInstance) this._gameData.AddAssetIndexToInstantiate(saveableInstance.PooledObjectType);
+                dataPersistenceObject.SaveData(ref this._gameData);
             }
 
-            _dataHandler.Save(_gameData);
+            this._dataHandler.Save(this._gameData);
         }
 
         private void FindAllDataPersistence()
         {
-            _dataPersistencesObjects =
+            this._dataPersistencesObjects =
                 FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
                     .OfType<IDataPersistence>()
                     .ToList();

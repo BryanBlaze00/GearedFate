@@ -89,87 +89,90 @@ namespace BTG
 
         private void Awake()
         {
-            RB = GetComponent<Rigidbody2D>();
-            Input = GetComponent<PlayerInputHandler>();
-            var body = transform.Find("Graphics").Find("Body");
-            Anim = body.GetComponent<Animator>();
-            AnimEvent = body.GetComponent<PlayerAnimationEventHandler>();
-            hitFlash = GetComponentInChildren<HitFlash>();
-            Knockback = GetComponentInChildren<Knockback>();
+            this.RB = this.GetComponent<Rigidbody2D>();
+            this.Input = this.GetComponent<PlayerInputHandler>();
+            var body = this.transform.Find("Graphics").Find("Body");
+            this.Anim = body.GetComponent<Animator>();
+            this.AnimEvent = body.GetComponent<PlayerAnimationEventHandler>();
+            this.hitFlash = this.GetComponentInChildren<HitFlash>();
+            this.Knockback = this.GetComponentInChildren<Knockback>();
 
-            states.Add(State.Idle, new PlayerIdleState(fsm, this, Data, Animator.StringToHash(nameof(State.Idle))));
-            states.Add(State.Move, new PlayerMoveState(fsm, this, Data, Animator.StringToHash(nameof(State.Move))));
-            states.Add(State.Dash, new PlayerDashState(fsm, this, Data, Animator.StringToHash(nameof(State.Dash))));
-            states.Add(State.Slash, new PlayerSlashState(fsm, this, Data, Animator.StringToHash(nameof(State.Slash))));
-            states.Add(State.HeatWave,
-                new PlayerHeatWave(fsm, this, Data, Animator.StringToHash(nameof(State.HeatWave))));
-            states.Add(State.GearToss,
-                new PlayerGearTossState(fsm, this, Data, Animator.StringToHash(nameof(State.GearToss))));
-            states.Add(State.FireBlaze,
-                new PlayerFireBlazeState(fsm, this, Data,
+            this.states.Add(State.Idle, new PlayerIdleState(this.fsm, this, this.Data, Animator.StringToHash(nameof(State.Idle))));
+            this.states.Add(State.Move, new PlayerMoveState(this.fsm, this, this.Data, Animator.StringToHash(nameof(State.Move))));
+            this.states.Add(State.Dash, new PlayerDashState(this.fsm, this, this.Data, Animator.StringToHash(nameof(State.Dash))));
+            this.states.Add(State.Slash, new PlayerSlashState(this.fsm, this, this.Data, Animator.StringToHash(nameof(State.Slash))));
+            this.states.Add(State.HeatWave,
+                new PlayerHeatWave(this.fsm, this, this.Data, Animator.StringToHash(nameof(State.HeatWave))));
+            this.states.Add(State.GearToss,
+                new PlayerGearTossState(this.fsm, this, this.Data, Animator.StringToHash(nameof(State.GearToss))));
+            this.states.Add(State.FireBlaze,
+                new PlayerFireBlazeState(
+                    this.fsm, this,
+                    this.Data,
                     Animator.StringToHash("ChargeUp"))); ///Charges up before plays fireblaze Animation
-            states.Add(State.Hit,
-                new PlayerHitState(fsm, this, Data,
+            this.states.Add(State.Hit,
+                new PlayerHitState(
+                    this.fsm, this,
+                    this.Data,
                     Animator.StringToHash(nameof(State.Idle)))); //TODO: change to hit (No animation yet)
-            states.Add(State.Dead, new PlayerDeadState(fsm, this, Data, Animator.StringToHash(nameof(State.Dead))));
+            this.states.Add(State.Dead, new PlayerDeadState(this.fsm, this, this.Data, Animator.StringToHash(nameof(State.Dead))));
 
-            abilities.Add(State.Slash);
-            abilities.Add(State.FireBlaze);
-            abilities.Add(State.HeatWave);
-            abilities.Add(State.GearToss);
+            this.abilities.Add(State.Slash);
+            this.abilities.Add(State.FireBlaze);
+            this.abilities.Add(State.HeatWave);
+            this.abilities.Add(State.GearToss);
         }
 
         private void Start()
         {
-            CurrentHealth = Data.Health;
-            CurrentAttackFuelAmount = Data.MaxAttackFuelAmount;
-            CurrentDirection = Vector2.down;
-            currentAbilityIndex = 0;
-            CurrentAbility = abilities[currentAbilityIndex];
-            Blaze.SetActive(false);
-            AnimMoveX = Animator.StringToHash("MoveX");
-            AnimMoveY = Animator.StringToHash("MoveY");
-            fsm.Initialize(states[State.Idle]);
+            this.CurrentHealth = this.Data.Health;
+            this.CurrentAttackFuelAmount = this.Data.MaxAttackFuelAmount;
+            this.CurrentDirection = Vector2.down;
+            this.currentAbilityIndex = 0;
+            this.CurrentAbility = this.abilities[this.currentAbilityIndex];
+            this.Blaze.SetActive(false);
+            this.AnimMoveX = Animator.StringToHash("MoveX");
+            this.AnimMoveY = Animator.StringToHash("MoveY");
+            this.fsm.Initialize(this.states[State.Idle]);
         }
 
         private void Update()
         {
-            fsm.CurrentState.OnFrameUpdate();
-            if (_lastHit + 1f < Time.time) isInvulnerable = false;
+            this.fsm.CurrentState.OnFrameUpdate();
+            if (this._lastHit + 1f < Time.time) this.isInvulnerable = false;
         }
 
         private void FixedUpdate()
         {
-            fsm.CurrentState.OnPhysicsUpdate();
+            this.fsm.CurrentState.OnPhysicsUpdate();
             // make sure the player isn't stuck out of bounds
             var walkMask = 1 << NavMesh.GetAreaFromName("Walkable");
 
-            var inBounds = NavMesh.SamplePosition(transform.position, out var hit, 0.1f, walkMask);
+            var inBounds = NavMesh.SamplePosition(this.transform.position, out var hit, 0.1f, walkMask);
             var sceneName = SceneManager.GetActiveScene().name;
 
             if (sceneName.Contains("Boss") || sceneName.Contains("boss")) // it's getting hackier and hackier
             {
                 if (inBounds)
                 {
-                    OutOfBoundsTime--;
-                    if (OutOfBoundsTime < 0f)
-                        OutOfBoundsTime = 0f;
+                    this.OutOfBoundsTime--;
+                    if (this.OutOfBoundsTime < 0f) this.OutOfBoundsTime = 0f;
                 }
                 else
                 {
-                    OutOfBoundsTime += Time.fixedDeltaTime;
-                    if (OutOfBoundsTime >= 6f)
+                    this.OutOfBoundsTime += Time.fixedDeltaTime;
+                    if (this.OutOfBoundsTime >= 6f)
                     {
                         //Debug.LogError("Player out of bounds!");
                         var found = false;
                         var searchRadius = 0.5f;
                         while (!found && searchRadius < 10f)
                         {
-                            found = NavMesh.SamplePosition(transform.position, out hit, searchRadius, walkMask);
+                            found = NavMesh.SamplePosition(this.transform.position, out hit, searchRadius, walkMask);
                             searchRadius += 0.5f;
                         }
 
-                        if (found) transform.position = hit.position;
+                        if (found) this.transform.position = hit.position;
                     }
                 }
             }
@@ -177,12 +180,12 @@ namespace BTG
 
         private void LateUpdate()
         {
-            MyDebug();
+            this.MyDebug();
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (isInvulnerable) return;
+            if (this.isInvulnerable) return;
         }
 
         #endregion Unity CallBacks
@@ -191,63 +194,61 @@ namespace BTG
 
         public void SetLookDir()
         {
-            if (Input.MoveInput == Vector2.zero) return;
-            CurrentDirection = Input.MoveInput;
-            Anim.SetFloat(AnimMoveX, Input.MoveInput.x);
-            Anim.SetFloat(AnimMoveY, Input.MoveInput.y);
-            CheckIfShouldFlip();
+            if (this.Input.MoveInput == Vector2.zero) return;
+            this.CurrentDirection = this.Input.MoveInput;
+            this.Anim.SetFloat(this.AnimMoveX, this.Input.MoveInput.x);
+            this.Anim.SetFloat(this.AnimMoveY, this.Input.MoveInput.y);
+            this.CheckIfShouldFlip();
         }
 
         public void CheckIfShouldFlip()
         {
-            renderer.flipX = Input.MoveInput.x == -1;
+            this.renderer.flipX = this.Input.MoveInput.x == -1;
         }
 
         public void BurnAttackFuel(float fuel)
         {
-            CurrentAttackFuelAmount -= fuel;
-            if (CurrentAttackFuelAmount < 0)
-                CurrentAttackFuelAmount = 0;
+            this.CurrentAttackFuelAmount -= fuel;
+            if (this.CurrentAttackFuelAmount < 0) this.CurrentAttackFuelAmount = 0;
         }
 
         public void ShootGear()
         {
-            var obj = ObjectPool.Instance.GetPooledObject(GearData.PooledObjectType);
-            obj.transform.position = ShootPos.position;
+            var obj = ObjectPool.Instance.GetPooledObject(this.GearData.PooledObjectType);
+            obj.transform.position = this.ShootPos.position;
 
-            if (obj.TryGetComponent(out Projectile projectile)) projectile.SetUnaffectedLayer(gameObject.layer);
+            if (obj.TryGetComponent(out Projectile projectile)) projectile.SetUnaffectedLayer(this.gameObject.layer);
 
-            AudioManager.Instance.PlaySFX(ShootGearAudio);
+            AudioManager.Instance.PlaySFX(this.ShootGearAudio);
             obj.SetActive(true);
-            obj.GetComponent<Rigidbody2D>().linearVelocity = CurrentDirection * GearData.Speed;
+            obj.GetComponent<Rigidbody2D>().linearVelocity = this.CurrentDirection * this.GearData.Speed;
 
-            BurnAttackFuel(Data.GearFuelBurnAmount);
+            this.BurnAttackFuel(this.Data.GearFuelBurnAmount);
         }
 
         public void BlastHeatWave()
         {
-            Instantiate(HeatWave, ShootPos.position, Quaternion.identity);
+            Instantiate(this.HeatWave, this.ShootPos.position, Quaternion.identity);
         }
 
         public void TakeDamage(float damage)
         {
-            if (isInvulnerable) return;
+            if (this.isInvulnerable) return;
 
-            if (CurrentHealth > 0)
+            if (this.CurrentHealth > 0)
             {
-                CurrentHealth -= damage;
+                this.CurrentHealth -= damage;
                 if (damage > 0)
                 {
-                    AudioManager.Instance.PlaySFX(HurtAudio);
-                    StartCoroutine(SetInvulnerable());
-                    hitFlash.HitFlashRoutine();
-                    _lastHit = Time.time;
-                    Debug.Log("Health: " + CurrentHealth);
+                    AudioManager.Instance.PlaySFX(this.HurtAudio);
+                    this.StartCoroutine(this.SetInvulnerable());
+                    this.hitFlash.HitFlashRoutine();
+                    this._lastHit = Time.time;
+                    Debug.Log("Health: " + this.CurrentHealth);
                 }
 
-
-                fsm.SwitchState(
-                    CurrentHealth <= 0 ? states[State.Dead] : states[State.Hit]
+                this.fsm.SwitchState(
+                    this.CurrentHealth <= 0 ? this.states[State.Dead] : this.states[State.Hit]
                 );
             }
         }
@@ -255,26 +256,26 @@ namespace BTG
         private IEnumerator SetInvulnerable()
         {
             yield return null;
-            isInvulnerable = true;
+            this.isInvulnerable = true;
         }
 
         public void Heal(float heal)
         {
-            AudioManager.Instance.PlaySFX(HealAudio);
-            CurrentHealth = Mathf.Min(CurrentHealth + heal, Data.Health);
+            AudioManager.Instance.PlaySFX(this.HealAudio);
+            this.CurrentHealth = Mathf.Min(this.CurrentHealth + heal, this.Data.Health);
         }
 
         public void Refuel(float fuel)
         {
-            AudioManager.Instance.PlaySFX(HealAudio);
-            CurrentAttackFuelAmount = Mathf.Min(CurrentAttackFuelAmount + fuel, Data.MaxAttackFuelAmount);
+            AudioManager.Instance.PlaySFX(this.HealAudio);
+            this.CurrentAttackFuelAmount = Mathf.Min(this.CurrentAttackFuelAmount + fuel, this.Data.MaxAttackFuelAmount);
         }
 
         public void ChangeCurrentAbility(int value)
         {
-            currentAbilityIndex += value + 4; /// if cA = 0 & value = -1 then cA = 0 - 1 + 4 => cA = 3
-            currentAbilityIndex %= 4; /// if cA = 3 & value = 1 then cA = (3 + 1)%4 = 0
-            CurrentAbility = abilities[currentAbilityIndex];
+            this.currentAbilityIndex += value + 4; /// if cA = 0 & value = -1 then cA = 0 - 1 + 4 => cA = 3
+            this.currentAbilityIndex %= 4; /// if cA = 3 & value = 1 then cA = (3 + 1)%4 = 0
+            this.CurrentAbility = this.abilities[this.currentAbilityIndex];
         }
 
         private void MyDebug()
@@ -289,14 +290,14 @@ namespace BTG
 
         public void LoadData(GameData data)
         {
-            transform.position = data.PlayerData.Position;
-            CurrentHealth = data.PlayerData.Health;
-            CurrentAttackFuelAmount = data.PlayerData.Fuel;
+            this.transform.position = data.PlayerData.Position;
+            this.CurrentHealth = data.PlayerData.Health;
+            this.CurrentAttackFuelAmount = data.PlayerData.Fuel;
         }
 
         public void SaveData(ref GameData data)
         {
-            data.PlayerData = new PlayerSaveStruct(transform.position, CurrentAttackFuelAmount, CurrentHealth);
+            data.PlayerData = new PlayerSaveStruct(this.transform.position, this.CurrentAttackFuelAmount, this.CurrentHealth);
         }
     }
 }

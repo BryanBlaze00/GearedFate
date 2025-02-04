@@ -28,14 +28,14 @@ namespace BTG
 
         private void Awake()
         {
-            _avatarAnim = _avatar.GetComponent<UISpriteAnimation>();
-            _retryButton.onClick.AddListener(Retry);
-            _menuButton.onClick.AddListener(GoMain);
+            this._avatarAnim = this._avatar.GetComponent<UISpriteAnimation>();
+            this._retryButton.onClick.AddListener(this.Retry);
+            this._menuButton.onClick.AddListener(this.GoMain);
         }
 
         private void Start()
         {
-            _avatarAnim.PlayOnce(false);
+            this._avatarAnim.PlayOnce(false);
         }
 
         private void GoMain()

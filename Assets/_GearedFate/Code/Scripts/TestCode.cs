@@ -10,26 +10,26 @@ namespace BTG
 
         private void Awake()
         {
-            agent = GetComponent<NavMeshAgent>();
-            agent.updateRotation = false;
-            agent.updateUpAxis = false;
+            this.agent = this.GetComponent<NavMeshAgent>();
+            this.agent.updateRotation = false;
+            this.agent.updateUpAxis = false;
         }
 
         private void Update()
         {
-            agent.SetDestination(target.position);
+            this.agent.SetDestination(this.target.position);
         }
 
         private void TestPhysicsDetections()
         {
-            var col = Physics2D.OverlapCircle(transform.position, 1, LayerMask.GetMask("Ground"));
+            var col = Physics2D.OverlapCircle(this.transform.position, 1, LayerMask.GetMask("Ground"));
             if (col != null)
             {
                 //Debug.Log(col.name);
             }
 
-            var hit = Physics2D.Raycast(transform.position, Vector2.down, 2, LayerMask.GetMask("Ground"));
-            Debug.DrawRay(transform.position, Vector2.down * 2);
+            var hit = Physics2D.Raycast(this.transform.position, Vector2.down, 2, LayerMask.GetMask("Ground"));
+            Debug.DrawRay(this.transform.position, Vector2.down * 2);
             Debug.Log(hit.collider);
             if (hit) Debug.Log(hit.collider.name);
         }
@@ -41,7 +41,7 @@ namespace BTG
 
         public void TakeDamage(float damage)
         {
-            Debug.Log("Ouch!! it hurt about " + damage + "from: " + name);
+            Debug.Log("Ouch!! it hurt about " + damage + "from: " + this.name);
         }
     }
 }

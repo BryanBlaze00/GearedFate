@@ -31,30 +31,31 @@ namespace BTG
 
         private void Awake()
         {
-            player = GetComponent<Player>();
+            this.player = this.GetComponent<Player>();
         }
 
         public void OnMove(InputAction.CallbackContext ctx)
         {
-            MoveInput = ctx.ReadValue<Vector2>();
+            this.MoveInput = ctx.ReadValue<Vector2>();
         }
 
         public void OnAbilityChange(InputAction.CallbackContext ctx)
         {
-            if (ctx.performed)
-                player.ChangeCurrentAbility((int)ctx.ReadValue<float>());
+            if (ctx.performed) this.player.ChangeCurrentAbility((int)ctx.ReadValue<float>());
         }
 
         public void OnDash(InputAction.CallbackContext ctx) //Might change later to call an event instead of using bool
         {
-            if (ctx.performed) DashPressed = true;
-            else if (ctx.canceled) DashPressed = false;
+            if (ctx.performed)
+                this.DashPressed = true;
+            else if (ctx.canceled) this.DashPressed = false;
         }
 
         public void OnAttack(InputAction.CallbackContext ctx)
         {
-            if (ctx.performed) AttackPressed = true;
-            else if (ctx.canceled) AttackPressed = false;
+            if (ctx.performed)
+                this.AttackPressed = true;
+            else if (ctx.canceled) this.AttackPressed = false;
         }
 
 

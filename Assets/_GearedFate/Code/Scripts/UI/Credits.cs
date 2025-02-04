@@ -14,12 +14,12 @@ public class Credits : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(DisplayCredits());
+        this.StartCoroutine(this.DisplayCredits());
     }
 
     private IEnumerator DisplayCredits()
     {
-        yield return new WaitForSeconds(_waitForCredits);
+        yield return new WaitForSeconds(this._waitForCredits);
         GameManager.Instance.LoadMainMenu();
     }
 }

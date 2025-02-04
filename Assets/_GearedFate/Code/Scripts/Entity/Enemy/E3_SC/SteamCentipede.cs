@@ -84,254 +84,254 @@ namespace BTG
 
         private float _totalSplineLength;
 
-        public float DistanceToTarget => Vector3.Distance(_bodyParts.Last().position, _target.position);
+        public float DistanceToTarget => Vector3.Distance(this._bodyParts.Last().position, this._target.position);
 
-        public Vector2 VectorToTarget => _bodyParts.Last().position - _target.position;
+        public Vector2 VectorToTarget => this._bodyParts.Last().position - this._target.position;
 
-        public Vector2 HeadPosition => _bodyParts.Last().position;
+        public Vector2 HeadPosition => this._bodyParts.Last().position;
 
-        private float HeadPositionOnSpline => _currentPositionsOnSpline.Last();
+        private float HeadPositionOnSpline => this._currentPositionsOnSpline.Last();
 
-        public CentipedeBaseState this[CentipedeState key] => _states[key];
+        public CentipedeBaseState this[CentipedeState key] => this._states[key];
 
-        public Transform this[int key] => _bodyParts[key];
+        public Transform this[int key] => this._bodyParts[key];
 
-        public Transform Head => _bodyParts.Last();
+        public Transform Head => this._bodyParts.Last();
 
-        public Transform Tail => _bodyParts.First();
+        public Transform Tail => this._bodyParts.First();
 
-        public int BodyPartsCount => _bodyParts.Count;
+        public int BodyPartsCount => this._bodyParts.Count;
 
-        public Transform Target => _target;
+        public Transform Target => this._target;
 
         public bool IsAttacking { get; set; }
 
         protected void Start()
         {
             // Create all initial body parts
-            for (var i = 0; i < _initialBodyPartsCount; i++)
+            for (var i = 0; i < this._initialBodyPartsCount; i++)
             {
-                var bodypartGo = Instantiate(_bodyPartPrefab, transform, true);
+                var bodypartGo = Instantiate(this._bodyPartPrefab, this.transform, true);
 
                 // Register body death events for each body parts
-                bodypartGo.GetComponent<CentipedeBodyPart>().OnBodyPartDeath += HandleBodyPartDeath;
-                _bodyParts.Add(bodypartGo.transform);
+                bodypartGo.GetComponent<CentipedeBodyPart>().OnBodyPartDeath += this.HandleBodyPartDeath;
+                this._bodyParts.Add(bodypartGo.transform);
             }
 
-            _head.GetComponent<CentipedeBodyPart>().OnBodyPartDeath += HandleBodyPartDeath;
-            _bodyParts.Add(_head);
+            this._head.GetComponent<CentipedeBodyPart>().OnBodyPartDeath += this.HandleBodyPartDeath;
+            this._bodyParts.Add(this._head);
 
             // Initialise Trajectory and position on it.
-            var trajectoryGo = Instantiate(_trajectoryPrefab);
-            _trajectory = trajectoryGo.GetComponent<SplineContainer>();
-            _totalSplineLength = _trajectory.CalculateLength();
-            InitializeBodyPosition();
+            var trajectoryGo = Instantiate(this._trajectoryPrefab);
+            this._trajectory = trajectoryGo.GetComponent<SplineContainer>();
+            this._totalSplineLength = this._trajectory.CalculateLength();
+            this.InitializeBodyPosition();
 
-            Speed = RegularSpeed;
+            this.Speed = this.RegularSpeed;
 
 
             // Add the fsm states of the centipede
-            _states.Add(CentipedeState.Chase,
-                new CentipedeChaseState(_finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Chase)), this,
-                    ChasingDistance));
+            this._states.Add(CentipedeState.Chase,
+                new CentipedeChaseState(
+                    this._finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Chase)), this,
+                    this.ChasingDistance));
 
-            _states.Add(CentipedeState.Circle,
-                new CentipedeCircleState(_finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Chase)),
+            this._states.Add(CentipedeState.Circle,
+                new CentipedeCircleState(
+                    this._finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Chase)),
                     this,
-                    ChasingDistance,
-                    CirclingDistance,
-                    MinimumTimeBeforeCharge,
-                    MaximumTimeBeforeCharge));
+                    this.ChasingDistance,
+                    this.CirclingDistance,
+                    this.MinimumTimeBeforeCharge,
+                    this.MaximumTimeBeforeCharge));
 
-            _states.Add(CentipedeState.Charge,
-                new CentipedeChargeState(_finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Chase)),
+            this._states.Add(CentipedeState.Charge,
+                new CentipedeChargeState(
+                    this._finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Chase)),
                     this));
-            _states.Add(CentipedeState.DeathCircle,
-                new CentipedeDeathCircleState(_finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Chase)),
+            this._states.Add(CentipedeState.DeathCircle,
+                new CentipedeDeathCircleState(
+                    this._finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Chase)),
                     this));
-            _states.Add(CentipedeState.Whip,
-                new CentipedeWhipState(_finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Chase)), this));
-            _states.Add(CentipedeState.Knocked,
-                new CentipedeKnockedState(_finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Knocked)),
+            this._states.Add(CentipedeState.Whip,
+                new CentipedeWhipState(this._finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Chase)), this));
+            this._states.Add(CentipedeState.Knocked,
+                new CentipedeKnockedState(
+                    this._finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Knocked)),
                     this));
-            _states.Add(CentipedeState.Dead,
-                new CentipedeDeadState(_finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Dead)), this));
-            _finiteStateMachine.Initialize(_states[CentipedeState.Chase]);
+            this._states.Add(CentipedeState.Dead,
+                new CentipedeDeadState(this._finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Dead)), this));
+            this._finiteStateMachine.Initialize(this._states[CentipedeState.Chase]);
 
 
             // Find it's target
-            _target = FindFirstObjectByType<Player>().transform;
+            this._target = FindFirstObjectByType<Player>().transform;
 
-            _maxHealth = _bodyParts.Sum(x => x.GetComponent<CentipedeBodyPart>().MaxHealth);
+            this._maxHealth = this._bodyParts.Sum(x => x.GetComponent<CentipedeBodyPart>().MaxHealth);
             ;
         }
 
         private void HandleBodyPartDeath()
         {
-            var deadBodyPart = _bodyParts.First();
-            UnregisterBodyPart();
+            var deadBodyPart = this._bodyParts.First();
+            this.UnregisterBodyPart();
 
 
-            var explosion = Instantiate(_explosion);
-            explosion.transform.position = Tail.position;
+            var explosion = Instantiate(this._explosion);
+            explosion.transform.position = this.Tail.position;
 
-            if (_bodyParts.Count == 1)
+            if (this._bodyParts.Count == 1)
             {
-                _finiteStateMachine.SwitchState(_states[CentipedeState.Dead]);
+                this._finiteStateMachine.SwitchState(this._states[CentipedeState.Dead]);
 
                 Elevator.Instance.ActivateElevator(); // Blaze added this line for level transition
             }
 
-            if (_bodyParts.Count > 1) Destroy(deadBodyPart.gameObject);
+            if (this._bodyParts.Count > 1) Destroy(deadBodyPart.gameObject);
 
-            RegularSpeed *= AccelerationWhenLosingBodyPart;
-            ChargeSpeed *= AccelerationWhenLosingBodyPart;
-            DeathCircleSpeed *= AccelerationWhenLosingBodyPart;
-            Speed *= AccelerationWhenLosingBodyPart;
+            this.RegularSpeed *= this.AccelerationWhenLosingBodyPart;
+            this.ChargeSpeed *= this.AccelerationWhenLosingBodyPart;
+            this.DeathCircleSpeed *= this.AccelerationWhenLosingBodyPart;
+            this.Speed *= this.AccelerationWhenLosingBodyPart;
 
-            MinimumTimeBeforeCharge *= ChargeBoundMultiplier;
-            MaximumTimeBeforeCharge *= ChargeBoundMultiplier;
+            this.MinimumTimeBeforeCharge *= this.ChargeBoundMultiplier;
+            this.MaximumTimeBeforeCharge *= this.ChargeBoundMultiplier;
 
-            ((CentipedeCircleState)_states[CentipedeState.Circle]).SetChargeTimeBounds(MinimumTimeBeforeCharge,
-                MaximumTimeBeforeCharge);
+            ((CentipedeCircleState)this._states[CentipedeState.Circle]).SetChargeTimeBounds(
+                this.MinimumTimeBeforeCharge,
+                this.MaximumTimeBeforeCharge);
         }
 
         public Vector2 HeadDirection()
         {
-            var tangent = _trajectory.EvaluateTangent(_currentPositionsOnSpline.Last());
+            var tangent = this._trajectory.EvaluateTangent(this._currentPositionsOnSpline.Last());
             var closestCardinal = VectorHelper2D.ClosestCardinal(new Vector2(tangent.x, tangent.y));
             return VectorHelper2D.VectorFromDirection(closestCardinal);
         }
 
         public void MoveAlongTrajectory()
         {
-            var moved = Time.deltaTime * Speed;
+            var moved = Time.deltaTime * this.Speed;
 
             // Move all following transform along the spline
-            for (var i = 0; i < _bodyParts.Count; i++)
+            for (var i = 0; i < this._bodyParts.Count; i++)
             {
-                _currentPositionsOnSpline[i] += moved / _totalSplineLength;
-                _bodyParts[i].position = _trajectory.EvaluatePosition(_currentPositionsOnSpline[i]);
-                Vector3 tangent = _trajectory.EvaluateTangent(_currentPositionsOnSpline[i]);
-                UpdateAnimationDirectionParameter(i, new Vector2(tangent.x, tangent.y));
+                this._currentPositionsOnSpline[i] += moved / this._totalSplineLength;
+                this._bodyParts[i].position = this._trajectory.EvaluatePosition(this._currentPositionsOnSpline[i]);
+                Vector3 tangent = this._trajectory.EvaluateTangent(this._currentPositionsOnSpline[i]);
+                this.UpdateAnimationDirectionParameter(i, new Vector2(tangent.x, tangent.y));
             }
 
-
-            transform.position = HeadPosition;
+            this.transform.position = this.HeadPosition;
         }
 
         public void UpdateAnimationDirectionParameter(int bodyIndex, Vector2 lookingDirection)
         {
-            _bodyParts[bodyIndex].GetComponent<CentipedeBodyPart>().SetAnimationDirectionParameter(lookingDirection);
+            this._bodyParts[bodyIndex].GetComponent<CentipedeBodyPart>().SetAnimationDirectionParameter(lookingDirection);
         }
 
         protected void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Walls"))
             {
-                ShortenTrajectory();
-                _finiteStateMachine.SwitchState(_states[CentipedeState.Charge]);
+                this.ShortenTrajectory();
+                this._finiteStateMachine.SwitchState(this._states[CentipedeState.Charge]);
             }
 
             if (other.TryGetComponent(out HealthScrap healthScrap)) healthScrap.ApplyEffect(this);
 
-            if (other.gameObject.GetComponent<DestructableObject>() && IsAttacking)
+            if (other.gameObject.GetComponent<DestructableObject>() && this.IsAttacking)
             {
                 other.gameObject.GetComponent<DestructableObject>().TakeDamage(50000f);
-                _finiteStateMachine.SwitchState(_states[CentipedeState.Knocked]);
+                this._finiteStateMachine.SwitchState(this._states[CentipedeState.Knocked]);
             }
         }
 
 
         public void ShortenTrajectory()
         {
-            var lengthBeforeShorteningNode = _totalSplineLength;
+            var lengthBeforeShorteningNode = this._totalSplineLength;
 
-            var last = _trajectory.Spline.Knots.Last();
-            last.Position = new float3(HeadPosition.x, HeadPosition.y, 0);
-            _trajectory.Spline.SetKnot(_trajectory.Spline.Count - 1, last);
-            _totalSplineLength = _trajectory.CalculateLength();
+            var last = this._trajectory.Spline.Knots.Last();
+            last.Position = new float3(this.HeadPosition.x, this.HeadPosition.y, 0);
+            this._trajectory.Spline.SetKnot(this._trajectory.Spline.Count - 1, last);
+            this._totalSplineLength = this._trajectory.CalculateLength();
 
             // Gotta recompute the correct spline position for each body parts since the spline length changed.
-            for (var i = 0; i < _bodyParts.Count; i++)
-                _currentPositionsOnSpline[i] *= lengthBeforeShorteningNode / _totalSplineLength;
+            for (var i = 0; i < this._bodyParts.Count; i++) this._currentPositionsOnSpline[i] *= lengthBeforeShorteningNode / this._totalSplineLength;
         }
 
         public void SetSpeed(float value)
         {
-            Speed = value;
-            for (var i = 0; i < _bodyParts.Count; i++)
-                _bodyParts[i].GetComponent<CentipedeBodyPart>().SetAnimationSpeed(value / 3);
+            this.Speed = value;
+            for (var i = 0; i < this._bodyParts.Count; i++) this._bodyParts[i].GetComponent<CentipedeBodyPart>().SetAnimationSpeed(value / 3);
         }
 
         public void KnockOutAnimate()
         {
-            for (var i = 0; i < _bodyParts.Count - 1; i++)
-                _bodyParts[i].GetComponent<CentipedeBodyPart>().SetAnimationSpeed(0);
-            _bodyParts.Last().GetComponent<CentipedeBodyPart>().SetAnimationSpeed(1f);
+            for (var i = 0; i < this._bodyParts.Count - 1; i++) this._bodyParts[i].GetComponent<CentipedeBodyPart>().SetAnimationSpeed(0);
+            this._bodyParts.Last().GetComponent<CentipedeBodyPart>().SetAnimationSpeed(1f);
         }
 
         public void ExpandTrajectory(Vector2 aimingPosition)
         {
             var aimingPosition3D = new Vector3(aimingPosition.x, aimingPosition.y);
 
-            var lengthBeforeAddingNode = _totalSplineLength;
+            var lengthBeforeAddingNode = this._totalSplineLength;
 
-            _trajectory.Spline.Add(aimingPosition3D);
+            this._trajectory.Spline.Add(aimingPosition3D);
 
-            _totalSplineLength = _trajectory.CalculateLength();
+            this._totalSplineLength = this._trajectory.CalculateLength();
 
             // Gotta recompute the correct spline position for each body parts since the spline length changed.
-            for (var i = 0; i < _bodyParts.Count; i++)
-                _currentPositionsOnSpline[i] *= lengthBeforeAddingNode / _totalSplineLength;
+            for (var i = 0; i < this._bodyParts.Count; i++) this._currentPositionsOnSpline[i] *= lengthBeforeAddingNode / this._totalSplineLength;
         }
 
         public void SetAnimations(int animId, bool isWalking)
         {
-            for (var i = 0; i < _bodyParts.Count; i++)
+            for (var i = 0; i < this._bodyParts.Count; i++)
             {
                 var offset = isWalking ? i % 2 / 2f : 0f;
-                _bodyParts[i].GetComponent<CentipedeBodyPart>().PlayAnimation(animId, offset);
+                this._bodyParts[i].GetComponent<CentipedeBodyPart>().PlayAnimation(animId, offset);
             }
         }
 
         // Check if a given normalized spline position is after the spline end.
         public bool IsReachingTrajectoryEndNextStep()
         {
-            var moved = Time.deltaTime * Speed;
-            return HeadPositionOnSpline + moved / _totalSplineLength >= 1;
+            var moved = Time.deltaTime * this.Speed;
+            return this.HeadPositionOnSpline + moved / this._totalSplineLength >= 1;
         }
 
         protected void Update()
         {
-            _finiteStateMachine.CurrentState.OnFrameUpdate();
+            this._finiteStateMachine.CurrentState.OnFrameUpdate();
         }
 
         protected void FixedUpdate()
         {
-            _finiteStateMachine.CurrentState.OnPhysicsUpdate();
+            this._finiteStateMachine.CurrentState.OnPhysicsUpdate();
         }
 
         private void InitializeBodyPosition()
         {
-            var normalizedDistance = _bodyPartDistance / _totalSplineLength;
-            for (var i = 0; i < _bodyParts.Count - 1; i++)
+            var normalizedDistance = this._bodyPartDistance / this._totalSplineLength;
+            for (var i = 0; i < this._bodyParts.Count - 1; i++)
             {
-                _currentPositionsOnSpline.Add(normalizedDistance * i);
-                _bodyParts[i].position = _trajectory.EvaluatePosition(normalizedDistance * i);
+                this._currentPositionsOnSpline.Add(normalizedDistance * i);
+                this._bodyParts[i].position = this._trajectory.EvaluatePosition(normalizedDistance * i);
             }
 
             // position head
-            var headNormalizedDistance = _headDistance / _totalSplineLength;
-            _bodyParts.Last().position =
-                _trajectory.EvaluatePosition(normalizedDistance * (_bodyParts.Count() - 2) + headNormalizedDistance);
-            _currentPositionsOnSpline.Add(normalizedDistance * (_bodyParts.Count() - 2) + headNormalizedDistance);
+            var headNormalizedDistance = this._headDistance / this._totalSplineLength;
+            this._bodyParts.Last().position = this._trajectory.EvaluatePosition(normalizedDistance * (this._bodyParts.Count() - 2) + headNormalizedDistance);
+            this._currentPositionsOnSpline.Add(normalizedDistance * (this._bodyParts.Count() - 2) + headNormalizedDistance);
         }
 
         private void UnregisterBodyPart()
         {
-            _bodyParts.Remove(_bodyParts.First());
-            _currentPositionsOnSpline.Remove(_currentPositionsOnSpline.First());
+            this._bodyParts.Remove(this._bodyParts.First());
+            this._currentPositionsOnSpline.Remove(this._currentPositionsOnSpline.First());
         }
 
 
@@ -365,13 +365,13 @@ namespace BTG
 
         public void LayEgg()
         {
-            var egg = Instantiate(_eggPrefab);
-            egg.transform.position = Tail.position;
+            var egg = Instantiate(this._eggPrefab);
+            egg.transform.position = this.Tail.position;
             egg.GetComponent<Explosive>().Explode(2f);
         }
 
-        public float MaxHealth => _maxHealth;
+        public float MaxHealth => this._maxHealth;
 
-        public float CurrentHealth => _bodyParts.Sum(x => x.GetComponent<CentipedeBodyPart>().CurrentHealth);
+        public float CurrentHealth => this._bodyParts.Sum(x => x.GetComponent<CentipedeBodyPart>().CurrentHealth);
     }
 }

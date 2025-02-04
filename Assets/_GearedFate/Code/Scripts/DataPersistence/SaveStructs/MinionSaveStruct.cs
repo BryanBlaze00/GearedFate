@@ -13,14 +13,14 @@ namespace BTG
 
         [SerializeField] private float _health;
 
-        public Vector3 Position => _position;
+        public Vector3 Position => this._position;
 
-        public float Health => _health;
+        public float Health => this._health;
 
         public MinionSaveStruct(Vector3 position, float health)
         {
-            _position = position;
-            _health = health;
+            this._position = position;
+            this._health = health;
         }
     }
 }

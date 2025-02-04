@@ -20,12 +20,12 @@ namespace BTG
 
         private void Update()
         {
-            ScrollingParallax();
+            this.ScrollingParallax();
         }
 
         private void ScrollingParallax()
         {
-            _img.uvRect = new Rect(_img.uvRect.position + new Vector2(_x, _y) * Time.deltaTime, _img.uvRect.size);
+            this._img.uvRect = new Rect(this._img.uvRect.position + new Vector2(this._x, this._y) * Time.deltaTime, this._img.uvRect.size);
         }
     }
 }

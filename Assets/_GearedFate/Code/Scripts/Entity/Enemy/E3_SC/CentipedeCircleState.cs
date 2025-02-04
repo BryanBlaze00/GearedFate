@@ -35,29 +35,29 @@ namespace BTG
             float minTimeBeforeCharge,
             float maxTimeBeforeCharge) : base(fsm, steamCentipede)
         {
-            _animId = animationId;
-            _chasingDistance = chasingDistance;
-            _circlingDistance = circlingDistance;
-            _minTimeBeforeCharge = minTimeBeforeCharge;
-            _maxTimeBeforeCharge = maxTimeBeforeCharge;
+            this._animId = animationId;
+            this._chasingDistance = chasingDistance;
+            this._circlingDistance = circlingDistance;
+            this._minTimeBeforeCharge = minTimeBeforeCharge;
+            this._maxTimeBeforeCharge = maxTimeBeforeCharge;
         }
 
         public override void OnEnter()
         {
-            Centipede.SetSpeed(Centipede.RegularSpeed);
-            Centipede.SetAnimations(_animId, true);
-            Centipede.IsAttacking = false;
-            _firstCircling = true;
+            this.Centipede.SetSpeed(this.Centipede.RegularSpeed);
+            this.Centipede.SetAnimations(this._animId, true);
+            this.Centipede.IsAttacking = false;
+            this._firstCircling = true;
 
-            if (Centipede.IsReachingTrajectoryEndNextStep())
+            if (this.Centipede.IsReachingTrajectoryEndNextStep())
             {
-                Centipede.ExpandTrajectory(ComputeCircleAimPosition());
-                _firstCircling = false;
+                this.Centipede.ExpandTrajectory(this.ComputeCircleAimPosition());
+                this._firstCircling = false;
             }
 
-            _eggLayingTimer = Time.time;
-            _chargingTimer = 0f;
-            _timeBeforeCharge = Random.Range(_minTimeBeforeCharge, _maxTimeBeforeCharge);
+            this._eggLayingTimer = Time.time;
+            this._chargingTimer = 0f;
+            this._timeBeforeCharge = Random.Range(this._minTimeBeforeCharge, this._maxTimeBeforeCharge);
         }
 
         public override void OnExit()
@@ -66,35 +66,35 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            _chargingTimer += Time.deltaTime;
-            Centipede.MoveAlongTrajectory();
+            this._chargingTimer += Time.deltaTime;
+            this.Centipede.MoveAlongTrajectory();
 
-            if (Time.time > _eggLayingTimer + _layingEggRate)
+            if (Time.time > this._eggLayingTimer + this._layingEggRate)
             {
-                Centipede.LayEgg();
-                _eggLayingTimer = Time.time;
+                this.Centipede.LayEgg();
+                this._eggLayingTimer = Time.time;
             }
 
 
-            if (!Centipede.IsReachingTrajectoryEndNextStep()) return;
+            if (!this.Centipede.IsReachingTrajectoryEndNextStep()) return;
 
-            if (Centipede.DistanceToTarget > _chasingDistance)
+            if (this.Centipede.DistanceToTarget > this._chasingDistance)
             {
-                fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Chase]);
+                this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Chase]);
             }
             else
             {
-                if (_chargingTimer > _timeBeforeCharge)
+                if (this._chargingTimer > this._timeBeforeCharge)
                 {
                     // choose randomly between charging or death circle
                     if (Random.Range(0, 10) > 3f)
-                        fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Charge]);
+                        this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Charge]);
                     else
-                        fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.DeathCircle]);
+                        this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.DeathCircle]);
                 }
 
-                Centipede.ExpandTrajectory(ComputeCircleAimPosition());
-                _firstCircling = false;
+                this.Centipede.ExpandTrajectory(this.ComputeCircleAimPosition());
+                this._firstCircling = false;
             }
         }
 
@@ -104,23 +104,23 @@ namespace BTG
 
         public void SetChargeTimeBounds(float a, float b)
         {
-            _minTimeBeforeCharge = a;
-            _maxTimeBeforeCharge = b;
+            this._minTimeBeforeCharge = a;
+            this._maxTimeBeforeCharge = b;
         }
 
         private Vector2 ComputeCircleAimPosition()
         {
-            var directionFromPlayerToHead = Centipede.VectorToTarget;
+            var directionFromPlayerToHead = this.Centipede.VectorToTarget;
 
             // if not circling yet, choose as a node the closest cardinal point at the defined circling distance.
-            if (_firstCircling)
-                _circleDirection = VectorHelper2D.ClosestCardinalOrDiagonal(directionFromPlayerToHead);
+            if (this._firstCircling)
+                this._circleDirection = VectorHelper2D.ClosestCardinalOrDiagonal(directionFromPlayerToHead);
             else
-                _circleDirection = VectorHelper2D.NextClockWiseDirection(_circleDirection);
+                this._circleDirection = VectorHelper2D.NextClockWiseDirection(this._circleDirection);
 
-            var nodeDirection = VectorHelper2D.VectorFromDirection(_circleDirection);
+            var nodeDirection = VectorHelper2D.VectorFromDirection(this._circleDirection);
 
-            return (Vector2)Centipede.Target.position + nodeDirection * _circlingDistance;
+            return (Vector2)this.Centipede.Target.position + nodeDirection * this._circlingDistance;
         }
     }
 }

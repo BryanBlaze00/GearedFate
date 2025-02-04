@@ -28,14 +28,13 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            if (AttackCheck) return;
-            if (DashCheck) return;
+            if (this.AttackCheck) return;
+            if (this.DashCheck) return;
 
-            player.RB.linearVelocity = Input.MoveInput * data.MoveSpeed;
-            player.SetLookDir();
+            this.player.RB.linearVelocity = Input.MoveInput * this.data.MoveSpeed;
+            this.player.SetLookDir();
 
-            if (Input.MoveInput == Vector2.zero)
-                fsm.SwitchState(player.states[Player.State.Idle]);
+            if (Input.MoveInput == Vector2.zero) this.fsm.SwitchState(this.player.states[Player.State.Idle]);
         }
 
         public override void OnPhysicsUpdate()

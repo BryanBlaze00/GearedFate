@@ -10,7 +10,7 @@ namespace BTG
         [SerializeField]
         private void SpawnFinished()
         {
-            OnSpawnFinished?.Invoke();
+            this.OnSpawnFinished?.Invoke();
         }
     }
 }

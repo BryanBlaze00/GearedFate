@@ -41,119 +41,121 @@ namespace BTG
 
         private void Start()
         {
-            _firstString.CurrentCamera = FindFirstObjectByType<Camera>();
-            _secondString.CurrentCamera = FindFirstObjectByType<Camera>();
-            _circlePointsNumber = _firstStringPoints + _secondStringPoints + _firstEmptySpacePoints +
-                                  _secondEmptySpacePoints;
-            _angle = 2 * Mathf.PI / (_circlePointsNumber - 1);
-            _nextRotationTime = Time.time + _rotatingTime;
-            _target = FindFirstObjectByType<Player>().transform;
+            this._firstString.CurrentCamera = FindFirstObjectByType<Camera>();
+            this._secondString.CurrentCamera = FindFirstObjectByType<Camera>();
+            this._circlePointsNumber = this._firstStringPoints + this._secondStringPoints + this._firstEmptySpacePoints + this._secondEmptySpacePoints;
+            this._angle = 2 * Mathf.PI / (this._circlePointsNumber - 1);
+            this._nextRotationTime = Time.time + this._rotatingTime;
+            this._target = FindFirstObjectByType<Player>().transform;
         }
 
         public void SetDamage(float damage)
         {
-            _damage = damage;
+            this._damage = damage;
         }
 
         public void SetKnockBack(float knockback)
         {
-            _knockback = knockback;
+            this._knockback = knockback;
         }
 
         public void SetTolerance(float tolerance)
         {
-            _tolerance = tolerance;
+            this._tolerance = tolerance;
         }
 
         public void SetRotationSpeed(float timeBetweenRotate)
         {
-            _rotatingTime = timeBetweenRotate;
+            this._rotatingTime = timeBetweenRotate;
         }
 
         public void SetRadius(float radius)
         {
-            _radius = radius;
+            this._radius = radius;
         }
 
         public void SetAngle(float angle)
         {
-            _startingAngle = angle;
+            this._startingAngle = angle;
         }
 
         public void SetDirection(bool clockwise)
         {
-            _turnClockwise = clockwise;
+            this._turnClockwise = clockwise;
         }
 
         // Update is called once per frame
         private void Update()
         {
-            _circlePointsNumber = _firstStringPoints + _secondStringPoints + _firstEmptySpacePoints +
-                                  _secondEmptySpacePoints;
+            this._circlePointsNumber = this._firstStringPoints + this._secondStringPoints + this._firstEmptySpacePoints + this._secondEmptySpacePoints;
 
-            if (Time.time > _nextRotationTime)
+            if (Time.time > this._nextRotationTime)
             {
-                UpdateAngle();
-                _nextRotationTime = Time.time + _rotatingTime;
+                this.UpdateAngle();
+                this._nextRotationTime = Time.time + this._rotatingTime;
             }
 
-            ComputeStringsVisuals();
-            IsOnCircle();
+            this.ComputeStringsVisuals();
+            this.IsOnCircle();
         }
 
         private void ComputeStringsVisuals()
         {
-            _firstString.Points.Clear();
-            _secondString.Points.Clear();
+            this._firstString.Points.Clear();
+            this._secondString.Points.Clear();
 
-            for (var i = 0; i < _circlePointsNumber; i++)
+            for (var i = 0; i < this._circlePointsNumber; i++)
             {
-                if (i < _firstStringPoints)
-                    _firstString.Points.Add(new Vector2(Mathf.Cos(_startingAngle + _angle * i) * _radius,
-                        Mathf.Sin(_startingAngle + _angle * i) * _radius));
-                if (i >= _firstStringPoints + _firstEmptySpacePoints &&
-                    i < _firstStringPoints + _firstEmptySpacePoints + _secondStringPoints)
-                    _secondString.Points.Add(new Vector2(Mathf.Cos(_startingAngle + _angle * i) * _radius,
-                        Mathf.Sin(_startingAngle + _angle * i) * _radius));
+                if (i < this._firstStringPoints)
+                    this._firstString.Points.Add(new Vector2(Mathf.Cos(this._startingAngle + this._angle * i) * this._radius,
+                        Mathf.Sin(this._startingAngle + this._angle * i) * this._radius));
+                if (i >= this._firstStringPoints + this._firstEmptySpacePoints &&
+                    i < this._firstStringPoints + this._firstEmptySpacePoints + this._secondStringPoints)
+                    this._secondString.Points.Add(new Vector2(Mathf.Cos(this._startingAngle + this._angle * i) * this._radius,
+                        Mathf.Sin(this._startingAngle + this._angle * i) * this._radius));
             }
 
-            _firstString.SetMaxPoints(_firstStringPoints);
-            _firstString.ApplyPointPositionChanges();
-            _firstString.RefreshMaterial();
+            this._firstString.SetMaxPoints(this._firstStringPoints);
+            this._firstString.ApplyPointPositionChanges();
+            this._firstString.RefreshMaterial();
 
-            _secondString.SetMaxPoints(_secondStringPoints);
-            _secondString.ApplyPointPositionChanges();
-            _secondString.RefreshMaterial();
+            this._secondString.SetMaxPoints(this._secondStringPoints);
+            this._secondString.ApplyPointPositionChanges();
+            this._secondString.RefreshMaterial();
         }
 
         private void UpdateAngle()
         {
-            if (_turnClockwise)
-                _startingAngle -= _angle;
+            if (this._turnClockwise)
+                this._startingAngle -= this._angle;
             else
-                _startingAngle += _angle;
+                this._startingAngle += this._angle;
         }
 
         private void IsOnCircle()
         {
-            if (IsOnCircle(_target.position, transform.position, _radius, _tolerance))
+            if (IsOnCircle(this._target.position, this.transform.position, this._radius, this._tolerance))
             {
-                var closestPointOnCircle = ClosestPointOnCircle(_target.position, transform.position, _radius);
-                var startFirstEmptyPoint = _firstString.Points[^1] + (Vector2)transform.position;
-                var endFirstEmptyPoint = _secondString.Points[0] + (Vector2)transform.position;
+                var closestPointOnCircle = ClosestPointOnCircle(this._target.position, this.transform.position, this._radius);
+                var startFirstEmptyPoint = this._firstString.Points[^1] + (Vector2)this.transform.position;
+                var endFirstEmptyPoint = this._secondString.Points[0] + (Vector2)this.transform.position;
 
-                var startSecondEmptyPoint = _secondString.Points[^1] + (Vector2)transform.position;
-                var endSecondEmptyPoint = _firstString.Points[0] + (Vector2)transform.position;
+                var startSecondEmptyPoint = this._secondString.Points[^1] + (Vector2)this.transform.position;
+                var endSecondEmptyPoint = this._firstString.Points[0] + (Vector2)this.transform.position;
 
 
-                if (IsPointInArc(transform.position, _radius, startFirstEmptyPoint, endFirstEmptyPoint,
+                if (IsPointInArc(
+                        this.transform.position,
+                        this._radius, startFirstEmptyPoint, endFirstEmptyPoint,
                         closestPointOnCircle)
-                    || IsPointInArc(transform.position, _radius, startSecondEmptyPoint, endSecondEmptyPoint,
+                    || IsPointInArc(
+                        this.transform.position,
+                        this._radius, startSecondEmptyPoint, endSecondEmptyPoint,
                         closestPointOnCircle))
                     return;
 
-                _target.GetComponent<Player>().TakeDamage(_damage);
-                _target.GetComponent<Player>().Knockback.GetKnockedBack(closestPointOnCircle, _knockback);
+                this._target.GetComponent<Player>().TakeDamage(this._damage);
+                this._target.GetComponent<Player>().Knockback.GetKnockedBack(closestPointOnCircle, this._knockback);
             }
         }
 

@@ -13,8 +13,8 @@ namespace BTG
         public override void OnEnter()
         {
             Debug.Log("dead");
-            PlayAnimationHighBodyPart();
-            PlayAnimationLowBodyPart();
+            this.PlayAnimationHighBodyPart();
+            this.PlayAnimationLowBodyPart();
         }
 
         public override void OnExit()

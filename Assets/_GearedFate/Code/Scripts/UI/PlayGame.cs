@@ -39,7 +39,7 @@ namespace BTG
         // }
         protected void Start()
         {
-            _playButton.onClick.AddListener(StartLoadGame);
+            this._playButton.onClick.AddListener(this.StartLoadGame);
         }
 
         protected void Update()

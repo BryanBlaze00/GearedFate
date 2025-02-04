@@ -15,15 +15,15 @@ namespace BTG
 
         public void Initialize(BaseState<State> startState)
         {
-            CurrentState = startState;
-            CurrentState.OnEnter();
+            this.CurrentState = startState;
+            this.CurrentState.OnEnter();
         }
 
         public void SwitchState(BaseState<State> nextState)
         {
-            CurrentState.OnExit();
-            CurrentState = nextState;
-            CurrentState.OnEnter();
+            this.CurrentState.OnExit();
+            this.CurrentState = nextState;
+            this.CurrentState.OnEnter();
         }
     }
 }

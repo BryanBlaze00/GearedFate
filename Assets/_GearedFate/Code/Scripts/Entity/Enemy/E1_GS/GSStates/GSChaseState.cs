@@ -24,30 +24,30 @@ namespace BTG
         public GSChaseState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state,
             GearboundSentinel gs) : base(fsm, state, gs)
         {
-            switchCirclingCoroutine ??= gs.StartCoroutine(SwitchCirlingDir(0.5f, 3f));
+            this.switchCirclingCoroutine ??= gs.StartCoroutine(this.SwitchCirlingDir(0.5f, 3f));
         }
 
         public override void OnEnter()
         {
-            isActive = true;
-            wasMoving = false;
-            AttackCooldown = gearboundSentinel.Phase switch
+            this.isActive = true;
+            this.wasMoving = false;
+            this.AttackCooldown = this.gearboundSentinel.Phase switch
             {
                 0 => 5f,
                 1 => 3.5f,
                 _ => 1f
             };
-            gearboundSentinel.Animator.speed = 1f;
-            gearboundSentinel.Animator.Play("Idle");
+            this.gearboundSentinel.Animator.speed = 1f;
+            this.gearboundSentinel.Animator.Play("Idle");
             // Coroutines stop themselves when isActive gets set to false by OnExit
-            gearboundSentinel.StartCoroutine(MoveToTarget());
-            gearboundSentinel.StartCoroutine(AnimateAndSound());
+            this.gearboundSentinel.StartCoroutine(this.MoveToTarget());
+            this.gearboundSentinel.StartCoroutine(this.AnimateAndSound());
             base.OnEnter();
         }
 
         public override void OnExit()
         {
-            isActive = false;
+            this.isActive = false;
 
             base.OnExit();
         }
@@ -59,21 +59,20 @@ namespace BTG
 
         public override void OnPhysicsUpdate()
         {
-            if (gearboundSentinel.TargetPlayer == null)
-                gearboundSentinel.TargetPlayer = Object.FindObjectsByType<Player>(FindObjectsSortMode.None).Random();
-            if (gearboundSentinel.TargetPlayer == null)
+            if (this.gearboundSentinel.TargetPlayer == null) this.gearboundSentinel.TargetPlayer = Object.FindObjectsByType<Player>(FindObjectsSortMode.None).Random();
+            if (this.gearboundSentinel.TargetPlayer == null)
             {
-                Debug.LogError("There is no TargetPlayer set on " + nameof(gearboundSentinel));
+                Debug.LogError("There is no TargetPlayer set on " + nameof(this.gearboundSentinel));
                 return;
             }
 
-            var vecToTarget = gearboundSentinel.TargetPlayer.transform.position - gearboundSentinel.transform.position;
+            var vecToTarget = this.gearboundSentinel.TargetPlayer.transform.position - this.gearboundSentinel.transform.position;
             var distToTarget = vecToTarget.magnitude;
 
-            UpdateDestination(vecToTarget, distToTarget);
+            this.UpdateDestination(vecToTarget, distToTarget);
 
-            AttackCooldown -= Time.fixedDeltaTime;
-            if (AttackCooldown < 0f) SelectAttack(distToTarget);
+            this.AttackCooldown -= Time.fixedDeltaTime;
+            if (this.AttackCooldown < 0f) this.SelectAttack(distToTarget);
 
             base.OnPhysicsUpdate();
 
@@ -86,40 +85,40 @@ namespace BTG
         {
             const float distanceMargin = 1f;
             // if too far from target, move to them
-            if (distToTarget > gearboundSentinel.CurDistanceGoal + distanceMargin)
+            if (distToTarget > this.gearboundSentinel.CurDistanceGoal + distanceMargin)
             {
-                TargetPos = gearboundSentinel.TargetPlayer.transform.position;
+                this.TargetPos = this.gearboundSentinel.TargetPlayer.transform.position;
             }
             // else if too close to target, run away from them
-            else if (distToTarget < gearboundSentinel.CurDistanceGoal - distanceMargin)
+            else if (distToTarget < this.gearboundSentinel.CurDistanceGoal - distanceMargin)
             {
                 var runAwayVec = -diffToTarget.normalized * runAwayDistance;
-                TargetPos = gearboundSentinel.transform.position + runAwayVec;
+                this.TargetPos = this.gearboundSentinel.transform.position + runAwayVec;
             }
             else // we're within margin of distance goal
             {
                 // rotate target position 30 deg around the player, using circlingDirection for clockwise or ccw
-                var vecFromPlayer = gearboundSentinel.transform.position -
-                                    gearboundSentinel.TargetPlayer.transform.position;
-                var rotatedVec = Quaternion.AngleAxis(circlingDirection * 30f, Vector3.forward) * vecFromPlayer;
-                TargetPos = gearboundSentinel.TargetPlayer.transform.position + rotatedVec;
+                var vecFromPlayer = this.gearboundSentinel.transform.position - this.gearboundSentinel.TargetPlayer.transform.position;
+                var rotatedVec = Quaternion.AngleAxis(this.circlingDirection * 30f, Vector3.forward) * vecFromPlayer;
+                this.TargetPos = this.gearboundSentinel.TargetPlayer.transform.position + rotatedVec;
             }
         }
 
         private IEnumerator MoveToTarget()
         {
-            while (isActive)
+            while (this.isActive)
             {
                 Vector2 targetVector = Vector3.zero;
                 NavMeshPath navMeshPath = new();
-                if (NavMesh.SamplePosition(TargetPos, out var hit, runAwayDistance,
-                        gearboundSentinel.NavMeshAgent.areaMask)) //TODO: area mask
+                if (NavMesh.SamplePosition(
+                        this.TargetPos, out var hit, runAwayDistance,
+                        this.gearboundSentinel.NavMeshAgent.areaMask)) //TODO: area mask
                 {
-                    TargetPos = hit.position;
-                    if (gearboundSentinel.NavMeshAgent.CalculatePath(TargetPos, navMeshPath) &&
+                    this.TargetPos = hit.position;
+                    if (this.gearboundSentinel.NavMeshAgent.CalculatePath(this.TargetPos, navMeshPath) &&
                         navMeshPath.corners.Length > 1)
                     {
-                        targetVector = navMeshPath.corners[1] - gearboundSentinel.transform.position;
+                        targetVector = navMeshPath.corners[1] - this.gearboundSentinel.transform.position;
                         targetVector = targetVector.SnapToCardinal(true);
                     }
                     else
@@ -133,14 +132,14 @@ namespace BTG
                 }
 
                 var wait = Random.Range(0.3f, 0.8f);
-                while (wait > 0f && isActive)
+                while (wait > 0f && this.isActive)
                 {
                     const float
                         vecMultiplier =
                             2f; // scales the movement vector to give it a little buffer; seems to help for some reason
-                    var newDest = (Vector2)gearboundSentinel.transform.position + targetVector *
-                        (gearboundSentinel.CurSpeed * Time.fixedDeltaTime * vecMultiplier);
-                    var success = gearboundSentinel.NavMeshAgent.SetDestination(newDest);
+                    var newDest = (Vector2)this.gearboundSentinel.transform.position + targetVector *
+                        (this.gearboundSentinel.CurSpeed * Time.fixedDeltaTime * vecMultiplier);
+                    var success = this.gearboundSentinel.NavMeshAgent.SetDestination(newDest);
                     if (!success) Debug.LogError("Failed?");
                     yield return new WaitForFixedUpdate();
                     wait -= Time.fixedDeltaTime;
@@ -150,38 +149,35 @@ namespace BTG
 
         private IEnumerator AnimateAndSound()
         {
-            while (isActive)
+            while (this.isActive)
             {
-                var speed = gearboundSentinel.NavMeshAgent.velocity.magnitude;
+                var speed = this.gearboundSentinel.NavMeshAgent.velocity.magnitude;
                 const float idleSpeedThreshold = 0.2f;
                 if (speed > idleSpeedThreshold)
                 {
-                    if (!wasMoving)
+                    if (!this.wasMoving)
                     {
-                        wasMoving = true;
-                        gearboundSentinel.Animator.Play("Walk Blend Tree");
+                        this.wasMoving = true;
+                        this.gearboundSentinel.Animator.Play("Walk Blend Tree");
                     }
 
-                    if ((!gearboundSentinel.AudioSource.isPlaying ||
-                         gearboundSentinel.AudioSource.clip != gearboundSentinel.AudioMovement) &&
-                        gearboundSentinel.AudioMovement != null)
+                    if ((!this.gearboundSentinel.AudioSource.isPlaying || this.gearboundSentinel.AudioSource.clip != this.gearboundSentinel.AudioMovement) && this.gearboundSentinel.AudioMovement != null)
                     {
-                        gearboundSentinel.AudioSource.clip = gearboundSentinel.AudioMovement;
-                        gearboundSentinel.AudioSource.pitch = gearboundSentinel.CurSpeed;
-                        gearboundSentinel.AudioSource.Play();
+                        this.gearboundSentinel.AudioSource.clip = this.gearboundSentinel.AudioMovement;
+                        this.gearboundSentinel.AudioSource.pitch = this.gearboundSentinel.CurSpeed;
+                        this.gearboundSentinel.AudioSource.Play();
                     }
 
                     // TODO: remove dividing constant and design the animation for 1u/s?
-                    gearboundSentinel.Animator.speed =
-                        gearboundSentinel.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / 2f * speed;
+                    this.gearboundSentinel.Animator.speed = this.gearboundSentinel.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / 2f * speed;
                 }
                 else
                 {
-                    if (wasMoving)
+                    if (this.wasMoving)
                     {
-                        wasMoving = false;
-                        gearboundSentinel.Animator.Play("Idle");
-                        gearboundSentinel.Animator.speed = 1f;
+                        this.wasMoving = false;
+                        this.gearboundSentinel.Animator.Play("Idle");
+                        this.gearboundSentinel.Animator.speed = 1f;
                     }
                 }
 
@@ -191,12 +187,13 @@ namespace BTG
 
         private void SelectAttack(float distToTarget)
         {
-            switch (gearboundSentinel.Phase)
+            switch (this.gearboundSentinel.Phase)
             {
                 case 0:
                     //fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Bomb]); break; // TODO: Comment out whole line. This is for testing.
                     // random between bombs and shoot (shotgun spray)
-                    fsm.SwitchState(gearboundSentinel.States[
+                    this.fsm.SwitchState(
+                        this.gearboundSentinel.States[
                         CollectionExtensions.SelectRandom(
                             GearboundSentinel.State.Bomb,
                             GearboundSentinel.State.Shoot)]);
@@ -205,7 +202,7 @@ namespace BTG
                     // choose randomly between burrow or attack (bomb or shoot)
                     if (Random.Range(0, 2) == 0)
                     {
-                        fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Burrow]);
+                        this.fsm.SwitchState(this.gearboundSentinel.States[GearboundSentinel.State.Burrow]);
                     }
                     else
                     {
@@ -215,13 +212,14 @@ namespace BTG
                         {
                             // if far away, throw bombs; else, shoot
                             if (distToTarget > 4f)
-                                fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Bomb]);
+                                this.fsm.SwitchState(this.gearboundSentinel.States[GearboundSentinel.State.Bomb]);
                             else
-                                fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Shoot]);
+                                this.fsm.SwitchState(this.gearboundSentinel.States[GearboundSentinel.State.Shoot]);
                         }
                         else
                         {
-                            fsm.SwitchState(gearboundSentinel.States[
+                            this.fsm.SwitchState(
+                                this.gearboundSentinel.States[
                                 CollectionExtensions.SelectRandom(
                                     GearboundSentinel.State.Bomb,
                                     GearboundSentinel.State.Shoot)]);
@@ -231,7 +229,8 @@ namespace BTG
                     break;
                 default: // last phase
                     // Random between bombs or shoot, with shoot being twice as likely (360 spray transitions to burrow when done)
-                    fsm.SwitchState(gearboundSentinel.States[
+                    this.fsm.SwitchState(
+                        this.gearboundSentinel.States[
                         CollectionExtensions.SelectRandom(
                             GearboundSentinel.State.Bomb,
                             GearboundSentinel.State.Shoot,
@@ -245,7 +244,7 @@ namespace BTG
             while (true)
             {
                 yield return new WaitForSeconds(Random.Range(minCD, maxCD));
-                circlingDirection = -circlingDirection;
+                this.circlingDirection = -this.circlingDirection;
             }
         }
     }

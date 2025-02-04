@@ -14,16 +14,16 @@ namespace BTG
             SteamCentipede steamCentipede)
             : base(fsm, steamCentipede)
         {
-            _animId = animationId;
+            this._animId = animationId;
         }
 
         public override void OnEnter()
         {
             Debug.Log("Knocked Down !");
-            _knockedTime = Time.time;
-            Centipede.SetAnimations(_animId, false);
-            Centipede.KnockOutAnimate();
-            Centipede.IsAttacking = false;
+            this._knockedTime = Time.time;
+            this.Centipede.SetAnimations(this._animId, false);
+            this.Centipede.KnockOutAnimate();
+            this.Centipede.IsAttacking = false;
         }
 
         public override void OnExit()
@@ -32,8 +32,7 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            if (Time.time > _knockedTime + _timeToGetBack)
-                fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Chase]);
+            if (Time.time > this._knockedTime + this._timeToGetBack) this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Chase]);
         }
 
         public override void OnPhysicsUpdate()

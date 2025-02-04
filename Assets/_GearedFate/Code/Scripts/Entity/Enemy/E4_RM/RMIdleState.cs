@@ -18,33 +18,33 @@ namespace BTG
 
         public override void OnEnter()
         {
-            _enterTime = Time.time;
-            PlayAnimationHighBodyPart();
-            PlayAnimationLowBodyPart();
-            Marionette.AnimatorHighPart.speed = 0f;
-            Marionette.AnimatorLowPart.speed = 0f;
+            this._enterTime = Time.time;
+            this.PlayAnimationHighBodyPart();
+            this.PlayAnimationLowBodyPart();
+            this.Marionette.AnimatorHighPart.speed = 0f;
+            this.Marionette.AnimatorLowPart.speed = 0f;
             Debug.Log("on enter idle");
         }
 
         public override void OnExit()
         {
-            Marionette.AnimatorHighPart.speed = 1f;
-            Marionette.AnimatorLowPart.speed = 1f;
+            this.Marionette.AnimatorHighPart.speed = 1f;
+            this.Marionette.AnimatorLowPart.speed = 1f;
         }
 
         public override void OnFrameUpdate()
         {
-            if (Time.time > _enterTime + _timeBeforeStateChange)
+            if (Time.time > this._enterTime + this._timeBeforeStateChange)
             {
-                if (_lastStateCircleStorm)
+                if (this._lastStateCircleStorm)
                 {
-                    fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.CirclingLines]);
-                    _lastStateCircleStorm = false;
+                    this.fsm.SwitchState(this.Marionette._states[RustedMarionette.RustedMarionetteState.CirclingLines]);
+                    this._lastStateCircleStorm = false;
                 }
                 else
                 {
-                    fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.CircleStorm]);
-                    _lastStateCircleStorm = true;
+                    this.fsm.SwitchState(this.Marionette._states[RustedMarionette.RustedMarionetteState.CircleStorm]);
+                    this._lastStateCircleStorm = true;
                 }
             }
         }

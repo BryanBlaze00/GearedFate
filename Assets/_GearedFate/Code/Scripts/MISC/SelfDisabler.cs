@@ -13,7 +13,7 @@ namespace BTG
     {
         public void DisableSelf()
         {
-            gameObject.SetActive(false);
+            this.gameObject.SetActive(false);
         }
     }
 }

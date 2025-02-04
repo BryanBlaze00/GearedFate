@@ -19,8 +19,8 @@ namespace BTG
 
         public float AnimationSpeed
         {
-            get => _speed;
-            private set => _speed = Mathf.Clamp(value, 0.001f, 1f);
+            get => this._speed;
+            private set => this._speed = Mathf.Clamp(value, 0.001f, 1f);
         }
 
         private Coroutine _coroutineAnim;
@@ -29,7 +29,7 @@ namespace BTG
 
         private void OnEnable()
         {
-            if (GameManager.Instance.GetCurrentScene() == "MainMenu") PlayUIAnim();
+            if (GameManager.Instance.GetCurrentScene() == "MainMenu") this.PlayUIAnim();
         }
 
         /// <summary>
@@ -37,8 +37,8 @@ namespace BTG
         /// </summary>
         public void PlayUIAnim()
         {
-            IsDone = false;
-            _coroutineAnim = StartCoroutine(PlayAnimUI());
+            this.IsDone = false;
+            this._coroutineAnim = this.StartCoroutine(this.PlayAnimUI());
         }
 
         /// <summary>
@@ -46,8 +46,8 @@ namespace BTG
         /// </summary>
         public void StopUIAnim()
         {
-            IsDone = true;
-            StopCoroutine(_coroutineAnim);
+            this.IsDone = true;
+            this.StopCoroutine(this._coroutineAnim);
         }
 
         /// <summary>
@@ -56,20 +56,20 @@ namespace BTG
         /// <param name="option"></param>
         public void PlayOnce(bool option)
         {
-            StartCoroutine(PlayAnimOnce(option));
+            this.StartCoroutine(this.PlayAnimOnce(option));
         }
 
         private IEnumerator PlayAnimOnce(bool option)
         {
-            for (var i = 0; i < _spriteArray.Length; i++)
+            for (var i = 0; i < this._spriteArray.Length; i++)
             {
-                _image.sprite = _spriteArray[i];
-                yield return new WaitForSeconds(_speed);
+                this._image.sprite = this._spriteArray[i];
+                yield return new WaitForSeconds(this._speed);
             }
 
             if (option)
                 // Optional: Reset sprite after animation completes
-                _image.sprite = _spriteArray[0];
+                this._image.sprite = this._spriteArray[0];
         }
 
         /// <summary>
@@ -78,12 +78,11 @@ namespace BTG
         /// <returns> Loops itself. </returns>
         private IEnumerator PlayAnimUI()
         {
-            yield return new WaitForSeconds(_speed);
-            if (_indexSprite >= _spriteArray.Length) _indexSprite = 0;
-            _image.sprite = _spriteArray[_indexSprite];
-            _indexSprite += 1;
-            if (IsDone == false)
-                _coroutineAnim = StartCoroutine(PlayAnimUI());
+            yield return new WaitForSeconds(this._speed);
+            if (this._indexSprite >= this._spriteArray.Length) this._indexSprite = 0;
+            this._image.sprite = this._spriteArray[this._indexSprite];
+            this._indexSprite += 1;
+            if (this.IsDone == false) this._coroutineAnim = this.StartCoroutine(this.PlayAnimUI());
         }
     }
 }

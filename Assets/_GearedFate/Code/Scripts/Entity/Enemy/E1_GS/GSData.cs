@@ -58,8 +58,7 @@ namespace BTG
 
         private void OnValidate()
         {
-            if (StageTransitionHealthPercentage.Count > 3)
-                StageTransitionHealthPercentage.RemoveRange(3, StageTransitionHealthPercentage.Count - 3);
+            if (this.StageTransitionHealthPercentage.Count > 3) this.StageTransitionHealthPercentage.RemoveRange(3, this.StageTransitionHealthPercentage.Count - 3);
         }
     }
 }

@@ -14,13 +14,13 @@ namespace BTG
 
         public FileDataHandler(string dataDirPath, string dataFileName)
         {
-            _dataDirPath = dataDirPath;
-            _dataFileName = dataFileName;
+            this._dataDirPath = dataDirPath;
+            this._dataFileName = dataFileName;
         }
 
         public GameData Load()
         {
-            var fullPath = Path.Combine(_dataDirPath, _dataFileName);
+            var fullPath = Path.Combine(this._dataDirPath, this._dataFileName);
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
 
             if (!File.Exists(fullPath)) return null;
@@ -40,7 +40,7 @@ namespace BTG
 
         public void Save(GameData data)
         {
-            var fullPath = Path.Combine(_dataDirPath, _dataFileName);
+            var fullPath = Path.Combine(this._dataDirPath, this._dataFileName);
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
 
             var dataToStore = JsonUtility.ToJson(data, true);

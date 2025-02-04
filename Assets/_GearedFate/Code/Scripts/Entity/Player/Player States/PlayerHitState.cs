@@ -21,17 +21,17 @@ namespace BTG
         public override void OnEnter()
         {
             base.OnEnter();
-            if (player.Knockback.isKnockedback)
+            if (this.player.Knockback.isKnockedback)
             {
-                player.RB.linearVelocity = player.Knockback.KnockBackVelocity;
-                player.Knockback.isKnockedback = false;
+                this.player.RB.linearVelocity = this.player.Knockback.KnockBackVelocity;
+                this.player.Knockback.isKnockedback = false;
             }
             else
             {
-                player.RB.linearVelocity = Vector2.zero;
+                this.player.RB.linearVelocity = Vector2.zero;
             }
 
-            startTime = Time.time;
+            this.startTime = Time.time;
         }
 
         public override void OnExit()
@@ -41,13 +41,12 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            if (Time.time > startTime + data.KnockBackTime)
-                player.RB.linearVelocity = Vector2.zero;
+            if (Time.time > this.startTime + this.data.KnockBackTime) this.player.RB.linearVelocity = Vector2.zero;
 
-            if (Time.time < startTime + data.HitStunTime) return;
+            if (Time.time < this.startTime + this.data.HitStunTime) return;
 
-            fsm.SwitchState(
-                Input.MoveInput == Vector2.zero ? player.states[Player.State.Idle] : player.states[Player.State.Move]
+            this.fsm.SwitchState(
+                Input.MoveInput == Vector2.zero ? this.player.states[Player.State.Idle] : this.player.states[Player.State.Move]
             );
         }
 

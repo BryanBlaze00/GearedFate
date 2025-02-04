@@ -23,20 +23,20 @@ namespace BTG
         public CentipedeDeathCircleState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId,
             SteamCentipede steamCentipede) : base(fsm, steamCentipede)
         {
-            _animId = animationId;
+            this._animId = animationId;
         }
 
         public override void OnEnter()
         {
-            Centipede.IsAttacking = true;
-            Centipede.SetSpeed(Centipede.ChargeSpeed);
-            Centipede.SetAnimations(_animId, true);
-            _originalTargetPosition = Centipede.Target.position;
-            _initialDistanceToTarget = Centipede.DistanceToTarget;
-            _firstCircling = true;
-            _timer = 0;
+            this.Centipede.IsAttacking = true;
+            this.Centipede.SetSpeed(this.Centipede.ChargeSpeed);
+            this.Centipede.SetAnimations(this._animId, true);
+            this._originalTargetPosition = this.Centipede.Target.position;
+            this._initialDistanceToTarget = this.Centipede.DistanceToTarget;
+            this._firstCircling = true;
+            this._timer = 0;
 
-            if (Centipede.IsReachingTrajectoryEndNextStep()) Centipede.ExpandTrajectory(ComputeDeathCirclePosition());
+            if (this.Centipede.IsReachingTrajectoryEndNextStep()) this.Centipede.ExpandTrajectory(this.ComputeDeathCirclePosition());
         }
 
         public override void OnExit()
@@ -45,21 +45,20 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            _timer += Time.deltaTime;
-            Centipede.MoveAlongTrajectory();
+            this._timer += Time.deltaTime;
+            this.Centipede.MoveAlongTrajectory();
 
 
-            if (!Centipede.IsReachingTrajectoryEndNextStep()) return;
+            if (!this.Centipede.IsReachingTrajectoryEndNextStep()) return;
 
-            if (Vector2.Distance(Centipede.Target.position, _originalTargetPosition) > _initialDistanceToTarget)
+            if (Vector2.Distance(this.Centipede.Target.position, this._originalTargetPosition) > this._initialDistanceToTarget)
             {
-                fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Charge]);
+                this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Charge]);
             }
             else
             {
-                if (_timer > _timeToReachMinimalDistance)
-                    fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Charge]);
-                Centipede.ExpandTrajectory(ComputeDeathCirclePosition());
+                if (this._timer > this._timeToReachMinimalDistance) this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Charge]);
+                this.Centipede.ExpandTrajectory(this.ComputeDeathCirclePosition());
             }
         }
 
@@ -69,25 +68,24 @@ namespace BTG
 
         private Vector2 ComputeDeathCirclePosition()
         {
-            var directionFromPlayerToHead = Centipede.VectorToTarget;
+            var directionFromPlayerToHead = this.Centipede.VectorToTarget;
 
             // if not circling yet, choose as a node the closest cardinal point at the defined circling distance.
-            if (_firstCircling)
+            if (this._firstCircling)
             {
-                _circleDirection = VectorHelper2D.ClosestCardinalOrDiagonal(directionFromPlayerToHead);
-                _firstCircling = false;
+                this._circleDirection = VectorHelper2D.ClosestCardinalOrDiagonal(directionFromPlayerToHead);
+                this._firstCircling = false;
             }
             else
             {
-                _circleDirection = VectorHelper2D.NextClockWiseDirection(_circleDirection);
+                this._circleDirection = VectorHelper2D.NextClockWiseDirection(this._circleDirection);
             }
 
-            var nodeDirection = VectorHelper2D.VectorFromDirection(_circleDirection);
+            var nodeDirection = VectorHelper2D.VectorFromDirection(this._circleDirection);
 
-            var circlingDistance = _initialDistanceToTarget / 2 * (1 - _timer / _timeToReachMinimalDistance) +
-                                   _finalDistanceToTarget * _timer / _timeToReachMinimalDistance;
+            var circlingDistance = this._initialDistanceToTarget / 2 * (1 - this._timer / this._timeToReachMinimalDistance) + this._finalDistanceToTarget * this._timer / this._timeToReachMinimalDistance;
 
-            return (Vector2)_originalTargetPosition + nodeDirection * circlingDistance;
+            return (Vector2)this._originalTargetPosition + nodeDirection * circlingDistance;
         }
     }
 }

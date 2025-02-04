@@ -21,12 +21,12 @@ namespace BTG
         /// <summary>
         /// Use the key to know which asset to load, and the value to know how much.
         /// </summary>
-        public ICollection<KeyValuePair<PooledObjectType, int>> AssetToInstantiates => _assetsToInstantiateIds;
+        public ICollection<KeyValuePair<PooledObjectType, int>> AssetToInstantiates => this._assetsToInstantiateIds;
 
         public GameData()
         {
             // Starting values for player on new game
-            PlayerData = new PlayerSaveStruct(Vector3.zero, 100, 100);
+            this.PlayerData = new PlayerSaveStruct(Vector3.zero, 100, 100);
         }
 
         /// <summary>
@@ -34,8 +34,8 @@ namespace BTG
         /// </summary>
         public void AddAssetIndexToInstantiate(PooledObjectType id)
         {
-            _assetsToInstantiateIds.TryGetValue(id, out var currentCount);
-            _assetsToInstantiateIds[id] = currentCount + 1;
+            this._assetsToInstantiateIds.TryGetValue(id, out var currentCount);
+            this._assetsToInstantiateIds[id] = currentCount + 1;
         }
 
         /// <summary>
@@ -43,8 +43,8 @@ namespace BTG
         /// </summary>
         public MinionSaveStruct GetNextMinionData()
         {
-            var data = MinionsData[_minionCurrentLoadedIndex];
-            _minionCurrentLoadedIndex++;
+            var data = this.MinionsData[this._minionCurrentLoadedIndex];
+            this._minionCurrentLoadedIndex++;
             return data;
         }
 
@@ -53,8 +53,8 @@ namespace BTG
         /// </summary>
         public void CleanAfterLoad()
         {
-            _assetsToInstantiateIds.Clear();
-            MinionsData.Clear();
+            this._assetsToInstantiateIds.Clear();
+            this.MinionsData.Clear();
         }
     }
 }

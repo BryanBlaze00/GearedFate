@@ -18,7 +18,7 @@ namespace BTG
 
         public override void OnEnter()
         {
-            PlayAnimation();
+            this.PlayAnimation();
         }
 
         public override void OnExit()
@@ -27,10 +27,9 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            if (IsReadyToSpawn()) fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Swarm]);
+            if (this.IsReadyToSpawn()) this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.Swarm]);
 
-            if (GreatCreator.DistanceToTarget < GreatCreator.SafeDistance)
-                fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.RunAway]);
+            if (this.GreatCreator.DistanceToTarget < this.GreatCreator.SafeDistance) this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.RunAway]);
         }
 
         public override void OnPhysicsUpdate()

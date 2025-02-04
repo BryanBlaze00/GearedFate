@@ -10,13 +10,13 @@ namespace BTG
             SteamCentipede steamCentipede)
             : base(fsm, steamCentipede)
         {
-            _animId = animationId;
+            this._animId = animationId;
         }
 
         public override void OnEnter()
         {
-            Centipede.SetAnimations(_animId, false);
-            Centipede.IsAttacking = false;
+            this.Centipede.SetAnimations(this._animId, false);
+            this.Centipede.IsAttacking = false;
         }
 
         public override void OnExit()

@@ -11,17 +11,17 @@ namespace BTG
         public CentipedeChaseState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId,
             SteamCentipede steamCentipede, float chasingDistance) : base(fsm, steamCentipede)
         {
-            _animId = animationId;
-            _chasingDistance = chasingDistance;
+            this._animId = animationId;
+            this._chasingDistance = chasingDistance;
         }
 
         public override void OnEnter()
         {
-            Centipede.SetSpeed(Centipede.RegularSpeed);
-            Centipede.SetAnimations(_animId, true);
-            Centipede.IsAttacking = false;
+            this.Centipede.SetSpeed(this.Centipede.RegularSpeed);
+            this.Centipede.SetAnimations(this._animId, true);
+            this.Centipede.IsAttacking = false;
 
-            if (Centipede.IsReachingTrajectoryEndNextStep()) Centipede.ExpandTrajectory(ComputeChaseAimPosition());
+            if (this.Centipede.IsReachingTrajectoryEndNextStep()) this.Centipede.ExpandTrajectory(this.ComputeChaseAimPosition());
         }
 
         public override void OnExit()
@@ -30,13 +30,13 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            Centipede.MoveAlongTrajectory();
-            if (!Centipede.IsReachingTrajectoryEndNextStep()) return;
+            this.Centipede.MoveAlongTrajectory();
+            if (!this.Centipede.IsReachingTrajectoryEndNextStep()) return;
 
-            if (Centipede.DistanceToTarget < _chasingDistance)
-                fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Circle]);
+            if (this.Centipede.DistanceToTarget < this._chasingDistance)
+                this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Circle]);
             else
-                Centipede.ExpandTrajectory(ComputeChaseAimPosition());
+                this.Centipede.ExpandTrajectory(this.ComputeChaseAimPosition());
         }
 
         public override void OnPhysicsUpdate()
@@ -45,7 +45,7 @@ namespace BTG
 
         private Vector2 ComputeChaseAimPosition()
         {
-            return Centipede.HeadPosition - Centipede.VectorToTarget.normalized * 3;
+            return this.Centipede.HeadPosition - this.Centipede.VectorToTarget.normalized * 3;
         }
     }
 }

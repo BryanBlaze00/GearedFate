@@ -17,28 +17,29 @@ namespace BTG
         private IBoss _boss;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        private void Start()
         {
-            _boss = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IBoss>().FirstOrDefault();
+            this._boss = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IBoss>().FirstOrDefault();
 #if UNITY_EDITOR
-         if (_boss == null)
+         if (this._boss == null)
                 Debug.LogError($"No {nameof(IBoss)} object found in scene");
 #endif
       }
-        void Update()
+
+        private void Update()
         {
-            if (_boss == null)
+            if (this._boss == null)
                 return;
-            float normalizedLife = _boss.CurrentHealth / _boss.MaxHealth;
+            float normalizedLife = this._boss.CurrentHealth / this._boss.MaxHealth;
             if (normalizedLife > 0.5f)
             {
-                _firstBossBar.fillAmount = 1f;
-                _secondBossBar.fillAmount = 2 * normalizedLife - 1;
+                this._firstBossBar.fillAmount = 1f;
+                this._secondBossBar.fillAmount = 2 * normalizedLife - 1;
             }
             else
             {
-                _firstBossBar.fillAmount = 2 * normalizedLife;
-                _secondBossBar.fillAmount = 0f;
+                this._firstBossBar.fillAmount = 2 * normalizedLife;
+                this._secondBossBar.fillAmount = 0f;
             }
         }
     }

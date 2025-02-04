@@ -48,19 +48,18 @@ namespace BTG
         private readonly FiniteStateMachine<State> fsm = new();
         public readonly Dictionary<State, GSBaseState> States = new();
         public float CurrentHealth { get; private set; }
-        float IBoss.MaxHealth => Data.MaxHealth;
+        float IBoss.MaxHealth => this.Data.MaxHealth;
         public int Phase = 0;
         public float CurDistanceGoal;
 
         public float CurSpeed
         {
-            get => curSpeed;
+            get => this.curSpeed;
             set
             {
-                curSpeed = value;
-                NavMeshAgent.speed = curSpeed;
-                if (NavMeshAgent.velocity.magnitude > curSpeed)
-                    NavMeshAgent.velocity = NavMeshAgent.velocity.normalized * curSpeed;
+                this.curSpeed = value;
+                this.NavMeshAgent.speed = this.curSpeed;
+                if (this.NavMeshAgent.velocity.magnitude > this.curSpeed) this.NavMeshAgent.velocity = this.NavMeshAgent.velocity.normalized * this.curSpeed;
             }
         }
 
@@ -98,46 +97,43 @@ namespace BTG
 
         private void Awake()
         {
-            if (NavMeshAgent == null)
-                NavMeshAgent = GetComponent<NavMeshAgent>();
-            NavMeshAgent.updateRotation = false;
-            NavMeshAgent.updateUpAxis = false;
-            ResetMoveSpeed();
-            CurrentHealth = Data.MaxHealth;
-            Phase = 0;
+            if (this.NavMeshAgent == null) this.NavMeshAgent = this.GetComponent<NavMeshAgent>();
+            this.NavMeshAgent.updateRotation = false;
+            this.NavMeshAgent.updateUpAxis = false;
+            this.ResetMoveSpeed();
+            this.CurrentHealth = this.Data.MaxHealth;
+            this.Phase = 0;
 
-            if (Animator == null)
-                Animator = GetComponentInChildren<Animator>();
-            if (AudioSource == null)
-                AudioSource = GetComponent<AudioSource>();
+            if (this.Animator == null) this.Animator = this.GetComponentInChildren<Animator>();
+            if (this.AudioSource == null) this.AudioSource = this.GetComponent<AudioSource>();
 
-            AddState(new GSIntroState(fsm, State.Intro, this));
-            AddState(new GSChaseState(fsm, State.Chase, this));
-            AddState(new GSBurrowState(fsm, State.Burrow, this));
-            AddState(new GSShootState(fsm, State.Shoot, this));
-            AddState(new GSBombState(fsm, State.Bomb, this));
-            AddState(new GSDyingState(fsm, State.Dying, this));
+            this.AddState(new GSIntroState(this.fsm, State.Intro, this));
+            this.AddState(new GSChaseState(this.fsm, State.Chase, this));
+            this.AddState(new GSBurrowState(this.fsm, State.Burrow, this));
+            this.AddState(new GSShootState(this.fsm, State.Shoot, this));
+            this.AddState(new GSBombState(this.fsm, State.Bomb, this));
+            this.AddState(new GSDyingState(this.fsm, State.Dying, this));
         }
 
         public void EnableColliders()
         {
-            GetComponents<Collider2D>().ForEach(collider => collider.enabled = true);
+            this.GetComponents<Collider2D>().ForEach(collider => collider.enabled = true);
         }
 
         public void DisableColliders()
         {
-            GetComponents<Collider2D>().ForEach(collider => collider.enabled = false);
+            this.GetComponents<Collider2D>().ForEach(collider => collider.enabled = false);
         }
 
         public void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.TryGetComponent<Knockback>(out var knockback))
-                knockback.GetKnockedBack(transform, 5f);
+                knockback.GetKnockedBack(this.transform, 5f);
         }
 
         public void ResetMoveSpeed()
         {
-            CurSpeed = Data.BaseMoveSpeed * (1 + Phase * 0.3f); // 1, 1.3, 1.6
+            this.CurSpeed = this.Data.BaseMoveSpeed * (1 + this.Phase * 0.3f); // 1, 1.3, 1.6
         }
 
         public float CalculateVolume(float delayBetweenSounds)
@@ -148,51 +144,49 @@ namespace BTG
 
         private void AddState(GSBaseState GSstate)
         {
-            States.Add(GSstate.State, GSstate);
+            this.States.Add(GSstate.State, GSstate);
         }
 
         private void Start()
         {
-            CurDistanceGoal = Data.BaseDistanceGoal;
-            fsm.Initialize(States[State.Intro]);
+            this.CurDistanceGoal = this.Data.BaseDistanceGoal;
+            this.fsm.Initialize(this.States[State.Intro]);
         }
 
         private void Update()
         {
 #if UNITY_EDITOR
-            debugCurState = fsm.CurrentState.ToString();
+            this.debugCurState = this.fsm.CurrentState.ToString();
 #endif
-            fsm.CurrentState.OnFrameUpdate();
+            this.fsm.CurrentState.OnFrameUpdate();
         }
 
         private void FixedUpdate()
         {
-            fsm.CurrentState.OnPhysicsUpdate();
-            var corners = NavMeshAgent.path?.corners;
+            this.fsm.CurrentState.OnPhysicsUpdate();
+            var corners = this.NavMeshAgent.path?.corners;
 
             if (corners != null && corners.Length >= 2)
             {
-                var movingDir = corners[1] - transform.position;
-                Animator.SetFloat("MoveDirX", movingDir.x);
-                Animator.SetFloat("MoveDirY", movingDir.y);
+                var movingDir = corners[1] - this.transform.position;
+                this.Animator.SetFloat("MoveDirX", movingDir.x);
+                this.Animator.SetFloat("MoveDirY", movingDir.y);
             }
         }
 
         public void TakeDamage(float damage)
         {
-            if (CurrentHealth <= 0)
+            if (this.CurrentHealth <= 0)
                 return; // don't repeatedly die
-            CurrentHealth -= damage;
-            HitFlash.HitFlashRoutine();
-            if (CurrentHealth <= 0)
+            this.CurrentHealth -= damage;
+            this.HitFlash.HitFlashRoutine();
+            if (this.CurrentHealth <= 0)
             {
-                CurrentHealth = 0;
-                fsm.SwitchState(States[State.Dying]);
+                this.CurrentHealth = 0;
+                this.fsm.SwitchState(this.States[State.Dying]);
             }
 
-            if (Phase < Data.StageTransitionHealthPercentage.Count &&
-                CurrentHealth < Data.MaxHealth * Data.StageTransitionHealthPercentage[Phase])
-                Phase++;
+            if (this.Phase < this.Data.StageTransitionHealthPercentage.Count && this.CurrentHealth < this.Data.MaxHealth * this.Data.StageTransitionHealthPercentage[this.Phase]) this.Phase++;
         }
     }
 }

@@ -32,13 +32,13 @@ namespace BTG
 
         private void Start()
         {
-            polygonCollider = GetComponent<PolygonCollider2D>();
-            polygonCollider.isTrigger = true; // Make the collider a trigger
+            this.polygonCollider = this.GetComponent<PolygonCollider2D>();
+            this.polygonCollider.isTrigger = true; // Make the collider a trigger
 
-            if (polygonCollider.points.Length != 4)
+            if (this.polygonCollider.points.Length != 4)
             {
                 Debug.LogError("Polygon Collider 2D must have exactly 4 points! Use for corners of the conveyer belt.");
-                enabled = false; // Disable the script to prevent further execution
+                this.enabled = false; // Disable the script to prevent further execution
                 return;
             }
         }
@@ -49,16 +49,16 @@ namespace BTG
 
             if (rb != null)
             {
-                var conveyorBeltVelocity = new Vector2(speedX, speedY); // The *desired* velocity
+                var conveyorBeltVelocity = new Vector2(this.speedX, this.speedY); // The *desired* velocity
 
                 // Blend the conveyor belt velocity with the player's current velocity
-                rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, conveyorBeltVelocity, blendVelocityFactor);
+                rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, conveyorBeltVelocity, this.blendVelocityFactor);
             }
         }
 
         private void FixedUpdate()
         {
-            MoveEntities(); // Call the MoveEntities method from the base class
+            this.MoveEntities(); // Call the MoveEntities method from the base class
         }
     }
 }

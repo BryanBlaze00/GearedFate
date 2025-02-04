@@ -16,23 +16,22 @@ namespace BTG
 
         public override void OnEnter()
         {
-            Marionette.CircleExpander.SetCircleExpand(true);
-            _enterTime = Time.time;
-            PlayAnimationHighBodyPart();
-            PlayAnimationLowBodyPart();
-            Marionette.OnHitTaken += HandleHitTaken;
+            this.Marionette.CircleExpander.SetCircleExpand(true);
+            this._enterTime = Time.time;
+            this.PlayAnimationHighBodyPart();
+            this.PlayAnimationLowBodyPart();
+            this.Marionette.OnHitTaken += this.HandleHitTaken;
         }
 
         private void HandleHitTaken()
         {
-            if (Time.time > _enterTime + _timeBeforeStateChange)
-                fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.Idle]);
+            if (Time.time > this._enterTime + this._timeBeforeStateChange) this.fsm.SwitchState(this.Marionette._states[RustedMarionette.RustedMarionetteState.Idle]);
         }
 
         public override void OnExit()
         {
-            Marionette.OnHitTaken -= HandleHitTaken;
-            Marionette.CircleExpander.SetCircleExpand(false);
+            this.Marionette.OnHitTaken -= this.HandleHitTaken;
+            this.Marionette.CircleExpander.SetCircleExpand(false);
         }
 
         public override void OnFrameUpdate()

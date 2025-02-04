@@ -8,20 +8,20 @@ public class Parallax : MonoBehaviour
     [SerializeField] private float parallaxOffset = -0.30f;
     private Camera cam;
     private Vector2 startPosition;
-    private Vector2 travel => (Vector2)cam.transform.position - startPosition;
+    private Vector2 travel => (Vector2)this.cam.transform.position - this.startPosition;
 
     private void Awake()
     {
-        cam = Camera.main;
+        this.cam = Camera.main;
     }
 
     private void Start()
     {
-        startPosition = transform.position;
+        this.startPosition = this.transform.position;
     }
 
     private void FixedUpdate()
     {
-        transform.position = startPosition + travel * parallaxOffset;
+        this.transform.position = this.startPosition + this.travel * this.parallaxOffset;
     }
 }

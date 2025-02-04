@@ -15,7 +15,7 @@ namespace BTG
 
         private void Start()
         {
-            Destroy(gameObject, destroyWaitTime);
+            Destroy(this.gameObject, this.destroyWaitTime);
         }
     }
 }

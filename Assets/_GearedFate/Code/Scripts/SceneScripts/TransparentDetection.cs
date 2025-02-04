@@ -17,18 +17,17 @@ public class TransparentDetection : MonoBehaviour
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        tilemap = GetComponent<Tilemap>();
+        this.spriteRenderer = this.GetComponent<SpriteRenderer>();
+        this.tilemap = this.GetComponent<Tilemap>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.TryGetComponent(out Player _))
         {
-            if (spriteRenderer != null)
-                StartCoroutine(FadeRoutine(spriteRenderer, fadeTime, spriteRenderer.color.a, transparancyAmount));
-            else if (tilemap != null)
-                StartCoroutine(FadeRoutine(tilemap, fadeTime, tilemap.color.a, transparancyAmount));
+            if (this.spriteRenderer != null)
+                this.StartCoroutine(this.FadeRoutine(this.spriteRenderer, this.fadeTime, this.spriteRenderer.color.a, this.transparancyAmount));
+            else if (this.tilemap != null) this.StartCoroutine(this.FadeRoutine(this.tilemap, this.fadeTime, this.tilemap.color.a, this.transparancyAmount));
         }
     }
 
@@ -36,10 +35,9 @@ public class TransparentDetection : MonoBehaviour
     {
         if (other.TryGetComponent(out Player _))
         {
-            if (spriteRenderer != null && gameObject.activeSelf)
-                StartCoroutine(FadeRoutine(spriteRenderer, fadeTime, spriteRenderer.color.a, 1f));
-            else if (tilemap != null)
-                StartCoroutine(FadeRoutine(tilemap, fadeTime, tilemap.color.a, 1f));
+            if (this.spriteRenderer != null && this.gameObject.activeSelf)
+                this.StartCoroutine(this.FadeRoutine(this.spriteRenderer, this.fadeTime, this.spriteRenderer.color.a, 1f));
+            else if (this.tilemap != null) this.StartCoroutine(this.FadeRoutine(this.tilemap, this.fadeTime, this.tilemap.color.a, 1f));
         }
     }
 

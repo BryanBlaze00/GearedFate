@@ -8,20 +8,20 @@ namespace BTG
         public GCTransformationState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy,
             int animId) : base(fsm, enemy, animId)
         {
-            var smb = GreatCreator.Animator.GetBehaviours<MultiStepSmb>().First(x => x.Id == "Transform");
-            smb.OnStepReached += HandleEndTransformation;
+            var smb = this.GreatCreator.Animator.GetBehaviours<MultiStepSmb>().First(x => x.Id == "Transform");
+            smb.OnStepReached += this.HandleEndTransformation;
         }
 
         private void HandleEndTransformation(int obj)
         {
-            GreatCreator.Agent.isStopped = false;
-            fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
+            this.GreatCreator.Agent.isStopped = false;
+            this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
         }
 
         public override void OnEnter()
         {
-            PlayAnimation();
-            GreatCreator.Agent.isStopped = true;
+            this.PlayAnimation();
+            this.GreatCreator.Agent.isStopped = true;
         }
 
         public override void OnExit()

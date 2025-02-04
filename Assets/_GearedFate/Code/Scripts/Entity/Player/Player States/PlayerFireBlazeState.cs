@@ -17,62 +17,67 @@ namespace BTG
         public PlayerFireBlazeState(FiniteStateMachine<Player.State> fsm, Player player, PlayerData data, int animId) :
             base(fsm, player, data, animId)
         {
-            player.AnimEvent.OnChargeUpFinishedEvent += ChargedUp;
+            player.AnimEvent.OnChargeUpFinishedEvent += this.ChargedUp;
         }
 
         ~PlayerFireBlazeState()
         {
-            player.AnimEvent.OnChargeUpFinishedEvent -= ChargedUp;
+            this.player.AnimEvent.OnChargeUpFinishedEvent -= this.ChargedUp;
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
-            AudioManager.Instance.PlaySFX(player.FlameBeam);
-            chargingUp = true;
-            player.RB.linearVelocity = Vector2.zero;
+            AudioManager.Instance.PlaySFX(this.player.FlameBeam);
+            this.chargingUp = true;
+            this.player.RB.linearVelocity = Vector2.zero;
         }
 
         public override void OnExit()
         {
             base.OnExit();
-            player.Blaze.GetComponent<Animator>().SetTrigger("BlazeOff");
+            this.player.Blaze.GetComponent<Animator>().SetTrigger("BlazeOff");
         }
 
         public override void OnFrameUpdate()
         {
-            if (!Input.AttackPressed || player.CurrentAttackFuelAmount == 0)
+            if (!Input.AttackPressed || this.player.CurrentAttackFuelAmount == 0)
             {
-                fsm.SwitchState(player.states[Player.State.Idle]);
+                this.fsm.SwitchState(this.player.states[Player.State.Idle]);
                 return;
             }
 
-            if (chargingUp) return;
+            if (this.chargingUp) return;
 
-            var input = player.Input.MoveInput;
-            player.RB.linearVelocity = input * data.FireBlazeMoveSpeed;
+            var input = this.player.Input.MoveInput;
+            this.player.RB.linearVelocity = input * this.data.FireBlazeMoveSpeed;
 
-            player.SetLookDir();
+            this.player.SetLookDir();
 
-            var direction = player.CurrentDirection;
+            var direction = this.player.CurrentDirection;
 
             var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-            player.ShootPos.rotation = Quaternion.Euler(0, 0, angle - 90);
+            this.player.ShootPos.rotation = Quaternion.Euler(0, 0, angle - 90);
 
-            var collisions = Physics2D.BoxCastAll(player.Blaze.transform.position, data.FireBlazeDimension, angle,
-                player.CurrentDirection, data.FireBlazeDistance, data.EnemyLayerMask);
+            var collisions = Physics2D.BoxCastAll(
+                this.player.Blaze.transform.position,
+                this.data.FireBlazeDimension, angle,
+                this.player.CurrentDirection,
+                this.data.FireBlazeDistance,
+                this.data.EnemyLayerMask);
             foreach (var collision in collisions)
                 if (collision.collider.TryGetComponent(out IDamagable damagable))
-                    damagable.TakeDamage(data.FireBlazeDPS * Time.deltaTime);
+                    damagable.TakeDamage(this.data.FireBlazeDPS * Time.deltaTime);
 
-            Debug.DrawRay(player.Blaze.transform.position,
-                player.CurrentDirection * data.FireBlazeDistance); ///visualization for now
+            Debug.DrawRay(
+                this.player.Blaze.transform.position,
+                this.player.CurrentDirection * this.data.FireBlazeDistance); ///visualization for now
 
             ///I think since this is basically fire, we can keep it at fixed distance despite any enemy falls under it or not.
             ///We don't have to change anything from current code that way
 
-            player.BurnAttackFuel(Time.deltaTime * data.FireBlazeBurnRate);
+            this.player.BurnAttackFuel(Time.deltaTime * this.data.FireBlazeBurnRate);
         }
 
         public override void OnPhysicsUpdate()
@@ -82,8 +87,8 @@ namespace BTG
 
         private void ChargedUp()
         {
-            player.Blaze.SetActive(true);
-            chargingUp = false;
+            this.player.Blaze.SetActive(true);
+            this.chargingUp = false;
         }
     }
 }

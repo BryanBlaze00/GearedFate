@@ -41,33 +41,33 @@ namespace BTG
         {
             base.Awake(); // Important: Call the base Singleton Awake!
 
-            currentScene = SceneManager.GetActiveScene().name;
+            this.currentScene = SceneManager.GetActiveScene().name;
         }
 
         public void LoadMainMenu()
         {
             AudioManager.instance.PlayMenuClip();
-            LoadScene(mainMenuScene);
+            this.LoadScene(this.mainMenuScene);
         }
 
         public void StartGame()
         {
-            LoadScene("Cutscene 0");
+            this.LoadScene("Cutscene 0");
         }
 
         public string GetCurrentScene()
         {
-            return currentScene;
+            return this.currentScene;
         }
 
         public string[] GetCutsceneScenes()
         {
-            return cutsceneScenes;
+            return this.cutsceneScenes;
         }
 
         public string[] GetBossLevelScenes()
         {
-            return bossLevelScenes;
+            return this.bossLevelScenes;
         }
 
         public void LoadNextLevel()
@@ -131,7 +131,7 @@ namespace BTG
             var currentBuildScene = SceneManager.GetActiveScene().buildIndex;
             if (currentBuildScene >= 10)
             {
-                LoadMainMenu();
+                this.LoadMainMenu();
             }
             else
             {
@@ -143,23 +143,23 @@ namespace BTG
 
         private void LoadScene(string sceneName)
         {
-            currentScene = sceneName;
+            this.currentScene = sceneName;
             SceneManager.LoadScene(sceneName);
         }
 
         public void RestartLevel()
         {
-            LoadScene(currentScene);
+            this.LoadScene(this.currentScene);
         }
 
         public void LoadGameOver()
         {
-            LoadScene(gameOver);
+            this.LoadScene(this.gameOver);
         }
 
         public void LoadCredits()
         {
-            LoadScene(credits);
+            this.LoadScene(this.credits);
         }
 
         public void QuitGame()

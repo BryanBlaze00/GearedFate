@@ -29,23 +29,25 @@ namespace BTG
         private void Awake()
         {
             // _objectBreakAnim = GetComponent<ObjectBreakAnim>(); TODO: FIX ME
-            _currentHealth = _maxHealth;
+            this._currentHealth = this._maxHealth;
         }
 
         public void TakeDamage(float damage)
         {
-            _currentHealth -= damage;
+            this._currentHealth -= damage;
 
-            if (_currentHealth <= 0)
+            if (this._currentHealth <= 0)
             {
-                if (_destroyEffect != null)
-                    Instantiate(_destroyEffect, transform.position,
+                if (this._destroyEffect != null)
+                    Instantiate(
+                        this._destroyEffect,
+                        this.transform.position,
                         Quaternion.identity); // Instantiate the destroy effect
 
-                RandomizedItemDrop();
+                this.RandomizedItemDrop();
                 // doesn't work to update navmesh:
                 //GameObject.FindObjectsByType<NavMeshSurface>(FindObjectsSortMode.None).ForEach(x => x.UpdateNavMesh(x.navMeshData));
-                Destroy(gameObject); // Destroy the object
+                Destroy(this.gameObject); // Destroy the object
             }
         }
 
@@ -54,23 +56,23 @@ namespace BTG
         /// </summary>
         private void RandomizedItemDrop()
         {
-            var randAmount = RandomUtilily.RandomInt(_minAmountToDrop, _maxAmountToDrop); /// Randomized scrap amount.
+            var randAmount = RandomUtilily.RandomInt(this._minAmountToDrop, this._maxAmountToDrop); /// Randomized scrap amount.
 
             for (var i = 0; i < randAmount; i++)
             {
                 var randObj = RandomUtilily.RandomInt(1, 2); // Randomized object to drop
-                var randChance = RandomUtilily.Chance(_chanceToDrop); // Randomized chance to drop object
+                var randChance = RandomUtilily.Chance(this._chanceToDrop); // Randomized chance to drop object
 
                 if (randObj == 1 && randChance)
                 {
                     var obj = ObjectPool.Instance.GetPooledObject(PooledObjectType.Fuel_Scrap);
-                    obj.transform.position = transform.position;
+                    obj.transform.position = this.transform.position;
                     obj.SetActive(true);
                 }
                 else if (randObj == 2 && randChance)
                 {
                     var obj = ObjectPool.Instance.GetPooledObject(PooledObjectType.Health_Scrap);
-                    obj.transform.position = transform.position;
+                    obj.transform.position = this.transform.position;
                     obj.SetActive(true);
                 }
             }

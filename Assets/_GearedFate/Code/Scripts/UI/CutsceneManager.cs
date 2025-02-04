@@ -34,19 +34,19 @@ namespace BTG
 
         private void Awake()
         {
-            _bossAvatarAnim = _bossAvatar.GetComponent<UISpriteAnimation>();
-            _nextButton.onClick.AddListener(NextDialogue);
-            _skipButton.onClick.AddListener(SkipCutscene);
+            this._bossAvatarAnim = this._bossAvatar.GetComponent<UISpriteAnimation>();
+            this._nextButton.onClick.AddListener(this.NextDialogue);
+            this._skipButton.onClick.AddListener(this.SkipCutscene);
         }
 
         private void Start()
         {
             Elevator.Instance.ActivateElevatorAnim();
-            _dialogueText.text = string.Empty;
+            this._dialogueText.text = string.Empty;
 
             // Start the first dialogue
-            StartCoroutine(TypeText(_dialogueLines[_currentLineIndex]));
-            _bossAvatarAnim.PlayUIAnim();
+            this.StartCoroutine(this.TypeText(this._dialogueLines[this._currentLineIndex]));
+            this._bossAvatarAnim.PlayUIAnim();
         }
 
         /// <summary>
@@ -54,16 +54,16 @@ namespace BTG
         /// </summary>
         private IEnumerator TypeText(string line)
         {
-            _nextButton.interactable = false;
+            this._nextButton.interactable = false;
 
-            _dialogueText.text = string.Empty;
+            this._dialogueText.text = string.Empty;
             foreach (var letter in line)
             {
-                _dialogueText.text += letter;
-                yield return new WaitForSeconds(_typingSpeed);
+                this._dialogueText.text += letter;
+                yield return new WaitForSeconds(this._typingSpeed);
             }
 
-            _nextButton.interactable = true;
+            this._nextButton.interactable = true;
             // _bossAvatarAnim.StopUIAnim(); // Stop the avatar animation
         }
 
@@ -73,17 +73,17 @@ namespace BTG
         public void NextDialogue()
         {
             // Move to the next line
-            _currentLineIndex++;
+            this._currentLineIndex++;
 
             // Check if we've reached the end of the dialogue
-            if (_currentLineIndex >= _dialogueLines.Length)
+            if (this._currentLineIndex >= this._dialogueLines.Length)
             {
                 // Load the next level if we've reached the end of the dialogue
                 GameManager.Instance.LoadNextLevel();
                 return;
             }
 
-            StartCoroutine(TypeText(_dialogueLines[_currentLineIndex]));
+            this.StartCoroutine(this.TypeText(this._dialogueLines[this._currentLineIndex]));
             // _bossAvatarAnim.PlayUIAnim(); // Play the avatar animation
         }
 

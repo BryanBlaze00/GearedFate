@@ -22,9 +22,9 @@ namespace BTG
 
         public ObjectToPoolInfo(GameObject obj, int amt = 2, bool exp = true)
         {
-            ObjectToPool = obj;
-            AmountToPool = amt;
-            ShouldExpand = exp;
+            this.ObjectToPool = obj;
+            this.AmountToPool = amt;
+            this.ShouldExpand = exp;
         }
     }
 
@@ -49,9 +49,9 @@ namespace BTG
         {
             base.Awake();
 
-            foreach (var obj in objectsToPoolList)
+            foreach (var obj in this.objectsToPoolList)
             {
-                if (objectsToPool.ContainsKey(obj.ObjectType))
+                if (this.objectsToPool.ContainsKey(obj.ObjectType))
                 {
 #if UNITY_EDITOR
                     Debug.LogWarning("Object skipped. Key already exists in pool!!");
@@ -67,24 +67,24 @@ namespace BTG
                     continue;
                 }
 
-                objectsToPool.Add(obj.ObjectType, obj.ObjectToPoolInfo);
-                ObjectPoolItemToPooledObject(obj.ObjectType);
+                this.objectsToPool.Add(obj.ObjectType, obj.ObjectToPoolInfo);
+                this.ObjectPoolItemToPooledObject(obj.ObjectType);
             }
 
-            objectsToPoolList = null;
+            this.objectsToPoolList = null;
         }
 
         public GameObject GetPooledObject(PooledObjectType type)
         {
-            if (!PooledObjects.ContainsKey(type)) return null;
-            for (var i = 0; i < PooledObjects[type].Count; i++)
-                if (!PooledObjects[type][i].activeInHierarchy)
-                    return PooledObjects[type][i];
+            if (!this.PooledObjects.ContainsKey(type)) return null;
+            for (var i = 0; i < this.PooledObjects[type].Count; i++)
+                if (!this.PooledObjects[type][i].activeInHierarchy)
+                    return this.PooledObjects[type][i];
 
-            if (objectsToPool[type].ShouldExpand)
+            if (this.objectsToPool[type].ShouldExpand)
             {
-                var obj = AddObjectToPool(objectsToPool[type]);
-                PooledObjects[type].Add(obj);
+                var obj = this.AddObjectToPool(this.objectsToPool[type]);
+                this.PooledObjects[type].Add(obj);
                 return obj;
             }
 
@@ -93,14 +93,14 @@ namespace BTG
 
         public List<GameObject> GetAllPooledObjects(PooledObjectType type)
         {
-            PooledObjects.TryGetValue(type, out var obj);
+            this.PooledObjects.TryGetValue(type, out var obj);
             return obj;
         }
 
 
         public void AddObject(GameObject GO, int amt, bool exp = true, PooledObjectType type = PooledObjectType.None)
         {
-            if (PooledObjects.ContainsKey(type))
+            if (this.PooledObjects.ContainsKey(type))
             {
 #if UNITY_EDITOR
                 Debug.LogWarning("Object already exists in pool!");
@@ -109,15 +109,15 @@ namespace BTG
             }
 
             ObjectToPoolInfo item = new(GO, amt, exp);
-            objectsToPool.Add(type, item);
-            ObjectPoolItemToPooledObject(type);
+            this.objectsToPool.Add(type, item);
+            this.ObjectPoolItemToPooledObject(type);
         }
 
         public GameObject AddObjectToPool(ObjectToPoolInfo item)
         {
             var obj = Instantiate(item.ObjectToPool);
             obj.SetActive(false);
-            obj.transform.parent = transform;
+            obj.transform.parent = this.transform;
             return obj;
         }
 
@@ -128,11 +128,11 @@ namespace BTG
 
         private void ObjectPoolItemToPooledObject(PooledObjectType type)
         {
-            var item = objectsToPool[type];
+            var item = this.objectsToPool[type];
 
             var pooledObjects = new List<GameObject>();
-            for (var i = 0; i < item.AmountToPool; i++) pooledObjects.Add(AddObjectToPool(item));
-            PooledObjects.Add(type, pooledObjects);
+            for (var i = 0; i < item.AmountToPool; i++) pooledObjects.Add(this.AddObjectToPool(item));
+            this.PooledObjects.Add(type, pooledObjects);
         }
     }
 }

@@ -29,31 +29,29 @@ namespace BTG
         public GCBaseState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy,
             int animId) : base(fsm)
         {
-            GreatCreator = enemy;
-            _animId = animId;
-            SetSpawnTime();
-            enemy.OnHitTaken += HandleHitTaken;
+            this.GreatCreator = enemy;
+            this._animId = animId;
+            this.SetSpawnTime();
+            enemy.OnHitTaken += this.HandleHitTaken;
         }
 
         private void HandleHitTaken()
         {
-            if (GreatCreator.CurrentHealth == 0)
+            if (this.GreatCreator.CurrentHealth == 0)
             {
-                fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Death]);
+                this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.Death]);
                 return;
             }
 
-            if (GreatCreator.Stage >= 1 && fsm.CurrentState.GetType() != typeof(GCSpinState) &&
-                fsm.CurrentState.GetType() != typeof(GCTransformationState))
-                fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Spin]);
+            if (this.GreatCreator.Stage >= 1 && this.fsm.CurrentState.GetType() != typeof(GCSpinState) && this.fsm.CurrentState.GetType() != typeof(GCTransformationState)) this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.Spin]);
         }
 
         protected IEnumerator GoToCenter()
         {
             _goingToCenter = true;
             var timer = Time.time;
-            GreatCreator.Agent.SetDestination(Vector3.zero);
-            while (timer + 3 > Time.time || Vector2.Distance(GreatCreator.transform.position, Vector2.zero) > 1)
+            this.GreatCreator.Agent.SetDestination(Vector3.zero);
+            while (timer + 3 > Time.time || Vector2.Distance(this.GreatCreator.transform.position, Vector2.zero) > 1)
                 yield return null;
 
             _goingToCenter = false;
@@ -61,14 +59,14 @@ namespace BTG
 
         protected void SetAnimationId(int animId)
         {
-            _animId = animId;
+            this._animId = animId;
         }
 
         protected void SetSpawnTime()
         {
             _lastSpawnTime = Time.time;
             _nextSpawnTime = _lastSpawnTime +
-                             Random.Range(GreatCreator.SwarmCoolDown.Min, GreatCreator.SwarmCoolDown.Max);
+                             Random.Range(this.GreatCreator.SwarmCoolDown.Min, this.GreatCreator.SwarmCoolDown.Max);
         }
 
         protected bool IsReadyToSpawn()
@@ -78,7 +76,7 @@ namespace BTG
 
         protected void PlayAnimation()
         {
-            GreatCreator.Animator.Play(_animId);
+            this.GreatCreator.Animator.Play(this._animId);
         }
 
         public abstract override void OnEnter();

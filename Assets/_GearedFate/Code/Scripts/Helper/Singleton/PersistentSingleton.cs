@@ -38,23 +38,23 @@ namespace UnityUtils
         /// </summary>
         protected virtual void Awake()
         {
-            InitializeSingleton();
+            this.InitializeSingleton();
         }
 
         protected virtual void InitializeSingleton()
         {
             if (!Application.isPlaying) return;
 
-            if (AutoUnparentOnAwake) transform.SetParent(null);
+            if (this.AutoUnparentOnAwake) this.transform.SetParent(null);
 
             if (instance == null)
             {
                 instance = this as T;
-                DontDestroyOnLoad(gameObject);
+                DontDestroyOnLoad(this.gameObject);
             }
             else
             {
-                if (instance != this) Destroy(gameObject);
+                if (instance != this) Destroy(this.gameObject);
             }
         }
     }

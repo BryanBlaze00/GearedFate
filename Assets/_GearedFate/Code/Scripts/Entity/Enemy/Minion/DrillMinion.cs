@@ -35,25 +35,25 @@ namespace BTG
         protected override void Awake()
         {
             base.Awake();
-            _animator = GetComponent<Animator>(); // Blaze added this line
-            _startingSpeed = agent.speed; // Blaze added this line
+            this._animator = this.GetComponent<Animator>(); // Blaze added this line
+            this._startingSpeed = this.agent.speed; // Blaze added this line
         }
 
         protected override void Update()
         {
-            switch (_CurrentState)
+            switch (this._CurrentState)
             {
                 case DrillMinionState.Idle:
-                    Idle();
+                    this.Idle();
                     break;
                 case DrillMinionState.MoveIntoPosition:
-                    MoveIntoPosition();
+                    this.MoveIntoPosition();
                     break;
                 case DrillMinionState.Charge:
-                    Attack();
+                    this.Attack();
                     break;
                 case DrillMinionState.Retreat:
-                    Retreat();
+                    this.Retreat();
                     break;
                 case DrillMinionState.Dying:
                     break;
@@ -62,65 +62,65 @@ namespace BTG
 
         protected void Idle()
         {
-            _stateTimer += Time.deltaTime;
-            if (_stateTimer >= attackCooldown)
+            this._stateTimer += Time.deltaTime;
+            if (this._stateTimer >= this.attackCooldown)
             {
-                _CurrentState = DrillMinionState.Charge;
-                _stateTimer = 0.0f;
+                this._CurrentState = DrillMinionState.Charge;
+                this._stateTimer = 0.0f;
             }
         }
 
         protected void MoveIntoPosition()
         {
-            MoveToTarget(target);
-            if (agent.remainingDistance <= 10)
+            this.MoveToTarget(this.target);
+            if (this.agent.remainingDistance <= 10)
             {
-                _CurrentState = DrillMinionState.Charge;
-                agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+                this._CurrentState = DrillMinionState.Charge;
+                this.agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
 
-                agent.speed *= 2;
+                this.agent.speed *= 2;
             }
         }
 
         protected override void Attack()
         {
-            MoveToTarget(target);
-            _stateTimer += Time.deltaTime;
-            if (_stateTimer >= 2)
+            this.MoveToTarget(this.target);
+            this._stateTimer += Time.deltaTime;
+            if (this._stateTimer >= 2)
             {
-                _CurrentState = DrillMinionState.Idle;
-                _stateTimer = 0.0f;
-                agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
+                this._CurrentState = DrillMinionState.Idle;
+                this._stateTimer = 0.0f;
+                this.agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
 
                 // agent.speed /= 2; // Blaze commented this line
-                agent.speed = _startingSpeed; // Blaze adden this line
+                this.agent.speed = this._startingSpeed; // Blaze adden this line
             }
         }
 
         protected void Retreat()
         {
             //TODO: move away from player for a bit
-            _stateTimer += Time.deltaTime;
-            if (_stateTimer >= 4)
+            this._stateTimer += Time.deltaTime;
+            if (this._stateTimer >= 4)
             {
-                _CurrentState = DrillMinionState.Idle;
-                _stateTimer = 0.0f;
+                this._CurrentState = DrillMinionState.Idle;
+                this._stateTimer = 0.0f;
             }
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (_CurrentState != DrillMinionState.Charge) return;
+            if (this._CurrentState != DrillMinionState.Charge) return;
             if (other.TryGetComponent(out Player player))
             {
                 if (player.isInvulnerable) return;
 
-                _animator.SetTrigger("Attack"); // Blaze added this line
-                _CurrentState = DrillMinionState.Retreat;
-                agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
-                agent.speed *= 2;
-                player.TakeDamage(touchDmgAmt);
-                player.GetComponent<Knockback>().GetKnockedBack(transform, knockBackAmt); // Blaze added this line
+                this._animator.SetTrigger("Attack"); // Blaze added this line
+                this._CurrentState = DrillMinionState.Retreat;
+                this.agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
+                this.agent.speed *= 2;
+                player.TakeDamage(this.touchDmgAmt);
+                player.GetComponent<Knockback>().GetKnockedBack(this.transform, this.knockBackAmt); // Blaze added this line
             }
         }
     }

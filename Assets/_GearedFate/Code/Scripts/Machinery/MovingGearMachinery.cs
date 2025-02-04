@@ -14,18 +14,18 @@ namespace BTG
 
         private void Awake()
         {
-            parentSpriteRenderer = GetComponentInParent<SpriteRenderer>();
+            this.parentSpriteRenderer = this.GetComponentInParent<SpriteRenderer>();
         }
 
         protected void Start()
         {
             // Each time the animation of the gear moves, we should move entities with it.
-            _gearAnim.OnGearMoved += MoveEntities;
+            this._gearAnim.OnGearMoved += this.MoveEntities;
         }
 
         protected override void MoveEntity(Transform entity)
         {
-            var angle = 1f / _gearAnim.FullCircleRotationNumbers * 360f;
+            var angle = 1f / this._gearAnim.FullCircleRotationNumbers * 360f;
 
             if (entity.TryGetComponent(out ContactTransformProvider contactTransformProvider))
             {
@@ -33,7 +33,7 @@ namespace BTG
                 // Instead, we rotate a gameObject at the position of the feet, to know where the feet should end up.
                 var temp = new GameObject();
                 temp.transform.position = contactTransformProvider.ContactTransform.position;
-                temp.transform.RotateAround(transform.position, Vector3.forward, -angle);
+                temp.transform.RotateAround(this.transform.position, Vector3.forward, -angle);
 
                 // When figuring out where the feet should be, it's straightforward :
                 // The entity should end up at the feet position + the distance between the entity center and its feet.
@@ -45,10 +45,10 @@ namespace BTG
             }
             else
             {
-                if (parentSpriteRenderer.flipX == false)
-                    entity.RotateAround(transform.position, Vector3.forward, -angle);
+                if (this.parentSpriteRenderer.flipX == false)
+                    entity.RotateAround(this.transform.position, Vector3.forward, -angle);
                 else
-                    entity.RotateAround(transform.position, Vector3.forward, +angle);
+                    entity.RotateAround(this.transform.position, Vector3.forward, +angle);
             }
         }
     }

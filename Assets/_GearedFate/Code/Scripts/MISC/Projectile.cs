@@ -26,37 +26,36 @@ namespace BTG
         /// </summary>
         public void SetUnaffectedLayer(int unaffectedLayer)
         {
-            _unaffectedLayer = unaffectedLayer;
+            this._unaffectedLayer = unaffectedLayer;
         }
 
         private void OnEnable()
         {
-            coroutineHandle = Timing.RunCoroutine(_Disable().CancelWith(gameObject));
-            if (rb == null)
-                rb = GetComponent<Rigidbody2D>();
+            this.coroutineHandle = Timing.RunCoroutine(this._Disable().CancelWith(this.gameObject));
+            if (this.rb == null) this.rb = this.GetComponent<Rigidbody2D>();
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
             // Do nothing if the collided game object is the on the unnafected layer or if it can't take damages
             // TODO : Some objects should stop projectiles, like walls, maybe have a IStopProjectileInterface to deal with that.
-            if (collision.gameObject.layer == _unaffectedLayer ||
+            if (collision.gameObject.layer == this._unaffectedLayer ||
                 !collision.TryGetComponent(out IDamagable damageable)) return;
             Debug.Log("Projectile hit");
-            damageable.TakeDamage(Data.Damage);
-            gameObject.SetActive(false);
-            Timing.KillCoroutines(coroutineHandle);
+            damageable.TakeDamage(this.Data.Damage);
+            this.gameObject.SetActive(false);
+            Timing.KillCoroutines(this.coroutineHandle);
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            OnTriggerEnter2D(collision.collider);
+            this.OnTriggerEnter2D(collision.collider);
         }
 
         private IEnumerator<float> _Disable()
         {
             yield return Timing.WaitForSeconds(5f);
-            gameObject.SetActive(false);
+            this.gameObject.SetActive(false);
         }
     }
 }

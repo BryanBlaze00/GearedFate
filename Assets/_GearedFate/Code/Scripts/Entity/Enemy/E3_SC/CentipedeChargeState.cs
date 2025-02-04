@@ -13,16 +13,16 @@ namespace BTG
         public CentipedeChargeState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId,
             SteamCentipede steamCentipede) : base(fsm, steamCentipede)
         {
-            _animId = animationId;
+            this._animId = animationId;
         }
 
         public override void OnEnter()
         {
-            Centipede.IsAttacking = true;
-            Centipede.SetSpeed(Centipede.ChargeSpeed);
-            Centipede.SetAnimations(_animId, true);
+            this.Centipede.IsAttacking = true;
+            this.Centipede.SetSpeed(this.Centipede.ChargeSpeed);
+            this.Centipede.SetAnimations(this._animId, true);
 
-            if (Centipede.IsReachingTrajectoryEndNextStep()) Centipede.ExpandTrajectory(ComputeChargeAimPosition());
+            if (this.Centipede.IsReachingTrajectoryEndNextStep()) this.Centipede.ExpandTrajectory(this.ComputeChargeAimPosition());
         }
 
         public override void OnExit()
@@ -31,11 +31,11 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            Centipede.MoveAlongTrajectory();
+            this.Centipede.MoveAlongTrajectory();
 
-            if (!Centipede.IsReachingTrajectoryEndNextStep()) return;
+            if (!this.Centipede.IsReachingTrajectoryEndNextStep()) return;
 
-            fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Chase]);
+            this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Chase]);
         }
 
         public override void OnPhysicsUpdate()
@@ -44,8 +44,8 @@ namespace BTG
 
         private Vector2 ComputeChargeAimPosition()
         {
-            Vector3 direction = Centipede.VectorToTarget;
-            return Centipede.Target.position - direction.normalized * 3;
+            Vector3 direction = this.Centipede.VectorToTarget;
+            return this.Centipede.Target.position - direction.normalized * 3;
         }
     }
 }

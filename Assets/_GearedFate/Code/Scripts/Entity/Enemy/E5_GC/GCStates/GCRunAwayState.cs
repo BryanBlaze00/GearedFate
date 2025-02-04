@@ -14,7 +14,7 @@ namespace BTG
 
         public override void OnEnter()
         {
-            PlayAnimation();
+            this.PlayAnimation();
         }
 
         public override void OnExit()
@@ -23,28 +23,28 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            GreatCreator.SetAnimationMoveParameters(GreatCreator.Agent.velocity);
-            if (GreatCreator.DistanceToTarget > GreatCreator.SafeDistance)
+            this.GreatCreator.SetAnimationMoveParameters(this.GreatCreator.Agent.velocity);
+            if (this.GreatCreator.DistanceToTarget > this.GreatCreator.SafeDistance)
             {
-                fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
+                this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
             }
             else
             {
-                if (IsReadyToSpawn() && GreatCreator.Stage == 0)
+                if (this.IsReadyToSpawn() && this.GreatCreator.Stage == 0)
                 {
-                    fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Swarm]);
+                    this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.Swarm]);
                     return;
                 }
 
-                if (GoingToCenter) return;
+                if (this.GoingToCenter) return;
 
-                var canMoveAway = CanMoveAwayFromPlayer(out var AwayPosition);
+                var canMoveAway = this.CanMoveAwayFromPlayer(out var AwayPosition);
 
                 if (canMoveAway)
-                    GreatCreator.Agent.SetDestination(AwayPosition);
-                else if (!canMoveAway && GreatCreator.Stage == 0)
-                    fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Dash]);
-                else if (!canMoveAway && GreatCreator.Stage > 0) GreatCreator.StartCoroutine(GoToCenter());
+                    this.GreatCreator.Agent.SetDestination(AwayPosition);
+                else if (!canMoveAway && this.GreatCreator.Stage == 0)
+                    this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.Dash]);
+                else if (!canMoveAway && this.GreatCreator.Stage > 0) this.GreatCreator.StartCoroutine(this.GoToCenter());
             }
         }
 
@@ -55,14 +55,13 @@ namespace BTG
 
         public void SetAnimation(int animId)
         {
-            SetAnimationId(animId);
+            this.SetAnimationId(animId);
         }
 
         private bool CanMoveAwayFromPlayer(out Vector2 targetPosition)
         {
             // Calculate the target position
-            targetPosition = (Vector2)GreatCreator.Target.position +
-                             GreatCreator.DirectionToTarget * GreatCreator.SafeDistance;
+            targetPosition = (Vector2)this.GreatCreator.Target.position + this.GreatCreator.DirectionToTarget * this.GreatCreator.SafeDistance;
 
             // Find a valid NavMesh position close to the target
             if (NavMesh.SamplePosition(targetPosition, out var hit, 3, NavMesh.AllAreas))
@@ -78,20 +77,16 @@ namespace BTG
 
         private void MoveOnSidePlayer()
         {
-            var side = Vector2.Perpendicular(GreatCreator.DirectionToTarget);
-            Vector3 targetPosition = (Vector2)GreatCreator.Target.position -
-                GreatCreator.DirectionToTarget * GreatCreator.SafeDistance + side;
+            var side = Vector2.Perpendicular(this.GreatCreator.DirectionToTarget);
+            Vector3 targetPosition = (Vector2)this.GreatCreator.Target.position - this.GreatCreator.DirectionToTarget * this.GreatCreator.SafeDistance + side;
 
             // Find a valid NavMesh position close to the target
-            if (NavMesh.SamplePosition(targetPosition, out var hit, 3, NavMesh.AllAreas))
-                GreatCreator.Agent.SetDestination(hit.position);
+            if (NavMesh.SamplePosition(targetPosition, out var hit, 3, NavMesh.AllAreas)) this.GreatCreator.Agent.SetDestination(hit.position);
 
-            targetPosition = (Vector2)GreatCreator.Target.position -
-                             GreatCreator.DirectionToTarget * GreatCreator.SafeDistance - side;
+            targetPosition = (Vector2)this.GreatCreator.Target.position - this.GreatCreator.DirectionToTarget * this.GreatCreator.SafeDistance - side;
 
             // Find a valid NavMesh position close to the target
-            if (NavMesh.SamplePosition(targetPosition, out hit, 3, NavMesh.AllAreas))
-                GreatCreator.Agent.SetDestination(hit.position);
+            if (NavMesh.SamplePosition(targetPosition, out hit, 3, NavMesh.AllAreas)) this.GreatCreator.Agent.SetDestination(hit.position);
         }
     }
 }

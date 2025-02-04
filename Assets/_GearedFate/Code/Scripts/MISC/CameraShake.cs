@@ -18,34 +18,34 @@ namespace BTG
 
         private void Start()
         {
-            noise = GetComponent<CinemachineBasicMultiChannelPerlin>();
+            this.noise = this.GetComponent<CinemachineBasicMultiChannelPerlin>();
         }
 
         public void OnCamerShake()
         {
-            StopAllCoroutines();
-            ShakeCamera(0.6f, 2f, 50f);
+            this.StopAllCoroutines();
+            this.ShakeCamera(0.6f, 2f, 50f);
         }
 
         public void ShakeCamera(float duration, float amplitude, float frequency)
         {
-            if (noise != null)
+            if (this.noise != null)
             {
-                noise.AmplitudeGain = amplitude;
-                noise.FrequencyGain = frequency;
+                this.noise.AmplitudeGain = amplitude;
+                this.noise.FrequencyGain = frequency;
             }
 
-            StartCoroutine(StopShakeAfterDelay(duration));
+            this.StartCoroutine(this.StopShakeAfterDelay(duration));
         }
 
         private System.Collections.IEnumerator StopShakeAfterDelay(float delay)
         {
             yield return new WaitForSeconds(delay);
 
-            if (noise != null)
+            if (this.noise != null)
             {
-                noise.AmplitudeGain = 0f;
-                noise.FrequencyGain = 0f;
+                this.noise.AmplitudeGain = 0f;
+                this.noise.FrequencyGain = 0f;
             }
         }
     }

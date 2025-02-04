@@ -29,11 +29,11 @@ namespace BTG
             if (other.TryGetComponent(out Player player))
             {
                 if (player.isInvulnerable) return;
-                agent.enabled = false;
-                player.GetComponent<Knockback>().GetKnockedBack(transform, explodeKnockBackAmt);
-                player.TakeDamage(explosionDmgAmt);
-                Instantiate(explosionEffect, transform.position, Quaternion.identity);
-                gameObject.SetInactive(destroyWaitTime);
+                this.agent.enabled = false;
+                player.GetComponent<Knockback>().GetKnockedBack(this.transform, this.explodeKnockBackAmt);
+                player.TakeDamage(this.explosionDmgAmt);
+                Instantiate(this.explosionEffect, this.transform.position, Quaternion.identity);
+                this.gameObject.SetInactive(this.destroyWaitTime);
             }
         }
     }

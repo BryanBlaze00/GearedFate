@@ -29,30 +29,30 @@ namespace BTG
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            _dashStartReached = false;
-            _dashEndReached = false;
-            _animationEndReached = false;
+            this._dashStartReached = false;
+            this._dashEndReached = false;
+            this._animationEndReached = false;
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            if (stateInfo.normalizedTime >= _frameStartTarget && !_dashStartReached)
+            if (stateInfo.normalizedTime >= this._frameStartTarget && !this._dashStartReached)
             {
-                _dashStartReached = true;
-                OnStartDash?.Invoke();
+                this._dashStartReached = true;
+                this.OnStartDash?.Invoke();
             }
 
-            if (stateInfo.normalizedTime >= _frameEndTarget && !_dashEndReached)
+            if (stateInfo.normalizedTime >= this._frameEndTarget && !this._dashEndReached)
             {
-                _dashEndReached = true;
-                OnDashEnd?.Invoke();
+                this._dashEndReached = true;
+                this.OnDashEnd?.Invoke();
             }
 
-            if (stateInfo.normalizedTime >= _animationEndTarget && !_animationEndReached)
+            if (stateInfo.normalizedTime >= this._animationEndTarget && !this._animationEndReached)
             {
-                _animationEndReached = true;
-                OnAnimationEnd?.Invoke();
+                this._animationEndReached = true;
+                this.OnAnimationEnd?.Invoke();
             }
         }
     }

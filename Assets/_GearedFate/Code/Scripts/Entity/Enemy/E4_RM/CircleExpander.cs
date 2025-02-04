@@ -33,48 +33,49 @@ namespace BTG
 
         public void SetCircleExpand(bool state)
         {
-            _state = state;
+            this._state = state;
             if (state)
             {
-                StartCoroutine(SpawnSlowCircles());
-                StartCoroutine(SpawnQuickCircle());
+                this.StartCoroutine(this.SpawnSlowCircles());
+                this.StartCoroutine(this.SpawnQuickCircle());
             }
             else
             {
-                for (var i = _instances.Count - 1; i >= 0; i--) Destroy(_instances[i].gameObject);
-                _instances.Clear();
+                for (var i = this._instances.Count - 1; i >= 0; i--) Destroy(this._instances[i].gameObject);
+                this._instances.Clear();
             }
         }
 
         private IEnumerator SpawnQuickCircle()
         {
-            for (var i = 0; i < _quickCircleNumber; i++)
+            for (var i = 0; i < this._quickCircleNumber; i++)
             {
-                SpawnPrefab(_rotationUpdate.Min, Random.Range(0, 2 * Mathf.PI), 3f, 2f);
-                yield return new WaitForSeconds(_timeBetweenQuickCircle);
+                this.SpawnPrefab(this._rotationUpdate.Min, Random.Range(0, 2 * Mathf.PI), 3f, 2f);
+                yield return new WaitForSeconds(this._timeBetweenQuickCircle);
             }
         }
 
         private IEnumerator SpawnSlowCircles()
         {
-            while (_state)
+            while (this._state)
             {
-                SpawnPrefab(Random.Range(_rotationUpdate.Min, _rotationUpdate.Max), Random.Range(0, 2 * Mathf.PI),
-                    _expandSpeed, _lifetime);
-                yield return new WaitForSeconds(_spawnRate);
+                this.SpawnPrefab(Random.Range(this._rotationUpdate.Min, this._rotationUpdate.Max), Random.Range(0, 2 * Mathf.PI),
+                    this._expandSpeed,
+                    this._lifetime);
+                yield return new WaitForSeconds(this._spawnRate);
             }
         }
 
         private void SpawnPrefab(float rotationSpeed, float angle, float expandingSpeed, float lifeTime)
         {
-            _alternate = !_alternate;
-            var instance = Instantiate(_prefab, transform);
-            _instances.Add(instance);
+            this._alternate = !this._alternate;
+            var instance = Instantiate(this._prefab, this.transform);
+            this._instances.Add(instance);
             instance.GetComponent<OpenRotatingCircleStrings>().SetAngle(angle);
-            instance.GetComponent<OpenRotatingCircleStrings>().SetDirection(_alternate);
+            instance.GetComponent<OpenRotatingCircleStrings>().SetDirection(this._alternate);
             instance.GetComponent<OpenRotatingCircleStrings>().SetRotationSpeed(rotationSpeed);
-            instance.GetComponent<OpenRotatingCircleStrings>().SetTolerance(_circleTolerance);
-            StartCoroutine(ExpandAndDestroy(instance, expandingSpeed, lifeTime));
+            instance.GetComponent<OpenRotatingCircleStrings>().SetTolerance(this._circleTolerance);
+            this.StartCoroutine(this.ExpandAndDestroy(instance, expandingSpeed, lifeTime));
         }
 
         private IEnumerator ExpandAndDestroy(GameObject obj, float expandingSpeed, float lifeTime)
@@ -82,12 +83,12 @@ namespace BTG
             var timer = 0f;
             while (timer < lifeTime)
             {
-                obj.GetComponent<OpenRotatingCircleStrings>().SetRadius(_startingRadius + timer * expandingSpeed);
+                obj.GetComponent<OpenRotatingCircleStrings>().SetRadius(this._startingRadius + timer * expandingSpeed);
                 timer += Time.deltaTime;
                 yield return null;
             }
 
-            _instances.Remove(obj);
+            this._instances.Remove(obj);
             Destroy(obj);
         }
     }

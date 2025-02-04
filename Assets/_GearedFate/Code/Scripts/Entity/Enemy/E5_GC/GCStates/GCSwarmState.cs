@@ -14,23 +14,23 @@ namespace BTG
         public GCSwarmState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId) :
             base(fsm, enemy, animId)
         {
-            enemy.AnimationEventHandler.OnSpawnFinished += HandleSpawnFinished;
+            enemy.AnimationEventHandler.OnSpawnFinished += this.HandleSpawnFinished;
         }
 
         private void HandleSpawnFinished()
         {
-            GreatCreator.SpawnMinions(Random.Range(GreatCreator.SwarmAmount.Min, GreatCreator.SwarmAmount.Max));
-            fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
+            this.GreatCreator.SpawnMinions(Random.Range(this.GreatCreator.SwarmAmount.Min, this.GreatCreator.SwarmAmount.Max));
+            this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
         }
 
         public override void OnEnter()
         {
-            PlayAnimation();
+            this.PlayAnimation();
         }
 
         public override void OnExit()
         {
-            SetSpawnTime();
+            this.SetSpawnTime();
         }
 
         public override void OnFrameUpdate()

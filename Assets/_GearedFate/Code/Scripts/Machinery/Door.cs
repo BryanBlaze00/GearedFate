@@ -16,16 +16,16 @@ namespace BTG
 
         private void Start()
         {
-            closedChild.SetActive(true);
-            openChild.SetActive(false);
+            this.closedChild.SetActive(true);
+            this.openChild.SetActive(false);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.TryGetComponent(out Player _))
             {
-                closedChild.SetActive(false);
-                openChild.SetActive(true);
+                this.closedChild.SetActive(false);
+                this.openChild.SetActive(true);
             }
         }
 
@@ -33,8 +33,8 @@ namespace BTG
         {
             if (other.TryGetComponent(out Player _))
             {
-                closedChild.SetActive(true);
-                openChild.SetActive(false);
+                this.closedChild.SetActive(true);
+                this.openChild.SetActive(false);
             }
         }
     }

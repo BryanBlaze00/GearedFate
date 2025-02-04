@@ -21,20 +21,20 @@ namespace BTG
 
         public void PlaySFX(AudioClip clip)
         {
-            _sfxSource.clip = clip; /// 3 -> 1, 5 -> 2 etc.
-            _sfxSource.Play();
+            this._sfxSource.clip = clip; /// 3 -> 1, 5 -> 2 etc.
+            this._sfxSource.Play();
         }
 
         public void PlayCorrrectClip(int index)
         {
-            audioSource.clip = clips[(index - 1) / 2]; /// 3 -> 1, 5 -> 2 etc.
-            audioSource.Play();
+            this.audioSource.clip = this.clips[(index - 1) / 2]; /// 3 -> 1, 5 -> 2 etc.
+            this.audioSource.Play();
         }
 
         public void PlayMenuClip()
         {
-            audioSource.clip = clips[0];
-            audioSource.Play();
+            this.audioSource.clip = this.clips[0];
+            this.audioSource.Play();
         }
     }
 }

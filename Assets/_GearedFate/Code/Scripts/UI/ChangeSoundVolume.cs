@@ -12,12 +12,12 @@ namespace BTG
 
         protected void Start()
         {
-            _soundSlider.onValueChanged.AddListener(ChangeVolume);
+            this._soundSlider.onValueChanged.AddListener(this.ChangeVolume);
         }
 
         private void ChangeVolume(float volume)
         {
-            _audioSource.volume = volume;
+            this._audioSource.volume = volume;
         }
     }
 }

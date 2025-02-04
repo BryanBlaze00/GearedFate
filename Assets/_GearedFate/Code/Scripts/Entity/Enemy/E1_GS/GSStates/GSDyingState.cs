@@ -20,13 +20,12 @@ namespace BTG
         public override void OnEnter()
         {
             base.OnEnter(); // TODO: What happens when he dies?
-            gearboundSentinel.StartCoroutine(DieAndStayDead());
-            gearboundSentinel.StopAllCoroutines();
-            gearboundSentinel.GetComponentsInChildren<Collider2D>().ForEach(x => x.enabled = false);
-            Object.Destroy(gearboundSentinel);
+            this.gearboundSentinel.StartCoroutine(this.DieAndStayDead());
+            this.gearboundSentinel.StopAllCoroutines();
+            this.gearboundSentinel.GetComponentsInChildren<Collider2D>().ForEach(x => x.enabled = false);
+            Object.Destroy(this.gearboundSentinel);
             GameManager.Instance
-                .StartCoroutine(
-                    DelayedElevator()); // start it on GameManager because gearboundSentinel's coroutines will end right after destroy
+                .StartCoroutine(this.DelayedElevator()); // start it on GameManager because gearboundSentinel's coroutines will end right after destroy
         }
 
         private IEnumerator DelayedElevator()
@@ -39,21 +38,21 @@ namespace BTG
 
         private IEnumerator DieAndStayDead()
         {
-            gearboundSentinel.Animator.speed = 1f;
-            gearboundSentinel.transform.position += new Vector3(0f, -1.05f); // death animation is higher
-            gearboundSentinel.Shadow.SetActive(false);
-            var pos = gearboundSentinel.transform.position;
-            gearboundSentinel.Animator.Play("Death");
+            this.gearboundSentinel.Animator.speed = 1f;
+            this.gearboundSentinel.transform.position += new Vector3(0f, -1.05f); // death animation is higher
+            this.gearboundSentinel.Shadow.SetActive(false);
+            var pos = this.gearboundSentinel.transform.position;
+            this.gearboundSentinel.Animator.Play("Death");
             yield return null; // this might break if something sets its animation differently right after death?
             Debug.Log("This code shouldn't run because all coroutines should be stopped.");
-            var animationLength = gearboundSentinel.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
+            var animationLength = this.gearboundSentinel.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
             var played = 0f;
             while (true) // prevents other stuff from changing the animation
             {
                 played += Time.deltaTime;
                 var progress = played / animationLength;
-                gearboundSentinel.Animator.Play("Death", -1, Mathf.Min(1f, progress));
-                gearboundSentinel.transform.position = pos;
+                this.gearboundSentinel.Animator.Play("Death", -1, Mathf.Min(1f, progress));
+                this.gearboundSentinel.transform.position = pos;
                 yield return null;
             }
         }

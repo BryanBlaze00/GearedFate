@@ -16,26 +16,26 @@ namespace BTG
 
         private void Awake()
         {
-            if (player == null)
+            if (this.player == null)
             {
-                Debug.LogWarning($"{nameof(player)} wasn't assigned on {nameof(PlayerUI)}");
-                player = FindAnyObjectByType<Player>();
+                Debug.LogWarning($"{nameof(this.player)} wasn't assigned on {nameof(PlayerUI)}");
+                this.player = FindAnyObjectByType<Player>();
             }
         }
 
         private void Update()
         {
-            UpdateUI();
+            this.UpdateUI();
         }
 
         private void UpdateUI()
         {
-            healthBar.value = player.CurrentHealth / player.Data.Health;
-            fuelBar.value = player.CurrentAttackFuelAmount / player.Data.MaxAttackFuelAmount;
-            var gearTossState = player.states[Player.State.GearToss] as PlayerGearTossState;
-            var GearTossCDLeft = gearTossState.LastUsedTime + player.Data.GearShootCoolDown - Time.time;
-            gearTossIcon.value = GearTossCDLeft / player.Data.GearShootCoolDown;
-            gearTossCDText.text = FormatCooldown(GearTossCDLeft);
+            this.healthBar.value = this.player.CurrentHealth / this.player.Data.Health;
+            this.fuelBar.value = this.player.CurrentAttackFuelAmount / this.player.Data.MaxAttackFuelAmount;
+            var gearTossState = this.player.states[Player.State.GearToss] as PlayerGearTossState;
+            var GearTossCDLeft = gearTossState.LastUsedTime + this.player.Data.GearShootCoolDown - Time.time;
+            this.gearTossIcon.value = GearTossCDLeft / this.player.Data.GearShootCoolDown;
+            this.gearTossCDText.text = this.FormatCooldown(GearTossCDLeft);
         }
 
         private string FormatCooldown(float cooldown)

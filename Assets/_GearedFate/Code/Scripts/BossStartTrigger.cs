@@ -9,22 +9,22 @@ namespace BTG
 
         private void Awake()
         {
-            if (TryGetComponent(out SpriteRenderer sr))
+            if (this.TryGetComponent(out SpriteRenderer sr))
                 sr.enabled = false;
-            if (Boss == null)
-                Boss = (MonoBehaviour)FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include,
+            if (this.Boss == null)
+                this.Boss = (MonoBehaviour)FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include,
                     FindObjectsSortMode.None).OfType<IBoss>().FirstOrDefault();
-            if (Boss == null)
+            if (this.Boss == null)
                 Debug.LogError(nameof(BossStartTrigger) + " doesn't have a boss");
-            Boss.gameObject.SetActive(false);
+            this.Boss.gameObject.SetActive(false);
         }
 
         public void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.TryGetComponent(out Player _))
             {
-                Boss.gameObject.SetActive(true);
-                gameObject.SetActive(false);
+                this.Boss.gameObject.SetActive(true);
+                this.gameObject.SetActive(false);
             }
         }
     }

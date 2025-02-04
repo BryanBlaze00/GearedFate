@@ -47,27 +47,27 @@ namespace BTG
 
         private void Start()
         {
-            _player = FindFirstObjectByType<Player>();
+            this._player = FindFirstObjectByType<Player>();
             var death = Animator.StringToHash(nameof(RustedMarionetteState.Death));
             var spin = Animator.StringToHash("Spin");
-            CurrentHealth = MaxHealth;
+            this.CurrentHealth = this.MaxHealth;
 
-            _states.Add(RustedMarionetteState.Idle, new RMIdleState(_fsm, this, spin, spin));
-            _states.Add(RustedMarionetteState.Death, new RMDeathState(_fsm, this, death, death));
-            _states.Add(RustedMarionetteState.CircleStorm, new RMCircleStormState(_fsm, this, spin, spin));
-            _states.Add(RustedMarionetteState.CirclingLines, new RMSpinningLinesState(_fsm, this, spin, spin));
-            _states.Add(RustedMarionetteState.StringMaze, new RMStringMazeState(_fsm, this, spin, spin));
+            this._states.Add(RustedMarionetteState.Idle, new RMIdleState(this._fsm, this, spin, spin));
+            this._states.Add(RustedMarionetteState.Death, new RMDeathState(this._fsm, this, death, death));
+            this._states.Add(RustedMarionetteState.CircleStorm, new RMCircleStormState(this._fsm, this, spin, spin));
+            this._states.Add(RustedMarionetteState.CirclingLines, new RMSpinningLinesState(this._fsm, this, spin, spin));
+            this._states.Add(RustedMarionetteState.StringMaze, new RMStringMazeState(this._fsm, this, spin, spin));
 
-            _fsm.Initialize(_states[RustedMarionetteState.CirclingLines]);
+            this._fsm.Initialize(this._states[RustedMarionetteState.CirclingLines]);
         }
 
         public void TakeDamage(float damage)
         {
             // Ignore hit if in maze state and player far from target
-            if (_fsm.CurrentState.GetType() == typeof(RMStringMazeState) &&
-                Vector2.Distance(_player.transform.position, transform.position) > 3f)
+            if (this._fsm.CurrentState.GetType() == typeof(RMStringMazeState) &&
+                Vector2.Distance(this._player.transform.position, this.transform.position) > 3f)
             {
-                foreach (var hitFlash in GetComponentsInChildren<HitFlash>())
+                foreach (var hitFlash in this.GetComponentsInChildren<HitFlash>())
                 {
                     hitFlash.SetFlashColor(Color.blue);
                     hitFlash.HitFlashRoutine();
@@ -76,21 +76,21 @@ namespace BTG
                 return;
             }
 
-            foreach (var hitFlash in GetComponentsInChildren<HitFlash>())
+            foreach (var hitFlash in this.GetComponentsInChildren<HitFlash>())
             {
                 hitFlash.SetFlashColor(Color.red);
                 hitFlash.HitFlashRoutine();
             }
 
-            CurrentHealth = Mathf.Max(0f, CurrentHealth - damage);
+            this.CurrentHealth = Mathf.Max(0f, this.CurrentHealth - damage);
 
-            if (CurrentHealth == 0) Elevator.Instance.ActivateElevator();
-            OnHitTaken?.Invoke();
+            if (this.CurrentHealth == 0) Elevator.Instance.ActivateElevator();
+            this.OnHitTaken?.Invoke();
         }
 
         protected void Update()
         {
-            _fsm.CurrentState.OnFrameUpdate();
+            this._fsm.CurrentState.OnFrameUpdate();
         }
     }
 }

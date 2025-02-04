@@ -8,12 +8,12 @@ namespace BTG
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.TryGetComponent(out IDamagable damagable)) damagable.TakeDamage(Damage);
+            if (collision.TryGetComponent(out IDamagable damagable)) damagable.TakeDamage(this.Damage);
         }
 
         public void OnAnimationFinished()
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 }

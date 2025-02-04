@@ -28,27 +28,27 @@ namespace BTG
 
         private void Awake()
         {
-            _objBreakRenderer = GetComponent<SpriteRenderer>();
-            _sprites = new Sprite[_animSpritesCount];
+            this._objBreakRenderer = this.GetComponent<SpriteRenderer>();
+            this._sprites = new Sprite[this._animSpritesCount];
 
 
-            for (var i = 0; i < _animSpritesCount; i++) _sprites[i] = _objBreakRenderer.sprite;
+            for (var i = 0; i < this._animSpritesCount; i++) this._sprites[i] = this._objBreakRenderer.sprite;
 
             // Debug.Log("Sprites: " + _sprites.Length);
         }
 
         public void TriggerBreak()
         {
-            if (!isBreaking)
+            if (!this.isBreaking)
             {
-                isBreaking = true;
-                StartCoroutine(Explode());
+                this.isBreaking = true;
+                this.StartCoroutine(this.Explode());
             }
         }
 
         private IEnumerator Explode()
         {
-            for (var i = _animStartIndex; i < _animSpritesCount + _animStartIndex; i++)
+            for (var i = this._animStartIndex; i < this._animSpritesCount + this._animStartIndex; i++)
             {
                 // Debug.Log("_sprites.Length: " + _sprites.Length);
                 // Debug.Log("AnimStartIndex: " + _animStartIndex);
@@ -56,11 +56,11 @@ namespace BTG
                 // Debug.Log("i: " + i);
                 // Debug.Log("Total: " + (_animSpritesCount + _animStartIndex));
 
-                _objBreakRenderer.sprite = _sprites[i];
-                yield return new WaitForSeconds(_animSpeed);
+                this._objBreakRenderer.sprite = this._sprites[i];
+                yield return new WaitForSeconds(this._animSpeed);
             }
 
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 }

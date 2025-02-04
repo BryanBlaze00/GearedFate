@@ -18,15 +18,15 @@ namespace BTG
         public GSBaseState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state,
             GearboundSentinel gs) : base(fsm)
         {
-            gearboundSentinel = gs;
-            State = state;
+            this.gearboundSentinel = gs;
+            this.State = state;
         }
 
         public override void OnEnter()
         {
             //TODO: Play animations
-            gearboundSentinel.AudioSource.pitch = 1f;
-            gearboundSentinel.EnableColliders(); // workaround rare bug where colliders got stuck disabled
+            this.gearboundSentinel.AudioSource.pitch = 1f;
+            this.gearboundSentinel.EnableColliders(); // workaround rare bug where colliders got stuck disabled
         }
 
         public override void OnExit()

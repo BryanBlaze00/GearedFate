@@ -26,10 +26,10 @@ namespace BTG
 
         protected void Start()
         {
-            _animMoveX = Animator.StringToHash("MoveX");
-            _animMoveY = Animator.StringToHash("MoveY");
-            _steamCentipede = GetComponentInParent<SteamCentipede>();
-            CurrentHealth = MaxHealth;
+            this._animMoveX = Animator.StringToHash("MoveX");
+            this._animMoveY = Animator.StringToHash("MoveY");
+            this._steamCentipede = this.GetComponentInParent<SteamCentipede>();
+            this.CurrentHealth = this.MaxHealth;
         }
 
         protected void OnTriggerEnter2D(Collider2D other)
@@ -37,49 +37,49 @@ namespace BTG
             if (other.TryGetComponent(out Player player))
             {
                 // no damage and a bit less knockback if not attacking
-                player.TakeDamage(_steamCentipede.IsAttacking ? _damageDealt : 0);
+                player.TakeDamage(this._steamCentipede.IsAttacking ? this._damageDealt : 0);
                 player.GetComponent<Knockback>()
-                    .GetKnockedBack(transform, _steamCentipede.IsAttacking ? _knockBack : _knockBack / 3);
+                    .GetKnockedBack(this.transform, this._steamCentipede.IsAttacking ? this._knockBack : this._knockBack / 3);
             }
         }
 
         public void SetAnimationDirectionParameter(Vector2 tangent)
         {
-            Animator.SetFloat(_animMoveX, tangent.normalized.x);
-            Animator.SetFloat(_animMoveY, tangent.normalized.y);
+            this.Animator.SetFloat(this._animMoveX, tangent.normalized.x);
+            this.Animator.SetFloat(this._animMoveY, tangent.normalized.y);
         }
 
         public void SetAnimationSpeed(float speed)
         {
-            Animator.speed = speed;
+            this.Animator.speed = speed;
         }
 
         public void PlayAnimation(int animId, float offset)
         {
-            Animator.Play(animId);
-            Animator.SetFloat("CycleOffset", offset);
+            this.Animator.Play(animId);
+            this.Animator.SetFloat("CycleOffset", offset);
         }
 
         public void TakeDamage(float damage)
         {
-            if (_steamCentipede.Tail == transform)
+            if (this._steamCentipede.Tail == this.transform)
             {
-                CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
-                GetComponent<HitFlash>().SetFlashColor(Color.red);
-                GetComponent<HitFlash>().HitFlashRoutine();
+                this.CurrentHealth = Mathf.Max(this.CurrentHealth - damage, 0);
+                this.GetComponent<HitFlash>().SetFlashColor(Color.red);
+                this.GetComponent<HitFlash>().HitFlashRoutine();
             }
             else
             {
-                GetComponent<HitFlash>().SetFlashColor(Color.blue);
-                GetComponent<HitFlash>().HitFlashRoutine();
+                this.GetComponent<HitFlash>().SetFlashColor(Color.blue);
+                this.GetComponent<HitFlash>().HitFlashRoutine();
             }
 
-            if (CurrentHealth == 0) OnBodyPartDeath?.Invoke();
+            if (this.CurrentHealth == 0) this.OnBodyPartDeath?.Invoke();
         }
 
         public void Heal(float addedHealth)
         {
-            CurrentHealth = Mathf.Min(CurrentHealth + addedHealth, MaxHealth);
+            this.CurrentHealth = Mathf.Min(this.CurrentHealth + addedHealth, this.MaxHealth);
         }
     }
 }

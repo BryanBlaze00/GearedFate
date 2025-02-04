@@ -20,7 +20,7 @@ namespace BTG
         public override void OnEnter()
         {
             base.OnEnter();
-            player.RB.linearVelocity = Vector2.zero;
+            this.player.RB.linearVelocity = Vector2.zero;
         }
 
         public override void OnExit()
@@ -30,11 +30,10 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            if (AttackCheck) return;
-            if (DashCheck) return;
+            if (this.AttackCheck) return;
+            if (this.DashCheck) return;
 
-            if (Input.MoveInput != Vector2.zero)
-                fsm.SwitchState(player.states[Player.State.Move]);
+            if (Input.MoveInput != Vector2.zero) this.fsm.SwitchState(this.player.states[Player.State.Move]);
         }
 
         public override void OnPhysicsUpdate()

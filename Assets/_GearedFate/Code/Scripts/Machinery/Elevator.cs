@@ -21,44 +21,44 @@ namespace BTG
         {
             base.Awake();
 
-            _animator = GetComponent<Animator>();
-            _animator.SetBool("isFlying", false);
+            this._animator = this.GetComponent<Animator>();
+            this._animator.SetBool("isFlying", false);
 
-            if (_exitLevelTrigger != null && _exitLevelTrigger.activeSelf) _exitLevelTrigger.SetActive(false);
+            if (this._exitLevelTrigger != null && this._exitLevelTrigger.activeSelf) this._exitLevelTrigger.SetActive(false);
         }
 
         private void Start()
         {
-            transform.SetParent(_parentTransform);
+            this.transform.SetParent(this._parentTransform);
 
-            CutSceneCheckActivate();
+            this.CutSceneCheckActivate();
         }
 
         public void ActivateElevator()
         {
-            _animator.SetBool("isFlying", true);
-            _exitLevelTrigger.SetActive(true);
+            this._animator.SetBool("isFlying", true);
+            this._exitLevelTrigger.SetActive(true);
         }
 
         public void DeactivateElevator()
         {
-            _animator.SetBool("isFlying", false);
-            _exitLevelTrigger.SetActive(false);
+            this._animator.SetBool("isFlying", false);
+            this._exitLevelTrigger.SetActive(false);
         }
 
         public void ActivateElevatorAnim()
         {
-            _animator.SetBool("isFlying", true);
+            this._animator.SetBool("isFlying", true);
         }
 
         public void DeactivateElevatorAnim()
         {
-            _animator.SetBool("isFlying", false);
+            this._animator.SetBool("isFlying", false);
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out Player _) && _animator.GetBool("isFlying"))
+            if (other.TryGetComponent(out Player _) && this._animator.GetBool("isFlying"))
                 GameManager.Instance.LoadNextLevel();
         }
 
@@ -68,7 +68,7 @@ namespace BTG
             var cutsceneScenes = GameManager.Instance.GetCutsceneScenes();
             foreach (var scene in cutsceneScenes)
                 if (scene == GameManager.Instance.GetCurrentScene())
-                    ActivateElevatorAnim();
+                    this.ActivateElevatorAnim();
         }
     }
 }

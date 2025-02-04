@@ -15,17 +15,17 @@ namespace BTG
 
         [SerializeField] private float _health;
 
-        public Vector3 Position => _position;
+        public Vector3 Position => this._position;
 
-        public float Fuel => _fuel;
+        public float Fuel => this._fuel;
 
-        public float Health => _health;
+        public float Health => this._health;
 
         public PlayerSaveStruct(Vector3 position, float fuel, float health)
         {
-            _position = position;
-            _fuel = fuel;
-            _health = health;
+            this._position = position;
+            this._fuel = fuel;
+            this._health = health;
         }
     }
 }

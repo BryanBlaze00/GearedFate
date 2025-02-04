@@ -28,8 +28,8 @@ namespace BTG
 
         public override void OnEnter()
         {
-            player.Anim.Play(animId, 0, 0);
-            OnCheck();
+            this.player.Anim.Play(this.animId, 0, 0);
+            this.OnCheck();
         }
 
         public override void OnExit()
@@ -46,7 +46,7 @@ namespace BTG
             {
                 if (Input.AttackPressed)
                 {
-                    fsm.SwitchState(player.states[player.CurrentAbility]);
+                    this.fsm.SwitchState(this.player.states[this.player.CurrentAbility]);
                     return true;
                 }
 
@@ -58,9 +58,9 @@ namespace BTG
         {
             get
             {
-                if (Input.DashPressed && ((PlayerDashState)player.states[Player.State.Dash]).CanDash)
+                if (Input.DashPressed && ((PlayerDashState)this.player.states[Player.State.Dash]).CanDash)
                 {
-                    fsm.SwitchState(player.states[Player.State.Dash]);
+                    this.fsm.SwitchState(this.player.states[Player.State.Dash]);
                     return true;
                 }
 
@@ -114,7 +114,7 @@ namespace BTG
 
         public override void OnPhysicsUpdate()
         {
-            OnCheck();
+            this.OnCheck();
         }
 
         private void OnCheck()

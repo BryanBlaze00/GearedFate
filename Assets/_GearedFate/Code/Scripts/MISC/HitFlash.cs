@@ -21,28 +21,28 @@ namespace BTG
 
         private void Awake()
         {
-            material = GetComponent<SpriteRenderer>().material;
+            this.material = this.GetComponent<SpriteRenderer>().material;
         }
 
         public void SetFlashColor(Color color)
         {
-            redFlashColor = color;
+            this.redFlashColor = color;
         }
 
         public void HitFlashRoutine()
         {
-            StartCoroutine(_ChainRoutine());
+            this.StartCoroutine(this._ChainRoutine());
         }
 
         private IEnumerator _ChainRoutine()
         {
-            yield return StartCoroutine(_FlashRoutine(redFlashColor, redFlashDuration));
-            yield return StartCoroutine(_FlashRoutine(whiteFlashColor, whiteFlashDuration));
+            yield return this.StartCoroutine(this._FlashRoutine(this.redFlashColor, this.redFlashDuration));
+            yield return this.StartCoroutine(this._FlashRoutine(this.whiteFlashColor, this.whiteFlashDuration));
         }
 
         private IEnumerator _FlashRoutine(Color color, float duration)
         {
-            material.SetColor("_FlashColor", color);
+            this.material.SetColor("_FlashColor", color);
 
             float currentFlashAmount;
             var elapsedTime = 0f;
@@ -50,7 +50,7 @@ namespace BTG
             {
                 elapsedTime += Time.deltaTime;
                 currentFlashAmount = Mathf.Lerp(1, 0f, elapsedTime / duration);
-                material.SetFloat("_FlashAmount", currentFlashAmount);
+                this.material.SetFloat("_FlashAmount", currentFlashAmount);
                 yield return null;
             }
         }

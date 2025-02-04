@@ -31,28 +31,28 @@ namespace BTG
 
         private void Start()
         {
-            RefreshSlider();
-            Controls();
-            gameObject.SetActive(false);
+            this.RefreshSlider();
+            this.Controls();
+            this.gameObject.SetActive(false);
         }
 
         public void Sound()
         {
-            soundTab.SetActive(true);
-            controlsTab.SetActive(false);
+            this.soundTab.SetActive(true);
+            this.controlsTab.SetActive(false);
         }
 
         public void Controls()
         {
-            soundTab.SetActive(false);
-            controlsTab.SetActive(true);
+            this.soundTab.SetActive(false);
+            this.controlsTab.SetActive(true);
         }
 
         private void RefreshSlider()
         {
-            masterSlider.value = PlayerPrefs.GetFloat(nameof(SettingsConstant.MasterVolume), 100);
-            musicSlider.value = PlayerPrefs.GetFloat(nameof(SettingsConstant.MusicVolume), 100);
-            sfxSlider.value = PlayerPrefs.GetFloat(nameof(SettingsConstant.SFXVolume), 100);
+            this.masterSlider.value = PlayerPrefs.GetFloat(nameof(SettingsConstant.MasterVolume), 100);
+            this.musicSlider.value = PlayerPrefs.GetFloat(nameof(SettingsConstant.MusicVolume), 100);
+            this.sfxSlider.value = PlayerPrefs.GetFloat(nameof(SettingsConstant.SFXVolume), 100);
         }
 
         private float SliderToDB(float value)
@@ -63,23 +63,23 @@ namespace BTG
         private void HandleVolume(string param, float value)
         {
             if (value < 1) value = 0.001f;
-            musicMaster.SetFloat(param, SliderToDB(value));
+            this.musicMaster.SetFloat(param, this.SliderToDB(value));
             PlayerPrefs.SetFloat(param, value);
         }
 
         public void OnMasterVolumeChange(float value)
         {
-            HandleVolume(nameof(SettingsConstant.MasterVolume), value);
+            this.HandleVolume(nameof(SettingsConstant.MasterVolume), value);
         }
 
         public void OnMusicVolumeChange(float value)
         {
-            HandleVolume(nameof(SettingsConstant.MusicVolume), value);
+            this.HandleVolume(nameof(SettingsConstant.MusicVolume), value);
         }
 
         public void OnSFXVolumeChange(float value)
         {
-            HandleVolume(nameof(SettingsConstant.SFXVolume), value);
+            this.HandleVolume(nameof(SettingsConstant.SFXVolume), value);
         }
     }
 }

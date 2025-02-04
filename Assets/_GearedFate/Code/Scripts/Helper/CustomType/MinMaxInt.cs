@@ -22,8 +22,8 @@ namespace BTG
 
         public MinMaxInt()
         {
-            Min = 0;
-            Max = 0;
+            this.Min = 0;
+            this.Max = 0;
         }
 
         /// <summary>
@@ -33,8 +33,8 @@ namespace BTG
         /// <param name="max">Maximum value</param>
         public MinMaxInt(int min, int max)
         {
-            Min = min;
-            Max = max;
+            this.Min = min;
+            this.Max = max;
         }
     }
 }

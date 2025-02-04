@@ -44,26 +44,26 @@ namespace BTG
         /// Since an animation loop does 1/8th of a turn,
         /// a full circle rotation is 8 times the rotation numbers to complete the animation loop.
         /// </summary>
-        public int FullCircleRotationNumbers => 8 * _rotationNumbers;
+        public int FullCircleRotationNumbers => 8 * this._rotationNumbers;
 
         protected void Start()
         {
-            _previousUpdateTime = Time.time;
-            _gearRenderer = GetComponent<SpriteRenderer>();
+            this._previousUpdateTime = Time.time;
+            this._gearRenderer = this.GetComponent<SpriteRenderer>();
         }
 
         protected void Update()
         {
-            if (_previousUpdateTime + _rotateSpeed > Time.time) return;
+            if (this._previousUpdateTime + this._rotateSpeed > Time.time) return;
 
-            _previousUpdateTime = Time.time;
+            this._previousUpdateTime = Time.time;
 
-            _rotateStep = _startingSpriteIndex + (_rotateStep + 1) % _rotationNumbers;
+            this._rotateStep = this._startingSpriteIndex + (this._rotateStep + 1) % this._rotationNumbers;
 
-            if (_spritesData.TryGetSpriteAtIndex(_rotateStep, out var gearSprite))
+            if (this._spritesData.TryGetSpriteAtIndex(this._rotateStep, out var gearSprite))
             {
-                _gearRenderer.sprite = gearSprite;
-                OnGearMoved?.Invoke();
+                this._gearRenderer.sprite = gearSprite;
+                this.OnGearMoved?.Invoke();
             }
         }
     }

@@ -20,27 +20,26 @@ namespace BTG
 
         public override void OnEnter()
         {
-            _enterTime = Time.time;
-            _isAttacking = false;
-            PlayAnimationHighBodyPart();
-            PlayAnimationLowBodyPart();
+            this._enterTime = Time.time;
+            this._isAttacking = false;
+            this.PlayAnimationHighBodyPart();
+            this.PlayAnimationLowBodyPart();
         }
 
         public override void OnExit()
         {
-            Marionette.LineRotater.SetLineState(false);
+            this.Marionette.LineRotater.SetLineState(false);
         }
 
         public override void OnFrameUpdate()
         {
-            if (Time.time > _enterTime + _timeBeforeAttack && !_isAttacking)
+            if (Time.time > this._enterTime + this._timeBeforeAttack && !this._isAttacking)
             {
-                _isAttacking = true;
-                Marionette.LineRotater.SetLineState(true);
+                this._isAttacking = true;
+                this.Marionette.LineRotater.SetLineState(true);
             }
 
-            if (Time.time > _enterTime + _timeBeforeStateChange)
-                fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.Idle]);
+            if (Time.time > this._enterTime + this._timeBeforeStateChange) this.fsm.SwitchState(this.Marionette._states[RustedMarionette.RustedMarionetteState.Idle]);
         }
 
         public override void OnPhysicsUpdate()

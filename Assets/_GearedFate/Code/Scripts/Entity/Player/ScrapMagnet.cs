@@ -23,22 +23,23 @@ namespace BTG
             float t = 0;
 
             // Move the object toward the player until it's close enough
-            while (Vector3.Distance(scrap.transform.position, _player.transform.position) > _proximityThreshold)
+            while (Vector3.Distance(scrap.transform.position, this._player.transform.position) > this._proximityThreshold)
             {
-                t += Time.deltaTime / reachTime;
-                scrap.transform.position = Vector3.Lerp(scrap.transform.position, _player.transform.position,
+                t += Time.deltaTime / this.reachTime;
+                scrap.transform.position = Vector3.Lerp(scrap.transform.position,
+                    this._player.transform.position,
                     Mathf.SmoothStep(0.0f, 1.0f, t));
                 yield return null; // Wait for the next frame
             }
 
             // Handle arrival logic
-            scrap.ApplyEffect(_player);
+            scrap.ApplyEffect(this._player);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             // Trigger the magnet effect if the scrap enters the Players trigger zone
-            if (other.TryGetComponent(out Scrap scrap)) StartCoroutine(MoveToPlayer(scrap));
+            if (other.TryGetComponent(out Scrap scrap)) this.StartCoroutine(this.MoveToPlayer(scrap));
         }
     }
 }

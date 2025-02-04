@@ -71,66 +71,64 @@ namespace BTG
 
         protected void Start()
         {
-            _totalSplineLength = _splineContainer.CalculateLength();
-            InitializeBodyPosition();
-            _speed = _regularSpeed;
+            this._totalSplineLength = this._splineContainer.CalculateLength();
+            this.InitializeBodyPosition();
+            this._speed = this._regularSpeed;
         }
 
         protected void Update()
         {
             // Distance crossed by each transform on the spline
-            var moved = Time.deltaTime * _speed;
+            var moved = Time.deltaTime * this._speed;
 
             // Move all following transform along the spline
-            for (var i = 0; i < _movingAlongSpline.Count; i++)
+            for (var i = 0; i < this._movingAlongSpline.Count; i++)
             {
-                _currentPositionsOnSpline[i] += moved / _totalSplineLength;
-                _movingAlongSpline[i].position = _splineContainer.EvaluatePosition(_currentPositionsOnSpline[i]);
-                Vector3 tangent = _splineContainer.EvaluateTangent(_currentPositionsOnSpline[i]);
-                SetSpriteBasedOnTangent(_movingAlongSpline[i].GetComponent<SpriteRenderer>(), tangent);
+                this._currentPositionsOnSpline[i] += moved / this._totalSplineLength;
+                this._movingAlongSpline[i].position = this._splineContainer.EvaluatePosition(this._currentPositionsOnSpline[i]);
+                Vector3 tangent = this._splineContainer.EvaluateTangent(this._currentPositionsOnSpline[i]);
+                this.SetSpriteBasedOnTangent(this._movingAlongSpline[i].GetComponent<SpriteRenderer>(), tangent);
             }
 
-            _chargingTimer += Time.deltaTime;
+            this._chargingTimer += Time.deltaTime;
 
             // If head is about to reach the spline end, create a new knot in the spline
-            if (IsReachingSplineEndNextStep(_currentPositionsOnSpline.Last(), moved))
+            if (this.IsReachingSplineEndNextStep(this._currentPositionsOnSpline.Last(), moved))
             {
-                ChooseNextState(_toFollow.position, _splineContainer.Spline.Knots.Last().Position);
+                this.ChooseNextState(this._toFollow.position, this._splineContainer.Spline.Knots.Last().Position);
 
-                var nextNodePosition =
-                    ChooseNextNode(_toFollow.position, _splineContainer.Spline.Knots.Last().Position);
-                AddNodeToSpline(nextNodePosition);
+                var nextNodePosition = this.ChooseNextNode(this._toFollow.position, this._splineContainer.Spline.Knots.Last().Position);
+                this.AddNodeToSpline(nextNodePosition);
             }
         }
 
         private void InitializeBodyPosition()
         {
-            var normalizedDistance = _bodyPartDistance / _totalSplineLength;
-            for (var i = 0; i < _movingAlongSpline.Count; i++)
+            var normalizedDistance = this._bodyPartDistance / this._totalSplineLength;
+            for (var i = 0; i < this._movingAlongSpline.Count; i++)
             {
-                _currentPositionsOnSpline.Add(normalizedDistance * i);
-                _movingAlongSpline[i].position = _splineContainer.EvaluatePosition(normalizedDistance * i);
+                this._currentPositionsOnSpline.Add(normalizedDistance * i);
+                this._movingAlongSpline[i].position = this._splineContainer.EvaluatePosition(normalizedDistance * i);
             }
         }
 
         // Check if a given normalized spline position is after the penultimate knot.
         private bool IsReachingSplineEndNextStep(float currentSplinePosition, float moved)
         {
-            return currentSplinePosition + moved / _totalSplineLength >= 1;
+            return currentSplinePosition + moved / this._totalSplineLength >= 1;
         }
 
         private void AddNodeToSpline(Vector3 nodePosition)
         {
-            var spline = _splineContainer.Spline;
-            var lengthBeforeAddingNode = _totalSplineLength;
+            var spline = this._splineContainer.Spline;
+            var lengthBeforeAddingNode = this._totalSplineLength;
 
             spline.Add(nodePosition);
 
-            _totalSplineLength = _splineContainer.CalculateLength();
+            this._totalSplineLength = this._splineContainer.CalculateLength();
 
             // Gotta recompute the correct spline position for each body parts since the spline length changed.
-            for (var i = 0; i < _movingAlongSpline.Count; i++)
-                _currentPositionsOnSpline[i] *= lengthBeforeAddingNode / _totalSplineLength;
+            for (var i = 0; i < this._movingAlongSpline.Count; i++) this._currentPositionsOnSpline[i] *= lengthBeforeAddingNode / this._totalSplineLength;
         }
 
         private Vector3 NextPositionBehindPlayer(Vector3 playerPosition, Vector3 lastPosition)
@@ -141,15 +139,15 @@ namespace BTG
 
         private Vector3 ChooseNextNode(Vector3 playerPosition, Vector3 lastPosition)
         {
-            switch (_centipedeState)
+            switch (this._centipedeState)
             {
                 case CentipedeState.Chasing:
                     var direction = playerPosition - lastPosition;
                     return lastPosition + direction.normalized * 3;
                 case CentipedeState.Circling:
-                    return ChooseCirclingNode(playerPosition, lastPosition);
+                    return this.ChooseCirclingNode(playerPosition, lastPosition);
                 case CentipedeState.Ramming:
-                    return NextPositionBehindPlayer(playerPosition, lastPosition);
+                    return this.NextPositionBehindPlayer(playerPosition, lastPosition);
                 default:
                     return Vector3.zero;
             }
@@ -158,38 +156,38 @@ namespace BTG
         private void ChooseNextState(Vector3 playerPosition, Vector3 lastPosition)
         {
             // If centipede too far from its target it goes in chasing mode
-            if (Vector3.Distance(playerPosition, lastPosition) > _chasingDistance)
+            if (Vector3.Distance(playerPosition, lastPosition) > this._chasingDistance)
             {
-                _centipedeState = CentipedeState.Chasing;
-                _speed = _regularSpeed;
+                this._centipedeState = CentipedeState.Chasing;
+                this._speed = this._regularSpeed;
             }
             else
             {
                 // If not already circling, start the charge timer
-                if (_centipedeState != CentipedeState.Circling)
+                if (this._centipedeState != CentipedeState.Circling)
                 {
-                    _firstCircleNodeChose = true;
-                    StartChargeTimer();
+                    this._firstCircleNodeChose = true;
+                    this.StartChargeTimer();
                 }
 
                 // if charge is ready, go ramming, otherwise keep circling
-                if (_chargingTimer > _timeBeforeCharge)
+                if (this._chargingTimer > this._timeBeforeCharge)
                 {
-                    _speed = _chargeSpeed;
-                    _centipedeState = CentipedeState.Ramming;
+                    this._speed = this._chargeSpeed;
+                    this._centipedeState = CentipedeState.Ramming;
                 }
                 else
                 {
-                    _speed = _regularSpeed;
-                    _centipedeState = CentipedeState.Circling;
+                    this._speed = this._regularSpeed;
+                    this._centipedeState = CentipedeState.Circling;
                 }
             }
         }
 
         private void StartChargeTimer()
         {
-            _chargingTimer = Time.time;
-            _timeBeforeCharge = Time.time + Random.Range(_chargeMinimumTime, _chargeMaximumTime);
+            this._chargingTimer = Time.time;
+            this._timeBeforeCharge = Time.time + Random.Range(this._chargeMinimumTime, this._chargeMaximumTime);
         }
 
         private Vector3 ChooseCirclingNode(Vector3 playerPosition, Vector3 lastPosition)
@@ -198,20 +196,20 @@ namespace BTG
                 new Vector2(playerPosition.x - lastPosition.x, playerPosition.y - lastPosition.y);
 
             // if not circling yet, choose as a node the closest cardinal point at the defined circling distance.
-            if (_firstCircleNodeChose)
+            if (this._firstCircleNodeChose)
             {
-                _circleDirection = VectorHelper2D.ClosestCardinalOrDiagonal(directionFromPlayerToHead);
-                _firstCircleNodeChose = false;
+                this._circleDirection = VectorHelper2D.ClosestCardinalOrDiagonal(directionFromPlayerToHead);
+                this._firstCircleNodeChose = false;
             }
             else
             {
-                _circleDirection = VectorHelper2D.NextClockWiseDirection(_circleDirection);
+                this._circleDirection = VectorHelper2D.NextClockWiseDirection(this._circleDirection);
             }
 
-            var nodeDirection = VectorHelper2D.VectorFromDirection(_circleDirection);
+            var nodeDirection = VectorHelper2D.VectorFromDirection(this._circleDirection);
             var nodeDirection3D = new Vector3(nodeDirection.x, nodeDirection.y, 0);
 
-            return playerPosition + nodeDirection3D * _circleDistance;
+            return playerPosition + nodeDirection3D * this._circleDistance;
         }
 
         // Based on the tangent at the spline position, set the sprite to look in the right direction.
@@ -221,28 +219,28 @@ namespace BTG
             switch (VectorHelper2D.ClosestCardinalOrDiagonal(tangent2D))
             {
                 case VectorHelper2D.Direction.Top:
-                    renderer.sprite = _topSprite;
+                    renderer.sprite = this._topSprite;
                     break;
                 case VectorHelper2D.Direction.TopRight:
-                    renderer.sprite = _topRightSprite;
+                    renderer.sprite = this._topRightSprite;
                     break;
                 case VectorHelper2D.Direction.Right:
-                    renderer.sprite = _rightSprite;
+                    renderer.sprite = this._rightSprite;
                     break;
                 case VectorHelper2D.Direction.BottomRight:
-                    renderer.sprite = _bottomRightSprite;
+                    renderer.sprite = this._bottomRightSprite;
                     break;
                 case VectorHelper2D.Direction.Bottom:
-                    renderer.sprite = _bottomSprite;
+                    renderer.sprite = this._bottomSprite;
                     break;
                 case VectorHelper2D.Direction.BottomLeft:
-                    renderer.sprite = _bottomLeftSprite;
+                    renderer.sprite = this._bottomLeftSprite;
                     break;
                 case VectorHelper2D.Direction.Left:
-                    renderer.sprite = _leftSprite;
+                    renderer.sprite = this._leftSprite;
                     break;
                 case VectorHelper2D.Direction.TopLeft:
-                    renderer.sprite = _topLeftSprite;
+                    renderer.sprite = this._topLeftSprite;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

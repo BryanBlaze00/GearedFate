@@ -10,7 +10,7 @@ namespace BTG
 
         protected void Awake()
         {
-            _quitButton.onClick.AddListener(Quit);
+            this._quitButton.onClick.AddListener(this.Quit);
         }
 
         private void Quit()

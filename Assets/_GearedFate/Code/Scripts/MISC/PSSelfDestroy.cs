@@ -15,18 +15,17 @@ namespace BTG
 
         private void Awake()
         {
-            ps = GetComponent<ParticleSystem>();
+            this.ps = this.GetComponent<ParticleSystem>();
         }
 
         private void Update()
         {
-            if (ps && !ps.IsAlive())
-                DestroySelfAnimEvent();
+            if (this.ps && !this.ps.IsAlive()) this.DestroySelfAnimEvent();
         }
 
         private void DestroySelfAnimEvent()
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 }

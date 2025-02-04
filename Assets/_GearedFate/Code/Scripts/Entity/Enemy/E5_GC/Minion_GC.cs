@@ -16,7 +16,7 @@ namespace BTG
 
         [SerializeField] private PooledObjectType _pooledObjectType;
 
-        public PooledObjectType PooledObjectType => _pooledObjectType;
+        public PooledObjectType PooledObjectType => this._pooledObjectType;
 
         private void Start()
         {
@@ -25,13 +25,13 @@ namespace BTG
         public void LoadData(GameData data)
         {
             var minionData = data.GetNextMinionData();
-            Health = minionData.Health;
-            transform.position = minionData.Position;
+            this.Health = minionData.Health;
+            this.transform.position = minionData.Position;
         }
 
         public void SaveData(ref GameData data)
         {
-            data.MinionsData.Add(new MinionSaveStruct(transform.position, Health));
+            data.MinionsData.Add(new MinionSaveStruct(this.transform.position, this.Health));
         }
     }
 }

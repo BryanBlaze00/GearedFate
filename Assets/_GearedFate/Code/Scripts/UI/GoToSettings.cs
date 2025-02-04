@@ -19,23 +19,23 @@ namespace BTG
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         {
-            _settingsButton.onClick.AddListener(GoSettings);
+            this._settingsButton.onClick.AddListener(this.GoSettings);
         }
 
         private void GoSettings()
         {
             Sequence.Create(1, CycleMode.Restart, 0f, true)
-                .Group(Tween.Alpha(_fadingPanel, 1f, 1f))
-                .ChainCallback(SetScreens)
-                .Chain(Tween.Alpha(_fadingPanel, 0f, 1f));
+                .Group(Tween.Alpha(this._fadingPanel, 1f, 1f))
+                .ChainCallback(this.SetScreens)
+                .Chain(Tween.Alpha(this._fadingPanel, 0f, 1f));
         }
 
         private void SetScreens()
         {
-            _settingScreen.SetActive(true);
-            _mainMenuScreen.SetActive(false);
+            this._settingScreen.SetActive(true);
+            this._mainMenuScreen.SetActive(false);
 
-            if (_title) _title.SetActive(false);
+            if (this._title) this._title.SetActive(false);
         }
     }
 }

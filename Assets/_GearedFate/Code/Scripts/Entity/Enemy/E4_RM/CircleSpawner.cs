@@ -29,41 +29,41 @@ namespace BTG
 
         public void SetSpawningState(bool isSpawning)
         {
-            _isSpawning = isSpawning;
-            if (isSpawning) StartCoroutine(SpawnRoutine());
+            this._isSpawning = isSpawning;
+            if (isSpawning) this.StartCoroutine(this.SpawnRoutine());
         }
 
         private IEnumerator SpawnRoutine()
         {
-            while (_isSpawning)
+            while (this._isSpawning)
             {
-                SpawnCircles();
-                yield return new WaitForSeconds(_spawnRate);
-                _offset += 40f;
+                this.SpawnCircles();
+                yield return new WaitForSeconds(this._spawnRate);
+                this._offset += 40f;
             }
         }
 
         private void SpawnCircles()
         {
-            var directions = GetEvenlySpacedDirections(_atSameTime, _offset);
-            for (var i = 0; i < _atSameTime; i++)
+            var directions = GetEvenlySpacedDirections(this._atSameTime, this._offset);
+            for (var i = 0; i < this._atSameTime; i++)
             {
                 var instance = ObjectPool.Instance.GetPooledObject(PooledObjectType.CircleString);
                 instance.SetActive(true);
-                instance.transform.SetParent(transform);
+                instance.transform.SetParent(this.transform);
                 instance.GetComponent<OpenRotatingCircleStrings>().SetAngle(Random.Range(0, 2 * Mathf.PI));
-                StartCoroutine(MoveCircleAndDestroy(instance, directions[i]));
+                this.StartCoroutine(this.MoveCircleAndDestroy(instance, directions[i]));
             }
         }
 
         private IEnumerator MoveCircleAndDestroy(GameObject obj, Vector2 direction)
         {
             var timer = 0f;
-            while (timer < _lifetime)
+            while (timer < this._lifetime)
             {
-                var t = Mathf.Min(1f, timer / _endRadiusTime);
-                obj.transform.position = (Vector2)obj.transform.position + direction * _moveSpeed * Time.deltaTime;
-                obj.GetComponent<OpenRotatingCircleStrings>().SetRadius(_startingRadius * (1 - t) + _endRadius * t);
+                var t = Mathf.Min(1f, timer / this._endRadiusTime);
+                obj.transform.position = (Vector2)obj.transform.position + direction * this._moveSpeed * Time.deltaTime;
+                obj.GetComponent<OpenRotatingCircleStrings>().SetRadius(this._startingRadius * (1 - t) + this._endRadius * t);
                 timer += Time.deltaTime;
                 yield return null;
             }

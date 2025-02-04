@@ -19,7 +19,7 @@ namespace BTG
         [SerializeField]
         private void OnChargeUpFinished()
         {
-            OnChargeUpFinishedEvent.Invoke();
+            this.OnChargeUpFinishedEvent.Invoke();
         }
 
         #endregion FireBlaze
@@ -32,13 +32,13 @@ namespace BTG
         [SerializeField]
         private void OnSpinChargeUp()
         {
-            OnSpinChargeUpEvent.Invoke();
+            this.OnSpinChargeUpEvent.Invoke();
         }
 
         [SerializeField]
         private void OnSpinFinished()
         {
-            OnSpinFinishedEvent.Invoke();
+            this.OnSpinFinishedEvent.Invoke();
         }
 
         #endregion FireSpin
@@ -51,13 +51,13 @@ namespace BTG
         [SerializeField]
         private void OnGearToss()
         {
-            OnGearTossEvent?.Invoke();
+            this.OnGearTossEvent?.Invoke();
         }
 
         [SerializeField]
         private void OnGearTossFinished()
         {
-            OnGearTossFinishedEvent.Invoke();
+            this.OnGearTossFinishedEvent.Invoke();
         }
 
         #endregion GearToss

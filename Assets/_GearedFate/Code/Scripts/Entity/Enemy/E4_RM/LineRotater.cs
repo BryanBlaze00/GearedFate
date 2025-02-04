@@ -36,29 +36,29 @@ namespace BTG
 
         public void SetLineState(bool isSpawning)
         {
-            _isSpawning = isSpawning;
+            this._isSpawning = isSpawning;
             if (isSpawning)
             {
-                var angles = GetEvenlySpacedAngles(_lineNumber, 0);
+                var angles = GetEvenlySpacedAngles(this._lineNumber, 0);
 
-                for (var i = 0; i < _lineNumber; i++)
+                for (var i = 0; i < this._lineNumber; i++)
                 {
                     var instance = ObjectPool.Instance.GetPooledObject(PooledObjectType.LineString);
-                    instance.transform.SetParent(transform);
+                    instance.transform.SetParent(this.transform);
                     instance.SetActive(true);
 
                     var rotatingLine = instance.GetComponent<RotatingLine>();
-                    _rotatingLines.Add(rotatingLine);
+                    this._rotatingLines.Add(rotatingLine);
                     rotatingLine.SetAngle(angles[i]);
-                    rotatingLine.SetSpeed(_lineSpeed);
+                    rotatingLine.SetSpeed(this._lineSpeed);
                 }
             }
             else
             {
-                for (var i = _rotatingLines.Count - 1; i >= 0; i--) _rotatingLines[i].gameObject.SetActive(false);
-                _rotatingLines.Clear();
+                for (var i = this._rotatingLines.Count - 1; i >= 0; i--) this._rotatingLines[i].gameObject.SetActive(false);
+                this._rotatingLines.Clear();
 
-                if (_protectionInstance != null) _protectionInstance.SetActive(false);
+                if (this._protectionInstance != null) this._protectionInstance.SetActive(false);
             }
         }
 

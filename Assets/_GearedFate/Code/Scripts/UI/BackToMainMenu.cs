@@ -14,14 +14,14 @@ namespace BTG
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         {
-            _backToMenuButton.onClick.AddListener(GoMenu);
+            this._backToMenuButton.onClick.AddListener(this.GoMenu);
         }
 
         private void GoMenu()
         {
             Sequence.Create(1, CycleMode.Restart, 0f, true)
-                .Group(Tween.Alpha(_fadingPanel, 1f, 1f))
-                .ChainCallback(LoadMainMenu);
+                .Group(Tween.Alpha(this._fadingPanel, 1f, 1f))
+                .ChainCallback(this.LoadMainMenu);
         }
 
         private void LoadMainMenu()
