@@ -1,13 +1,11 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using DayenCreation;
-using System.Collections;
-using UnityEngine;
 
 namespace BTG
 {
+    using System.Collections;
+    using DayenCreation;
+    using UnityEngine;
+
     /// <summary>
     /// GSShootFlameState
     /// </summary>
@@ -21,17 +19,18 @@ namespace BTG
         public override void OnEnter()
         {
             base.OnEnter();
+
             // pick a random direction's eye position as the origin.
             // A bit of randomness rather than having to do maths or consistently being off in the same direction.
             var shotCalculationOrigin = CollectionExtensions.SelectRandom(
-                this.gearboundSentinel.EyeShootUpPos,
-                this.gearboundSentinel.EyeShootRightPos,
-                this.gearboundSentinel.EyeShootDownPos,
-                this.gearboundSentinel.EyeShootLeftPos);
-            this.gearboundSentinel.StartCoroutine(
-                this.SprayCoroutine(
-                    this.gearboundSentinel.TargetPlayer.transform.position - shotCalculationOrigin.position,
-                    Random.Range(Mathf.Max(0, this.gearboundSentinel.Phase - 1), this.gearboundSentinel.Phase + 1)));
+                gearboundSentinel.EyeShootUpPos,
+                gearboundSentinel.EyeShootRightPos,
+                gearboundSentinel.EyeShootDownPos,
+                gearboundSentinel.EyeShootLeftPos);
+            gearboundSentinel.StartCoroutine(
+                SprayCoroutine(
+                    gearboundSentinel.TargetPlayer.transform.position - shotCalculationOrigin.position,
+                    Random.Range(Mathf.Max(0, gearboundSentinel.Phase - 1), gearboundSentinel.Phase + 1)));
         }
 
         public override void OnExit()
@@ -56,27 +55,27 @@ namespace BTG
             Transform spawnTransform = null;
             if (cardinal.x > 0)
             {
-                spawnTransform = this.gearboundSentinel.EyeShootRightPos;
+                spawnTransform = gearboundSentinel.EyeShootRightPos;
             }
             else if (cardinal.x < 0)
             {
-                spawnTransform = this.gearboundSentinel.EyeShootLeftPos;
+                spawnTransform = gearboundSentinel.EyeShootLeftPos;
             }
 
             if (cardinal.y > 0)
             {
-                spawnTransform = this.gearboundSentinel.EyeShootUpPos;
+                spawnTransform = gearboundSentinel.EyeShootUpPos;
             }
             else if (cardinal.y < 0)
             {
-                spawnTransform = this.gearboundSentinel.EyeShootDownPos;
+                spawnTransform = gearboundSentinel.EyeShootDownPos;
             }
 
-            var GO = ObjectPool.Instance.GetPooledObject(this.gearboundSentinel.ProjectileData.PooledObjectType);
+            var GO = ObjectPool.Instance.GetPooledObject(gearboundSentinel.ProjectileData.PooledObjectType);
             GO.transform.position = spawnTransform.position;
             GO.transform.rotation = angleQuat;
             var proj = GO.GetComponent<Projectile>();
-            proj.SetUnaffectedLayer(this.gearboundSentinel.gameObject.layer);
+            proj.SetUnaffectedLayer(gearboundSentinel.gameObject.layer);
             GO.SetActive(true);
             var projAnimator = GO.GetComponentInChildren<Animator>();
             projAnimator.Play("DirectionalProj_Windup");
@@ -90,83 +89,86 @@ namespace BTG
             yield return new WaitForSeconds(windUp);
             projAnimator.Play("DirectionalProj_Moving");
             GO.GetComponent<Rigidbody2D>().linearVelocity =
-                direction.normalized * this.gearboundSentinel.ProjectileData.Speed;
+                direction.normalized * gearboundSentinel.ProjectileData.Speed;
         }
 
         private IEnumerator SprayCoroutine(Vector2 centerDirection, int phasePattern)
         {
             var numBullets = phasePattern switch
             {
-                0 => this.gearboundSentinel.Data.Stage0ShotgunProjCount,
-                1 => this.gearboundSentinel.Data.Stage1ShotgunProjCount,
+                0 => gearboundSentinel.Data.Stage0ShotgunProjCount,
+                1 => gearboundSentinel.Data.Stage1ShotgunProjCount,
                 _ => Mathf.RoundToInt(
-                    this.gearboundSentinel.Data.Stage2Spray360ProjPerRotation * this.gearboundSentinel.Data.Stage2Spray360NumRotations)
+                    gearboundSentinel.Data.Stage2Spray360ProjPerRotation * gearboundSentinel.Data.Stage2Spray360NumRotations)
             };
             var spreadDeg = phasePattern switch
             {
-                0 => this.gearboundSentinel.Data.Stage0ShotgunSpreadDegrees,
-                1 => this.gearboundSentinel.Data.Stage1ShotgunSpreadDegrees,
-                _ => 360 * this.gearboundSentinel.Data.Stage2Spray360NumRotations
+                0 => gearboundSentinel.Data.Stage0ShotgunSpreadDegrees,
+                1 => gearboundSentinel.Data.Stage1ShotgunSpreadDegrees,
+                _ => 360 * gearboundSentinel.Data.Stage2Spray360NumRotations
             };
-            var delayBetweenShots = this.gearboundSentinel.Phase switch // note: switches off phase, not phasePattern
+            var delayBetweenShots = gearboundSentinel.Phase switch // note: switches off phase, not phasePattern
             {
                 0 => 0.4f,
                 1 => 0.15f, // TODO: config delay between shots for phase 0 and 1
-                _ => 1 / this.gearboundSentinel.Data.Stage2Spray360RotationsPerSecond / this.gearboundSentinel.Data.Stage2Spray360ProjPerRotation // seconds per rotation divided by projCount
+                _ => 1 / gearboundSentinel.Data.Stage2Spray360RotationsPerSecond / gearboundSentinel.Data.Stage2Spray360ProjPerRotation // seconds per rotation divided by projCount
             };
+
             //bool circle = Mathf.Approximately(spreadDeg, 360f);
             //if (circle)
             //    // temporarily increase for spread calculations
             //    numBullets++;
 
             var rotPerShot = spreadDeg / (numBullets - 1);
-            var startRot = Vector2.SignedAngle(Vector2.up, centerDirection) - spreadDeg / 2f;
+            var startRot = Vector2.SignedAngle(Vector2.up, centerDirection) - (spreadDeg / 2f);
+
             //if(circle)
             //    // remove temporary increase; the last bullet won't be spawned because that'll be the start of the circle
             //    numBullets--;
             for (var i = 0; i < numBullets; i++)
             {
-                var angleQuat = Quaternion.AngleAxis(startRot + rotPerShot * i, Vector3.forward);
+                var angleQuat = Quaternion.AngleAxis(startRot + (rotPerShot * i), Vector3.forward);
                 var vec = angleQuat * Vector2.up;
-                this.gearboundSentinel.Animator.SetFloat("AttackDirX", vec.x);
-                this.gearboundSentinel.Animator.SetFloat("AttackDirY", vec.y);
-                this.gearboundSentinel.Animator.Play("Shoot Blend Tree", -1, 0f); // play from the start
+                gearboundSentinel.Animator.SetFloat("AttackDirX", vec.x);
+                gearboundSentinel.Animator.SetFloat("AttackDirY", vec.y);
+                gearboundSentinel.Animator.Play("Shoot Blend Tree", -1, 0f); // play from the start
                 yield return null; // TODO: Can we remove this?
                 var wait = delayBetweenShots;
-                var baseAnimationLength = this.gearboundSentinel.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
+                var baseAnimationLength = gearboundSentinel.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
+
                 // x2 because half the duration on this animation, half on the bullet animation
                 if (delayBetweenShots < baseAnimationLength * 2f) // speed up the animation if needed
                 {
-                    this.gearboundSentinel.Animator.speed = baseAnimationLength / delayBetweenShots * 2f;
+                    gearboundSentinel.Animator.speed = baseAnimationLength / delayBetweenShots * 2f;
                 }
                 else
                 {
-                    this.gearboundSentinel.Animator.speed = 0f;
-                    yield return new WaitForSeconds(wait - baseAnimationLength * 2f);
+                    gearboundSentinel.Animator.speed = 0f;
+                    yield return new WaitForSeconds(wait - (baseAnimationLength * 2f));
                     wait = baseAnimationLength / 2f;
-                    this.gearboundSentinel.Animator.speed = 1f;
+                    gearboundSentinel.Animator.speed = 1f;
                 }
 
                 yield return new WaitForSeconds(wait);
-                if (this.gearboundSentinel.AudioLaserShot)
+                if (gearboundSentinel.AudioLaserShot)
                 {
-                    this.gearboundSentinel.AudioSource.PlayOneShot(
-                        this.gearboundSentinel.AudioLaserShot,
-                        this.gearboundSentinel.CalculateVolume(delayBetweenShots));
+                    gearboundSentinel.AudioSource.PlayOneShot(
+                        gearboundSentinel.AudioLaserShot,
+                        gearboundSentinel.CalculateVolume(delayBetweenShots));
                 }
 
-                yield return this.gearboundSentinel.StartCoroutine(this.ShootProjectile(vec, wait, angleQuat));
+                yield return gearboundSentinel.StartCoroutine(ShootProjectile(vec, wait, angleQuat));
             }
 
             // wait a moment before going to the next state
             yield return new WaitForSeconds(0.5f);
             if (phasePattern >= 2) // go from 360 spray straight into burrow
             {
-                this.fsm.SwitchState(this.gearboundSentinel.States[GearboundSentinel.State.Burrow]);
+                fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Burrow]);
             }
             else
             {
-                this.fsm.SwitchState(this.gearboundSentinel.States[GearboundSentinel.State.Chase]);
+                fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Chase]);
             }
         }
     }

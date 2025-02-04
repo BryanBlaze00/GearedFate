@@ -1,9 +1,9 @@
-using System.Linq;
-using UnityEngine;
-using UnityEngine.UI;
-
 namespace BTG
 {
+    using System.Linq;
+    using UnityEngine;
+    using UnityEngine.UI;
+
     public class BossHealthListener : MonoBehaviour
     {
 
@@ -18,9 +18,9 @@ namespace BTG
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         {
-            this._boss = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IBoss>().FirstOrDefault();
+            _boss = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IBoss>().FirstOrDefault();
 #if UNITY_EDITOR
-         if (this._boss == null)
+            if (_boss == null)
          {
              Debug.LogError($"No {nameof(IBoss)} object found in scene");
          }
@@ -29,21 +29,21 @@ namespace BTG
 
         private void Update()
         {
-            if (this._boss == null)
+            if (_boss == null)
             {
                 return;
             }
 
-            float normalizedLife = this._boss.CurrentHealth / this._boss.MaxHealth;
+            float normalizedLife = _boss.CurrentHealth / _boss.MaxHealth;
             if (normalizedLife > 0.5f)
             {
-                this._firstBossBar.fillAmount = 1f;
-                this._secondBossBar.fillAmount = 2 * normalizedLife - 1;
+                _firstBossBar.fillAmount = 1f;
+                _secondBossBar.fillAmount = (2 * normalizedLife) - 1;
             }
             else
             {
-                this._firstBossBar.fillAmount = 2 * normalizedLife;
-                this._secondBossBar.fillAmount = 0f;
+                _firstBossBar.fillAmount = 2 * normalizedLife;
+                _secondBossBar.fillAmount = 0f;
             }
         }
     }

@@ -1,8 +1,8 @@
-using System.IO;
-using UnityEngine;
-
 namespace BTG
 {
+    using System.IO;
+    using UnityEngine;
+
     /// <summary>
     /// Class managing the serialization / deserialization of game data and save said data on the disk.
     /// </summary>
@@ -14,13 +14,13 @@ namespace BTG
 
         public FileDataHandler(string dataDirPath, string dataFileName)
         {
-            this._dataDirPath = dataDirPath;
-            this._dataFileName = dataFileName;
+            _dataDirPath = dataDirPath;
+            _dataFileName = dataFileName;
         }
 
         public GameData Load()
         {
-            var fullPath = Path.Combine(this._dataDirPath, this._dataFileName);
+            var fullPath = Path.Combine(_dataDirPath, _dataFileName);
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
 
             if (!File.Exists(fullPath))
@@ -43,7 +43,7 @@ namespace BTG
 
         public void Save(GameData data)
         {
-            var fullPath = Path.Combine(this._dataDirPath, this._dataFileName);
+            var fullPath = Path.Combine(_dataDirPath, _dataFileName);
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
 
             var dataToStore = JsonUtility.ToJson(data, true);

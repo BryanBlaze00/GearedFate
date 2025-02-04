@@ -1,11 +1,9 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityEngine;
 
 namespace BTG
 {
+    using UnityEngine;
+
     /// <summary>
     /// PlayerDeadState
     /// </summary>
@@ -21,9 +19,9 @@ namespace BTG
         public override void OnEnter()
         {
             base.OnEnter();
-            this.player.RB.linearVelocity = Vector2.zero;
-            this.player.RB.Sleep();
-            this.time = Time.time;
+            player.RB.linearVelocity = Vector2.zero;
+            player.RB.Sleep();
+            time = Time.time;
         }
 
         public override void OnExit()
@@ -32,7 +30,7 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            if (Time.time > this.time + 3f)
+            if (Time.time > time + 3f)
             {
                 GameManager.Instance.LoadMainMenu();
             }

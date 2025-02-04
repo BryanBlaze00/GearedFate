@@ -11,24 +11,29 @@ namespace BTG
     {
         public event Action OnHitTaken;
 
-        [field: SerializeField] public CircleSpawner CircleSpawner { get; private set; }
+        [field: SerializeField]
+        public CircleSpawner CircleSpawner { get; private set; }
 
-        [field: SerializeField] public LineRotater LineRotater { get; private set; }
+        [field: SerializeField]
+        public LineRotater LineRotater { get; private set; }
 
-        [field: SerializeField] public CircleExpander CircleExpander { get; private set; }
+        [field: SerializeField]
+        public CircleExpander CircleExpander { get; private set; }
 
-        [field: SerializeField] public Animator AnimatorLowPart { get; private set; }
+        [field: SerializeField]
+        public Animator AnimatorLowPart { get; private set; }
 
-        [field: SerializeField] public Animator AnimatorHighPart { get; private set; }
+        [field: SerializeField]
+        public Animator AnimatorHighPart { get; private set; }
 
-        [field: SerializeField] public float MaxHealth { get; private set; }
-
+        [field: SerializeField]
+        public float MaxHealth { get; private set; }
 
         private Player _player;
 
-        private readonly FiniteStateMachine<RustedMarionetteState> _fsm = new();
+        private readonly FiniteStateMachine<RustedMarionetteState> _fsm = new ();
 
-        public readonly Dictionary<RustedMarionetteState, RMBaseState> _states = new();
+        public readonly Dictionary<RustedMarionetteState, RMBaseState> _states = new ();
 
         public float CurrentHealth { get; private set; }
 
@@ -43,27 +48,27 @@ namespace BTG
 
         private void Start()
         {
-            this._player = FindFirstObjectByType<Player>();
+            _player = FindFirstObjectByType<Player>();
             var death = Animator.StringToHash(nameof(RustedMarionetteState.Death));
             var spin = Animator.StringToHash("Spin");
-            this.CurrentHealth = this.MaxHealth;
+            CurrentHealth = MaxHealth;
 
-            this._states.Add(RustedMarionetteState.Idle, new RMIdleState(this._fsm, this, spin, spin));
-            this._states.Add(RustedMarionetteState.Death, new RMDeathState(this._fsm, this, death, death));
-            this._states.Add(RustedMarionetteState.CircleStorm, new RMCircleStormState(this._fsm, this, spin, spin));
-            this._states.Add(RustedMarionetteState.CirclingLines, new RMSpinningLinesState(this._fsm, this, spin, spin));
-            this._states.Add(RustedMarionetteState.StringMaze, new RMStringMazeState(this._fsm, this, spin, spin));
+            _states.Add(RustedMarionetteState.Idle, new RMIdleState(_fsm, this, spin, spin));
+            _states.Add(RustedMarionetteState.Death, new RMDeathState(_fsm, this, death, death));
+            _states.Add(RustedMarionetteState.CircleStorm, new RMCircleStormState(_fsm, this, spin, spin));
+            _states.Add(RustedMarionetteState.CirclingLines, new RMSpinningLinesState(_fsm, this, spin, spin));
+            _states.Add(RustedMarionetteState.StringMaze, new RMStringMazeState(_fsm, this, spin, spin));
 
-            this._fsm.Initialize(this._states[RustedMarionetteState.CirclingLines]);
+            _fsm.Initialize(_states[RustedMarionetteState.CirclingLines]);
         }
 
         public void TakeDamage(float damage)
         {
             // Ignore hit if in maze state and player far from target
-            if (this._fsm.CurrentState.GetType() == typeof(RMStringMazeState) &&
-                Vector2.Distance(this._player.transform.position, this.transform.position) > 3f)
+            if (_fsm.CurrentState.GetType() == typeof(RMStringMazeState) &&
+                Vector2.Distance(_player.transform.position, transform.position) > 3f)
             {
-                foreach (var hitFlash in this.GetComponentsInChildren<HitFlash>())
+                foreach (var hitFlash in GetComponentsInChildren<HitFlash>())
                 {
                     hitFlash.SetFlashColor(Color.blue);
                     hitFlash.HitFlashRoutine();
@@ -72,25 +77,25 @@ namespace BTG
                 return;
             }
 
-            foreach (var hitFlash in this.GetComponentsInChildren<HitFlash>())
+            foreach (var hitFlash in GetComponentsInChildren<HitFlash>())
             {
                 hitFlash.SetFlashColor(Color.red);
                 hitFlash.HitFlashRoutine();
             }
 
-            this.CurrentHealth = Mathf.Max(0f, this.CurrentHealth - damage);
+            CurrentHealth = Mathf.Max(0f, CurrentHealth - damage);
 
-            if (this.CurrentHealth == 0)
+            if (CurrentHealth == 0)
             {
                 Elevator.Instance.ActivateElevator();
             }
 
-            this.OnHitTaken?.Invoke();
+            OnHitTaken?.Invoke();
         }
 
         protected void Update()
         {
-            this._fsm.CurrentState.OnFrameUpdate();
+            _fsm.CurrentState.OnFrameUpdate();
         }
     }
 }

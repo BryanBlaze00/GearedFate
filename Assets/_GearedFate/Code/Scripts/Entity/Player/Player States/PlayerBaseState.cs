@@ -1,6 +1,4 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
 
 namespace BTG
 {
@@ -10,6 +8,7 @@ namespace BTG
     public class PlayerBaseState : BaseState<Player.State>
     {
         protected static PlayerInputHandler Input { get; private set; }
+
         protected readonly Player player;
         protected readonly PlayerData data;
         private readonly int animId;
@@ -25,8 +24,8 @@ namespace BTG
 
         public override void OnEnter()
         {
-            this.player.Anim.Play(this.animId, 0, 0);
-            this.OnCheck();
+            player.Anim.Play(animId, 0, 0);
+            OnCheck();
         }
 
         public override void OnExit()
@@ -43,7 +42,7 @@ namespace BTG
             {
                 if (Input.AttackPressed)
                 {
-                    this.fsm.SwitchState(this.player.states[this.player.CurrentAbility]);
+                    fsm.SwitchState(player.states[player.CurrentAbility]);
                     return true;
                 }
 
@@ -55,16 +54,15 @@ namespace BTG
         {
             get
             {
-                if (Input.DashPressed && ((PlayerDashState)this.player.states[Player.State.Dash]).CanDash)
+                if (Input.DashPressed && ((PlayerDashState)player.states[Player.State.Dash]).CanDash)
                 {
-                    this.fsm.SwitchState(this.player.states[Player.State.Dash]);
+                    fsm.SwitchState(player.states[Player.State.Dash]);
                     return true;
                 }
 
                 return false;
             }
         }
-
 
         /* Previous Controls
         protected bool AbilityChecks
@@ -111,7 +109,7 @@ namespace BTG
 
         public override void OnPhysicsUpdate()
         {
-            this.OnCheck();
+            OnCheck();
         }
 
         private void OnCheck()

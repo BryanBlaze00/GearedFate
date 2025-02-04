@@ -1,39 +1,39 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityEngine;
-using UnityEngine.UI;
 
 namespace BTG
 {
+    using UnityEngine;
+    using UnityEngine.UI;
+
     /// <summary>
     /// GAMEOVER 
     /// </summary>
     public class GameOver : MonoBehaviour
     {
-        [Header("Game Over Settings")] [Header("Button Settings")] [SerializeField]
+        [Header("Game Over Settings")]
+        [Header("Button Settings")]
+        [SerializeField]
         private Button _retryButton;
 
-        [SerializeField] private Button _menuButton;
+        [SerializeField]
+        private Button _menuButton;
 
-        [Header("Avatar Settings")] [SerializeField]
+        [Header("Avatar Settings")]
+        [SerializeField]
         private GameObject _avatar;
-
 
         private UISpriteAnimation _avatarAnim;
 
-
         private void Awake()
         {
-            this._avatarAnim = this._avatar.GetComponent<UISpriteAnimation>();
-            this._retryButton.onClick.AddListener(this.Retry);
-            this._menuButton.onClick.AddListener(this.GoMain);
+            _avatarAnim = _avatar.GetComponent<UISpriteAnimation>();
+            _retryButton.onClick.AddListener(Retry);
+            _menuButton.onClick.AddListener(GoMain);
         }
 
         private void Start()
         {
-            this._avatarAnim.PlayOnce(false);
+            _avatarAnim.PlayOnce(false);
         }
 
         private void GoMain()

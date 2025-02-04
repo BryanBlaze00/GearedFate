@@ -1,19 +1,20 @@
-using UnityEngine;
-
 namespace BTG
 {
+    using UnityEngine;
+
     /// <summary>
     /// Scrap to refuel the player.
     /// </summary>
     public class FuelScrap : Scrap
     {
-        [SerializeField] private float _fuelAdded;
+        [SerializeField]
+        private float _fuelAdded;
 
         public override void ApplyEffect(IAffectable player)
         {
             if (player is IRefuelable refuelable)
             {
-                refuelable.Refuel(this._fuelAdded);
+                refuelable.Refuel(_fuelAdded);
             }
 
             var listedPoolObjects = ObjectPool.Instance.GetAllPooledObjects(PooledObjectType.Fuel_Scrap);
@@ -21,12 +22,12 @@ namespace BTG
             {
                 if (pooledObject.activeSelf)
                 {
-                    ObjectPool.Instance.ReturnPooledObject(this.gameObject);
+                    ObjectPool.Instance.ReturnPooledObject(gameObject);
                     break;
                 }
                 else
                 {
-                    Destroy(this.gameObject); // Destroy the scrap when it reaches the player if not in the pool.
+                    Destroy(gameObject); // Destroy the scrap when it reaches the player if not in the pool.
                     break;
                 }
             }

@@ -1,28 +1,34 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace BTG
 {
+    using System.Collections.Generic;
+    using UnityEngine;
+
     /// <summary>
     /// Geared Sentinel Data
     /// </summary>
     [CreateAssetMenu(fileName = "newGSData", menuName = "Data/Entity/Enemy/GSData", order = 0)]
     public class GSData : ScriptableObject
     {
-        [field: SerializeField] public float BaseMoveSpeed { get; private set; }
-        [field: SerializeField] public float BurrowSpeedMultiplier { get; private set; }
-        [field: SerializeField] public float BurrowDamage { get; private set; }
-        [field: SerializeField] public float MaxHealth { get; private set; }
-        [field: SerializeField] public float BaseDistanceGoal { get; private set; }
+        [field: SerializeField]
+        public float BaseMoveSpeed { get; private set; }
+
+        [field: SerializeField]
+        public float BurrowSpeedMultiplier { get; private set; }
+
+        [field: SerializeField]
+        public float BurrowDamage { get; private set; }
+
+        [field: SerializeField]
+        public float MaxHealth { get; private set; }
+
+        [field: SerializeField]
+        public float BaseDistanceGoal { get; private set; }
 
         [field: SerializeField]
         [field: Range(0, 1)]
         public List<float> StageTransitionHealthPercentage { get; private set; }
-
 
         [Header("Stage 0 Data")]
         [field: SerializeField]
@@ -57,9 +63,9 @@ namespace BTG
 
         private void OnValidate()
         {
-            if (this.StageTransitionHealthPercentage.Count > 3)
+            if (StageTransitionHealthPercentage.Count > 3)
             {
-                this.StageTransitionHealthPercentage.RemoveRange(3, this.StageTransitionHealthPercentage.Count - 3);
+                StageTransitionHealthPercentage.RemoveRange(3, StageTransitionHealthPercentage.Count - 3);
             }
         }
     }

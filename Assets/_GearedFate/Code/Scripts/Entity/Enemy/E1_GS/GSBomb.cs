@@ -1,9 +1,9 @@
-using System.Collections;
-using System.Linq;
-using UnityEngine;
-
 namespace BTG
 {
+    using System.Collections;
+    using System.Linq;
+    using UnityEngine;
+
     public class GSBomb : MonoBehaviour
     {
         public float WindupTime;
@@ -17,55 +17,55 @@ namespace BTG
 
         private void OnEnable()
         {
-            if (this.rb == null)
+            if (rb == null)
             {
-                this.rb = this.GetComponent<Rigidbody2D>();
+                rb = GetComponent<Rigidbody2D>();
             }
 
-            if (this.col == null)
+            if (col == null)
             {
-                this.col = this.GetComponents<Collider2D>().First(x => !x.isTrigger);
+                col = GetComponents<Collider2D>().First(x => !x.isTrigger);
             }
 
-            this.col.enabled = false;
-            if (this.Animator == null)
+            col.enabled = false;
+            if (Animator == null)
             {
-                this.Animator = this.GetComponentInChildren<Animator>();
+                Animator = GetComponentInChildren<Animator>();
             }
 
-            if (this.AudioSource == null)
+            if (AudioSource == null)
             {
-                this.AudioSource = this.GetComponent<AudioSource>();
+                AudioSource = GetComponent<AudioSource>();
             }
 
-            this.StartCoroutine(this.Explode());
-            this.StartCoroutine(this.PhysicsThrow());
+            StartCoroutine(Explode());
+            StartCoroutine(PhysicsThrow());
         }
 
         private IEnumerator Explode()
         {
-            this.Animator.speed = this.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / this.WindupTime;
-            yield return new WaitForSeconds(this.WindupTime - 0.15f); // yeah ok
+            Animator.speed = Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / WindupTime;
+            yield return new WaitForSeconds(WindupTime - 0.15f); // yeah ok
 
-            var hits = Physics2D.OverlapCircleAll(this.transform.position, this.BlastRadius, LayerMask.GetMask("Player"))
+            var hits = Physics2D.OverlapCircleAll(transform.position, BlastRadius, LayerMask.GetMask("Player"))
                 .Where(x => !x.isTrigger); // the player's feet
-            this.col.enabled = false;
+            col.enabled = false;
             foreach (var hit in hits)
             {
                 if (hit.TryGetComponent<Player>(out var player))
                 {
                     Debug.Log("Bomb hit player");
-                    player.TakeDamage(this.Damage);
+                    player.TakeDamage(Damage);
                 }
             }
 
-            if (this.AudioSource != null)
+            if (AudioSource != null)
             {
-                this.AudioSource.Play();
+                AudioSource.Play();
             }
 
             yield return new WaitForSeconds(1.5f); // make sure explosion finished
-            this.gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
 
         private IEnumerator PhysicsThrow()
@@ -75,20 +75,20 @@ namespace BTG
             var vY = baseVY;
             var bouncesLeft = baseNumBounces - 1;
             var time = 0f;
-            while (this.gameObject.activeInHierarchy)
+            while (gameObject.activeInHierarchy)
             {
                 const float grav = -9f;
                 vY += grav * Time.fixedDeltaTime;
-                this.Animator.transform.localPosition += new Vector3(0, vY * Time.fixedDeltaTime);
-                this.col.enabled = this.Animator.transform.localPosition.y < 0.3f &&
+                Animator.transform.localPosition += new Vector3(0, vY * Time.fixedDeltaTime);
+                col.enabled = Animator.transform.localPosition.y < 0.3f &&
                     time > 0.5f; // collide near ground but not at the start (the initial throw)
-                if (this.Animator.transform.localPosition.y <= 0f)
+                if (Animator.transform.localPosition.y <= 0f)
                 {
-                    this.rb.linearVelocity /= 1.3f;
+                    rb.linearVelocity /= 1.3f;
                     if (bouncesLeft == 0)
                     {
-                        this.Animator.transform.localPosition *= new Vector2(1, 0);
-                        this.col.enabled = true;
+                        Animator.transform.localPosition *= new Vector2(1, 0);
+                        col.enabled = true;
                         yield break;
                     }
 
@@ -98,7 +98,7 @@ namespace BTG
 
                 if (bouncesLeft == 0)
                 {
-                    this.rb.linearVelocity = Vector2.zero;
+                    rb.linearVelocity = Vector2.zero;
                 }
 
                 yield return new WaitForFixedUpdate();

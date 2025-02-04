@@ -1,7 +1,7 @@
-using UnityEngine;
-
 namespace BTG
 {
+    using UnityEngine;
+
     public class RMCircleStormState : RMBaseState
     {
         private float _enterTime;
@@ -21,28 +21,28 @@ namespace BTG
         public override void OnEnter()
         {
             Debug.Log("enter circle storm");
-            this._enterTime = Time.time;
-            this.PlayAnimationHighBodyPart();
-            this.PlayAnimationLowBodyPart();
-            this._isAttacking = false;
+            _enterTime = Time.time;
+            PlayAnimationHighBodyPart();
+            PlayAnimationLowBodyPart();
+            _isAttacking = false;
         }
 
         public override void OnExit()
         {
-            this.Marionette.CircleSpawner.SetSpawningState(false);
+            Marionette.CircleSpawner.SetSpawningState(false);
         }
 
         public override void OnFrameUpdate()
         {
-            if (Time.time > this._enterTime + this._timeBeforeAttack && !this._isAttacking)
+            if (Time.time > _enterTime + _timeBeforeAttack && !_isAttacking)
             {
-                this._isAttacking = true;
-                this.Marionette.CircleSpawner.SetSpawningState(true);
+                _isAttacking = true;
+                Marionette.CircleSpawner.SetSpawningState(true);
             }
 
-            if (Time.time > this._enterTime + this._timeBeforeStateChange)
+            if (Time.time > _enterTime + _timeBeforeStateChange)
             {
-                this.fsm.SwitchState(this.Marionette._states[RustedMarionette.RustedMarionetteState.Idle]);
+                fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.Idle]);
             }
         }
 

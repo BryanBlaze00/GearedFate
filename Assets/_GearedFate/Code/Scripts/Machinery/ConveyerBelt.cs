@@ -1,11 +1,9 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityEngine;
 
 namespace BTG
 {
+    using UnityEngine;
+
     /// <summary>
     /// ConveyerBelt class to provide conveyer belt functionality.
     /// </summary>
@@ -24,21 +22,21 @@ namespace BTG
         [Range(-5f, 5f)]
         private float speedY = 0f; // Speed in the y-axis
 
-        [Tooltip("Blend factor for the velocity. 0 means no blending, 1 means full blending.")] [SerializeField]
+        [Tooltip("Blend factor for the velocity. 0 means no blending, 1 means full blending.")]
+        [SerializeField]
         private float blendVelocityFactor = 0.5f; // Blend factor for the velocity
 
         private PolygonCollider2D polygonCollider;
 
-
         private void Start()
         {
-            this.polygonCollider = this.GetComponent<PolygonCollider2D>();
-            this.polygonCollider.isTrigger = true; // Make the collider a trigger
+            polygonCollider = GetComponent<PolygonCollider2D>();
+            polygonCollider.isTrigger = true; // Make the collider a trigger
 
-            if (this.polygonCollider.points.Length != 4)
+            if (polygonCollider.points.Length != 4)
             {
                 Debug.LogError("Polygon Collider 2D must have exactly 4 points! Use for corners of the conveyer belt.");
-                this.enabled = false; // Disable the script to prevent further execution
+                enabled = false; // Disable the script to prevent further execution
                 return;
             }
         }
@@ -49,16 +47,16 @@ namespace BTG
 
             if (rb != null)
             {
-                var conveyorBeltVelocity = new Vector2(this.speedX, this.speedY); // The *desired* velocity
+                var conveyorBeltVelocity = new Vector2(speedX, speedY); // The *desired* velocity
 
                 // Blend the conveyor belt velocity with the player's current velocity
-                rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, conveyorBeltVelocity, this.blendVelocityFactor);
+                rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, conveyorBeltVelocity, blendVelocityFactor);
             }
         }
 
         private void FixedUpdate()
         {
-            this.MoveEntities(); // Call the MoveEntities method from the base class
+            MoveEntities(); // Call the MoveEntities method from the base class
         }
     }
 }

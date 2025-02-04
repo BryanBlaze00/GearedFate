@@ -1,17 +1,18 @@
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using UnityUtils;
-
 namespace BTG
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using UnityEngine;
+    using UnityUtils;
+
     /// <summary>
     /// Manager for handling loading and saving game data.
     /// </summary>
     public class DataPersistenceManager : PersistentSingleton<DataPersistenceManager>
     {
         // Name of the saved file.
-        [SerializeField] private string _saveFileName;
+        [SerializeField]
+        private string _saveFileName;
 
         // Full state of the game is saved in GameData
         private GameData _gameData;
@@ -24,31 +25,31 @@ namespace BTG
 
         private void Start()
         {
-            this._dataHandler = new FileDataHandler(Application.persistentDataPath, this._saveFileName);
-            this.LoadGame();
+            _dataHandler = new FileDataHandler(Application.persistentDataPath, _saveFileName);
+            LoadGame();
         }
 
         private void OnApplicationQuit()
         {
-            this.SaveGame();
+            SaveGame();
         }
 
         // TODO : Call that from a menu "Start" button
         public void NewGame()
         {
-            this._gameData = new GameData();
+            _gameData = new GameData();
         }
 
         // TODO : Call that from a menu "Continue" button
         public void LoadGame()
         {
-            this._gameData = this._dataHandler.Load();
-            if (this._gameData == null)
+            _gameData = _dataHandler.Load();
+            if (_gameData == null)
             {
-                this.NewGame();
+                NewGame();
             }
 
-            foreach (var pair in this._gameData.AssetToInstantiates)
+            foreach (var pair in _gameData.AssetToInstantiates)
             {
                 for (var i = 0; i < pair.Value; i++)
                 {
@@ -57,37 +58,37 @@ namespace BTG
                 }
             }
 
-            this.FindAllDataPersistence();
+            FindAllDataPersistence();
 
-            foreach (var dataPersistenceObject in this._dataPersistencesObjects)
+            foreach (var dataPersistenceObject in _dataPersistencesObjects)
             {
-                dataPersistenceObject.LoadData(this._gameData);
+                dataPersistenceObject.LoadData(_gameData);
             }
 
-            this._gameData.CleanAfterLoad();
+            _gameData.CleanAfterLoad();
         }
 
         // TODO : Call that from a menu "Save" button or Save from time to time (checkpoints ?)
         public void SaveGame()
         {
-            this.FindAllDataPersistence();
-            foreach (var dataPersistenceObject in this._dataPersistencesObjects)
+            FindAllDataPersistence();
+            foreach (var dataPersistenceObject in _dataPersistencesObjects)
             {
                 // Instance that need to be saved register in the game data using their pooled object type.
                 if (dataPersistenceObject is ISaveableInstance saveableInstance)
                 {
-                    this._gameData.AddAssetIndexToInstantiate(saveableInstance.PooledObjectType);
+                    _gameData.AddAssetIndexToInstantiate(saveableInstance.PooledObjectType);
                 }
 
-                dataPersistenceObject.SaveData(ref this._gameData);
+                dataPersistenceObject.SaveData(ref _gameData);
             }
 
-            this._dataHandler.Save(this._gameData);
+            _dataHandler.Save(_gameData);
         }
 
         private void FindAllDataPersistence()
         {
-            this._dataPersistencesObjects =
+            _dataPersistencesObjects =
                 FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
                     .OfType<IDataPersistence>()
                     .ToList();

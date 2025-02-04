@@ -1,7 +1,7 @@
-using UnityEngine;
-
 namespace BTG
 {
+    using UnityEngine;
+
     public class CentipedeChaseState : CentipedeBaseState
     {
         private readonly int _animId;
@@ -11,19 +11,19 @@ namespace BTG
         public CentipedeChaseState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId,
             SteamCentipede steamCentipede, float chasingDistance) : base(fsm, steamCentipede)
         {
-            this._animId = animationId;
-            this._chasingDistance = chasingDistance;
+            _animId = animationId;
+            _chasingDistance = chasingDistance;
         }
 
         public override void OnEnter()
         {
-            this.Centipede.SetSpeed(this.Centipede.RegularSpeed);
-            this.Centipede.SetAnimations(this._animId, true);
-            this.Centipede.IsAttacking = false;
+            Centipede.SetSpeed(Centipede.RegularSpeed);
+            Centipede.SetAnimations(_animId, true);
+            Centipede.IsAttacking = false;
 
-            if (this.Centipede.IsReachingTrajectoryEndNextStep())
+            if (Centipede.IsReachingTrajectoryEndNextStep())
             {
-                this.Centipede.ExpandTrajectory(this.ComputeChaseAimPosition());
+                Centipede.ExpandTrajectory(ComputeChaseAimPosition());
             }
         }
 
@@ -33,19 +33,19 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            this.Centipede.MoveAlongTrajectory();
-            if (!this.Centipede.IsReachingTrajectoryEndNextStep())
+            Centipede.MoveAlongTrajectory();
+            if (!Centipede.IsReachingTrajectoryEndNextStep())
             {
                 return;
             }
 
-            if (this.Centipede.DistanceToTarget < this._chasingDistance)
+            if (Centipede.DistanceToTarget < _chasingDistance)
             {
-                this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Circle]);
+                fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Circle]);
             }
             else
             {
-                this.Centipede.ExpandTrajectory(this.ComputeChaseAimPosition());
+                Centipede.ExpandTrajectory(ComputeChaseAimPosition());
             }
         }
 
@@ -55,7 +55,7 @@ namespace BTG
 
         private Vector2 ComputeChaseAimPosition()
         {
-            return this.Centipede.HeadPosition - this.Centipede.VectorToTarget.normalized * 3;
+            return Centipede.HeadPosition - (Centipede.VectorToTarget.normalized * 3);
         }
     }
 }

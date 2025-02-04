@@ -1,28 +1,28 @@
-using UnityEngine;
-
 namespace BTG
 {
+    using UnityEngine;
+
     public static class VectorHelper2D
     {
         // Define the cardinal and diagonal directions (don't change the order, that will break some method)
         private static Vector2[] _directions = new Vector2[]
         {
-            new(0, 1), // Up
-            new(1, 1), // Top-right
-            new(1, 0), // Right
-            new(1, -1), // Bottom-right
-            new(0, -1), // Down
-            new(-1, -1), // Bottom-left
-            new(-1, 0), // Left
-            new(-1, 1) // Top-left
+            new (0, 1), // Up
+            new (1, 1), // Top-right
+            new (1, 0), // Right
+            new (1, -1), // Bottom-right
+            new (0, -1), // Down
+            new (-1, -1), // Bottom-left
+            new (-1, 0), // Left
+            new (-1, 1), // Top-left
         };
 
         private static Vector2[] _cardinalDirections = new Vector2[]
         {
-            new(0, 1), // Up
-            new(1, 0), // Right
-            new(0, -1), // Down
-            new(-1, 0) // Left
+            new (0, 1), // Up
+            new (1, 0), // Right
+            new (0, -1), // Down
+            new (-1, 0), // Left
         };
 
         public enum Direction
@@ -34,7 +34,7 @@ namespace BTG
             Bottom = 4,
             BottomLeft = 5,
             Left = 6,
-            TopLeft = 7
+            TopLeft = 7,
         }
 
         public static Direction ClosestCardinalOrDiagonal(Vector2 vector)

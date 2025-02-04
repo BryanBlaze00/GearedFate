@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-
-namespace UnityUtils
+﻿namespace UnityUtils
 {
+    using UnityEngine;
+
     public class PersistentSingleton<T> : MonoBehaviour where T : Component
     {
         public bool AutoUnparentOnAwake = true;
@@ -38,7 +38,7 @@ namespace UnityUtils
         /// </summary>
         protected virtual void Awake()
         {
-            this.InitializeSingleton();
+            InitializeSingleton();
         }
 
         protected virtual void InitializeSingleton()
@@ -48,21 +48,21 @@ namespace UnityUtils
                 return;
             }
 
-            if (this.AutoUnparentOnAwake)
+            if (AutoUnparentOnAwake)
             {
-                this.transform.SetParent(null);
+                transform.SetParent(null);
             }
 
             if (instance == null)
             {
                 instance = this as T;
-                DontDestroyOnLoad(this.gameObject);
+                DontDestroyOnLoad(gameObject);
             }
             else
             {
                 if (instance != this)
                 {
-                    Destroy(this.gameObject);
+                    Destroy(gameObject);
                 }
             }
         }

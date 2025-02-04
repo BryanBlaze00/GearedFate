@@ -1,32 +1,31 @@
-using System.Linq;
-
 namespace BTG
 {
+    using System.Linq;
+
     public class GCSpinState : GCBaseState
     {
         public GCSpinState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId) :
             base(fsm, enemy, animId)
         {
-            var smb = this.GreatCreator.Animator.GetBehaviours<MultiStepSmb>().First(x => x.Id == "Spin");
-            smb.OnStepReached += this.HandleEndSpin;
+            var smb = GreatCreator.Animator.GetBehaviours<MultiStepSmb>().First(x => x.Id == "Spin");
+            smb.OnStepReached += HandleEndSpin;
         }
 
         private void HandleEndSpin(int obj)
         {
-            this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.RunAway]);
+            fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.RunAway]);
         }
-
 
         public override void OnEnter()
         {
-            this.PlayAnimation();
-            this.GreatCreator.StartCoroutine(this.GreatCreator.ShootProjectiles());
-            this.GreatCreator.Agent.isStopped = true;
+            PlayAnimation();
+            GreatCreator.StartCoroutine(GreatCreator.ShootProjectiles());
+            GreatCreator.Agent.isStopped = true;
         }
 
         public override void OnExit()
         {
-            this.GreatCreator.Agent.isStopped = false;
+            GreatCreator.Agent.isStopped = false;
         }
 
         public override void OnFrameUpdate()
@@ -39,7 +38,7 @@ namespace BTG
 
         public void SetAnimation(int stringToHash)
         {
-            this.SetAnimationId(stringToHash);
+            SetAnimationId(stringToHash);
         }
     }
 }

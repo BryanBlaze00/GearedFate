@@ -1,7 +1,7 @@
-using UnityEngine;
-
 namespace BTG
 {
+    using UnityEngine;
+
     public class RMDeathState : RMBaseState
     {
         public RMDeathState(FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm, RustedMarionette marionette,
@@ -13,8 +13,8 @@ namespace BTG
         public override void OnEnter()
         {
             Debug.Log("dead");
-            this.PlayAnimationHighBodyPart();
-            this.PlayAnimationLowBodyPart();
+            PlayAnimationHighBodyPart();
+            PlayAnimationLowBodyPart();
         }
 
         public override void OnExit()

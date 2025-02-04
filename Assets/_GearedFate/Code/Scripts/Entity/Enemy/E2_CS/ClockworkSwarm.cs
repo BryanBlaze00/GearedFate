@@ -1,11 +1,9 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityEngine;
 
 namespace BTG
 {
+    using UnityEngine;
+
     /// <summary>
     /// GearboundSentinel
     /// </summary>
@@ -13,7 +11,7 @@ namespace BTG
     {
         public enum State
         {
-            Idle
+            Idle,
         }
 
         private void Start()

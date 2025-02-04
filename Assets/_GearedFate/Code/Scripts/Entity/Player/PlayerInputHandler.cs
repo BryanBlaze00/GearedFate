@@ -1,18 +1,17 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace BTG
 {
+    using UnityEngine;
+    using UnityEngine.InputSystem;
+
     /// <summary>
     /// PlayerInputHandler
     /// </summary>
     public class PlayerInputHandler : MonoBehaviour
     {
         public Vector2 MoveInput { get; private set; }
+
         public bool AttackPressed { get; private set; }
 
         public bool DashPressed { get; private set; }
@@ -29,19 +28,19 @@ namespace BTG
 
         private void Awake()
         {
-            this.player = this.GetComponent<Player>();
+            player = GetComponent<Player>();
         }
 
         public void OnMove(InputAction.CallbackContext ctx)
         {
-            this.MoveInput = ctx.ReadValue<Vector2>();
+            MoveInput = ctx.ReadValue<Vector2>();
         }
 
         public void OnAbilityChange(InputAction.CallbackContext ctx)
         {
             if (ctx.performed)
             {
-                this.player.ChangeCurrentAbility((int)ctx.ReadValue<float>());
+                player.ChangeCurrentAbility((int)ctx.ReadValue<float>());
             }
         }
 
@@ -49,11 +48,11 @@ namespace BTG
         {
             if (ctx.performed)
             {
-                this.DashPressed = true;
+                DashPressed = true;
             }
             else if (ctx.canceled)
             {
-                this.DashPressed = false;
+                DashPressed = false;
             }
         }
 
@@ -61,14 +60,13 @@ namespace BTG
         {
             if (ctx.performed)
             {
-                this.AttackPressed = true;
+                AttackPressed = true;
             }
             else if (ctx.canceled)
             {
-                this.AttackPressed = false;
+                AttackPressed = false;
             }
         }
-
 
         /* Previous
         public void OnAim(InputAction.CallbackContext ctx)

@@ -1,11 +1,9 @@
-//
 // Copyright (c) Dayen Creation. All rights reserved.
-//
-
-using UnityEngine;
 
 namespace DayenCreation
 {
+    using UnityEngine;
+
     /// <summary>
     /// Extension Methods for UnityEngine.Transform
     /// </summary>

@@ -1,19 +1,18 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityEngine;
-using System.Collections.Generic;
-using MEC;
 
 namespace BTG
 {
+    using System.Collections.Generic;
+    using MEC;
+    using UnityEngine;
+
     /// <summary>
     /// Projectile
     /// </summary>
     public class Projectile : MonoBehaviour
     {
-        [field: SerializeField] public ProjectileData Data { get; private set; }
+        [field: SerializeField]
+        public ProjectileData Data { get; private set; }
 
         private CoroutineHandle coroutineHandle;
         private Rigidbody2D rb;
@@ -26,15 +25,15 @@ namespace BTG
         /// </summary>
         public void SetUnaffectedLayer(int unaffectedLayer)
         {
-            this._unaffectedLayer = unaffectedLayer;
+            _unaffectedLayer = unaffectedLayer;
         }
 
         private void OnEnable()
         {
-            this.coroutineHandle = Timing.RunCoroutine(this._Disable().CancelWith(this.gameObject));
-            if (this.rb == null)
+            coroutineHandle = Timing.RunCoroutine(_Disable().CancelWith(gameObject));
+            if (rb == null)
             {
-                this.rb = this.GetComponent<Rigidbody2D>();
+                rb = GetComponent<Rigidbody2D>();
             }
         }
 
@@ -42,27 +41,27 @@ namespace BTG
         {
             // Do nothing if the collided game object is the on the unnafected layer or if it can't take damages
             // TODO : Some objects should stop projectiles, like walls, maybe have a IStopProjectileInterface to deal with that.
-            if (collision.gameObject.layer == this._unaffectedLayer ||
+            if (collision.gameObject.layer == _unaffectedLayer ||
                 !collision.TryGetComponent(out IDamagable damageable))
             {
                 return;
             }
 
             Debug.Log("Projectile hit");
-            damageable.TakeDamage(this.Data.Damage);
-            this.gameObject.SetActive(false);
-            Timing.KillCoroutines(this.coroutineHandle);
+            damageable.TakeDamage(Data.Damage);
+            gameObject.SetActive(false);
+            Timing.KillCoroutines(coroutineHandle);
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            this.OnTriggerEnter2D(collision.collider);
+            OnTriggerEnter2D(collision.collider);
         }
 
         private IEnumerator<float> _Disable()
         {
             yield return Timing.WaitForSeconds(5f);
-            this.gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 }

@@ -1,12 +1,10 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using NaughtyAttributes;
-using UnityEngine;
 
 namespace BTG
 {
+    using NaughtyAttributes;
+    using UnityEngine;
+
     /// <summary>
     /// Carries and transfers player state information to other scripts
     /// This is used to remove any direct dependencies among player and any other scripts
@@ -15,6 +13,7 @@ namespace BTG
     [CreateAssetMenu(fileName = "newPlayerInfoSO", menuName = "Data/Entity/Player/Player Info SO", order = 0)]
     public class PlayerInfoSO : ScriptableObject
     {
-        [ReadOnly] public Vector2 position;
+        [ReadOnly]
+        public Vector2 position;
     }
 }

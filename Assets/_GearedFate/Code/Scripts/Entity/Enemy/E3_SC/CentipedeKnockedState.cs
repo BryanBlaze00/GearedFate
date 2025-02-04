@@ -1,7 +1,7 @@
-using UnityEngine;
-
 namespace BTG
 {
+    using UnityEngine;
+
     public class CentipedeKnockedState : CentipedeBaseState
     {
         private readonly int _animId;
@@ -14,16 +14,16 @@ namespace BTG
             SteamCentipede steamCentipede)
             : base(fsm, steamCentipede)
         {
-            this._animId = animationId;
+            _animId = animationId;
         }
 
         public override void OnEnter()
         {
             Debug.Log("Knocked Down !");
-            this._knockedTime = Time.time;
-            this.Centipede.SetAnimations(this._animId, false);
-            this.Centipede.KnockOutAnimate();
-            this.Centipede.IsAttacking = false;
+            _knockedTime = Time.time;
+            Centipede.SetAnimations(_animId, false);
+            Centipede.KnockOutAnimate();
+            Centipede.IsAttacking = false;
         }
 
         public override void OnExit()
@@ -32,9 +32,9 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            if (Time.time > this._knockedTime + this._timeToGetBack)
+            if (Time.time > _knockedTime + _timeToGetBack)
             {
-                this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Chase]);
+                fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Chase]);
             }
         }
 

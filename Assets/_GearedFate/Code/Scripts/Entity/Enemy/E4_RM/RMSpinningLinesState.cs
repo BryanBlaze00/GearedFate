@@ -1,7 +1,7 @@
-using UnityEngine;
-
 namespace BTG
 {
+    using UnityEngine;
+
     public class RMSpinningLinesState : RMBaseState
     {
         private float _enterTime;
@@ -20,28 +20,28 @@ namespace BTG
 
         public override void OnEnter()
         {
-            this._enterTime = Time.time;
-            this._isAttacking = false;
-            this.PlayAnimationHighBodyPart();
-            this.PlayAnimationLowBodyPart();
+            _enterTime = Time.time;
+            _isAttacking = false;
+            PlayAnimationHighBodyPart();
+            PlayAnimationLowBodyPart();
         }
 
         public override void OnExit()
         {
-            this.Marionette.LineRotater.SetLineState(false);
+            Marionette.LineRotater.SetLineState(false);
         }
 
         public override void OnFrameUpdate()
         {
-            if (Time.time > this._enterTime + this._timeBeforeAttack && !this._isAttacking)
+            if (Time.time > _enterTime + _timeBeforeAttack && !_isAttacking)
             {
-                this._isAttacking = true;
-                this.Marionette.LineRotater.SetLineState(true);
+                _isAttacking = true;
+                Marionette.LineRotater.SetLineState(true);
             }
 
-            if (Time.time > this._enterTime + this._timeBeforeStateChange)
+            if (Time.time > _enterTime + _timeBeforeStateChange)
             {
-                this.fsm.SwitchState(this.Marionette._states[RustedMarionette.RustedMarionetteState.Idle]);
+                fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.Idle]);
             }
         }
 

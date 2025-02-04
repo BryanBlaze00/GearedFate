@@ -6,23 +6,43 @@
   <component name="ChangeListManager">
     <list default="true" id="6194bf5e-abe9-4a8e-92d7-42f7cb0f609d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.GearedFate/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GearedFate/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/FastScriptReload/Plugins/Harmony/net48/0Harmony.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/FastScriptReload/Plugins/Harmony/net48/0Harmony.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/FastScriptReload/Plugins/Roslyn/2021+/System.Reflection.Metadata.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/FastScriptReload/Plugins/Roslyn/2021+/System.Reflection.Metadata.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/FastScriptReload/Plugins/Roslyn/2021+/System.Runtime.CompilerServices.Unsafe.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/FastScriptReload/Plugins/Roslyn/2021+/System.Runtime.CompilerServices.Unsafe.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/FastScriptReload/Scripts/Editor/FastScriptReload.Editor.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/FastScriptReload/Scripts/Editor/FastScriptReload.Editor.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/FastScriptReload/Scripts/Runtime/FastScriptReload.Runtime.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/FastScriptReload/Scripts/Runtime/FastScriptReload.Runtime.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/NaughtyAttributes/Scripts/Core/NaughtyAttributes.Core.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/NaughtyAttributes/Scripts/Core/NaughtyAttributes.Core.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/NaughtyAttributes/Scripts/Editor/NaughtyAttributes.Editor.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/NaughtyAttributes/Scripts/Editor/NaughtyAttributes.Editor.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/NaughtyAttributes/Scripts/Test/NaughtyAttributes.Test.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/NaughtyAttributes/Scripts/Test/NaughtyAttributes.Test.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/NaughtyAttributes/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/NaughtyAttributes/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/NavMeshComponents/Editor/NavMeshComponentsEditor.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/NavMeshComponents/Editor/NavMeshComponentsEditor.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/NavMeshComponents/Scripts/NavMeshComponents.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/NavMeshComponents/Scripts/NavMeshComponents.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/LineRenderer2D/LineRenderer2D-main/Assets/LineRenderer2D.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/LineRenderer2D/LineRenderer2D-main/Assets/LineRenderer2D.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/LineRenderer2D/LineRenderer2D-main/Assets/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/LineRenderer2D/LineRenderer2D-main/Assets/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/PrimeTween/Demo/Scripts/MeasureAllocations/PrimeTween.Debug.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/PrimeTween/Demo/Scripts/MeasureAllocations/PrimeTween.Debug.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/PrimeTween/Demo/Scripts/PrimeTween.Demo.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/PrimeTween/Demo/Scripts/PrimeTween.Demo.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/PrimeTween/internal/PrimeTween.Installer.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/PrimeTween/internal/PrimeTween.Installer.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Trinary Software/MEC.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Trinary Software/MEC.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SceneReference-master/Tymski.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SceneReference-master/Tymski.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SceneReference-master/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SceneReference-master/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Sprites/EmojiOne.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Sprites/EmojiOne.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/BossHealthListener.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/BossHealthListener.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/MultiStepSmb.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/MultiStepSmb.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/BossStartTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/BossStartTrigger.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/DataPersistence/DataPersistenceManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/DataPersistence/DataPersistenceManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/DataPersistence/FileDataHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/DataPersistence/FileDataHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/DataPersistence/GameData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/DataPersistence/GameData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/DataPersistence/IDataPersistence.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/DataPersistence/IDataPersistence.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/DataPersistence/ISaveableInstance.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/DataPersistence/ISaveableInstance.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/DataPersistence/SaveStructs/MinionSaveStruct.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/DataPersistence/SaveStructs/MinionSaveStruct.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/DataPersistence/SaveStructs/PlayerSaveStruct.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/DataPersistence/SaveStructs/PlayerSaveStruct.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Core/Abstract/BossMinion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Core/Abstract/BossMinion.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Core/Interfaces/IAffectable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Core/Interfaces/IAffectable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Core/Interfaces/IHealable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Core/Interfaces/IHealable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Core/Interfaces/IRefuelable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Core/Interfaces/IRefuelable.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Core/FiniteStateMachine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Core/FiniteStateMachine.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E1_GS/GSBomb.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E1_GS/GSBomb.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E1_GS/GSData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E1_GS/GSData.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E1_GS/GSStates/GSBaseState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E1_GS/GSStates/GSBaseState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E1_GS/GSStates/GSBombState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E1_GS/GSStates/GSBombState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E1_GS/GSStates/GSBurrowState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E1_GS/GSStates/GSBurrowState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E1_GS/GSStates/GSChaseState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E1_GS/GSStates/GSChaseState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E1_GS/GSStates/GSDyingState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E1_GS/GSStates/GSDyingState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E1_GS/GSStates/GSIntroState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E1_GS/GSStates/GSIntroState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E1_GS/GSStates/GSShootState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E1_GS/GSStates/GSShootState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E1_GS/GearboundSentinel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E1_GS/GearboundSentinel.cs" afterDir="false" />
@@ -43,9 +63,13 @@
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/CircleString.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/CircleString.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/LineRotater.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/LineRotater.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/OpenRotatingCircleStrings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/OpenRotatingCircleStrings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/RMBaseState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/RMBaseState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/RMCircleStormState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/RMCircleStormState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/RMDeathState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/RMDeathState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/RMIdleState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/RMIdleState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/RMSpinningLinesState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/RMSpinningLinesState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/RMStringMazeState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/RMStringMazeState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/RotatingLine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/RotatingLine.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/RustedMarionette.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E4_RM/RustedMarionette.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E5_GC/GCStates/GCBaseState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E5_GC/GCStates/GCBaseState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E5_GC/GCStates/GCDashState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E5_GC/GCStates/GCDashState.cs" afterDir="false" />
@@ -53,9 +77,11 @@
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E5_GC/GCStates/GCIdleState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E5_GC/GCStates/GCIdleState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E5_GC/GCStates/GCRunAwayState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E5_GC/GCStates/GCRunAwayState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E5_GC/GCStates/GCSpinState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E5_GC/GCStates/GCSpinState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E5_GC/GCStates/GCSwarmState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E5_GC/GCStates/GCSwarmState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E5_GC/GCStates/GCTransformationState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E5_GC/GCStates/GCTransformationState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E5_GC/GreatCreator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E5_GC/GreatCreator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/IBoss.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/IBoss.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E5_GC/GreatCreatorAnimationEventHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E5_GC/GreatCreatorAnimationEventHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E5_GC/Minion_GC.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/E5_GC/Minion_GC.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/Minion/BombMinion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/Minion/BombMinion.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/Minion/DrillMinion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/Minion/DrillMinion.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/Minion/Explosive.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Enemy/Minion/Explosive.cs" afterDir="false" />
@@ -64,25 +90,39 @@
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/Player States/PlayerDashState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/Player States/PlayerDashState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/Player States/PlayerDeadState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/Player States/PlayerDeadState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/Player States/PlayerFireBlazeState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/Player States/PlayerFireBlazeState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/Player States/PlayerGearTossState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/Player States/PlayerGearTossState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/Player States/PlayerHeatWave.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/Player States/PlayerHeatWave.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/Player States/PlayerHitState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/Player States/PlayerHitState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/Player States/PlayerIdleState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/Player States/PlayerIdleState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/Player States/PlayerMoveState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/Player States/PlayerMoveState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/Player States/PlayerSlashState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/Player States/PlayerSlashState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/Player.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/PlayerAnimationEventHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/PlayerAnimationEventHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/PlayerInputHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/PlayerInputHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/PlayerUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/PlayerUI.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/ScrapMagnet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Entity/Player/ScrapMagnet.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Helper/CustomType/MinMaxFloat.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Helper/CustomType/MinMaxFloat.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Helper/CustomType/MinMaxInt.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Helper/CustomType/MinMaxInt.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Helper/Serialization/SerializableDictionary.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Helper/Serialization/SerializableDictionary.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Helper/Singleton/PersistentSingleton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Helper/Singleton/PersistentSingleton.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Helper/Singleton/Singleton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Helper/Singleton/Singleton.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Helper/Vector/VectorHelper2D.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Helper/Vector/VectorHelper2D.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Helper/Transform/RootTransformProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Helper/Transform/RootTransformProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/CameraShake.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/CameraShake.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/DestructableObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/DestructableObject.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/FloatAnimation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/FloatAnimation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/HitFlash.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/HitFlash.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/Knockback.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/Knockback.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/ObjectBreakAnim.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/ObjectBreakAnim.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/PSSelfDestroy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/PSSelfDestroy.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/Projectile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/Projectile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/SelfDestroy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/SelfDestroy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/SelfDisabler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/SelfDisabler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/SpinMe.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/SpinMe.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/Tag.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/Tag.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/TagContainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/MISC/TagContainer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Machinery/AbstractMovingMachinery.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Machinery/AbstractMovingMachinery.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Machinery/ConveyerBelt.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Machinery/ConveyerBelt.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Machinery/Door.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Machinery/Door.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Machinery/Elevator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Machinery/Elevator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Machinery/GearAnim.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Machinery/GearAnim.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Machinery/GearSpritesData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Machinery/GearSpritesData.cs" afterDir="false" />
@@ -91,13 +131,17 @@
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Manager/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Manager/GameManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Manager/ObjectPool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Manager/ObjectPool.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/SceneScripts/ExitLevel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/SceneScripts/ExitLevel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/SceneScripts/Parallax.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/SceneScripts/Parallax.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/SceneScripts/ParallaxScroller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/SceneScripts/ParallaxScroller.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/SceneScripts/TransparentDetection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/SceneScripts/TransparentDetection.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Scraps/FuelScrap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Scraps/FuelScrap.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Scraps/HealthScrap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/Scraps/HealthScrap.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/TestCode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/TestCode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/BackToMainMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/BackToMainMenu.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/BackToMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/BackToMenu.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/ChangeSoundVolume.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/ChangeSoundVolume.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/Credits.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/Credits.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/CutsceneManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/CutsceneManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/GAMEOVER.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/GAMEOVER.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/GoToSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/GoToSettings.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/HandleSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/HandleSettings.cs" afterDir="false" />
@@ -106,6 +150,8 @@
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/PlayerHUD_UI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/PlayerHUD_UI.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/QuitGame.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/QuitGame.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/UISpriteAnimation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/Scripts/UI/UISpriteAnimation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/TgcDashSmb.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/TgcDashSmb.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_GearedFate/Code/UnityStyleCop.ruleset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_GearedFate/Code/UnityStyleCop.ruleset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,28 +173,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Attach to Unity Editor.Attach to Unity Editor.executor": "Debug",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "XThreadsFramesViewSplitterKey": "0.24133949",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.sourceCode",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.24133949&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\Nat\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\Nat\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\Nat\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\Nat\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\Nat\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\Nat\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\6000.0.32f1\Editor\Unity.exe" />
@@ -197,7 +243,8 @@
       <updated>1738702941146</updated>
       <workItem from="1738702956510" duration="614000" />
       <workItem from="1738704465807" duration="2922000" />
-      <workItem from="1738707773149" duration="2677000" />
+      <workItem from="1738707773149" duration="4322000" />
+      <workItem from="1738712160555" duration="4000" />
     </task>
     <servers />
   </component>

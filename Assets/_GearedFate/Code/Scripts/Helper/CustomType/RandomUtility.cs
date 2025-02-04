@@ -1,11 +1,9 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityEngine;
 
 namespace BTG
 {
+    using UnityEngine;
+
     /// <summary>
     /// RandomUtility class to provide random utility functions. 
     /// </summary>
@@ -72,7 +70,7 @@ namespace BTG
         /// </summary>
         public static Vector2 RandomPointOnCircleEdge(Vector2 center, float radius)
         {
-            return center + Random.insideUnitCircle.normalized * radius;
+            return center + (Random.insideUnitCircle.normalized * radius);
         }
     }
 }

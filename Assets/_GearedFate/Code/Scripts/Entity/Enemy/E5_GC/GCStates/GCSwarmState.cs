@@ -1,11 +1,9 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityEngine;
 
 namespace BTG
 {
+    using UnityEngine;
+
     /// <summary>
     /// GCIdleState
     /// </summary>
@@ -14,23 +12,23 @@ namespace BTG
         public GCSwarmState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId) :
             base(fsm, enemy, animId)
         {
-            enemy.AnimationEventHandler.OnSpawnFinished += this.HandleSpawnFinished;
+            enemy.AnimationEventHandler.OnSpawnFinished += HandleSpawnFinished;
         }
 
         private void HandleSpawnFinished()
         {
-            this.GreatCreator.SpawnMinions(Random.Range(this.GreatCreator.SwarmAmount.Min, this.GreatCreator.SwarmAmount.Max));
-            this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
+            GreatCreator.SpawnMinions(Random.Range(GreatCreator.SwarmAmount.Min, GreatCreator.SwarmAmount.Max));
+            fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
         }
 
         public override void OnEnter()
         {
-            this.PlayAnimation();
+            PlayAnimation();
         }
 
         public override void OnExit()
         {
-            this.SetSpawnTime();
+            SetSpawnTime();
         }
 
         public override void OnFrameUpdate()

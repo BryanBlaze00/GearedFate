@@ -1,13 +1,10 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using Unity.Cinemachine;
-using UnityEngine;
-
 
 namespace BTG
 {
+    using Unity.Cinemachine;
+    using UnityEngine;
+
     /// <summary>
     /// Adds Camera shake effect
     /// </summary>
@@ -18,34 +15,34 @@ namespace BTG
 
         private void Start()
         {
-            this.noise = this.GetComponent<CinemachineBasicMultiChannelPerlin>();
+            noise = GetComponent<CinemachineBasicMultiChannelPerlin>();
         }
 
         public void OnCamerShake()
         {
-            this.StopAllCoroutines();
-            this.ShakeCamera(0.6f, 2f, 50f);
+            StopAllCoroutines();
+            ShakeCamera(0.6f, 2f, 50f);
         }
 
         public void ShakeCamera(float duration, float amplitude, float frequency)
         {
-            if (this.noise != null)
+            if (noise != null)
             {
-                this.noise.AmplitudeGain = amplitude;
-                this.noise.FrequencyGain = frequency;
+                noise.AmplitudeGain = amplitude;
+                noise.FrequencyGain = frequency;
             }
 
-            this.StartCoroutine(this.StopShakeAfterDelay(duration));
+            StartCoroutine(StopShakeAfterDelay(duration));
         }
 
         private System.Collections.IEnumerator StopShakeAfterDelay(float delay)
         {
             yield return new WaitForSeconds(delay);
 
-            if (this.noise != null)
+            if (noise != null)
             {
-                this.noise.AmplitudeGain = 0f;
-                this.noise.FrequencyGain = 0f;
+                noise.AmplitudeGain = 0f;
+                noise.FrequencyGain = 0f;
             }
         }
     }

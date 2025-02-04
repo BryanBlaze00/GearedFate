@@ -1,17 +1,21 @@
-using UnityEngine;
-using UnityEngine.UI;
-
 namespace BTG
 {
+    using UnityEngine;
+    using UnityEngine.UI;
+
     public class PlayGame : MonoBehaviour
     {
-        [SerializeField] private GameObject _loadScreen;
+        [SerializeField]
+        private GameObject _loadScreen;
 
-        [SerializeField] private GameObject _menuScreen;
+        [SerializeField]
+        private GameObject _menuScreen;
 
-        [SerializeField] private Image _progressBarFiller;
+        [SerializeField]
+        private Image _progressBarFiller;
 
-        [SerializeField] private Button _playButton;
+        [SerializeField]
+        private Button _playButton;
 
         private float _targetFill;
 
@@ -38,7 +42,7 @@ namespace BTG
         // }
         protected void Start()
         {
-            this._playButton.onClick.AddListener(this.StartLoadGame);
+            _playButton.onClick.AddListener(StartLoadGame);
         }
 
         protected void Update()

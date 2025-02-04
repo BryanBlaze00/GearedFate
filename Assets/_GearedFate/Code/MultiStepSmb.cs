@@ -24,32 +24,32 @@ namespace BTG
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            if (this._steps.Count != 0)
+            if (_steps.Count != 0)
             {
-                this._nextStepIndex = 0;
-                this._nextStep = this._steps[0];
+                _nextStepIndex = 0;
+                _nextStep = _steps[0];
             }
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            if (this._nextStepIndex == this._steps.Count)
+            if (_nextStepIndex == _steps.Count)
             {
                 return;
             }
 
-            if (stateInfo.normalizedTime >= this._nextStep)
+            if (stateInfo.normalizedTime >= _nextStep)
             {
-                this.OnStepReached?.Invoke(this._nextStepIndex);
-                this._nextStepIndex++;
+                OnStepReached?.Invoke(_nextStepIndex);
+                _nextStepIndex++;
 
-                if (this._nextStepIndex == this._steps.Count)
+                if (_nextStepIndex == _steps.Count)
                 {
                     return;
                 }
 
-                this._nextStep = this._steps[this._nextStepIndex];
+                _nextStep = _steps[_nextStepIndex];
             }
         }
     }

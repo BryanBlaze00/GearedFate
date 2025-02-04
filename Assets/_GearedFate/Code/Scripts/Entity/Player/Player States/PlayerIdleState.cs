@@ -1,11 +1,9 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityEngine;
 
 namespace BTG
 {
+    using UnityEngine;
+
     /// <summary>
     /// PlayerIdleState
     /// </summary>
@@ -19,7 +17,7 @@ namespace BTG
         public override void OnEnter()
         {
             base.OnEnter();
-            this.player.RB.linearVelocity = Vector2.zero;
+            player.RB.linearVelocity = Vector2.zero;
         }
 
         public override void OnExit()
@@ -29,19 +27,19 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            if (this.AttackCheck)
+            if (AttackCheck)
             {
                 return;
             }
 
-            if (this.DashCheck)
+            if (DashCheck)
             {
                 return;
             }
 
             if (Input.MoveInput != Vector2.zero)
             {
-                this.fsm.SwitchState(this.player.states[Player.State.Move]);
+                fsm.SwitchState(player.states[Player.State.Move]);
             }
         }
 

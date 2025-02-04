@@ -1,11 +1,9 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityEngine;
 
 namespace BTG
 {
+    using UnityEngine;
+
     /// <summary>
     /// FloatAnimation class to provide floating animation to the object.
     /// </summary>
@@ -21,18 +19,18 @@ namespace BTG
 
         private void Start()
         {
-            this.startPosition = this.transform.localPosition;
-            this.startTimeOffset = RandomUtilily.RandomFloat(0f, Mathf.PI * 2f);
+            startPosition = transform.localPosition;
+            startTimeOffset = RandomUtilily.RandomFloat(0f, Mathf.PI * 2f);
         }
 
         private void Update()
         {
-            var targetY = this.startPosition.y + Mathf.Sin(Time.time * this.frequency + this.startTimeOffset) * this.amplitude;
-            var currentY = this.transform.localPosition.y;
+            var targetY = startPosition.y + (Mathf.Sin((Time.time * frequency) + startTimeOffset) * amplitude);
+            var currentY = transform.localPosition.y;
 
-            var smoothedY = Mathf.SmoothDamp(currentY, targetY, ref this.currentVelocityY, this.smoothTime);
+            var smoothedY = Mathf.SmoothDamp(currentY, targetY, ref currentVelocityY, smoothTime);
 
-            this.transform.localPosition = new Vector3(this.transform.localPosition.x, smoothedY, this.transform.localPosition.z);
+            transform.localPosition = new Vector3(transform.localPosition.x, smoothedY, transform.localPosition.z);
         }
     }
 }

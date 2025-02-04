@@ -1,12 +1,10 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using System.Threading.Tasks;
-using UnityEngine;
 
 namespace BTG
 {
+    using System.Threading.Tasks;
+    using UnityEngine;
+
     /// <summary>
     /// GameobjectExtensions
     /// </summary>

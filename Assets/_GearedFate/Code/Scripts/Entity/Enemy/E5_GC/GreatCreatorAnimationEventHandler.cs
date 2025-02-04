@@ -1,8 +1,8 @@
-using System;
-using UnityEngine;
-
 namespace BTG
 {
+    using System;
+    using UnityEngine;
+
     public class GreatCreatorAnimationEventHandler : MonoBehaviour
     {
         public event Action OnSpawnFinished;
@@ -10,7 +10,7 @@ namespace BTG
         [SerializeField]
         private void SpawnFinished()
         {
-            this.OnSpawnFinished?.Invoke();
+            OnSpawnFinished?.Invoke();
         }
     }
 }

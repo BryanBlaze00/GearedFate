@@ -1,22 +1,24 @@
-using UnityEngine;
-using UnityEngine.UI;
-
 namespace BTG
 {
+    using UnityEngine;
+    using UnityEngine.UI;
+
     public class ChangeSoundVolume : MonoBehaviour
     {
-        [SerializeField] private AudioSource _audioSource;
+        [SerializeField]
+        private AudioSource _audioSource;
 
-        [SerializeField] private Slider _soundSlider;
+        [SerializeField]
+        private Slider _soundSlider;
 
         protected void Start()
         {
-            this._soundSlider.onValueChanged.AddListener(this.ChangeVolume);
+            _soundSlider.onValueChanged.AddListener(ChangeVolume);
         }
 
         private void ChangeVolume(float volume)
         {
-            this._audioSource.volume = volume;
+            _audioSource.volume = volume;
         }
     }
 }

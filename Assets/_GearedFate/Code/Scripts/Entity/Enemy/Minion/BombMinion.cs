@@ -9,10 +9,12 @@ namespace BTG
     [RequireComponent(typeof(NavMeshAgent))]
     public class BombMinion : BossMinion
     {
-        [Header("Bomb Minion Stats")] [SerializeField]
+        [Header("Bomb Minion Stats")]
+        [SerializeField]
         private float explosionDmgAmt = 10.0f;
 
-        [SerializeField] private float explodeKnockBackAmt = 5.0f;
+        [SerializeField]
+        private float explodeKnockBackAmt = 5.0f;
 
         protected override void Attack()
         {
@@ -28,11 +30,11 @@ namespace BTG
                     return;
                 }
 
-                this.agent.enabled = false;
-                player.GetComponent<Knockback>().GetKnockedBack(this.transform, this.explodeKnockBackAmt);
-                player.TakeDamage(this.explosionDmgAmt);
-                Instantiate(this.explosionEffect, this.transform.position, Quaternion.identity);
-                this.gameObject.SetInactive(this.destroyWaitTime);
+                agent.enabled = false;
+                player.GetComponent<Knockback>().GetKnockedBack(transform, explodeKnockBackAmt);
+                player.TakeDamage(explosionDmgAmt);
+                Instantiate(explosionEffect, transform.position, Quaternion.identity);
+                gameObject.SetInactive(destroyWaitTime);
             }
         }
     }

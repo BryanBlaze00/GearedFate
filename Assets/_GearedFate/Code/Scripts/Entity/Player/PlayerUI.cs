@@ -1,40 +1,44 @@
-using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
-
 namespace BTG
 {
+    using TMPro;
+    using UnityEngine;
+    using UnityEngine.UI;
+
     public class PlayerUI : MonoBehaviour
     {
         public Player player;
 
-        [SerializeField] private Slider healthBar;
-        [SerializeField] private Slider fuelBar;
-        [SerializeField] private Slider gearTossIcon;
-        [SerializeField] private TextMeshProUGUI gearTossCDText;
+        [SerializeField]
+        private Slider healthBar;
+        [SerializeField]
+        private Slider fuelBar;
+        [SerializeField]
+        private Slider gearTossIcon;
+        [SerializeField]
+        private TextMeshProUGUI gearTossCDText;
 
         private void Awake()
         {
-            if (this.player == null)
+            if (player == null)
             {
-                Debug.LogWarning($"{nameof(this.player)} wasn't assigned on {nameof(PlayerUI)}");
-                this.player = FindAnyObjectByType<Player>();
+                Debug.LogWarning($"{nameof(player)} wasn't assigned on {nameof(PlayerUI)}");
+                player = FindAnyObjectByType<Player>();
             }
         }
 
         private void Update()
         {
-            this.UpdateUI();
+            UpdateUI();
         }
 
         private void UpdateUI()
         {
-            this.healthBar.value = this.player.CurrentHealth / this.player.Data.Health;
-            this.fuelBar.value = this.player.CurrentAttackFuelAmount / this.player.Data.MaxAttackFuelAmount;
-            var gearTossState = this.player.states[Player.State.GearToss] as PlayerGearTossState;
-            var GearTossCDLeft = gearTossState.LastUsedTime + this.player.Data.GearShootCoolDown - Time.time;
-            this.gearTossIcon.value = GearTossCDLeft / this.player.Data.GearShootCoolDown;
-            this.gearTossCDText.text = this.FormatCooldown(GearTossCDLeft);
+            healthBar.value = player.CurrentHealth / player.Data.Health;
+            fuelBar.value = player.CurrentAttackFuelAmount / player.Data.MaxAttackFuelAmount;
+            var gearTossState = player.states[Player.State.GearToss] as PlayerGearTossState;
+            var GearTossCDLeft = gearTossState.LastUsedTime + player.Data.GearShootCoolDown - Time.time;
+            gearTossIcon.value = GearTossCDLeft / player.Data.GearShootCoolDown;
+            gearTossCDText.text = FormatCooldown(GearTossCDLeft);
         }
 
         private string FormatCooldown(float cooldown)
@@ -45,6 +49,7 @@ namespace BTG
             }
 
             if (cooldown < 0.9f)
+
                 // display one decimal after the zero
             {
                 return "0." + Mathf.CeilToInt(cooldown * 10f);

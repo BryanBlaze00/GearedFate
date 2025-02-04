@@ -1,8 +1,8 @@
-using System;
-using UnityEngine;
-
 namespace BTG
 {
+    using System;
+    using UnityEngine;
+
     public class TgcDashSmb : StateMachineBehaviour
     {
         public event Action OnStartDash;
@@ -29,30 +29,30 @@ namespace BTG
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            this._dashStartReached = false;
-            this._dashEndReached = false;
-            this._animationEndReached = false;
+            _dashStartReached = false;
+            _dashEndReached = false;
+            _animationEndReached = false;
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            if (stateInfo.normalizedTime >= this._frameStartTarget && !this._dashStartReached)
+            if (stateInfo.normalizedTime >= _frameStartTarget && !_dashStartReached)
             {
-                this._dashStartReached = true;
-                this.OnStartDash?.Invoke();
+                _dashStartReached = true;
+                OnStartDash?.Invoke();
             }
 
-            if (stateInfo.normalizedTime >= this._frameEndTarget && !this._dashEndReached)
+            if (stateInfo.normalizedTime >= _frameEndTarget && !_dashEndReached)
             {
-                this._dashEndReached = true;
-                this.OnDashEnd?.Invoke();
+                _dashEndReached = true;
+                OnDashEnd?.Invoke();
             }
 
-            if (stateInfo.normalizedTime >= this._animationEndTarget && !this._animationEndReached)
+            if (stateInfo.normalizedTime >= _animationEndTarget && !_animationEndReached)
             {
-                this._animationEndReached = true;
-                this.OnAnimationEnd?.Invoke();
+                _animationEndReached = true;
+                OnAnimationEnd?.Invoke();
             }
         }
     }

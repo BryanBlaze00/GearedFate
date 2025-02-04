@@ -1,6 +1,4 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
 
 using UnityEngine;
 using System.Collections;
@@ -8,16 +6,17 @@ using BTG;
 
 public class Credits : MonoBehaviour
 {
-    [SerializeField] private float _waitForCredits = 0.5f;
+    [SerializeField]
+    private float _waitForCredits = 0.5f;
 
     private void Start()
     {
-        this.StartCoroutine(this.DisplayCredits());
+        StartCoroutine(DisplayCredits());
     }
 
     private IEnumerator DisplayCredits()
     {
-        yield return new WaitForSeconds(this._waitForCredits);
+        yield return new WaitForSeconds(_waitForCredits);
         GameManager.Instance.LoadMainMenu();
     }
 }

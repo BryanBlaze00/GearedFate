@@ -1,12 +1,10 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using System;
-using UnityEngine;
 
 namespace BTG
 {
+    using System;
+    using UnityEngine;
+
     /// <summary>
     /// GearAnim
     ///
@@ -15,16 +13,21 @@ namespace BTG
     [RequireComponent(typeof(SpriteRenderer))]
     public class GearAnim : MonoBehaviour
     {
-        [SerializeField] private GearSpritesData _spritesData;
+        [SerializeField]
+        private GearSpritesData _spritesData;
 
         /// Time in seconds before the animation updates. The shorter the faster.
-        [SerializeField] [Range(0, 3)] private float _rotateSpeed = 1.0f;
+        [SerializeField]
+        [Range(0, 3)]
+        private float _rotateSpeed = 1.0f;
 
         /// Index of the starting rotating sprite in the animation sprite sheet.
-        [SerializeField] private int _startingSpriteIndex;
+        [SerializeField]
+        private int _startingSpriteIndex;
 
         /// Number of sprites to achieve 1/8th of a turn, before animation loop. Big and medium gears should have 6, small only 4.
-        [SerializeField] private int _rotationNumbers;
+        [SerializeField]
+        private int _rotationNumbers;
 
         private float _previousUpdateTime;
 
@@ -41,29 +44,29 @@ namespace BTG
         /// Since an animation loop does 1/8th of a turn,
         /// a full circle rotation is 8 times the rotation numbers to complete the animation loop.
         /// </summary>
-        public int FullCircleRotationNumbers => 8 * this._rotationNumbers;
+        public int FullCircleRotationNumbers => 8 * _rotationNumbers;
 
         protected void Start()
         {
-            this._previousUpdateTime = Time.time;
-            this._gearRenderer = this.GetComponent<SpriteRenderer>();
+            _previousUpdateTime = Time.time;
+            _gearRenderer = GetComponent<SpriteRenderer>();
         }
 
         protected void Update()
         {
-            if (this._previousUpdateTime + this._rotateSpeed > Time.time)
+            if (_previousUpdateTime + _rotateSpeed > Time.time)
             {
                 return;
             }
 
-            this._previousUpdateTime = Time.time;
+            _previousUpdateTime = Time.time;
 
-            this._rotateStep = this._startingSpriteIndex + (this._rotateStep + 1) % this._rotationNumbers;
+            _rotateStep = _startingSpriteIndex + ((_rotateStep + 1) % _rotationNumbers);
 
-            if (this._spritesData.TryGetSpriteAtIndex(this._rotateStep, out var gearSprite))
+            if (_spritesData.TryGetSpriteAtIndex(_rotateStep, out var gearSprite))
             {
-                this._gearRenderer.sprite = gearSprite;
-                this.OnGearMoved?.Invoke();
+                _gearRenderer.sprite = gearSprite;
+                OnGearMoved?.Invoke();
             }
         }
     }

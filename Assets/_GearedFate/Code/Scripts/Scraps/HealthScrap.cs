@@ -1,19 +1,20 @@
-using UnityEngine;
-
 namespace BTG
 {
+    using UnityEngine;
+
     /// <summary>
     /// Scrap to heal the player.
     /// </summary>
     public class HealthScrap : Scrap
     {
-        [SerializeField] private float _healthAdded;
+        [SerializeField]
+        private float _healthAdded;
 
         public override void ApplyEffect(IAffectable affectable)
         {
             if (affectable is IHealable healable)
             {
-                healable.Heal(this._healthAdded);
+                healable.Heal(_healthAdded);
             }
 
             var listedPoolObjects = ObjectPool.Instance.GetAllPooledObjects(PooledObjectType.Health_Scrap);
@@ -21,12 +22,12 @@ namespace BTG
             {
                 if (pooledObject.activeSelf)
                 {
-                    ObjectPool.Instance.ReturnPooledObject(this.gameObject);
+                    ObjectPool.Instance.ReturnPooledObject(gameObject);
                     break;
                 }
                 else
                 {
-                    Destroy(this.gameObject); // Destroy the scrap when it reaches the player if not in the pool.
+                    Destroy(gameObject); // Destroy the scrap when it reaches the player if not in the pool.
                     break;
                 }
             }

@@ -1,15 +1,16 @@
-using UnityEngine;
-using UnityEngine.UI;
-
 namespace BTG
 {
+    using UnityEngine;
+    using UnityEngine.UI;
+
     public class QuitGame : MonoBehaviour
     {
-        [SerializeField] private Button _quitButton;
+        [SerializeField]
+        private Button _quitButton;
 
         protected void Awake()
         {
-            this._quitButton.onClick.AddListener(this.Quit);
+            _quitButton.onClick.AddListener(Quit);
         }
 
         private void Quit()

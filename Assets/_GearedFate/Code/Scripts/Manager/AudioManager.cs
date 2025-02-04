@@ -1,39 +1,40 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityEngine;
-using UnityUtils;
 
 namespace BTG
 {
+    using UnityEngine;
+    using UnityUtils;
+
     /// <summary>
     /// AudioManager
     /// </summary>
     public class AudioManager : PersistentSingleton<AudioManager>
     {
-        [SerializeField] private AudioSource audioSource;
+        [SerializeField]
+        private AudioSource audioSource;
 
-        [SerializeField] private AudioClip[] clips;
+        [SerializeField]
+        private AudioClip[] clips;
 
-        [SerializeField] private AudioSource _sfxSource;
+        [SerializeField]
+        private AudioSource _sfxSource;
 
         public void PlaySFX(AudioClip clip)
         {
-            this._sfxSource.clip = clip; /// 3 -> 1, 5 -> 2 etc.
-            this._sfxSource.Play();
+            _sfxSource.clip = clip; /// 3 -> 1, 5 -> 2 etc.
+            _sfxSource.Play();
         }
 
         public void PlayCorrrectClip(int index)
         {
-            this.audioSource.clip = this.clips[(index - 1) / 2]; /// 3 -> 1, 5 -> 2 etc.
-            this.audioSource.Play();
+            audioSource.clip = clips[(index - 1) / 2]; /// 3 -> 1, 5 -> 2 etc.
+            audioSource.Play();
         }
 
         public void PlayMenuClip()
         {
-            this.audioSource.clip = this.clips[0];
-            this.audioSource.Play();
+            audioSource.clip = clips[0];
+            audioSource.Play();
         }
     }
 }

@@ -1,14 +1,15 @@
-using System;
-using UnityEngine;
-
 namespace BTG
 {
+    using System;
+    using UnityEngine;
+
     [RequireComponent(typeof(Animator))]
     public class CentipedeBodyPart : MonoBehaviour, IDamagable
     {
         public event Action OnBodyPartDeath;
 
-        [field: SerializeField] public Animator Animator { get; private set; }
+        [field: SerializeField]
+        public Animator Animator { get; private set; }
 
         private int _animMoveX;
 
@@ -16,20 +17,23 @@ namespace BTG
 
         private SteamCentipede _steamCentipede;
 
-        [field: SerializeField] public float MaxHealth { get; private set; }
+        [field: SerializeField]
+        public float MaxHealth { get; private set; }
 
-        [SerializeField] private float _damageDealt = 10;
+        [SerializeField]
+        private float _damageDealt = 10;
 
-        [SerializeField] private float _knockBack = 10;
+        [SerializeField]
+        private float _knockBack = 10;
 
         public float CurrentHealth { get; private set; }
 
         protected void Start()
         {
-            this._animMoveX = Animator.StringToHash("MoveX");
-            this._animMoveY = Animator.StringToHash("MoveY");
-            this._steamCentipede = this.GetComponentInParent<SteamCentipede>();
-            this.CurrentHealth = this.MaxHealth;
+            _animMoveX = Animator.StringToHash("MoveX");
+            _animMoveY = Animator.StringToHash("MoveY");
+            _steamCentipede = GetComponentInParent<SteamCentipede>();
+            CurrentHealth = MaxHealth;
         }
 
         protected void OnTriggerEnter2D(Collider2D other)
@@ -37,52 +41,52 @@ namespace BTG
             if (other.TryGetComponent(out Player player))
             {
                 // no damage and a bit less knockback if not attacking
-                player.TakeDamage(this._steamCentipede.IsAttacking ? this._damageDealt : 0);
+                player.TakeDamage(_steamCentipede.IsAttacking ? _damageDealt : 0);
                 player.GetComponent<Knockback>()
-                    .GetKnockedBack(this.transform, this._steamCentipede.IsAttacking ? this._knockBack : this._knockBack / 3);
+                    .GetKnockedBack(transform, _steamCentipede.IsAttacking ? _knockBack : _knockBack / 3);
             }
         }
 
         public void SetAnimationDirectionParameter(Vector2 tangent)
         {
-            this.Animator.SetFloat(this._animMoveX, tangent.normalized.x);
-            this.Animator.SetFloat(this._animMoveY, tangent.normalized.y);
+            Animator.SetFloat(_animMoveX, tangent.normalized.x);
+            Animator.SetFloat(_animMoveY, tangent.normalized.y);
         }
 
         public void SetAnimationSpeed(float speed)
         {
-            this.Animator.speed = speed;
+            Animator.speed = speed;
         }
 
         public void PlayAnimation(int animId, float offset)
         {
-            this.Animator.Play(animId);
-            this.Animator.SetFloat("CycleOffset", offset);
+            Animator.Play(animId);
+            Animator.SetFloat("CycleOffset", offset);
         }
 
         public void TakeDamage(float damage)
         {
-            if (this._steamCentipede.Tail == this.transform)
+            if (_steamCentipede.Tail == transform)
             {
-                this.CurrentHealth = Mathf.Max(this.CurrentHealth - damage, 0);
-                this.GetComponent<HitFlash>().SetFlashColor(Color.red);
-                this.GetComponent<HitFlash>().HitFlashRoutine();
+                CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
+                GetComponent<HitFlash>().SetFlashColor(Color.red);
+                GetComponent<HitFlash>().HitFlashRoutine();
             }
             else
             {
-                this.GetComponent<HitFlash>().SetFlashColor(Color.blue);
-                this.GetComponent<HitFlash>().HitFlashRoutine();
+                GetComponent<HitFlash>().SetFlashColor(Color.blue);
+                GetComponent<HitFlash>().HitFlashRoutine();
             }
 
-            if (this.CurrentHealth == 0)
+            if (CurrentHealth == 0)
             {
-                this.OnBodyPartDeath?.Invoke();
+                OnBodyPartDeath?.Invoke();
             }
         }
 
         public void Heal(float addedHealth)
         {
-            this.CurrentHealth = Mathf.Min(this.CurrentHealth + addedHealth, this.MaxHealth);
+            CurrentHealth = Mathf.Min(CurrentHealth + addedHealth, MaxHealth);
         }
     }
 }

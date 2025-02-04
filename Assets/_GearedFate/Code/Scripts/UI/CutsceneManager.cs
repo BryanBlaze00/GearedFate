@@ -1,32 +1,36 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityEngine;
 
 namespace BTG
 {
+    using System.Collections;
     /// <summary>
     /// Cutscene Manager class to manage cutscene dialogues and transitions.
     /// </summary>
-    using TMPro;
-    using System.Collections;
+using TMPro;
+    using UnityEngine;
     using UnityEngine.UI;
 
     public class CutsceneManager : MonoBehaviour
     {
-        [Header("Cutscene Settings")] [Header("Dialogue Settings")] [SerializeField]
+        [Header("Cutscene Settings")]
+        [Header("Dialogue Settings")]
+        [SerializeField]
         private TextMeshProUGUI _dialogueText;
 
-        [SerializeField] private string[] _dialogueLines;
-        [SerializeField] private float _typingSpeed = 0.05f; // Adjust this for typing speed
+        [SerializeField]
+        private string[] _dialogueLines;
+        [SerializeField]
+        private float _typingSpeed = 0.05f; // Adjust this for typing speed
 
-        [Header("Button Settings")] [SerializeField]
+        [Header("Button Settings")]
+        [SerializeField]
         private Button _nextButton;
 
-        [SerializeField] private Button _skipButton;
+        [SerializeField]
+        private Button _skipButton;
 
-        [Header("Avatar Settings")] [SerializeField]
+        [Header("Avatar Settings")]
+        [SerializeField]
         private GameObject _bossAvatar;
 
         private UISpriteAnimation _bossAvatarAnim;
@@ -34,19 +38,19 @@ namespace BTG
 
         private void Awake()
         {
-            this._bossAvatarAnim = this._bossAvatar.GetComponent<UISpriteAnimation>();
-            this._nextButton.onClick.AddListener(this.NextDialogue);
-            this._skipButton.onClick.AddListener(this.SkipCutscene);
+            _bossAvatarAnim = _bossAvatar.GetComponent<UISpriteAnimation>();
+            _nextButton.onClick.AddListener(NextDialogue);
+            _skipButton.onClick.AddListener(SkipCutscene);
         }
 
         private void Start()
         {
             Elevator.Instance.ActivateElevatorAnim();
-            this._dialogueText.text = string.Empty;
+            _dialogueText.text = string.Empty;
 
             // Start the first dialogue
-            this.StartCoroutine(this.TypeText(this._dialogueLines[this._currentLineIndex]));
-            this._bossAvatarAnim.PlayUIAnim();
+            StartCoroutine(TypeText(_dialogueLines[_currentLineIndex]));
+            _bossAvatarAnim.PlayUIAnim();
         }
 
         /// <summary>
@@ -54,16 +58,17 @@ namespace BTG
         /// </summary>
         private IEnumerator TypeText(string line)
         {
-            this._nextButton.interactable = false;
+            _nextButton.interactable = false;
 
-            this._dialogueText.text = string.Empty;
+            _dialogueText.text = string.Empty;
             foreach (var letter in line)
             {
-                this._dialogueText.text += letter;
-                yield return new WaitForSeconds(this._typingSpeed);
+                _dialogueText.text += letter;
+                yield return new WaitForSeconds(_typingSpeed);
             }
 
-            this._nextButton.interactable = true;
+            _nextButton.interactable = true;
+
             // _bossAvatarAnim.StopUIAnim(); // Stop the avatar animation
         }
 
@@ -73,17 +78,18 @@ namespace BTG
         public void NextDialogue()
         {
             // Move to the next line
-            this._currentLineIndex++;
+            _currentLineIndex++;
 
             // Check if we've reached the end of the dialogue
-            if (this._currentLineIndex >= this._dialogueLines.Length)
+            if (_currentLineIndex >= _dialogueLines.Length)
             {
                 // Load the next level if we've reached the end of the dialogue
                 GameManager.Instance.LoadNextLevel();
                 return;
             }
 
-            this.StartCoroutine(this.TypeText(this._dialogueLines[this._currentLineIndex]));
+            StartCoroutine(TypeText(_dialogueLines[_currentLineIndex]));
+
             // _bossAvatarAnim.PlayUIAnim(); // Play the avatar animation
         }
 

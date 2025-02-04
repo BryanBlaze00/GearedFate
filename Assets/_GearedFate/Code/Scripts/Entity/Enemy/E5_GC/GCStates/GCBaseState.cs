@@ -1,12 +1,10 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using System.Collections;
-using UnityEngine;
 
 namespace BTG
 {
+    using System.Collections;
+    using UnityEngine;
+
     /// <summary>
     /// GSBaseState
     /// </summary>
@@ -24,27 +22,26 @@ namespace BTG
 
         public bool GoingToCenter => _goingToCenter;
 
-
         public GCBaseState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy,
             int animId) : base(fsm)
         {
-            this.GreatCreator = enemy;
-            this._animId = animId;
-            this.SetSpawnTime();
-            enemy.OnHitTaken += this.HandleHitTaken;
+            GreatCreator = enemy;
+            _animId = animId;
+            SetSpawnTime();
+            enemy.OnHitTaken += HandleHitTaken;
         }
 
         private void HandleHitTaken()
         {
-            if (this.GreatCreator.CurrentHealth == 0)
+            if (GreatCreator.CurrentHealth == 0)
             {
-                this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.Death]);
+                fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Death]);
                 return;
             }
 
-            if (this.GreatCreator.Stage >= 1 && this.fsm.CurrentState.GetType() != typeof(GCSpinState) && this.fsm.CurrentState.GetType() != typeof(GCTransformationState))
+            if (GreatCreator.Stage >= 1 && fsm.CurrentState.GetType() != typeof(GCSpinState) && fsm.CurrentState.GetType() != typeof(GCTransformationState))
             {
-                this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.Spin]);
+                fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Spin]);
             }
         }
 
@@ -52,8 +49,8 @@ namespace BTG
         {
             _goingToCenter = true;
             var timer = Time.time;
-            this.GreatCreator.Agent.SetDestination(Vector3.zero);
-            while (timer + 3 > Time.time || Vector2.Distance(this.GreatCreator.transform.position, Vector2.zero) > 1)
+            GreatCreator.Agent.SetDestination(Vector3.zero);
+            while (timer + 3 > Time.time || Vector2.Distance(GreatCreator.transform.position, Vector2.zero) > 1)
             {
                 yield return null;
             }
@@ -63,14 +60,14 @@ namespace BTG
 
         protected void SetAnimationId(int animId)
         {
-            this._animId = animId;
+            _animId = animId;
         }
 
         protected void SetSpawnTime()
         {
             _lastSpawnTime = Time.time;
             _nextSpawnTime = _lastSpawnTime +
-                             Random.Range(this.GreatCreator.SwarmCoolDown.Min, this.GreatCreator.SwarmCoolDown.Max);
+                             Random.Range(GreatCreator.SwarmCoolDown.Min, GreatCreator.SwarmCoolDown.Max);
         }
 
         protected bool IsReadyToSpawn()
@@ -80,7 +77,7 @@ namespace BTG
 
         protected void PlayAnimation()
         {
-            this.GreatCreator.Animator.Play(this._animId);
+            GreatCreator.Animator.Play(_animId);
         }
 
         public abstract override void OnEnter();

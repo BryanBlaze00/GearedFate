@@ -1,7 +1,7 @@
-using UnityEngine;
-
 namespace BTG
 {
+    using UnityEngine;
+
     public class RMStringMazeState : RMBaseState
     {
         private float _enterTime;
@@ -16,25 +16,25 @@ namespace BTG
 
         public override void OnEnter()
         {
-            this.Marionette.CircleExpander.SetCircleExpand(true);
-            this._enterTime = Time.time;
-            this.PlayAnimationHighBodyPart();
-            this.PlayAnimationLowBodyPart();
-            this.Marionette.OnHitTaken += this.HandleHitTaken;
+            Marionette.CircleExpander.SetCircleExpand(true);
+            _enterTime = Time.time;
+            PlayAnimationHighBodyPart();
+            PlayAnimationLowBodyPart();
+            Marionette.OnHitTaken += HandleHitTaken;
         }
 
         private void HandleHitTaken()
         {
-            if (Time.time > this._enterTime + this._timeBeforeStateChange)
+            if (Time.time > _enterTime + _timeBeforeStateChange)
             {
-                this.fsm.SwitchState(this.Marionette._states[RustedMarionette.RustedMarionetteState.Idle]);
+                fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.Idle]);
             }
         }
 
         public override void OnExit()
         {
-            this.Marionette.OnHitTaken -= this.HandleHitTaken;
-            this.Marionette.CircleExpander.SetCircleExpand(false);
+            Marionette.OnHitTaken -= HandleHitTaken;
+            Marionette.CircleExpander.SetCircleExpand(false);
         }
 
         public override void OnFrameUpdate()

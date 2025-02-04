@@ -1,6 +1,4 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
 
 namespace BTG
 {
@@ -22,8 +20,8 @@ namespace BTG
 
         public MinMaxFloat()
         {
-            this.Min = 0;
-            this.Max = 0;
+            Min = 0;
+            Max = 0;
         }
 
         /// <summary>
@@ -33,8 +31,8 @@ namespace BTG
         /// <param name="max">Maximum value</param>
         public MinMaxFloat(float min, float max)
         {
-            this.Min = min;
-            this.Max = max;
+            Min = min;
+            Max = max;
         }
     }
 }

@@ -1,19 +1,19 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityEngine;
-using UnityUtils;
 
 namespace BTG
 {
+    using UnityEngine;
+    using UnityUtils;
+
     /// <summary>
     /// Elevator class to manage elevator movement and interactions.
     /// </summary>
     public class Elevator : PersistentSingleton<Elevator>
     {
-        [SerializeField] private Transform _parentTransform;
-        [SerializeField] private GameObject _exitLevelTrigger;
+        [SerializeField]
+        private Transform _parentTransform;
+        [SerializeField]
+        private GameObject _exitLevelTrigger;
 
         private Animator _animator;
 
@@ -21,47 +21,47 @@ namespace BTG
         {
             base.Awake();
 
-            this._animator = this.GetComponent<Animator>();
-            this._animator.SetBool("isFlying", false);
+            _animator = GetComponent<Animator>();
+            _animator.SetBool("isFlying", false);
 
-            if (this._exitLevelTrigger != null && this._exitLevelTrigger.activeSelf)
+            if (_exitLevelTrigger != null && _exitLevelTrigger.activeSelf)
             {
-                this._exitLevelTrigger.SetActive(false);
+                _exitLevelTrigger.SetActive(false);
             }
         }
 
         private void Start()
         {
-            this.transform.SetParent(this._parentTransform);
+            transform.SetParent(_parentTransform);
 
-            this.CutSceneCheckActivate();
+            CutSceneCheckActivate();
         }
 
         public void ActivateElevator()
         {
-            this._animator.SetBool("isFlying", true);
-            this._exitLevelTrigger.SetActive(true);
+            _animator.SetBool("isFlying", true);
+            _exitLevelTrigger.SetActive(true);
         }
 
         public void DeactivateElevator()
         {
-            this._animator.SetBool("isFlying", false);
-            this._exitLevelTrigger.SetActive(false);
+            _animator.SetBool("isFlying", false);
+            _exitLevelTrigger.SetActive(false);
         }
 
         public void ActivateElevatorAnim()
         {
-            this._animator.SetBool("isFlying", true);
+            _animator.SetBool("isFlying", true);
         }
 
         public void DeactivateElevatorAnim()
         {
-            this._animator.SetBool("isFlying", false);
+            _animator.SetBool("isFlying", false);
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out Player _) && this._animator.GetBool("isFlying"))
+            if (other.TryGetComponent(out Player _) && _animator.GetBool("isFlying"))
             {
                 GameManager.Instance.LoadNextLevel();
             }
@@ -75,7 +75,7 @@ namespace BTG
             {
                 if (scene == GameManager.Instance.GetCurrentScene())
                 {
-                    this.ActivateElevatorAnim();
+                    ActivateElevatorAnim();
                 }
             }
         }

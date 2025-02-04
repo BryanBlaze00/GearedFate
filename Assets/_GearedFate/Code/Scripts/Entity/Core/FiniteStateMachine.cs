@@ -1,11 +1,9 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using System;
 
 namespace BTG
 {
+    using System;
+
     /// <summary>
     /// Base Super Class for entity states
     /// </summary>
@@ -15,15 +13,15 @@ namespace BTG
 
         public void Initialize(BaseState<State> startState)
         {
-            this.CurrentState = startState;
-            this.CurrentState.OnEnter();
+            CurrentState = startState;
+            CurrentState.OnEnter();
         }
 
         public void SwitchState(BaseState<State> nextState)
         {
-            this.CurrentState.OnExit();
-            this.CurrentState = nextState;
-            this.CurrentState.OnEnter();
+            CurrentState.OnExit();
+            CurrentState = nextState;
+            CurrentState.OnEnter();
         }
     }
 }

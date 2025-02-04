@@ -1,35 +1,47 @@
-using Game.Core.Rendering;
-using UnityEngine;
-
 namespace BTG
 {
+    using Game.Core.Rendering;
+    using UnityEngine;
+
     public class OpenRotatingCircleStrings : MonoBehaviour
     {
-        [SerializeField] private MultiLineRenderer2D _firstString;
+        [SerializeField]
+        private MultiLineRenderer2D _firstString;
 
-        [SerializeField] private MultiLineRenderer2D _secondString;
+        [SerializeField]
+        private MultiLineRenderer2D _secondString;
 
-        [SerializeField] private float _radius;
+        [SerializeField]
+        private float _radius;
 
         private float _angle;
 
-        [SerializeField] private int _firstStringPoints;
+        [SerializeField]
+        private int _firstStringPoints;
 
-        [SerializeField] private int _secondStringPoints;
+        [SerializeField]
+        private int _secondStringPoints;
 
-        [SerializeField] private int _firstEmptySpacePoints;
+        [SerializeField]
+        private int _firstEmptySpacePoints;
 
-        [SerializeField] private int _secondEmptySpacePoints;
+        [SerializeField]
+        private int _secondEmptySpacePoints;
 
-        [SerializeField] private float _rotatingTime;
+        [SerializeField]
+        private float _rotatingTime;
 
-        [SerializeField] private float _tolerance = 0.2f;
+        [SerializeField]
+        private float _tolerance = 0.2f;
 
-        [SerializeField] private float _damage = 1f;
+        [SerializeField]
+        private float _damage = 1f;
 
-        [SerializeField] private float _knockback = 3f;
+        [SerializeField]
+        private float _knockback = 3f;
 
-        [SerializeField] private bool _turnClockwise;
+        [SerializeField]
+        private bool _turnClockwise;
 
         private Transform _target;
 
@@ -39,132 +51,131 @@ namespace BTG
 
         private void Start()
         {
-            this._firstString.CurrentCamera = FindFirstObjectByType<Camera>();
-            this._secondString.CurrentCamera = FindFirstObjectByType<Camera>();
-            this._circlePointsNumber = this._firstStringPoints + this._secondStringPoints + this._firstEmptySpacePoints + this._secondEmptySpacePoints;
-            this._angle = 2 * Mathf.PI / (this._circlePointsNumber - 1);
-            this._nextRotationTime = Time.time + this._rotatingTime;
-            this._target = FindFirstObjectByType<Player>().transform;
+            _firstString.CurrentCamera = FindFirstObjectByType<Camera>();
+            _secondString.CurrentCamera = FindFirstObjectByType<Camera>();
+            _circlePointsNumber = _firstStringPoints + _secondStringPoints + _firstEmptySpacePoints + _secondEmptySpacePoints;
+            _angle = 2 * Mathf.PI / (_circlePointsNumber - 1);
+            _nextRotationTime = Time.time + _rotatingTime;
+            _target = FindFirstObjectByType<Player>().transform;
         }
 
         public void SetDamage(float damage)
         {
-            this._damage = damage;
+            _damage = damage;
         }
 
         public void SetKnockBack(float knockback)
         {
-            this._knockback = knockback;
+            _knockback = knockback;
         }
 
         public void SetTolerance(float tolerance)
         {
-            this._tolerance = tolerance;
+            _tolerance = tolerance;
         }
 
         public void SetRotationSpeed(float timeBetweenRotate)
         {
-            this._rotatingTime = timeBetweenRotate;
+            _rotatingTime = timeBetweenRotate;
         }
 
         public void SetRadius(float radius)
         {
-            this._radius = radius;
+            _radius = radius;
         }
 
         public void SetAngle(float angle)
         {
-            this._startingAngle = angle;
+            _startingAngle = angle;
         }
 
         public void SetDirection(bool clockwise)
         {
-            this._turnClockwise = clockwise;
+            _turnClockwise = clockwise;
         }
 
         // Update is called once per frame
         private void Update()
         {
-            this._circlePointsNumber = this._firstStringPoints + this._secondStringPoints + this._firstEmptySpacePoints + this._secondEmptySpacePoints;
+            _circlePointsNumber = _firstStringPoints + _secondStringPoints + _firstEmptySpacePoints + _secondEmptySpacePoints;
 
-            if (Time.time > this._nextRotationTime)
+            if (Time.time > _nextRotationTime)
             {
-                this.UpdateAngle();
-                this._nextRotationTime = Time.time + this._rotatingTime;
+                UpdateAngle();
+                _nextRotationTime = Time.time + _rotatingTime;
             }
 
-            this.ComputeStringsVisuals();
-            this.IsOnCircle();
+            ComputeStringsVisuals();
+            IsOnCircle();
         }
 
         private void ComputeStringsVisuals()
         {
-            this._firstString.Points.Clear();
-            this._secondString.Points.Clear();
+            _firstString.Points.Clear();
+            _secondString.Points.Clear();
 
-            for (var i = 0; i < this._circlePointsNumber; i++)
+            for (var i = 0; i < _circlePointsNumber; i++)
             {
-                if (i < this._firstStringPoints)
+                if (i < _firstStringPoints)
                 {
-                    this._firstString.Points.Add(new Vector2(Mathf.Cos(this._startingAngle + this._angle * i) * this._radius,
-                        Mathf.Sin(this._startingAngle + this._angle * i) * this._radius));
+                    _firstString.Points.Add(new Vector2(Mathf.Cos(_startingAngle + (_angle * i)) * _radius,
+                        Mathf.Sin(_startingAngle + (_angle * i)) * _radius));
                 }
 
-                if (i >= this._firstStringPoints + this._firstEmptySpacePoints &&
-                    i < this._firstStringPoints + this._firstEmptySpacePoints + this._secondStringPoints)
+                if (i >= _firstStringPoints + _firstEmptySpacePoints &&
+                    i < _firstStringPoints + _firstEmptySpacePoints + _secondStringPoints)
                 {
-                    this._secondString.Points.Add(new Vector2(Mathf.Cos(this._startingAngle + this._angle * i) * this._radius,
-                        Mathf.Sin(this._startingAngle + this._angle * i) * this._radius));
+                    _secondString.Points.Add(new Vector2(Mathf.Cos(_startingAngle + (_angle * i)) * _radius,
+                        Mathf.Sin(_startingAngle + (_angle * i)) * _radius));
                 }
             }
 
-            this._firstString.SetMaxPoints(this._firstStringPoints);
-            this._firstString.ApplyPointPositionChanges();
-            this._firstString.RefreshMaterial();
+            _firstString.SetMaxPoints(_firstStringPoints);
+            _firstString.ApplyPointPositionChanges();
+            _firstString.RefreshMaterial();
 
-            this._secondString.SetMaxPoints(this._secondStringPoints);
-            this._secondString.ApplyPointPositionChanges();
-            this._secondString.RefreshMaterial();
+            _secondString.SetMaxPoints(_secondStringPoints);
+            _secondString.ApplyPointPositionChanges();
+            _secondString.RefreshMaterial();
         }
 
         private void UpdateAngle()
         {
-            if (this._turnClockwise)
+            if (_turnClockwise)
             {
-                this._startingAngle -= this._angle;
+                _startingAngle -= _angle;
             }
             else
             {
-                this._startingAngle += this._angle;
+                _startingAngle += _angle;
             }
         }
 
         private void IsOnCircle()
         {
-            if (IsOnCircle(this._target.position, this.transform.position, this._radius, this._tolerance))
+            if (IsOnCircle(_target.position, transform.position, _radius, _tolerance))
             {
-                var closestPointOnCircle = ClosestPointOnCircle(this._target.position, this.transform.position, this._radius);
-                var startFirstEmptyPoint = this._firstString.Points[^1] + (Vector2)this.transform.position;
-                var endFirstEmptyPoint = this._secondString.Points[0] + (Vector2)this.transform.position;
+                var closestPointOnCircle = ClosestPointOnCircle(_target.position, transform.position, _radius);
+                var startFirstEmptyPoint = _firstString.Points[^1] + (Vector2)transform.position;
+                var endFirstEmptyPoint = _secondString.Points[0] + (Vector2)transform.position;
 
-                var startSecondEmptyPoint = this._secondString.Points[^1] + (Vector2)this.transform.position;
-                var endSecondEmptyPoint = this._firstString.Points[0] + (Vector2)this.transform.position;
-
+                var startSecondEmptyPoint = _secondString.Points[^1] + (Vector2)transform.position;
+                var endSecondEmptyPoint = _firstString.Points[0] + (Vector2)transform.position;
 
                 if (IsPointInArc(
-                        this.transform.position,
-                        this._radius, startFirstEmptyPoint, endFirstEmptyPoint,
+                        transform.position,
+                        _radius, startFirstEmptyPoint, endFirstEmptyPoint,
                         closestPointOnCircle)
                     || IsPointInArc(
-                        this.transform.position,
-                        this._radius, startSecondEmptyPoint, endSecondEmptyPoint,
+                        transform.position,
+                        _radius, startSecondEmptyPoint, endSecondEmptyPoint,
                         closestPointOnCircle))
                 {
                     return;
                 }
 
-                this._target.GetComponent<Player>().TakeDamage(this._damage);
-                this._target.GetComponent<Player>().Knockback.GetKnockedBack(closestPointOnCircle, this._knockback);
+                _target.GetComponent<Player>().TakeDamage(_damage);
+                _target.GetComponent<Player>().Knockback.GetKnockedBack(closestPointOnCircle, _knockback);
             }
         }
 
@@ -177,7 +188,7 @@ namespace BTG
         private static Vector2 ClosestPointOnCircle(Vector2 position, Vector2 center, float radius)
         {
             var direction = (position - center).normalized; // Get direction
-            return center + direction * radius; // Scale and offset
+            return center + (direction * radius); // Scale and offset
         }
 
         private static bool IsPointInArc(Vector2 center, float radius, Vector2 startPoint, Vector2 endPoint,
@@ -192,14 +203,14 @@ namespace BTG
 
             // Compute the point's angle relative to the center
             var pointAngle = Mathf.Atan2(point.y - center.y, point.x - center.x);
-            pointAngle = (pointAngle + 2 * Mathf.PI) % (2 * Mathf.PI); // Normalize to [0, 2 pi]
+            pointAngle = (pointAngle + (2 * Mathf.PI)) % (2 * Mathf.PI); // Normalize to [0, 2 pi]
 
             // Compute start and end angle
             var startAngle = Mathf.Atan2(startPoint.y - center.y, startPoint.x - center.x);
             startAngle = (startAngle + (2 * Mathf.PI)) % (2 * Mathf.PI);
 
             var endAngle = Mathf.Atan2(endPoint.y - center.y, endPoint.x - center.x);
-            endAngle = (endAngle + 2 * Mathf.PI) % (2 * Mathf.PI);
+            endAngle = (endAngle + (2 * Mathf.PI)) % (2 * Mathf.PI);
 
             if (startAngle < endAngle)
             {

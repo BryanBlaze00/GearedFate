@@ -1,30 +1,31 @@
-using UnityEngine;
-
 namespace BTG
 {
+    using UnityEngine;
+
     /// <summary>
     /// Script for gear machinery that moves movable entity in circle, following the gear animation.
     /// </summary>
     public class MovingGearMachinery : AbstractMovingMachinery
     {
         // Reference to the gear animation script
-        [SerializeField] private GearAnim _gearAnim;
+        [SerializeField]
+        private GearAnim _gearAnim;
         private SpriteRenderer parentSpriteRenderer;
 
         private void Awake()
         {
-            this.parentSpriteRenderer = this.GetComponentInParent<SpriteRenderer>();
+            parentSpriteRenderer = GetComponentInParent<SpriteRenderer>();
         }
 
         protected void Start()
         {
             // Each time the animation of the gear moves, we should move entities with it.
-            this._gearAnim.OnGearMoved += this.MoveEntities;
+            _gearAnim.OnGearMoved += MoveEntities;
         }
 
         protected override void MoveEntity(Transform entity)
         {
-            var angle = 1f / this._gearAnim.FullCircleRotationNumbers * 360f;
+            var angle = 1f / _gearAnim.FullCircleRotationNumbers * 360f;
 
             if (entity.TryGetComponent(out ContactTransformProvider contactTransformProvider))
             {
@@ -32,7 +33,7 @@ namespace BTG
                 // Instead, we rotate a gameObject at the position of the feet, to know where the feet should end up.
                 var temp = new GameObject();
                 temp.transform.position = contactTransformProvider.ContactTransform.position;
-                temp.transform.RotateAround(this.transform.position, Vector3.forward, -angle);
+                temp.transform.RotateAround(transform.position, Vector3.forward, -angle);
 
                 // When figuring out where the feet should be, it's straightforward :
                 // The entity should end up at the feet position + the distance between the entity center and its feet.
@@ -44,13 +45,13 @@ namespace BTG
             }
             else
             {
-                if (this.parentSpriteRenderer.flipX == false)
+                if (parentSpriteRenderer.flipX == false)
                 {
-                    entity.RotateAround(this.transform.position, Vector3.forward, -angle);
+                    entity.RotateAround(transform.position, Vector3.forward, -angle);
                 }
                 else
                 {
-                    entity.RotateAround(this.transform.position, Vector3.forward, +angle);
+                    entity.RotateAround(transform.position, Vector3.forward, +angle);
                 }
             }
         }

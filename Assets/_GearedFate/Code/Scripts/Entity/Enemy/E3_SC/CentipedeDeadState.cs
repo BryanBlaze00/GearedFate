@@ -8,13 +8,13 @@ namespace BTG
             SteamCentipede steamCentipede)
             : base(fsm, steamCentipede)
         {
-            this._animId = animationId;
+            _animId = animationId;
         }
 
         public override void OnEnter()
         {
-            this.Centipede.SetAnimations(this._animId, false);
-            this.Centipede.IsAttacking = false;
+            Centipede.SetAnimations(_animId, false);
+            Centipede.IsAttacking = false;
         }
 
         public override void OnExit()

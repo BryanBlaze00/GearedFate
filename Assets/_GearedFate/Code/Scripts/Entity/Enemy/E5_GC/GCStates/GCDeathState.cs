@@ -9,8 +9,8 @@ namespace BTG
 
         public override void OnEnter()
         {
-            this.PlayAnimation();
-            this.GreatCreator.Agent.isStopped = true;
+            PlayAnimation();
+            GreatCreator.Agent.isStopped = true;
         }
 
         public override void OnExit()

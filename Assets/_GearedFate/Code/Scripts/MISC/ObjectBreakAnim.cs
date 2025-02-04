@@ -1,25 +1,28 @@
-//
 // Copyright (c) BTG. All rights reserved.
 //
-
-using System.Collections;
-using UnityEngine;
 
 /// <summary>
 /// ObjectBreakAnim --- TODO: FIX ME
 /// </summary>
 namespace BTG
 {
+    using System.Collections;
+    using UnityEngine;
+
     [RequireComponent(typeof(SpriteRenderer))]
     public class ObjectBreakAnim : MonoBehaviour
     {
-        [Header("Animation Settings")] [Tooltip("Speed of the animation")] [SerializeField]
+        [Header("Animation Settings")]
+        [Tooltip("Speed of the animation")]
+        [SerializeField]
         private float _animSpeed = 1.0f;
 
-        [Tooltip("Number of sprites in the animation")] [SerializeField]
+        [Tooltip("Number of sprites in the animation")]
+        [SerializeField]
         private int _animSpritesCount = 7;
 
-        [Tooltip("Index of the starting sprite in the animation sprite sheet")] [SerializeField]
+        [Tooltip("Index of the starting sprite in the animation sprite sheet")]
+        [SerializeField]
         private int _animStartIndex = 0;
 
         private Sprite[] _sprites; // Array of sprites from the spritesheet
@@ -28,13 +31,12 @@ namespace BTG
 
         private void Awake()
         {
-            this._objBreakRenderer = this.GetComponent<SpriteRenderer>();
-            this._sprites = new Sprite[this._animSpritesCount];
+            _objBreakRenderer = GetComponent<SpriteRenderer>();
+            _sprites = new Sprite[_animSpritesCount];
 
-
-            for (var i = 0; i < this._animSpritesCount; i++)
+            for (var i = 0; i < _animSpritesCount; i++)
             {
-                this._sprites[i] = this._objBreakRenderer.sprite;
+                _sprites[i] = _objBreakRenderer.sprite;
             }
 
             // Debug.Log("Sprites: " + _sprites.Length);
@@ -42,16 +44,16 @@ namespace BTG
 
         public void TriggerBreak()
         {
-            if (!this.isBreaking)
+            if (!isBreaking)
             {
-                this.isBreaking = true;
-                this.StartCoroutine(this.Explode());
+                isBreaking = true;
+                StartCoroutine(Explode());
             }
         }
 
         private IEnumerator Explode()
         {
-            for (var i = this._animStartIndex; i < this._animSpritesCount + this._animStartIndex; i++)
+            for (var i = _animStartIndex; i < _animSpritesCount + _animStartIndex; i++)
             {
                 // Debug.Log("_sprites.Length: " + _sprites.Length);
                 // Debug.Log("AnimStartIndex: " + _animStartIndex);
@@ -59,11 +61,11 @@ namespace BTG
                 // Debug.Log("i: " + i);
                 // Debug.Log("Total: " + (_animSpritesCount + _animStartIndex));
 
-                this._objBreakRenderer.sprite = this._sprites[i];
-                yield return new WaitForSeconds(this._animSpeed);
+                _objBreakRenderer.sprite = _sprites[i];
+                yield return new WaitForSeconds(_animSpeed);
             }
 
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 }

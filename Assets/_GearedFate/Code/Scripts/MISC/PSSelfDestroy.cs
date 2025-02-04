@@ -1,11 +1,9 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityEngine;
 
 namespace BTG
 {
+    using UnityEngine;
+
     /// <summary>
     /// PSSelfDestroy is a script that will destroy the object it is attached to after the particle system has finished playing.
     /// </summary>
@@ -15,20 +13,20 @@ namespace BTG
 
         private void Awake()
         {
-            this.ps = this.GetComponent<ParticleSystem>();
+            ps = GetComponent<ParticleSystem>();
         }
 
         private void Update()
         {
-            if (this.ps && !this.ps.IsAlive())
+            if (ps && !ps.IsAlive())
             {
-                this.DestroySelfAnimEvent();
+                DestroySelfAnimEvent();
             }
         }
 
         private void DestroySelfAnimEvent()
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 }

@@ -1,9 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace BTG
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+
     public class CentipedeWhipState : CentipedeBaseState
     {
         private readonly int _animId;
@@ -17,9 +17,9 @@ namespace BTG
         // how long it takes to whip from left to right
         private float _frequency = 0.5f;
 
-        private readonly List<float> _angles = new();
+        private readonly List<float> _angles = new ();
 
-        private readonly List<Vector2> _initialPositions = new();
+        private readonly List<Vector2> _initialPositions = new ();
 
         private Vector2 _angleVector;
 
@@ -30,32 +30,32 @@ namespace BTG
         public CentipedeWhipState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId,
             SteamCentipede steamCentipede) : base(fsm, steamCentipede)
         {
-            this._animId = animationId;
+            _animId = animationId;
         }
 
         public override void OnEnter()
         {
-            this._whipFinished = false;
-            this.Centipede.SetSpeed(this.Centipede.RegularSpeed);
-            this.Centipede.SetAnimations(this._animId, true);
-            this.RegisterInitialPosition();
-            this._angleVector = new Vector2(-this.Centipede.HeadDirection().normalized.y, this.Centipede.HeadDirection().normalized.x);
-            this._angleVector = Vector2.up;
+            _whipFinished = false;
+            Centipede.SetSpeed(Centipede.RegularSpeed);
+            Centipede.SetAnimations(_animId, true);
+            RegisterInitialPosition();
+            _angleVector = new Vector2(-Centipede.HeadDirection().normalized.y, Centipede.HeadDirection().normalized.x);
+            _angleVector = Vector2.up;
 
-            this.ComputeAngles();
-            this.Centipede.StartCoroutine(this.Whip());
+            ComputeAngles();
+            Centipede.StartCoroutine(Whip());
         }
 
         public override void OnExit()
         {
-            this.ResetPosition();
+            ResetPosition();
         }
 
         public override void OnFrameUpdate()
         {
-            if (this._whipFinished)
+            if (_whipFinished)
             {
-                this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Chase]);
+                fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Chase]);
             }
         }
 
@@ -65,80 +65,79 @@ namespace BTG
 
         private IEnumerator Whip()
         {
-            while (this._timer < this._frequency)
+            while (_timer < _frequency)
             {
-                this._timer += Time.deltaTime;
+                _timer += Time.deltaTime;
 
-                for (var i = 0; i < this.Centipede.BodyPartsCount; i++)
+                for (var i = 0; i < Centipede.BodyPartsCount; i++)
                 {
-                    this.Centipede[i].RotateAround(
-                        this.Centipede.HeadPosition, Vector3.forward,
-                        -(this._angles[i] / this._frequency) * Time.deltaTime);
-                    this.Centipede[i].rotation = Quaternion.identity;
+                    Centipede[i].RotateAround(
+                        Centipede.HeadPosition, Vector3.forward,
+                        -(_angles[i] / _frequency) * Time.deltaTime);
+                    Centipede[i].rotation = Quaternion.identity;
                 }
 
                 yield return null;
             }
 
-            this._timer = 0;
-            while (this._timer < this._frequency)
+            _timer = 0;
+            while (_timer < _frequency)
             {
-                this._timer += Time.deltaTime;
-                for (var i = 0; i < this.Centipede.BodyPartsCount; i++)
+                _timer += Time.deltaTime;
+                for (var i = 0; i < Centipede.BodyPartsCount; i++)
                 {
-                    this.Centipede[i].RotateAround(
-                        this.Centipede.HeadPosition, Vector3.forward,
-                        (this._range + i * this._rangeDelay) / this._frequency * Time.deltaTime);
-                    this.Centipede[i].rotation = Quaternion.identity;
+                    Centipede[i].RotateAround(
+                        Centipede.HeadPosition, Vector3.forward,
+                        (_range + (i * _rangeDelay)) / _frequency * Time.deltaTime);
+                    Centipede[i].rotation = Quaternion.identity;
                 }
 
                 yield return null;
             }
 
-            this._timer = 0;
-            while (this._timer < this._frequency)
+            _timer = 0;
+            while (_timer < _frequency)
             {
-                this._timer += Time.deltaTime;
-                for (var i = 0; i < this.Centipede.BodyPartsCount; i++)
+                _timer += Time.deltaTime;
+                for (var i = 0; i < Centipede.BodyPartsCount; i++)
                 {
-                    this.Centipede[i].RotateAround(
-                        this.Centipede.HeadPosition, Vector3.forward,
-                        -((this._range + i * this._rangeDelay - this._angles[i]) / this._frequency) * Time.deltaTime);
-                    this.Centipede[i].rotation = Quaternion.identity;
+                    Centipede[i].RotateAround(
+                        Centipede.HeadPosition, Vector3.forward,
+                        -((_range + (i * _rangeDelay) - _angles[i]) / _frequency) * Time.deltaTime);
+                    Centipede[i].rotation = Quaternion.identity;
                 }
 
                 yield return null;
             }
 
-            this._whipFinished = true;
+            _whipFinished = true;
         }
-
 
         private void RegisterInitialPosition()
         {
-            this._initialPositions.Clear();
-            for (var i = 0; i < this.Centipede.BodyPartsCount; i++)
+            _initialPositions.Clear();
+            for (var i = 0; i < Centipede.BodyPartsCount; i++)
             {
-                this._initialPositions.Add(this.Centipede[i].position);
+                _initialPositions.Add(Centipede[i].position);
             }
         }
 
         private void ComputeAngles()
         {
-            this._angles.Clear();
-            for (var i = 0; i < this.Centipede.BodyPartsCount; i++)
+            _angles.Clear();
+            for (var i = 0; i < Centipede.BodyPartsCount; i++)
             {
-                this._angles.Add((this._range + i * this._rangeDelay) / 2 - Vector2.SignedAngle(
-                    this._angleVector,
-                    this.Centipede.HeadPosition - (Vector2)this.Centipede[i].position));
+                _angles.Add(((_range + (i * _rangeDelay)) / 2) - Vector2.SignedAngle(
+                    _angleVector,
+                    Centipede.HeadPosition - (Vector2)Centipede[i].position));
             }
         }
 
         private void ResetPosition()
         {
-            for (var i = 0; i < this.Centipede.BodyPartsCount; i++)
+            for (var i = 0; i < Centipede.BodyPartsCount; i++)
             {
-                this.Centipede[i].position = this._initialPositions[i];
+                Centipede[i].position = _initialPositions[i];
             }
         }
     }

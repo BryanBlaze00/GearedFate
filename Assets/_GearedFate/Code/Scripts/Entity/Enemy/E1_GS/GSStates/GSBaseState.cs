@@ -1,6 +1,4 @@
-﻿//
-// Copyright (c) BTG. All rights reserved.
-//
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -15,15 +13,15 @@ namespace BTG
         public GSBaseState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state,
             GearboundSentinel gs) : base(fsm)
         {
-            this.gearboundSentinel = gs;
-            this.State = state;
+            gearboundSentinel = gs;
+            State = state;
         }
 
         public override void OnEnter()
         {
             //TODO: Play animations
-            this.gearboundSentinel.AudioSource.pitch = 1f;
-            this.gearboundSentinel.EnableColliders(); // workaround rare bug where colliders got stuck disabled
+            gearboundSentinel.AudioSource.pitch = 1f;
+            gearboundSentinel.EnableColliders(); // workaround rare bug where colliders got stuck disabled
         }
 
         public override void OnExit()

@@ -1,31 +1,31 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityEngine;
 
 namespace BTG
 {
+    using UnityEngine;
+
     /// <summary>
     /// Door
     /// </summary>
     public class Door : MonoBehaviour
     {
-        [SerializeField] private GameObject closedChild;
-        [SerializeField] private GameObject openChild;
+        [SerializeField]
+        private GameObject closedChild;
+        [SerializeField]
+        private GameObject openChild;
 
         private void Start()
         {
-            this.closedChild.SetActive(true);
-            this.openChild.SetActive(false);
+            closedChild.SetActive(true);
+            openChild.SetActive(false);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.TryGetComponent(out Player _))
             {
-                this.closedChild.SetActive(false);
-                this.openChild.SetActive(true);
+                closedChild.SetActive(false);
+                openChild.SetActive(true);
             }
         }
 
@@ -33,8 +33,8 @@ namespace BTG
         {
             if (other.TryGetComponent(out Player _))
             {
-                this.closedChild.SetActive(true);
-                this.openChild.SetActive(false);
+                closedChild.SetActive(true);
+                openChild.SetActive(false);
             }
         }
     }

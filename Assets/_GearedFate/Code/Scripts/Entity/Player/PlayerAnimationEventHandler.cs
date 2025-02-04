@@ -1,12 +1,10 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using System;
-using UnityEngine;
 
 namespace BTG
 {
+    using System;
+    using UnityEngine;
+
     /// <summary>
     /// PlayerAnimationEventHandler
     /// </summary>
@@ -19,7 +17,7 @@ namespace BTG
         [SerializeField]
         private void OnChargeUpFinished()
         {
-            this.OnChargeUpFinishedEvent.Invoke();
+            OnChargeUpFinishedEvent.Invoke();
         }
 
         #endregion FireBlaze
@@ -27,39 +25,37 @@ namespace BTG
         #region FireSpin
 
         public event Action OnSpinChargeUpEvent;
+
         public event Action OnSpinFinishedEvent;
 
         [SerializeField]
         private void OnSpinChargeUp()
         {
-            this.OnSpinChargeUpEvent.Invoke();
+            OnSpinChargeUpEvent.Invoke();
         }
 
         [SerializeField]
         private void OnSpinFinished()
         {
-            this.OnSpinFinishedEvent.Invoke();
+            OnSpinFinishedEvent.Invoke();
         }
 
         #endregion FireSpin
 
-        #region GearToss
-
         public event Action OnGearTossEvent;
+
         public event Action OnGearTossFinishedEvent;
 
         [SerializeField]
         private void OnGearToss()
         {
-            this.OnGearTossEvent?.Invoke();
+            OnGearTossEvent?.Invoke();
         }
 
         [SerializeField]
         private void OnGearTossFinished()
         {
-            this.OnGearTossFinishedEvent.Invoke();
+            OnGearTossFinishedEvent.Invoke();
         }
-
-        #endregion GearToss
     }
 }

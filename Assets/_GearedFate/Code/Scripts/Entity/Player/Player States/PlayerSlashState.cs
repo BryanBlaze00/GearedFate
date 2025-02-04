@@ -1,11 +1,9 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityEngine;
 
 namespace BTG
 {
+    using UnityEngine;
+
     /// <summary>
     /// PlayerSlashState
     /// </summary>
@@ -17,44 +15,44 @@ namespace BTG
         public PlayerSlashState(FiniteStateMachine<Player.State> fsm, Player player, PlayerData data, int animId) :
             base(fsm, player, data, animId)
         {
-            this.slashIds = new int[3];
-            this.slashIds[0] = animId;
-            this.slashIds[1] = Animator.StringToHash("Slash_1");
-            this.slashIds[2] = Animator.StringToHash("Slash_2");
+            slashIds = new int[3];
+            slashIds[0] = animId;
+            slashIds[1] = Animator.StringToHash("Slash_1");
+            slashIds[2] = Animator.StringToHash("Slash_2");
         }
 
         public override void OnEnter()
         {
-            AudioManager.Instance.PlaySFX(this.player.SlashAudio);
+            AudioManager.Instance.PlaySFX(player.SlashAudio);
             var id = Random.Range(0, 3);
-            this.player.Anim.Play(this.slashIds[id]);
+            player.Anim.Play(slashIds[id]);
 
-            var direction = this.player.CurrentDirection;
+            var direction = player.CurrentDirection;
             var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            var pos = this.player.SlashPos;
+            var pos = player.SlashPos;
 
             pos.parent.rotation = Quaternion.Euler(0, 0, angle + 90);
 
-            var collisions = Physics2D.OverlapCircleAll(pos.position, this.data.SlashRadius, this.data.EnemyLayerMask);
+            var collisions = Physics2D.OverlapCircleAll(pos.position, data.SlashRadius, data.EnemyLayerMask);
             foreach (var collision in collisions)
             {
-                collision.GetComponent<IDamagable>()?.TakeDamage(this.data.SlashDamage);
+                collision.GetComponent<IDamagable>()?.TakeDamage(data.SlashDamage);
             }
 
-            this.startTime = Time.time;
+            startTime = Time.time;
         }
 
         public override void OnFrameUpdate()
         {
-            this.player.RB.linearVelocity = this.data.MoveSpeed * this.player.Input.MoveInput;
-            this.player.SetLookDir();
+            player.RB.linearVelocity = data.MoveSpeed * player.Input.MoveInput;
+            player.SetLookDir();
 
-            if (Time.time > this.startTime + this.data.SlashCoolDown)
+            if (Time.time > startTime + data.SlashCoolDown)
             {
-                this.fsm.SwitchState(
-                    this.player.Input.MoveInput == Vector2.zero
-                        ? this.player.states[Player.State.Idle]
-                        : this.player.states[Player.State.Move]);
+                fsm.SwitchState(
+                    player.Input.MoveInput == Vector2.zero
+                        ? player.states[Player.State.Idle]
+                        : player.states[Player.State.Move]);
             }
         }
     }

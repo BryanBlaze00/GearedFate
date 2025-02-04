@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace BTG
 {
+    using System.Collections.Generic;
+    using UnityEngine;
+
     /// <summary>
     /// Abstract base class for machinery that can move around entities.
     /// </summary>
@@ -11,7 +11,7 @@ namespace BTG
         /// <summary>
         /// Keep track of the entity this machinery should move.
         /// </summary>
-        private readonly HashSet<Transform> _entitiesToMove = new();
+        private readonly HashSet<Transform> _entitiesToMove = new ();
 
         /// <summary>
         /// Method called for each entity that should be moved. The movement differs depending on the machinery.
@@ -27,7 +27,7 @@ namespace BTG
             {
                 if (rootTransformProvider.RootTransform)
                 {
-                    this._entitiesToMove.Add(rootTransformProvider.RootTransform);
+                    _entitiesToMove.Add(rootTransformProvider.RootTransform);
                 }
             }
         }
@@ -39,7 +39,7 @@ namespace BTG
             {
                 if (rootTransformProvider.RootTransform)
                 {
-                    this._entitiesToMove.Remove(rootTransformProvider.RootTransform);
+                    _entitiesToMove.Remove(rootTransformProvider.RootTransform);
                 }
             }
         }
@@ -51,16 +51,16 @@ namespace BTG
             {
                 if (rootTransformProvider.RootTransform)
                 {
-                    this._entitiesToMove.Add(rootTransformProvider.RootTransform);
+                    _entitiesToMove.Add(rootTransformProvider.RootTransform);
                 }
             }
         }
 
         protected void MoveEntities()
         {
-            foreach (var entity in this._entitiesToMove)
+            foreach (var entity in _entitiesToMove)
             {
-                this.MoveEntity(entity);
+                MoveEntity(entity);
             }
         }
     }

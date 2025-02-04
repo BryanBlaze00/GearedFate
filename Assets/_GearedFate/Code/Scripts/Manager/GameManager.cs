@@ -1,13 +1,11 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityUtils;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace BTG
 {
+    using UnityEngine;
+    using UnityEngine.SceneManagement;
+    using UnityUtils;
+
     /// <summary>
     /// GameManager class to manage game scenes and transitions. Also other possible Settings (define when needed).
     /// </summary>
@@ -15,24 +13,29 @@ namespace BTG
     {
         // ... other game manager code ...
 
-        [Header("Scene Settings")] [SerializeField]
+        [Header("Scene Settings")]
+        [SerializeField]
         private string mainMenuScene = "MainMenu";
 
-        [SerializeField] private string gameOver = "GameOver";
+        [SerializeField]
+        private string gameOver = "GameOver";
 
-        [SerializeField] private string credits = "Credits";
+        [SerializeField]
+        private string credits = "Credits";
 
         // [SerializeField] string introScene = "IntroScene";
-        [SerializeField] private string[] bossLevelScenes =
+        [SerializeField]
+        private string[] bossLevelScenes =
         {
             "BossLevel 1", "BossLevel 2", "BossLevel 3",
-            "BossLevel 4", "BossLevel 5"
+            "BossLevel 4", "BossLevel 5",
         };
 
-        [SerializeField] private string[] cutsceneScenes =
+        [SerializeField]
+        private string[] cutsceneScenes =
         {
             "Cutscene 0", "Cutscene 1", "Cutscene 2",
-            "Cutscene 3", "Cutscene 4", "Cutscene 5"
+            "Cutscene 3", "Cutscene 4", "Cutscene 5",
         };
 
         private string currentScene;
@@ -41,33 +44,33 @@ namespace BTG
         {
             base.Awake(); // Important: Call the base Singleton Awake!
 
-            this.currentScene = SceneManager.GetActiveScene().name;
+            currentScene = SceneManager.GetActiveScene().name;
         }
 
         public void LoadMainMenu()
         {
             AudioManager.instance.PlayMenuClip();
-            this.LoadScene(this.mainMenuScene);
+            LoadScene(mainMenuScene);
         }
 
         public void StartGame()
         {
-            this.LoadScene("Cutscene 0");
+            LoadScene("Cutscene 0");
         }
 
         public string GetCurrentScene()
         {
-            return this.currentScene;
+            return currentScene;
         }
 
         public string[] GetCutsceneScenes()
         {
-            return this.cutsceneScenes;
+            return cutsceneScenes;
         }
 
         public string[] GetBossLevelScenes()
         {
-            return this.bossLevelScenes;
+            return bossLevelScenes;
         }
 
         public void LoadNextLevel()
@@ -131,7 +134,7 @@ namespace BTG
             var currentBuildScene = SceneManager.GetActiveScene().buildIndex;
             if (currentBuildScene >= 10)
             {
-                this.LoadMainMenu();
+                LoadMainMenu();
             }
             else
             {
@@ -145,23 +148,23 @@ namespace BTG
 
         private void LoadScene(string sceneName)
         {
-            this.currentScene = sceneName;
+            currentScene = sceneName;
             SceneManager.LoadScene(sceneName);
         }
 
         public void RestartLevel()
         {
-            this.LoadScene(this.currentScene);
+            LoadScene(currentScene);
         }
 
         public void LoadGameOver()
         {
-            this.LoadScene(this.gameOver);
+            LoadScene(gameOver);
         }
 
         public void LoadCredits()
         {
-            this.LoadScene(this.credits);
+            LoadScene(credits);
         }
 
         public void QuitGame()

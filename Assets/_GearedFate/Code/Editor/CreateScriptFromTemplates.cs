@@ -1,8 +1,8 @@
-using UnityEditor;
-using System.IO;
-
 namespace DayenCreation
 {
+    using System.IO;
+    using UnityEditor;
+
 	public static class CreateScriptFromTemplates
 	{
 		private const string ROOT_PATH = "Assets/_GearedFate/Code/Editor/Templates/";
@@ -21,6 +21,7 @@ namespace DayenCreation
 				{
 					rootNamespace = "BTG";
 				}
+
 				var copyright = COPYRIGHT;
 				copyright = copyright.Replace(PLACEHOLDER_RNS, rootNamespace);
 

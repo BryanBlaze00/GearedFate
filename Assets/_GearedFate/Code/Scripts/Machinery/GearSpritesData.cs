@@ -1,4 +1,3 @@
-using System.Linq;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -6,6 +5,8 @@ using UnityEngine;
 
 namespace BTG
 {
+    using System.Linq;
+
     /// <summary>
     /// Simple Scriptable object script to allow storing data about gear sprites in a single location.
     /// </summary>
@@ -13,7 +14,8 @@ namespace BTG
     public class GearSpritesData : ScriptableObject
     {
         // Sprite sheet with the gear animations, sprites should be name with a number at the end.
-        [SerializeField] private Texture2D _gearSpriteSheet;
+        [SerializeField]
+        private Texture2D _gearSpriteSheet;
 
         private Sprite[] _gearSprites;
 
@@ -25,9 +27,9 @@ namespace BTG
         {
             sprite = null;
 
-            if (index < this._gearSprites.Length && index >= 0)
+            if (index < _gearSprites.Length && index >= 0)
             {
-                sprite = this._gearSprites[index];
+                sprite = _gearSprites[index];
                 return true;
             }
 
@@ -38,9 +40,9 @@ namespace BTG
         {
 #if UNITY_EDITOR
             // Load all sprites from the sprite sheet and order them by the end number in the name.
-            this._gearSprites = AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GetAssetPath(this._gearSpriteSheet))
+            _gearSprites = AssetDatabase.LoadAllAssetsAtPath(AssetDatabase.GetAssetPath(_gearSpriteSheet))
                 .OfType<Sprite>()
-                .OrderBy(sprite => this.ExtractNumberFromName(sprite.name))
+                .OrderBy(sprite => ExtractNumberFromName(sprite.name))
                 .ToArray();
 #endif
         }

@@ -1,11 +1,9 @@
-//
 // Copyright (c) Dayen Creation. All rights reserved.
-//
-
-using UnityEngine;
 
 namespace DayenCreation
 {
+    using UnityEngine;
+
     /// <summary>
     /// Extension Methods for UnityEngine.Vector2
     /// </summary>
@@ -83,7 +81,6 @@ namespace DayenCreation
             return Vector2.Scale(vec, divisor.Invert());
         }
 
-
         /// <summary>
         /// Adds to any x y values of a Vector2
         /// </summary>
@@ -143,12 +140,12 @@ namespace DayenCreation
         public static Vector2 RandomPointInAnnulus(this Vector2 origin, float minRadius, float maxRadius)
         {
             var angle = Random.value * Mathf.PI * 2f;
-            Vector2 direction = new(Mathf.Cos(angle), Mathf.Sin(angle));
+            Vector2 direction = new (Mathf.Cos(angle), Mathf.Sin(angle));
 
             // Squaring and then square-rooting radii to ensure uniform distribution within the annulus
             var minRadiusSquared = minRadius * minRadius;
             var maxRadiusSquared = maxRadius * maxRadius;
-            var distance = Mathf.Sqrt(Random.value * (maxRadiusSquared - minRadiusSquared) + minRadiusSquared);
+            var distance = Mathf.Sqrt((Random.value * (maxRadiusSquared - minRadiusSquared)) + minRadiusSquared);
 
             // Calculate the position vector
             var position = direction * distance;

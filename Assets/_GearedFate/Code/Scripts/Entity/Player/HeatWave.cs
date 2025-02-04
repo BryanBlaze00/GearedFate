@@ -1,22 +1,23 @@
-using UnityEngine;
-
 namespace BTG
 {
+    using UnityEngine;
+
     public class HeatWave : MonoBehaviour
     {
-        [field: SerializeField] public int Damage { get; private set; }
+        [field: SerializeField]
+        public int Damage { get; private set; }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.TryGetComponent(out IDamagable damagable))
             {
-                damagable.TakeDamage(this.Damage);
+                damagable.TakeDamage(Damage);
             }
         }
 
         public void OnAnimationFinished()
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 }

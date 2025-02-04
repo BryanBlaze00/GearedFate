@@ -1,7 +1,7 @@
-using UnityEngine;
-
 namespace BTG
 {
+    using UnityEngine;
+
     public class CentipedeChargeState : CentipedeBaseState
     {
         private readonly int _animId;
@@ -13,18 +13,18 @@ namespace BTG
         public CentipedeChargeState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId,
             SteamCentipede steamCentipede) : base(fsm, steamCentipede)
         {
-            this._animId = animationId;
+            _animId = animationId;
         }
 
         public override void OnEnter()
         {
-            this.Centipede.IsAttacking = true;
-            this.Centipede.SetSpeed(this.Centipede.ChargeSpeed);
-            this.Centipede.SetAnimations(this._animId, true);
+            Centipede.IsAttacking = true;
+            Centipede.SetSpeed(Centipede.ChargeSpeed);
+            Centipede.SetAnimations(_animId, true);
 
-            if (this.Centipede.IsReachingTrajectoryEndNextStep())
+            if (Centipede.IsReachingTrajectoryEndNextStep())
             {
-                this.Centipede.ExpandTrajectory(this.ComputeChargeAimPosition());
+                Centipede.ExpandTrajectory(ComputeChargeAimPosition());
             }
         }
 
@@ -34,14 +34,14 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            this.Centipede.MoveAlongTrajectory();
+            Centipede.MoveAlongTrajectory();
 
-            if (!this.Centipede.IsReachingTrajectoryEndNextStep())
+            if (!Centipede.IsReachingTrajectoryEndNextStep())
             {
                 return;
             }
 
-            this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Chase]);
+            fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Chase]);
         }
 
         public override void OnPhysicsUpdate()
@@ -50,8 +50,8 @@ namespace BTG
 
         private Vector2 ComputeChargeAimPosition()
         {
-            Vector3 direction = this.Centipede.VectorToTarget;
-            return this.Centipede.Target.position - direction.normalized * 3;
+            Vector3 direction = Centipede.VectorToTarget;
+            return Centipede.Target.position - (direction.normalized * 3);
         }
     }
 }

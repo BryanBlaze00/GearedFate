@@ -1,11 +1,9 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using System;
 
 namespace BTG
 {
+    using System;
+
     /// <summary>
     /// Base Super Class for entity states
     /// </summary>
@@ -19,8 +17,11 @@ namespace BTG
         }
 
         public abstract void OnEnter();
+
         public abstract void OnExit();
+
         public abstract void OnFrameUpdate();
+
         public abstract void OnPhysicsUpdate();
     }
 }

@@ -1,6 +1,4 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
 
 namespace BTG
 {
@@ -16,7 +14,7 @@ namespace BTG
 
         public override void OnEnter()
         {
-            this.PlayAnimation();
+            PlayAnimation();
         }
 
         public override void OnExit()
@@ -25,14 +23,14 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            if (this.IsReadyToSpawn())
+            if (IsReadyToSpawn())
             {
-                this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.Swarm]);
+                fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Swarm]);
             }
 
-            if (this.GreatCreator.DistanceToTarget < this.GreatCreator.SafeDistance)
+            if (GreatCreator.DistanceToTarget < GreatCreator.SafeDistance)
             {
-                this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.RunAway]);
+                fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.RunAway]);
             }
         }
 

@@ -1,38 +1,40 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using System.Collections.Generic;
-using UnityEngine;
-using UnityUtils;
 
 namespace BTG
 {
+    using System.Collections.Generic;
+    using UnityEngine;
+    using UnityUtils;
+
     [System.Serializable]
     public class ObjectToPoolInfo
     {
-        [field: SerializeField] public GameObject ObjectToPool { get; private set; }
+        [field: SerializeField]
+        public GameObject ObjectToPool { get; private set; }
 
         [field: SerializeField]
         [field: Range(2, 100)]
         public int AmountToPool { get; private set; }
 
-        [field: SerializeField] public bool ShouldExpand { get; private set; } = true;
-
+        [field: SerializeField]
+        public bool ShouldExpand { get; private set; }
 
         public ObjectToPoolInfo(GameObject obj, int amt = 2, bool exp = true)
         {
-            this.ObjectToPool = obj;
-            this.AmountToPool = amt;
-            this.ShouldExpand = exp;
+            ObjectToPool = obj;
+            AmountToPool = amt;
+            ShouldExpand = exp;
         }
     }
 
     [System.Serializable]
     public class ObjectToPoolWrapper
     {
-        [field: SerializeField] public ObjectToPoolInfo ObjectToPoolInfo { get; private set; }
-        [field: SerializeField] public PooledObjectType ObjectType { get; private set; }
+        [field: SerializeField]
+        public ObjectToPoolInfo ObjectToPoolInfo { get; private set; }
+
+        [field: SerializeField]
+        public PooledObjectType ObjectType { get; private set; }
     }
 
     /// <summary>
@@ -40,18 +42,19 @@ namespace BTG
     /// </summary>
     public class ObjectPool : Singleton<ObjectPool>
     {
-        [SerializeField] private List<ObjectToPoolWrapper> objectsToPoolList;
-        private readonly Dictionary<PooledObjectType, ObjectToPoolInfo> objectsToPool = new();
+        [SerializeField]
+        private List<ObjectToPoolWrapper> objectsToPoolList;
+        private readonly Dictionary<PooledObjectType, ObjectToPoolInfo> objectsToPool = new ();
 
-        public Dictionary<PooledObjectType, List<GameObject>> PooledObjects { get; } = new();
+        public Dictionary<PooledObjectType, List<GameObject>> PooledObjects { get; } = new ();
 
         protected override void Awake()
         {
             base.Awake();
 
-            foreach (var obj in this.objectsToPoolList)
+            foreach (var obj in objectsToPoolList)
             {
-                if (this.objectsToPool.ContainsKey(obj.ObjectType))
+                if (objectsToPool.ContainsKey(obj.ObjectType))
                 {
 #if UNITY_EDITOR
                     Debug.LogWarning("Object skipped. Key already exists in pool!!");
@@ -67,32 +70,32 @@ namespace BTG
                     continue;
                 }
 
-                this.objectsToPool.Add(obj.ObjectType, obj.ObjectToPoolInfo);
-                this.ObjectPoolItemToPooledObject(obj.ObjectType);
+                objectsToPool.Add(obj.ObjectType, obj.ObjectToPoolInfo);
+                ObjectPoolItemToPooledObject(obj.ObjectType);
             }
 
-            this.objectsToPoolList = null;
+            objectsToPoolList = null;
         }
 
         public GameObject GetPooledObject(PooledObjectType type)
         {
-            if (!this.PooledObjects.ContainsKey(type))
+            if (!PooledObjects.ContainsKey(type))
             {
                 return null;
             }
 
-            for (var i = 0; i < this.PooledObjects[type].Count; i++)
+            for (var i = 0; i < PooledObjects[type].Count; i++)
             {
-                if (!this.PooledObjects[type][i].activeInHierarchy)
+                if (!PooledObjects[type][i].activeInHierarchy)
                 {
-                    return this.PooledObjects[type][i];
+                    return PooledObjects[type][i];
                 }
             }
 
-            if (this.objectsToPool[type].ShouldExpand)
+            if (objectsToPool[type].ShouldExpand)
             {
-                var obj = this.AddObjectToPool(this.objectsToPool[type]);
-                this.PooledObjects[type].Add(obj);
+                var obj = AddObjectToPool(objectsToPool[type]);
+                PooledObjects[type].Add(obj);
                 return obj;
             }
 
@@ -101,14 +104,13 @@ namespace BTG
 
         public List<GameObject> GetAllPooledObjects(PooledObjectType type)
         {
-            this.PooledObjects.TryGetValue(type, out var obj);
+            PooledObjects.TryGetValue(type, out var obj);
             return obj;
         }
 
-
         public void AddObject(GameObject GO, int amt, bool exp = true, PooledObjectType type = PooledObjectType.None)
         {
-            if (this.PooledObjects.ContainsKey(type))
+            if (PooledObjects.ContainsKey(type))
             {
 #if UNITY_EDITOR
                 Debug.LogWarning("Object already exists in pool!");
@@ -116,16 +118,15 @@ namespace BTG
 #endif
             }
 
-            ObjectToPoolInfo item = new(GO, amt, exp);
-            this.objectsToPool.Add(type, item);
-            this.ObjectPoolItemToPooledObject(type);
+            ObjectToPoolInfo item = new (GO, amt, exp);
+            objectsToPool.Add(type, item);
+            ObjectPoolItemToPooledObject(type);
         }
 
         public GameObject AddObjectToPool(ObjectToPoolInfo item)
         {
-            var obj = Instantiate(item.ObjectToPool);
+            var obj = Instantiate(item.ObjectToPool, transform, true);
             obj.SetActive(false);
-            obj.transform.parent = this.transform;
             return obj;
         }
 
@@ -136,15 +137,15 @@ namespace BTG
 
         private void ObjectPoolItemToPooledObject(PooledObjectType type)
         {
-            var item = this.objectsToPool[type];
+            var item = objectsToPool[type];
 
             var pooledObjects = new List<GameObject>();
             for (var i = 0; i < item.AmountToPool; i++)
             {
-                pooledObjects.Add(this.AddObjectToPool(item));
+                pooledObjects.Add(AddObjectToPool(item));
             }
 
-            this.PooledObjects.Add(type, pooledObjects);
+            PooledObjects.Add(type, pooledObjects);
         }
     }
 }

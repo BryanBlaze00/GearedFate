@@ -1,11 +1,9 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityEngine;
 
 namespace BTG
 {
+    using UnityEngine;
+
     /// <summary>
     /// PlayerHitState
     /// </summary>
@@ -21,17 +19,17 @@ namespace BTG
         public override void OnEnter()
         {
             base.OnEnter();
-            if (this.player.Knockback.isKnockedback)
+            if (player.Knockback.isKnockedback)
             {
-                this.player.RB.linearVelocity = this.player.Knockback.KnockBackVelocity;
-                this.player.Knockback.isKnockedback = false;
+                player.RB.linearVelocity = player.Knockback.KnockBackVelocity;
+                player.Knockback.isKnockedback = false;
             }
             else
             {
-                this.player.RB.linearVelocity = Vector2.zero;
+                player.RB.linearVelocity = Vector2.zero;
             }
 
-            this.startTime = Time.time;
+            startTime = Time.time;
         }
 
         public override void OnExit()
@@ -41,18 +39,18 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            if (Time.time > this.startTime + this.data.KnockBackTime)
+            if (Time.time > startTime + data.KnockBackTime)
             {
-                this.player.RB.linearVelocity = Vector2.zero;
+                player.RB.linearVelocity = Vector2.zero;
             }
 
-            if (Time.time < this.startTime + this.data.HitStunTime)
+            if (Time.time < startTime + data.HitStunTime)
             {
                 return;
             }
 
-            this.fsm.SwitchState(
-                Input.MoveInput == Vector2.zero ? this.player.states[Player.State.Idle] : this.player.states[Player.State.Move]
+            fsm.SwitchState(
+                Input.MoveInput == Vector2.zero ? player.states[Player.State.Idle] : player.states[Player.State.Move]
             );
         }
 

@@ -1,47 +1,47 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityEngine;
 
 namespace BTG
 {
+    using UnityEngine;
+
     /// <summary>
     /// PlayerDashState
     /// </summary>
     public class PlayerDashState : PlayerBaseState
     {
         public float LastUsedTime { get; private set; }
+
         private float startTime;
-        public bool CanDash => Time.time > this.LastUsedTime + this.data.DashCoolDown;
+
+        public bool CanDash => Time.time > LastUsedTime + data.DashCoolDown;
 
         public PlayerDashState(FiniteStateMachine<Player.State> fsm, Player player, PlayerData data, int animId) : base(
             fsm, player, data, animId)
         {
-            this.LastUsedTime = Time.time - data.DashCoolDown;
+            LastUsedTime = Time.time - data.DashCoolDown;
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
-            AudioManager.Instance.PlaySFX(this.player.DashAudio);
-            this.player.RB.linearVelocity = this.player.CurrentDirection * this.data.DashForce;
-            this.startTime = Time.time; // remove later
-            this.player.isInvulnerable = true;
+            AudioManager.Instance.PlaySFX(player.DashAudio);
+            player.RB.linearVelocity = player.CurrentDirection * data.DashForce;
+            startTime = Time.time; // remove later
+            player.isInvulnerable = true;
         }
 
         public override void OnExit()
         {
             base.OnExit();
-            this.LastUsedTime = Time.time;
-            this.player.isInvulnerable = false;
+            LastUsedTime = Time.time;
+            player.isInvulnerable = false;
         }
 
         public override void OnFrameUpdate()
         {
-            if (Time.time >= this.startTime + this.data.DashTime)
+            if (Time.time >= startTime + data.DashTime)
             {
-                this.OnDashFinish(); //TODO: Replace with animation finish event
+                OnDashFinish(); //TODO: Replace with animation finish event
             }
         }
 
@@ -52,8 +52,8 @@ namespace BTG
 
         public void OnDashFinish()
         {
-            this.fsm.SwitchState(
-                Input.MoveInput == Vector2.zero ? this.player.states[Player.State.Idle] : this.player.states[Player.State.Move]
+            fsm.SwitchState(
+                Input.MoveInput == Vector2.zero ? player.states[Player.State.Idle] : player.states[Player.State.Move]
             );
         }
     }

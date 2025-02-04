@@ -1,7 +1,7 @@
-using UnityEngine;
-
 namespace BTG
 {
+    using UnityEngine;
+
     /// <summary>
     /// Base script for scrap that the player can collect.
     /// </summary>

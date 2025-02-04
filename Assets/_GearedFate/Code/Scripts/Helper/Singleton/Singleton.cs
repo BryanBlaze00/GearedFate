@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-
-namespace UnityUtils
+﻿namespace UnityUtils
 {
+    using UnityEngine;
+
     public class Singleton<T> : MonoBehaviour where T : Component
     {
         protected static T instance;
@@ -36,7 +36,7 @@ namespace UnityUtils
         /// </summary>
         protected virtual void Awake()
         {
-            this.InitializeSingleton();
+            InitializeSingleton();
         }
 
         protected virtual void InitializeSingleton()
@@ -54,7 +54,7 @@ namespace UnityUtils
             {
                 if (instance != this)
                 {
-                    Destroy(this.gameObject);
+                    Destroy(gameObject);
                 }
             }
         }

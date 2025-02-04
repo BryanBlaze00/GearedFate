@@ -1,39 +1,39 @@
-using System.Linq;
-using UnityEngine;
-
 namespace BTG
 {
+    using System.Linq;
+    using UnityEngine;
+
     public class BossStartTrigger : MonoBehaviour
     {
         public MonoBehaviour Boss;
 
         private void Awake()
         {
-            if (this.TryGetComponent(out SpriteRenderer sr))
+            if (TryGetComponent(out SpriteRenderer sr))
             {
                 sr.enabled = false;
             }
 
-            if (this.Boss == null)
+            if (Boss == null)
             {
-                this.Boss = (MonoBehaviour)FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include,
+                Boss = (MonoBehaviour)FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include,
                     FindObjectsSortMode.None).OfType<IBoss>().FirstOrDefault();
             }
 
-            if (this.Boss == null)
+            if (Boss == null)
             {
                 Debug.LogError(nameof(BossStartTrigger) + " doesn't have a boss");
             }
 
-            this.Boss.gameObject.SetActive(false);
+            Boss.gameObject.SetActive(false);
         }
 
         public void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.TryGetComponent(out Player _))
             {
-                this.Boss.gameObject.SetActive(true);
-                this.gameObject.SetActive(false);
+                Boss.gameObject.SetActive(true);
+                gameObject.SetActive(false);
             }
         }
     }

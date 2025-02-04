@@ -1,12 +1,10 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using System.Collections;
-using UnityEngine;
 
 namespace BTG
 {
+    using System.Collections;
+    using UnityEngine;
+
     /// <summary>
     /// GSIntroState
     /// </summary>
@@ -20,7 +18,7 @@ namespace BTG
         public override void OnEnter()
         {
             base.OnEnter();
-            this.gearboundSentinel.StartCoroutine(this.OnEnterCoroutine());
+            gearboundSentinel.StartCoroutine(OnEnterCoroutine());
         }
 
         /// <summary>
@@ -30,7 +28,7 @@ namespace BTG
         {
             // TODO: Some kind of intro animation?
             yield return new WaitForSeconds(1f);
-            this.fsm.SwitchState(this.gearboundSentinel.States[GearboundSentinel.State.Chase]);
+            fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Chase]);
         }
 
         public override void OnExit()

@@ -20,6 +20,6 @@ namespace BTG
         GS_Bomb,
         CircleString,
         LineString,
-        CircleStringOneOpening
+        CircleStringOneOpening,
     }
 }

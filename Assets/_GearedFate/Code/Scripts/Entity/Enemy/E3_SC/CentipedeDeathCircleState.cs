@@ -1,7 +1,7 @@
-using UnityEngine;
-
 namespace BTG
 {
+    using UnityEngine;
+
     public class CentipedeDeathCircleState : CentipedeBaseState
     {
         private readonly int _animId;
@@ -23,22 +23,22 @@ namespace BTG
         public CentipedeDeathCircleState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId,
             SteamCentipede steamCentipede) : base(fsm, steamCentipede)
         {
-            this._animId = animationId;
+            _animId = animationId;
         }
 
         public override void OnEnter()
         {
-            this.Centipede.IsAttacking = true;
-            this.Centipede.SetSpeed(this.Centipede.ChargeSpeed);
-            this.Centipede.SetAnimations(this._animId, true);
-            this._originalTargetPosition = this.Centipede.Target.position;
-            this._initialDistanceToTarget = this.Centipede.DistanceToTarget;
-            this._firstCircling = true;
-            this._timer = 0;
+            Centipede.IsAttacking = true;
+            Centipede.SetSpeed(Centipede.ChargeSpeed);
+            Centipede.SetAnimations(_animId, true);
+            _originalTargetPosition = Centipede.Target.position;
+            _initialDistanceToTarget = Centipede.DistanceToTarget;
+            _firstCircling = true;
+            _timer = 0;
 
-            if (this.Centipede.IsReachingTrajectoryEndNextStep())
+            if (Centipede.IsReachingTrajectoryEndNextStep())
             {
-                this.Centipede.ExpandTrajectory(this.ComputeDeathCirclePosition());
+                Centipede.ExpandTrajectory(ComputeDeathCirclePosition());
             }
         }
 
@@ -48,27 +48,26 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            this._timer += Time.deltaTime;
-            this.Centipede.MoveAlongTrajectory();
+            _timer += Time.deltaTime;
+            Centipede.MoveAlongTrajectory();
 
-
-            if (!this.Centipede.IsReachingTrajectoryEndNextStep())
+            if (!Centipede.IsReachingTrajectoryEndNextStep())
             {
                 return;
             }
 
-            if (Vector2.Distance(this.Centipede.Target.position, this._originalTargetPosition) > this._initialDistanceToTarget)
+            if (Vector2.Distance(Centipede.Target.position, _originalTargetPosition) > _initialDistanceToTarget)
             {
-                this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Charge]);
+                fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Charge]);
             }
             else
             {
-                if (this._timer > this._timeToReachMinimalDistance)
+                if (_timer > _timeToReachMinimalDistance)
                 {
-                    this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Charge]);
+                    fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Charge]);
                 }
 
-                this.Centipede.ExpandTrajectory(this.ComputeDeathCirclePosition());
+                Centipede.ExpandTrajectory(ComputeDeathCirclePosition());
             }
         }
 
@@ -78,24 +77,24 @@ namespace BTG
 
         private Vector2 ComputeDeathCirclePosition()
         {
-            var directionFromPlayerToHead = this.Centipede.VectorToTarget;
+            var directionFromPlayerToHead = Centipede.VectorToTarget;
 
             // if not circling yet, choose as a node the closest cardinal point at the defined circling distance.
-            if (this._firstCircling)
+            if (_firstCircling)
             {
-                this._circleDirection = VectorHelper2D.ClosestCardinalOrDiagonal(directionFromPlayerToHead);
-                this._firstCircling = false;
+                _circleDirection = VectorHelper2D.ClosestCardinalOrDiagonal(directionFromPlayerToHead);
+                _firstCircling = false;
             }
             else
             {
-                this._circleDirection = VectorHelper2D.NextClockWiseDirection(this._circleDirection);
+                _circleDirection = VectorHelper2D.NextClockWiseDirection(_circleDirection);
             }
 
-            var nodeDirection = VectorHelper2D.VectorFromDirection(this._circleDirection);
+            var nodeDirection = VectorHelper2D.VectorFromDirection(_circleDirection);
 
-            var circlingDistance = this._initialDistanceToTarget / 2 * (1 - this._timer / this._timeToReachMinimalDistance) + this._finalDistanceToTarget * this._timer / this._timeToReachMinimalDistance;
+            var circlingDistance = (_initialDistanceToTarget / 2 * (1 - (_timer / _timeToReachMinimalDistance))) + (_finalDistanceToTarget * _timer / _timeToReachMinimalDistance);
 
-            return (Vector2)this._originalTargetPosition + nodeDirection * circlingDistance;
+            return (Vector2)_originalTargetPosition + (nodeDirection * circlingDistance);
         }
     }
 }

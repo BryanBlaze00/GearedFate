@@ -1,13 +1,11 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityEngine;
-using UnityEngine.Audio;
-using UnityEngine.UI;
 
 namespace BTG
 {
+    using UnityEngine;
+    using UnityEngine.Audio;
+    using UnityEngine.UI;
+
     /// <summary>
     /// HandleSettings
     /// </summary>
@@ -17,41 +15,47 @@ namespace BTG
         {
             MasterVolume,
             MusicVolume,
-            SFXVolume
+            SFXVolume,
         }
 
-        [SerializeField] private GameObject soundTab;
-        [SerializeField] private GameObject controlsTab;
-        [SerializeField] private AudioMixer musicMaster;
+        [SerializeField]
+        private GameObject soundTab;
+        [SerializeField]
+        private GameObject controlsTab;
+        [SerializeField]
+        private AudioMixer musicMaster;
 
-        [SerializeField] private Slider masterSlider;
-        [SerializeField] private Slider musicSlider;
-        [SerializeField] private Slider sfxSlider;
+        [SerializeField]
+        private Slider masterSlider;
+        [SerializeField]
+        private Slider musicSlider;
+        [SerializeField]
+        private Slider sfxSlider;
 
         private void Start()
         {
-            this.RefreshSlider();
-            this.Controls();
-            this.gameObject.SetActive(false);
+            RefreshSlider();
+            Controls();
+            gameObject.SetActive(false);
         }
 
         public void Sound()
         {
-            this.soundTab.SetActive(true);
-            this.controlsTab.SetActive(false);
+            soundTab.SetActive(true);
+            controlsTab.SetActive(false);
         }
 
         public void Controls()
         {
-            this.soundTab.SetActive(false);
-            this.controlsTab.SetActive(true);
+            soundTab.SetActive(false);
+            controlsTab.SetActive(true);
         }
 
         private void RefreshSlider()
         {
-            this.masterSlider.value = PlayerPrefs.GetFloat(nameof(SettingsConstant.MasterVolume), 100);
-            this.musicSlider.value = PlayerPrefs.GetFloat(nameof(SettingsConstant.MusicVolume), 100);
-            this.sfxSlider.value = PlayerPrefs.GetFloat(nameof(SettingsConstant.SFXVolume), 100);
+            masterSlider.value = PlayerPrefs.GetFloat(nameof(SettingsConstant.MasterVolume), 100);
+            musicSlider.value = PlayerPrefs.GetFloat(nameof(SettingsConstant.MusicVolume), 100);
+            sfxSlider.value = PlayerPrefs.GetFloat(nameof(SettingsConstant.SFXVolume), 100);
         }
 
         private float SliderToDB(float value)
@@ -66,23 +70,23 @@ namespace BTG
                 value = 0.001f;
             }
 
-            this.musicMaster.SetFloat(param, this.SliderToDB(value));
+            musicMaster.SetFloat(param, SliderToDB(value));
             PlayerPrefs.SetFloat(param, value);
         }
 
         public void OnMasterVolumeChange(float value)
         {
-            this.HandleVolume(nameof(SettingsConstant.MasterVolume), value);
+            HandleVolume(nameof(SettingsConstant.MasterVolume), value);
         }
 
         public void OnMusicVolumeChange(float value)
         {
-            this.HandleVolume(nameof(SettingsConstant.MusicVolume), value);
+            HandleVolume(nameof(SettingsConstant.MusicVolume), value);
         }
 
         public void OnSFXVolumeChange(float value)
         {
-            this.HandleVolume(nameof(SettingsConstant.SFXVolume), value);
+            HandleVolume(nameof(SettingsConstant.SFXVolume), value);
         }
     }
 }

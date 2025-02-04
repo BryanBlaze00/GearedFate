@@ -1,11 +1,9 @@
-//
 // Copyright (c) BTG. All rights reserved.
-//
-
-using UnityEngine;
 
 namespace BTG
 {
+    using UnityEngine;
+
     /// <summary>
     /// PlayerGearTossState
     /// </summary>
@@ -14,22 +12,22 @@ namespace BTG
         public float LastUsedTime { get; private set; }
 
         public bool CanShoot =>
-            this.player.CurrentAttackFuelAmount > this.data.GearFuelBurnAmount &&
-                                Time.time > this.LastUsedTime + this.data.GearShootCoolDown;
+            player.CurrentAttackFuelAmount > data.GearFuelBurnAmount &&
+                                Time.time > LastUsedTime + data.GearShootCoolDown;
 
         public PlayerGearTossState(FiniteStateMachine<Player.State> fsm, Player player, PlayerData data, int animId) :
             base(fsm, player, data, animId)
         {
-            this.LastUsedTime = Time.time - data.GearShootCoolDown;
+            LastUsedTime = Time.time - data.GearShootCoolDown;
 
-            player.AnimEvent.OnGearTossEvent += this.GearToss;
-            player.AnimEvent.OnGearTossFinishedEvent += this.SwitchState;
+            player.AnimEvent.OnGearTossEvent += GearToss;
+            player.AnimEvent.OnGearTossFinishedEvent += SwitchState;
         }
 
         ~PlayerGearTossState()
         {
-            this.player.AnimEvent.OnGearTossEvent -= this.GearToss;
-            this.player.AnimEvent.OnGearTossFinishedEvent -= this.SwitchState;
+            player.AnimEvent.OnGearTossEvent -= GearToss;
+            player.AnimEvent.OnGearTossFinishedEvent -= SwitchState;
         }
 
         public override void OnEnter()
@@ -39,25 +37,25 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            this.player.RB.linearVelocity = this.data.MoveSpeed * this.player.Input.MoveInput;
-            this.player.SetLookDir();
+            player.RB.linearVelocity = data.MoveSpeed * player.Input.MoveInput;
+            player.SetLookDir();
         }
 
         public override void OnExit()
         {
             base.OnExit();
-            this.LastUsedTime = Time.time;
+            LastUsedTime = Time.time;
         }
 
         private void GearToss()
         {
-            this.player.ShootGear();
+            player.ShootGear();
         }
 
         private void SwitchState()
         {
-            this.fsm.SwitchState(
-                Input.MoveInput == Vector2.zero ? this.player.states[Player.State.Idle] : this.player.states[Player.State.Move]
+            fsm.SwitchState(
+                Input.MoveInput == Vector2.zero ? player.states[Player.State.Idle] : player.states[Player.State.Move]
             );
         }
     }
