@@ -6,6 +6,7 @@ namespace BTG
 {
     public class BossHealthListener : MonoBehaviour
     {
+
         [SerializeField]
         private Image _firstBossBar;
 
@@ -18,7 +19,7 @@ namespace BTG
         void Start()
         {
             _boss = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IBoss>().FirstOrDefault();
-#if UNITY_EDITOR   
+#if UNITY_EDITOR
          if (_boss == null)
                 Debug.LogError($"No {nameof(IBoss)} object found in scene");
 #endif
