@@ -9,67 +9,47 @@ namespace BTG
 {
     public class MoveAlongSpline : MonoBehaviour
     {
+        [SerializeField] private List<Transform> _movingAlongSpline;
 
-        [SerializeField]
-        private List<Transform> _movingAlongSpline;
+        [SerializeField] private Transform _toFollow;
 
-        [SerializeField]
-        private Transform _toFollow;
+        [SerializeField] private SplineContainer _splineContainer;
 
-        [SerializeField]
-        private SplineContainer _splineContainer;
+        [SerializeField] private float _regularSpeed;
 
-        [SerializeField]
-        private float _regularSpeed;
+        [SerializeField] private float _speed;
 
-        [SerializeField]
-        private float _speed;
+        [SerializeField] private float _chargeSpeed;
 
-        [SerializeField]
-        private float _chargeSpeed;
+        [SerializeField] private float _chargeMinimumTime;
 
-        [SerializeField]
-        private float _chargeMinimumTime;
+        [SerializeField] private float _chargeMaximumTime;
 
-        [SerializeField]
-        private float _chargeMaximumTime;
+        [SerializeField] private float _bodyPartDistance;
 
-        [SerializeField]
-        private float _bodyPartDistance;
-
-        [SerializeField]
-        private float _chasingDistance = 15;
+        [SerializeField] private float _chasingDistance = 15;
 
         private float _totalSplineLength;
 
         private List<float> _currentPositionsOnSpline = new();
 
-        [SerializeField]
-        private float _circleDistance;
+        [SerializeField] private float _circleDistance;
 
-        [SerializeField]
-        private Sprite _topSprite;
+        [SerializeField] private Sprite _topSprite;
 
-        [SerializeField]
-        private Sprite _topRightSprite;
+        [SerializeField] private Sprite _topRightSprite;
 
-        [SerializeField]
-        private Sprite _rightSprite;
+        [SerializeField] private Sprite _rightSprite;
 
-        [SerializeField]
-        private Sprite _bottomRightSprite;
+        [SerializeField] private Sprite _bottomRightSprite;
 
-        [SerializeField]
-        private Sprite _bottomSprite;
+        [SerializeField] private Sprite _bottomSprite;
 
-        [SerializeField]
-        private Sprite _bottomLeftSprite;
+        [SerializeField] private Sprite _bottomLeftSprite;
 
-        [SerializeField]
-        private Sprite _leftSprite;
+        [SerializeField] private Sprite _leftSprite;
 
-        [SerializeField]
-        private Sprite _topLeftSprite;
+        [SerializeField] private Sprite _topLeftSprite;
 
         private VectorHelper2D.Direction _circleDirection;
 
@@ -84,9 +64,9 @@ namespace BTG
 
         private enum CentipedeState
         {
-             Chasing = 0,
-             Circling = 1,
-             Ramming = 2,
+            Chasing = 0,
+            Circling = 1,
+            Ramming = 2
         }
 
         protected void Start()
@@ -99,10 +79,10 @@ namespace BTG
         protected void Update()
         {
             // Distance crossed by each transform on the spline
-            float moved = Time.deltaTime * _speed;
+            var moved = Time.deltaTime * _speed;
 
             // Move all following transform along the spline
-            for (int i = 0; i < _movingAlongSpline.Count; i++)
+            for (var i = 0; i < _movingAlongSpline.Count; i++)
             {
                 _currentPositionsOnSpline[i] += moved / _totalSplineLength;
                 _movingAlongSpline[i].position = _splineContainer.EvaluatePosition(_currentPositionsOnSpline[i]);
@@ -117,46 +97,45 @@ namespace BTG
             {
                 ChooseNextState(_toFollow.position, _splineContainer.Spline.Knots.Last().Position);
 
-                Vector3 nextNodePosition = ChooseNextNode(_toFollow.position, _splineContainer.Spline.Knots.Last().Position);
+                var nextNodePosition =
+                    ChooseNextNode(_toFollow.position, _splineContainer.Spline.Knots.Last().Position);
                 AddNodeToSpline(nextNodePosition);
             }
         }
 
         private void InitializeBodyPosition()
         {
-            float normalizedDistance = _bodyPartDistance / _totalSplineLength;
-            for (int i = 0; i < _movingAlongSpline.Count; i++)
+            var normalizedDistance = _bodyPartDistance / _totalSplineLength;
+            for (var i = 0; i < _movingAlongSpline.Count; i++)
             {
                 _currentPositionsOnSpline.Add(normalizedDistance * i);
-               _movingAlongSpline[i].position = _splineContainer.EvaluatePosition(normalizedDistance * i);
+                _movingAlongSpline[i].position = _splineContainer.EvaluatePosition(normalizedDistance * i);
             }
         }
 
         // Check if a given normalized spline position is after the penultimate knot.
         private bool IsReachingSplineEndNextStep(float currentSplinePosition, float moved)
         {
-            return  currentSplinePosition + (moved / _totalSplineLength) >= 1;
+            return currentSplinePosition + moved / _totalSplineLength >= 1;
         }
 
         private void AddNodeToSpline(Vector3 nodePosition)
         {
-            Spline spline = _splineContainer.Spline;
-            float lengthBeforeAddingNode = _totalSplineLength;
+            var spline = _splineContainer.Spline;
+            var lengthBeforeAddingNode = _totalSplineLength;
 
             spline.Add(nodePosition);
 
             _totalSplineLength = _splineContainer.CalculateLength();
 
             // Gotta recompute the correct spline position for each body parts since the spline length changed.
-            for (int i = 0; i < _movingAlongSpline.Count; i++)
-            {
+            for (var i = 0; i < _movingAlongSpline.Count; i++)
                 _currentPositionsOnSpline[i] *= lengthBeforeAddingNode / _totalSplineLength;
-            }
         }
 
         private Vector3 NextPositionBehindPlayer(Vector3 playerPosition, Vector3 lastPosition)
         {
-            Vector3 direction = playerPosition - lastPosition;
+            var direction = playerPosition - lastPosition;
             return playerPosition + direction.normalized * 3;
         }
 
@@ -165,7 +144,7 @@ namespace BTG
             switch (_centipedeState)
             {
                 case CentipedeState.Chasing:
-                    Vector3 direction = playerPosition - lastPosition;
+                    var direction = playerPosition - lastPosition;
                     return lastPosition + direction.normalized * 3;
                 case CentipedeState.Circling:
                     return ChooseCirclingNode(playerPosition, lastPosition);
@@ -215,7 +194,8 @@ namespace BTG
 
         private Vector3 ChooseCirclingNode(Vector3 playerPosition, Vector3 lastPosition)
         {
-            Vector2 directionFromPlayerToHead = new Vector2(playerPosition.x-lastPosition.x, playerPosition.y - lastPosition.y);
+            var directionFromPlayerToHead =
+                new Vector2(playerPosition.x - lastPosition.x, playerPosition.y - lastPosition.y);
 
             // if not circling yet, choose as a node the closest cardinal point at the defined circling distance.
             if (_firstCircleNodeChose)
@@ -228,16 +208,16 @@ namespace BTG
                 _circleDirection = VectorHelper2D.NextClockWiseDirection(_circleDirection);
             }
 
-            Vector2 nodeDirection = VectorHelper2D.VectorFromDirection(_circleDirection);
-            Vector3 nodeDirection3D = new Vector3(nodeDirection.x, nodeDirection.y, 0);
+            var nodeDirection = VectorHelper2D.VectorFromDirection(_circleDirection);
+            var nodeDirection3D = new Vector3(nodeDirection.x, nodeDirection.y, 0);
 
-            return playerPosition + (nodeDirection3D * _circleDistance);
+            return playerPosition + nodeDirection3D * _circleDistance;
         }
 
         // Based on the tangent at the spline position, set the sprite to look in the right direction.
         private void SetSpriteBasedOnTangent(SpriteRenderer renderer, Vector3 tangent)
         {
-            Vector2 tangent2D = new Vector2(tangent.x, tangent.y);
+            var tangent2D = new Vector2(tangent.x, tangent.y);
             switch (VectorHelper2D.ClosestCardinalOrDiagonal(tangent2D))
             {
                 case VectorHelper2D.Direction.Top:

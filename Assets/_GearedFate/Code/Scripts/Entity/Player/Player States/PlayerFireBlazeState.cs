@@ -6,85 +6,84 @@ using UnityEngine;
 
 namespace BTG
 {
-	/// <summary>
-	/// PlayerFireBlazeState
-	/// </summary>
-	public class PlayerFireBlazeState : PlayerBaseState
-	{
-		private bool chargingUp;
-		private IDamagable damagable;
-		public PlayerFireBlazeState(FiniteStateMachine<Player.State> fsm, Player player, PlayerData data, int animId) : base(fsm, player, data, animId)
-		{
-			player.AnimEvent.OnChargeUpFinishedEvent += ChargedUp;
-		}
+    /// <summary>
+    /// PlayerFireBlazeState
+    /// </summary>
+    public class PlayerFireBlazeState : PlayerBaseState
+    {
+        private bool chargingUp;
+        private IDamagable damagable;
 
-		~PlayerFireBlazeState()
-		{
-			player.AnimEvent.OnChargeUpFinishedEvent -= ChargedUp;
-		}
+        public PlayerFireBlazeState(FiniteStateMachine<Player.State> fsm, Player player, PlayerData data, int animId) :
+            base(fsm, player, data, animId)
+        {
+            player.AnimEvent.OnChargeUpFinishedEvent += ChargedUp;
+        }
 
-		public override void OnEnter()
-		{
-			base.OnEnter();
-			AudioManager.Instance.PlaySFX(player.FlameBeam);
-			chargingUp = true;
-			player.RB.linearVelocity = Vector2.zero;
-		}
+        ~PlayerFireBlazeState()
+        {
+            player.AnimEvent.OnChargeUpFinishedEvent -= ChargedUp;
+        }
 
-		public override void OnExit()
-		{
-			base.OnExit();
-			player.Blaze.GetComponent<Animator>().SetTrigger("BlazeOff");
-		}
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            AudioManager.Instance.PlaySFX(player.FlameBeam);
+            chargingUp = true;
+            player.RB.linearVelocity = Vector2.zero;
+        }
 
-		public override void OnFrameUpdate()
-		{
-			if (!Input.AttackPressed || player.CurrentAttackFuelAmount == 0)
-			{
-				fsm.SwitchState(player.states[Player.State.Idle]);
-				return;
-			}
+        public override void OnExit()
+        {
+            base.OnExit();
+            player.Blaze.GetComponent<Animator>().SetTrigger("BlazeOff");
+        }
 
-			if (chargingUp) return;
+        public override void OnFrameUpdate()
+        {
+            if (!Input.AttackPressed || player.CurrentAttackFuelAmount == 0)
+            {
+                fsm.SwitchState(player.states[Player.State.Idle]);
+                return;
+            }
 
-			var input = player.Input.MoveInput;
-			player.RB.linearVelocity = input * data.FireBlazeMoveSpeed;
+            if (chargingUp) return;
 
-			player.SetLookDir();
+            var input = player.Input.MoveInput;
+            player.RB.linearVelocity = input * data.FireBlazeMoveSpeed;
 
-			var direction = player.CurrentDirection;
+            player.SetLookDir();
 
-			var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            var direction = player.CurrentDirection;
 
-			player.ShootPos.rotation = Quaternion.Euler(0, 0, angle - 90);
+            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-			var collisions = Physics2D.BoxCastAll(player.Blaze.transform.position, data.FireBlazeDimension, angle, player.CurrentDirection, data.FireBlazeDistance, data.EnemyLayerMask);
-			foreach (var collision in collisions)
-			{
-				if (collision.collider.TryGetComponent(out IDamagable damagable))
-				{
-					damagable.TakeDamage(data.FireBlazeDPS * Time.deltaTime);
-				}
-			}
+            player.ShootPos.rotation = Quaternion.Euler(0, 0, angle - 90);
 
-			Debug.DrawRay(player.Blaze.transform.position, player.CurrentDirection * data.FireBlazeDistance);  ///visualization for now
+            var collisions = Physics2D.BoxCastAll(player.Blaze.transform.position, data.FireBlazeDimension, angle,
+                player.CurrentDirection, data.FireBlazeDistance, data.EnemyLayerMask);
+            foreach (var collision in collisions)
+                if (collision.collider.TryGetComponent(out IDamagable damagable))
+                    damagable.TakeDamage(data.FireBlazeDPS * Time.deltaTime);
 
-			///I think since this is basically fire, we can keep it at fixed distance despite any enemy falls under it or not.
-			///We don't have to change anything from current code that way
+            Debug.DrawRay(player.Blaze.transform.position,
+                player.CurrentDirection * data.FireBlazeDistance); ///visualization for now
 
-			player.BurnAttackFuel(Time.deltaTime * data.FireBlazeBurnRate);
+            ///I think since this is basically fire, we can keep it at fixed distance despite any enemy falls under it or not.
+            ///We don't have to change anything from current code that way
 
-		}
+            player.BurnAttackFuel(Time.deltaTime * data.FireBlazeBurnRate);
+        }
 
-		public override void OnPhysicsUpdate()
-		{
-			base.OnPhysicsUpdate();
-		}
+        public override void OnPhysicsUpdate()
+        {
+            base.OnPhysicsUpdate();
+        }
 
-		private void ChargedUp()
-		{
-			player.Blaze.SetActive(true);
-			chargingUp = false;
-		}
-	}
+        private void ChargedUp()
+        {
+            player.Blaze.SetActive(true);
+            chargingUp = false;
+        }
+    }
 }

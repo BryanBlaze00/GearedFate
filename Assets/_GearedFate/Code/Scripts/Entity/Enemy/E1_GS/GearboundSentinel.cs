@@ -32,16 +32,16 @@ namespace BTG
     ///  - direct shot at the player (or predicting player)
     /// </summary>
     public class GearboundSentinel : MonoBehaviour, IDamagable, IBoss
-	{
-		public enum State
-		{
+    {
+        public enum State
+        {
             Intro,
-			Chase,
-			Burrow,
+            Chase,
+            Burrow,
             Shoot,
             Bomb,
-            Dying,
-		}
+            Dying
+        }
 #if UNITY_EDITOR
         public string debugCurState;
 #endif
@@ -51,25 +51,22 @@ namespace BTG
         float IBoss.MaxHealth => Data.MaxHealth;
         public int Phase = 0;
         public float CurDistanceGoal;
-        public float CurSpeed 
+
+        public float CurSpeed
         {
-            get 
+            get => curSpeed;
+            set
             {
-                return curSpeed; 
-            } 
-            set 
-            { 
-                curSpeed = value; 
-                NavMeshAgent.speed = curSpeed; 
-                if (NavMeshAgent.velocity.magnitude > curSpeed) 
-                    NavMeshAgent.velocity = NavMeshAgent.velocity.normalized * curSpeed; 
+                curSpeed = value;
+                NavMeshAgent.speed = curSpeed;
+                if (NavMeshAgent.velocity.magnitude > curSpeed)
+                    NavMeshAgent.velocity = NavMeshAgent.velocity.normalized * curSpeed;
             }
         }
 
         private float curSpeed;
 
-        [Header("Assign References")]
-        public GSData Data;
+        [Header("Assign References")] public GSData Data;
         public NavMeshAgent NavMeshAgent;
         public Animator Animator;
         public Player TargetPlayer;
@@ -82,11 +79,12 @@ namespace BTG
         public AudioClip AudioBurrow;
         public AudioClip AudioBurrowing;
         public AudioClip AudioUnBurrow;
+
         public AudioClip AudioLaserShot;
+
         //public AudioClip AudioZapClap;
         public AudioClip AudioDeath;
         public AudioClip AudioMovement;
-
 
 
         public Transform EyeShootUpPos;
@@ -100,7 +98,7 @@ namespace BTG
 
         private void Awake()
         {
-            if(NavMeshAgent == null)
+            if (NavMeshAgent == null)
                 NavMeshAgent = GetComponent<NavMeshAgent>();
             NavMeshAgent.updateRotation = false;
             NavMeshAgent.updateUpAxis = false;
@@ -125,6 +123,7 @@ namespace BTG
         {
             GetComponents<Collider2D>().ForEach(collider => collider.enabled = true);
         }
+
         public void DisableColliders()
         {
             GetComponents<Collider2D>().ForEach(collider => collider.enabled = false);
@@ -132,7 +131,7 @@ namespace BTG
 
         public void OnCollisionEnter2D(Collision2D collision)
         {
-            if(collision.gameObject.TryGetComponent<Knockback>(out  Knockback knockback))
+            if (collision.gameObject.TryGetComponent<Knockback>(out var knockback))
                 knockback.GetKnockedBack(transform, 5f);
         }
 
@@ -143,10 +142,11 @@ namespace BTG
 
         public float CalculateVolume(float delayBetweenSounds)
         {
-            return Mathf.Min(-0.05f / (delayBetweenSounds + 0.05f) + 10f/9f, 1f); // quick formula to make fast repeated sounds not too loud
+            return Mathf.Min(-0.05f / (delayBetweenSounds + 0.05f) + 10f / 9f,
+                1f); // quick formula to make fast repeated sounds not too loud
         }
 
-        void AddState(GSBaseState GSstate)
+        private void AddState(GSBaseState GSstate)
         {
             States.Add(GSstate.State, GSstate);
         }
@@ -160,7 +160,7 @@ namespace BTG
         private void Update()
         {
 #if UNITY_EDITOR
-            debugCurState =  fsm.CurrentState.ToString();
+            debugCurState = fsm.CurrentState.ToString();
 #endif
             fsm.CurrentState.OnFrameUpdate();
         }
@@ -169,15 +169,13 @@ namespace BTG
         {
             fsm.CurrentState.OnPhysicsUpdate();
             var corners = NavMeshAgent.path?.corners;
-            
-            if (corners != null && corners.Length >= 2) 
+
+            if (corners != null && corners.Length >= 2)
             {
                 var movingDir = corners[1] - transform.position;
                 Animator.SetFloat("MoveDirX", movingDir.x);
                 Animator.SetFloat("MoveDirY", movingDir.y);
             }
-
-           
         }
 
         public void TakeDamage(float damage)
@@ -191,7 +189,9 @@ namespace BTG
                 CurrentHealth = 0;
                 fsm.SwitchState(States[State.Dying]);
             }
-            if (Phase < Data.StageTransitionHealthPercentage.Count && CurrentHealth < Data.MaxHealth * Data.StageTransitionHealthPercentage[Phase])
+
+            if (Phase < Data.StageTransitionHealthPercentage.Count &&
+                CurrentHealth < Data.MaxHealth * Data.StageTransitionHealthPercentage[Phase])
                 Phase++;
         }
     }

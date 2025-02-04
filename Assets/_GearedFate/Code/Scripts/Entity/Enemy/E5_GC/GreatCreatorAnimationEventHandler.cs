@@ -5,10 +5,12 @@ namespace BTG
 {
     public class GreatCreatorAnimationEventHandler : MonoBehaviour
     {
-
         public event Action OnSpawnFinished;
 
         [SerializeField]
-        private void SpawnFinished() => OnSpawnFinished?.Invoke();
+        private void SpawnFinished()
+        {
+            OnSpawnFinished?.Invoke();
+        }
     }
 }

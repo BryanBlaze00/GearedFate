@@ -9,7 +9,7 @@ using UnityEngine.Tilemaps;
  */
 public class TransparentDetection : MonoBehaviour
 {
-    [Range(0, 1)][SerializeField] private float transparancyAmount = 0.8f;
+    [Range(0, 1)] [SerializeField] private float transparancyAmount = 0.8f;
     [SerializeField] private float fadeTime = 0.4f;
 
     private SpriteRenderer spriteRenderer;
@@ -44,15 +44,16 @@ public class TransparentDetection : MonoBehaviour
     }
 
 
-    private IEnumerator FadeRoutine(SpriteRenderer spriteRenderer, float fadeTime, float startValue, float targetTransparancy)
+    private IEnumerator FadeRoutine(SpriteRenderer spriteRenderer, float fadeTime, float startValue,
+        float targetTransparancy)
     {
         float elapsedTime = 0;
-        Color baseColor = spriteRenderer.color;
+        var baseColor = spriteRenderer.color;
 
         while (elapsedTime < fadeTime)
         {
             elapsedTime += Time.deltaTime;
-            float newAlpha = Mathf.Lerp(startValue, targetTransparancy, elapsedTime / fadeTime);
+            var newAlpha = Mathf.Lerp(startValue, targetTransparancy, elapsedTime / fadeTime);
             spriteRenderer.color = new Color(baseColor.r, baseColor.g, baseColor.b, newAlpha);
             yield return null;
         }
@@ -61,12 +62,12 @@ public class TransparentDetection : MonoBehaviour
     private IEnumerator FadeRoutine(Tilemap tilemap, float fadeTime, float startValue, float targetTransparancy)
     {
         float elapsedTime = 0;
-        Color baseColor = tilemap.color;
+        var baseColor = tilemap.color;
 
         while (elapsedTime < fadeTime)
         {
             elapsedTime += Time.deltaTime;
-            float newAlpha = Mathf.Lerp(startValue, targetTransparancy, elapsedTime / fadeTime);
+            var newAlpha = Mathf.Lerp(startValue, targetTransparancy, elapsedTime / fadeTime);
             tilemap.color = new Color(baseColor.r, baseColor.g, baseColor.b, newAlpha);
             yield return null;
         }

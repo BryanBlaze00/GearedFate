@@ -13,8 +13,7 @@ namespace BTG
     public class DataPersistenceManager : PersistentSingleton<DataPersistenceManager>
     {
         // Name of the saved file.
-        [SerializeField]
-        private string _saveFileName;
+        [SerializeField] private string _saveFileName;
 
         // Full state of the game is saved in GameData
         private GameData _gameData;
@@ -46,26 +45,18 @@ namespace BTG
         public void LoadGame()
         {
             _gameData = _dataHandler.Load();
-            if (_gameData == null)
-            {
-                NewGame();
-            }
+            if (_gameData == null) NewGame();
 
-            foreach (KeyValuePair<PooledObjectType, int> pair in _gameData.AssetToInstantiates)
-            {
-                for (int i = 0; i < pair.Value; i++)
+            foreach (var pair in _gameData.AssetToInstantiates)
+                for (var i = 0; i < pair.Value; i++)
                 {
-                    GameObject obj = ObjectPool.Instance.GetPooledObject(pair.Key);
+                    var obj = ObjectPool.Instance.GetPooledObject(pair.Key);
                     obj.SetActive(true);
                 }
-            }
 
             FindAllDataPersistence();
 
-            foreach (IDataPersistence dataPersistenceObject in _dataPersistencesObjects)
-            {
-               dataPersistenceObject.LoadData(_gameData);
-            }
+            foreach (var dataPersistenceObject in _dataPersistencesObjects) dataPersistenceObject.LoadData(_gameData);
 
             _gameData.CleanAfterLoad();
         }
@@ -74,13 +65,11 @@ namespace BTG
         public void SaveGame()
         {
             FindAllDataPersistence();
-            foreach (IDataPersistence dataPersistenceObject in _dataPersistencesObjects)
+            foreach (var dataPersistenceObject in _dataPersistencesObjects)
             {
                 // Instance that need to be saved register in the game data using their pooled object type.
                 if (dataPersistenceObject is ISaveableInstance saveableInstance)
-                {
-                     _gameData.AddAssetIndexToInstantiate(saveableInstance.PooledObjectType);
-                }
+                    _gameData.AddAssetIndexToInstantiate(saveableInstance.PooledObjectType);
                 dataPersistenceObject.SaveData(ref _gameData);
             }
 
@@ -89,9 +78,10 @@ namespace BTG
 
         private void FindAllDataPersistence()
         {
-            _dataPersistencesObjects = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
-                .OfType<IDataPersistence>()
-                .ToList();
+            _dataPersistencesObjects =
+                FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
+                    .OfType<IDataPersistence>()
+                    .ToList();
         }
     }
 }

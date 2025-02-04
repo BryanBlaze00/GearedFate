@@ -6,9 +6,10 @@ namespace BTG
 {
     public class GCSpinState : GCBaseState
     {
-        public GCSpinState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId) : base(fsm, enemy, animId)
+        public GCSpinState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId) :
+            base(fsm, enemy, animId)
         {
-            MultiStepSmb smb = GreatCreator.Animator.GetBehaviours<MultiStepSmb>().First(x => x.Id == "Spin");
+            var smb = GreatCreator.Animator.GetBehaviours<MultiStepSmb>().First(x => x.Id == "Spin");
             smb.OnStepReached += HandleEndSpin;
         }
 
@@ -32,12 +33,10 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-
         }
 
         public override void OnPhysicsUpdate()
         {
-
         }
 
         public void SetAnimation(int stringToHash)

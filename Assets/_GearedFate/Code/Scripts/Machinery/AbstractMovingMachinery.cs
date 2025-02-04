@@ -24,43 +24,31 @@ namespace BTG
         protected void OnTriggerEnter2D(Collider2D other)
         {
             // For a transform to be moved, it needs to have a collider tagged Movable Collider, and it needs to provide a root transform.
-            if (other.CompareTag("MovableCollider") && other.TryGetComponent(out RootTransformProvider rootTransformProvider))
-            {
+            if (other.CompareTag("MovableCollider") &&
+                other.TryGetComponent(out RootTransformProvider rootTransformProvider))
                 if (rootTransformProvider.RootTransform)
-                {
                     _entitiesToMove.Add(rootTransformProvider.RootTransform);
-                }
-            }
         }
 
         protected void OnTriggerExit2D(Collider2D other)
         {
-            if (other.CompareTag("MovableCollider") && other.TryGetComponent(out RootTransformProvider rootTransformProvider))
-            {
+            if (other.CompareTag("MovableCollider") &&
+                other.TryGetComponent(out RootTransformProvider rootTransformProvider))
                 if (rootTransformProvider.RootTransform)
-                {
                     _entitiesToMove.Remove(rootTransformProvider.RootTransform);
-                }
-            }
         }
 
         protected void OnTriggerStay2D(Collider2D other)
         {
-            if (other.CompareTag("MovableCollider") && other.TryGetComponent(out RootTransformProvider rootTransformProvider))
-            {
+            if (other.CompareTag("MovableCollider") &&
+                other.TryGetComponent(out RootTransformProvider rootTransformProvider))
                 if (rootTransformProvider.RootTransform)
-                {
                     _entitiesToMove.Add(rootTransformProvider.RootTransform);
-                }
-            }
         }
 
         protected void MoveEntities()
         {
-            foreach (Transform entity in _entitiesToMove)
-            {
-                MoveEntity(entity);
-            }
+            foreach (var entity in _entitiesToMove) MoveEntity(entity);
         }
     }
 }

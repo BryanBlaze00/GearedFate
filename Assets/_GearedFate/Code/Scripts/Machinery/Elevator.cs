@@ -7,77 +7,68 @@ using UnityUtils;
 
 namespace BTG
 {
-   /// <summary>
-   /// Elevator class to manage elevator movement and interactions.
-   /// </summary>
-   public class Elevator : PersistentSingleton<Elevator>
-   {
-      [SerializeField] Transform _parentTransform;
-      [SerializeField] GameObject _exitLevelTrigger;
+    /// <summary>
+    /// Elevator class to manage elevator movement and interactions.
+    /// </summary>
+    public class Elevator : PersistentSingleton<Elevator>
+    {
+        [SerializeField] private Transform _parentTransform;
+        [SerializeField] private GameObject _exitLevelTrigger;
 
-      private Animator _animator;
+        private Animator _animator;
 
-      protected override void Awake()
-      {
-         base.Awake();
+        protected override void Awake()
+        {
+            base.Awake();
 
-         _animator = GetComponent<Animator>();
-         _animator.SetBool("isFlying", false);
+            _animator = GetComponent<Animator>();
+            _animator.SetBool("isFlying", false);
 
-         if (_exitLevelTrigger != null && _exitLevelTrigger.activeSelf)
-         {
+            if (_exitLevelTrigger != null && _exitLevelTrigger.activeSelf) _exitLevelTrigger.SetActive(false);
+        }
+
+        private void Start()
+        {
+            transform.SetParent(_parentTransform);
+
+            CutSceneCheckActivate();
+        }
+
+        public void ActivateElevator()
+        {
+            _animator.SetBool("isFlying", true);
+            _exitLevelTrigger.SetActive(true);
+        }
+
+        public void DeactivateElevator()
+        {
+            _animator.SetBool("isFlying", false);
             _exitLevelTrigger.SetActive(false);
-         }
-      }
+        }
 
-      private void Start()
-      {
-         transform.SetParent(_parentTransform);
+        public void ActivateElevatorAnim()
+        {
+            _animator.SetBool("isFlying", true);
+        }
 
-         CutSceneCheckActivate();
-      }
+        public void DeactivateElevatorAnim()
+        {
+            _animator.SetBool("isFlying", false);
+        }
 
-      public void ActivateElevator()
-      {
-         _animator.SetBool("isFlying", true);
-         _exitLevelTrigger.SetActive(true);
-      }
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent(out Player _) && _animator.GetBool("isFlying"))
+                GameManager.Instance.LoadNextLevel();
+        }
 
-      public void DeactivateElevator()
-      {
-         _animator.SetBool("isFlying", false);
-         _exitLevelTrigger.SetActive(false);
-      }
-
-      public void ActivateElevatorAnim()
-      {
-         _animator.SetBool("isFlying", true);
-      }
-
-      public void DeactivateElevatorAnim()
-      {
-         _animator.SetBool("isFlying", false);
-      }
-
-      private void OnTriggerEnter(Collider other)
-      {
-         if (other.TryGetComponent(out Player _) && _animator.GetBool("isFlying"))
-         {
-            GameManager.Instance.LoadNextLevel();
-         }
-      }
-
-      private void CutSceneCheckActivate()
-      {
-         // Check if the current scene is a cutscene scene
-         string[] cutsceneScenes = GameManager.Instance.GetCutsceneScenes();
-         foreach (string scene in cutsceneScenes)
-         {
-            if (scene == GameManager.Instance.GetCurrentScene())
-            {
-               ActivateElevatorAnim();
-            }
-         }
-      }
-   }
+        private void CutSceneCheckActivate()
+        {
+            // Check if the current scene is a cutscene scene
+            var cutsceneScenes = GameManager.Instance.GetCutsceneScenes();
+            foreach (var scene in cutsceneScenes)
+                if (scene == GameManager.Instance.GetCurrentScene())
+                    ActivateElevatorAnim();
+        }
+    }
 }

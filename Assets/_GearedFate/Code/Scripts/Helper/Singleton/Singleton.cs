@@ -1,17 +1,27 @@
 ﻿using UnityEngine;
 
-namespace UnityUtils {
-    public class Singleton<T> : MonoBehaviour where T : Component {
+namespace UnityUtils
+{
+    public class Singleton<T> : MonoBehaviour where T : Component
+    {
         protected static T instance;
 
         public static bool HasInstance => instance != null;
-        public static T TryGetInstance() => HasInstance ? instance : null;
 
-        public static T Instance {
-            get {
-                if (instance == null) {
+        public static T TryGetInstance()
+        {
+            return HasInstance ? instance : null;
+        }
+
+        public static T Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
                     instance = FindAnyObjectByType<T>();
-                    if (instance == null) {
+                    if (instance == null)
+                    {
                         var go = new GameObject(typeof(T).Name + " Auto-Generated");
                         instance = go.AddComponent<T>();
                     }
@@ -24,24 +34,23 @@ namespace UnityUtils {
         /// <summary>
         /// Make sure to call base.Awake() in override if you need awake.
         /// </summary>
-        protected virtual void Awake() {
+        protected virtual void Awake()
+        {
             InitializeSingleton();
         }
 
-        protected virtual void InitializeSingleton() {
+        protected virtual void InitializeSingleton()
+        {
             if (!Application.isPlaying) return;
 
-			   if (instance == null)
-			   {
-		          instance = this as T;
-			   }
-			   else
-			   {
-				    if (instance != this)
-				    {
-					     Destroy(gameObject);
-				    }
-			   }
-		}
+            if (instance == null)
+            {
+                instance = this as T;
+            }
+            else
+            {
+                if (instance != this) Destroy(gameObject);
+            }
+        }
     }
 }

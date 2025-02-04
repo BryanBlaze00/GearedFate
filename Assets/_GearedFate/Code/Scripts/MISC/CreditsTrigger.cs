@@ -6,18 +6,14 @@ using UnityEngine;
 
 namespace BTG
 {
-   /// <summary>
-   /// CreditsTrigger
-   /// </summary>
-   public class CreditsTrigger : MonoBehaviour
-   {
-
-      private void OnTriggerEnter(Collider other)
-      {
-         if (other.TryGetComponent<Player>(out Player player))
-         {
-            GameManager.Instance.LoadCredits();
-         }
-      }
-   }
+    /// <summary>
+    /// CreditsTrigger
+    /// </summary>
+    public class CreditsTrigger : MonoBehaviour
+    {
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent<Player>(out var player)) GameManager.Instance.LoadCredits();
+        }
+    }
 }

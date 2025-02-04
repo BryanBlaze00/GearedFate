@@ -6,7 +6,8 @@ namespace BTG
     {
         protected SteamCentipede Centipede { get; }
 
-        protected CentipedeBaseState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, SteamCentipede centipede) : base(fsm)
+        protected CentipedeBaseState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, SteamCentipede centipede) :
+            base(fsm)
         {
             Centipede = centipede;
         }
@@ -21,6 +22,5 @@ namespace BTG
 
 
         public abstract override void OnPhysicsUpdate();
-
     }
 }

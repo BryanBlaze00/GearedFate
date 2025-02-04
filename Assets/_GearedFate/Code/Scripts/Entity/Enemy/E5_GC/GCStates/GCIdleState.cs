@@ -6,40 +6,35 @@ using UnityEngine;
 
 namespace BTG
 {
-	/// <summary>
-	/// GCIdleState
-	/// </summary>
-	public class GCIdleState : GCBaseState
-	{
+    /// <summary>
+    /// GCIdleState
+    /// </summary>
+    public class GCIdleState : GCBaseState
+    {
+        public GCIdleState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId) :
+            base(fsm, enemy, animId)
+        {
+        }
 
-		public GCIdleState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId) : base(fsm, enemy, animId)
-		{
-		}
+        public override void OnEnter()
+        {
+            PlayAnimation();
+        }
 
-		public override void OnEnter()
-		{
-			PlayAnimation();
-		}
+        public override void OnExit()
+        {
+        }
 
-		public override void OnExit()
-		{
-		}
+        public override void OnFrameUpdate()
+        {
+            if (IsReadyToSpawn()) fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Swarm]);
 
-		public override void OnFrameUpdate()
-		{
-			if (IsReadyToSpawn())
-			{
-				fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Swarm]);
-			}
+            if (GreatCreator.DistanceToTarget < GreatCreator.SafeDistance)
+                fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.RunAway]);
+        }
 
-			if (GreatCreator.DistanceToTarget < GreatCreator.SafeDistance)
-			{
-				fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.RunAway]);
-			}
-		}
-
-		public override void OnPhysicsUpdate()
-		{
-		}
-	}
+        public override void OnPhysicsUpdate()
+        {
+        }
+    }
 }

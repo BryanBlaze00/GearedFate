@@ -12,7 +12,8 @@ namespace BTG
 
         private float _timeBeforeAttack = 1f;
 
-        public RMCircleStormState(FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm, RustedMarionette marionette, int highAnimId, int lowAnimId)
+        public RMCircleStormState(FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm,
+            RustedMarionette marionette, int highAnimId, int lowAnimId)
             : base(fsm, marionette, highAnimId, lowAnimId)
         {
         }
@@ -40,9 +41,7 @@ namespace BTG
             }
 
             if (Time.time > _enterTime + _timeBeforeStateChange)
-            {
                 fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.Idle]);
-            }
         }
 
         public override void OnPhysicsUpdate()

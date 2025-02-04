@@ -6,23 +6,18 @@ namespace BTG
 {
     public class BackToMenu : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject _settingScreen;
+        [SerializeField] private GameObject _settingScreen;
 
-        [SerializeField]
-        private GameObject _mainMenuScreen;
+        [SerializeField] private GameObject _mainMenuScreen;
 
-        [SerializeField]
-        private GameObject _title;
+        [SerializeField] private GameObject _title;
 
-        [SerializeField]
-        private Image _fadingPanel;
+        [SerializeField] private Image _fadingPanel;
 
-        [SerializeField]
-        private Button _backToMenuButton;
+        [SerializeField] private Button _backToMenuButton;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        private void Start()
         {
             _backToMenuButton.onClick.AddListener(GoMenu);
         }
@@ -40,10 +35,7 @@ namespace BTG
             _settingScreen.SetActive(false);
             _mainMenuScreen.SetActive(true);
 
-            if (_title)
-            {
-                _title.SetActive(true);
-            }
+            if (_title) _title.SetActive(true);
         }
     }
 }

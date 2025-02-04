@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace BTG
 {
-    public class CentipedeWhipState: CentipedeBaseState
+    public class CentipedeWhipState : CentipedeBaseState
     {
         private readonly int _animId;
 
@@ -28,7 +28,8 @@ namespace BTG
 
         private bool _whipFinished;
 
-        public CentipedeWhipState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId, SteamCentipede steamCentipede) : base(fsm, steamCentipede)
+        public CentipedeWhipState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId,
+            SteamCentipede steamCentipede) : base(fsm, steamCentipede)
         {
             _animId = animationId;
         }
@@ -37,7 +38,7 @@ namespace BTG
         {
             _whipFinished = false;
             Centipede.SetSpeed(Centipede.RegularSpeed);
-            Centipede.SetAnimations(_animId,true);
+            Centipede.SetAnimations(_animId, true);
             RegisterInitialPosition();
             _angleVector = new Vector2(-Centipede.HeadDirection().normalized.y, Centipede.HeadDirection().normalized.x);
             _angleVector = Vector2.up;
@@ -53,10 +54,7 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            if (_whipFinished)
-            {
-                fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Chase]);
-            }
+            if (_whipFinished) fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Chase]);
         }
 
         public override void OnPhysicsUpdate()
@@ -69,9 +67,10 @@ namespace BTG
             {
                 _timer += Time.deltaTime;
 
-                for (int i=0; i<Centipede.BodyPartsCount; i++)
+                for (var i = 0; i < Centipede.BodyPartsCount; i++)
                 {
-                    Centipede[i].RotateAround(Centipede.HeadPosition, Vector3.forward, -(_angles[i] / _frequency) * Time.deltaTime);
+                    Centipede[i].RotateAround(Centipede.HeadPosition, Vector3.forward,
+                        -(_angles[i] / _frequency) * Time.deltaTime);
                     Centipede[i].rotation = Quaternion.identity;
                 }
 
@@ -82,9 +81,10 @@ namespace BTG
             while (_timer < _frequency)
             {
                 _timer += Time.deltaTime;
-                for (int i=0; i<Centipede.BodyPartsCount; i++)
+                for (var i = 0; i < Centipede.BodyPartsCount; i++)
                 {
-                    Centipede[i].RotateAround(Centipede.HeadPosition, Vector3.forward, ((_range +i*_rangeDelay) / _frequency) * Time.deltaTime);
+                    Centipede[i].RotateAround(Centipede.HeadPosition, Vector3.forward,
+                        (_range + i * _rangeDelay) / _frequency * Time.deltaTime);
                     Centipede[i].rotation = Quaternion.identity;
                 }
 
@@ -95,9 +95,10 @@ namespace BTG
             while (_timer < _frequency)
             {
                 _timer += Time.deltaTime;
-                for (int i=0; i<Centipede.BodyPartsCount; i++)
+                for (var i = 0; i < Centipede.BodyPartsCount; i++)
                 {
-                    Centipede[i].RotateAround(Centipede.HeadPosition, Vector3.forward, -((_range +i*_rangeDelay - _angles[i]) / _frequency) * Time.deltaTime);
+                    Centipede[i].RotateAround(Centipede.HeadPosition, Vector3.forward,
+                        -((_range + i * _rangeDelay - _angles[i]) / _frequency) * Time.deltaTime);
                     Centipede[i].rotation = Quaternion.identity;
                 }
 
@@ -111,28 +112,20 @@ namespace BTG
         private void RegisterInitialPosition()
         {
             _initialPositions.Clear();
-            for (int i=0; i<Centipede.BodyPartsCount; i++)
-            {
-                _initialPositions.Add(Centipede[i].position);
-            }
+            for (var i = 0; i < Centipede.BodyPartsCount; i++) _initialPositions.Add(Centipede[i].position);
         }
 
         private void ComputeAngles()
         {
             _angles.Clear();
-            for (int i=0; i<Centipede.BodyPartsCount; i++)
-            {
-                _angles.Add((_range +i*_rangeDelay)/2 - Vector2.SignedAngle(_angleVector, Centipede.HeadPosition - (Vector2) Centipede[i].position));
-            }
+            for (var i = 0; i < Centipede.BodyPartsCount; i++)
+                _angles.Add((_range + i * _rangeDelay) / 2 - Vector2.SignedAngle(_angleVector,
+                    Centipede.HeadPosition - (Vector2)Centipede[i].position));
         }
 
         private void ResetPosition()
         {
-            for (int i=0; i<Centipede.BodyPartsCount; i++)
-            {
-                Centipede[i].position = _initialPositions[i];
-            }
+            for (var i = 0; i < Centipede.BodyPartsCount; i++) Centipede[i].position = _initialPositions[i];
         }
-
     }
 }

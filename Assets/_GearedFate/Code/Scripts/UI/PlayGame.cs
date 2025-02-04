@@ -6,17 +6,13 @@ namespace BTG
 {
     public class PlayGame : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject _loadScreen;
+        [SerializeField] private GameObject _loadScreen;
 
-        [SerializeField]
-        private GameObject _menuScreen;
+        [SerializeField] private GameObject _menuScreen;
 
-        [SerializeField]
-        private Image _progressBarFiller;
+        [SerializeField] private Image _progressBarFiller;
 
-        [SerializeField]
-        private Button _playButton;
+        [SerializeField] private Button _playButton;
 
         private float _targetFill;
 
@@ -25,23 +21,22 @@ namespace BTG
         /// </summary>
         // private async void StartLoadGame()
         // {
-            // AsyncOperation scene = SceneManager.LoadSceneAsync("Cutscene 0");
-            // _loadScreen.SetActive(true);
-            // _menuScreen.SetActive(false);
-            // scene.allowSceneActivation = false;
+        // AsyncOperation scene = SceneManager.LoadSceneAsync("Cutscene 0");
+        // _loadScreen.SetActive(true);
+        // _menuScreen.SetActive(false);
+        // scene.allowSceneActivation = false;
 
-            // while (scene.progress < 0.89)
-            // {
-            //     _targetFill = scene.progress;
-            //     await Awaitable.NextFrameAsync();
-            // }
-
-            // _targetFill = scene.progress;
-            // await Awaitable.WaitForSecondsAsync(1f);
-            // _loadScreen.SetActive(false);
-            // scene.allowSceneActivation = true;
+        // while (scene.progress < 0.89)
+        // {
+        //     _targetFill = scene.progress;
+        //     await Awaitable.NextFrameAsync();
         // }
 
+        // _targetFill = scene.progress;
+        // await Awaitable.WaitForSecondsAsync(1f);
+        // _loadScreen.SetActive(false);
+        // scene.allowSceneActivation = true;
+        // }
         protected void Start()
         {
             _playButton.onClick.AddListener(StartLoadGame);

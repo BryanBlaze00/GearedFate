@@ -20,19 +20,16 @@ namespace BTG
 
         public GameData Load()
         {
-            string fullPath = Path.Combine(_dataDirPath, _dataFileName);
+            var fullPath = Path.Combine(_dataDirPath, _dataFileName);
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
 
-            if (!File.Exists(fullPath))
-            {
-                return null;
-            }
+            if (!File.Exists(fullPath)) return null;
 
             string dataToLoad;
 
-            using (FileStream stream = new FileStream(fullPath, FileMode.Open))
+            using (var stream = new FileStream(fullPath, FileMode.Open))
             {
-                using (StreamReader reader = new StreamReader(stream))
+                using (var reader = new StreamReader(stream))
                 {
                     dataToLoad = reader.ReadToEnd();
                 }
@@ -43,14 +40,14 @@ namespace BTG
 
         public void Save(GameData data)
         {
-            string fullPath = Path.Combine(_dataDirPath, _dataFileName);
+            var fullPath = Path.Combine(_dataDirPath, _dataFileName);
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
 
-            string dataToStore = JsonUtility.ToJson(data, true);
+            var dataToStore = JsonUtility.ToJson(data, true);
 
-            using (FileStream stream = new FileStream(fullPath, FileMode.Create))
+            using (var stream = new FileStream(fullPath, FileMode.Create))
             {
-                using (StreamWriter writer = new StreamWriter(stream))
+                using (var writer = new StreamWriter(stream))
                 {
                     writer.Write(dataToStore);
                 }

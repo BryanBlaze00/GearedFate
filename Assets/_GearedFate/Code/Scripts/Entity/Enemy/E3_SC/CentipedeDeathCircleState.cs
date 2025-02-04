@@ -20,7 +20,8 @@ namespace BTG
 
         private float _timer;
 
-        public CentipedeDeathCircleState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId, SteamCentipede steamCentipede) : base(fsm, steamCentipede)
+        public CentipedeDeathCircleState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId,
+            SteamCentipede steamCentipede) : base(fsm, steamCentipede)
         {
             _animId = animationId;
         }
@@ -35,10 +36,7 @@ namespace BTG
             _firstCircling = true;
             _timer = 0;
 
-            if (Centipede.IsReachingTrajectoryEndNextStep())
-            {
-                Centipede.ExpandTrajectory(ComputeDeathCirclePosition());
-            }
+            if (Centipede.IsReachingTrajectoryEndNextStep()) Centipede.ExpandTrajectory(ComputeDeathCirclePosition());
         }
 
         public override void OnExit()
@@ -51,10 +49,7 @@ namespace BTG
             Centipede.MoveAlongTrajectory();
 
 
-            if (!Centipede.IsReachingTrajectoryEndNextStep())
-            {
-                return;
-            }
+            if (!Centipede.IsReachingTrajectoryEndNextStep()) return;
 
             if (Vector2.Distance(Centipede.Target.position, _originalTargetPosition) > _initialDistanceToTarget)
             {
@@ -63,9 +58,7 @@ namespace BTG
             else
             {
                 if (_timer > _timeToReachMinimalDistance)
-                {
                     fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Charge]);
-                }
                 Centipede.ExpandTrajectory(ComputeDeathCirclePosition());
             }
         }
@@ -76,7 +69,7 @@ namespace BTG
 
         private Vector2 ComputeDeathCirclePosition()
         {
-            Vector2 directionFromPlayerToHead = Centipede.VectorToTarget;
+            var directionFromPlayerToHead = Centipede.VectorToTarget;
 
             // if not circling yet, choose as a node the closest cardinal point at the defined circling distance.
             if (_firstCircling)
@@ -89,11 +82,12 @@ namespace BTG
                 _circleDirection = VectorHelper2D.NextClockWiseDirection(_circleDirection);
             }
 
-            Vector2 nodeDirection = VectorHelper2D.VectorFromDirection(_circleDirection);
+            var nodeDirection = VectorHelper2D.VectorFromDirection(_circleDirection);
 
-            float circlingDistance = _initialDistanceToTarget/2 * (1 - _timer / _timeToReachMinimalDistance) + _finalDistanceToTarget * _timer / _timeToReachMinimalDistance;
+            var circlingDistance = _initialDistanceToTarget / 2 * (1 - _timer / _timeToReachMinimalDistance) +
+                                   _finalDistanceToTarget * _timer / _timeToReachMinimalDistance;
 
-            return (Vector2)_originalTargetPosition + (nodeDirection * circlingDistance);
+            return (Vector2)_originalTargetPosition + nodeDirection * circlingDistance;
         }
     }
 }

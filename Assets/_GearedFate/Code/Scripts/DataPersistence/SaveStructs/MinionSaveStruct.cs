@@ -9,11 +9,9 @@ namespace BTG
     [Serializable]
     public struct MinionSaveStruct
     {
-        [SerializeField]
-        private Vector3 _position;
+        [SerializeField] private Vector3 _position;
 
-        [SerializeField]
-        private float _health;
+        [SerializeField] private float _health;
 
         public Vector3 Position => _position;
 

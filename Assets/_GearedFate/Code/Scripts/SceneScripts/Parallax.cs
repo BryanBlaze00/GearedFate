@@ -15,7 +15,8 @@ public class Parallax : MonoBehaviour
         cam = Camera.main;
     }
 
-    private void Start() {
+    private void Start()
+    {
         startPosition = transform.position;
     }
 

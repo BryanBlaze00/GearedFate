@@ -9,14 +9,11 @@ namespace BTG
     {
         public Player player;
 
-        [SerializeField]
-        private Slider healthBar;
-        [SerializeField]
-        private Slider fuelBar;
-        [SerializeField]
-        private Slider gearTossIcon;
-        [SerializeField]
-        private TextMeshProUGUI gearTossCDText;
+        [SerializeField] private Slider healthBar;
+        [SerializeField] private Slider fuelBar;
+        [SerializeField] private Slider gearTossIcon;
+        [SerializeField] private TextMeshProUGUI gearTossCDText;
+
         private void Awake()
         {
             if (player == null)
@@ -36,10 +33,9 @@ namespace BTG
             healthBar.value = player.CurrentHealth / player.Data.Health;
             fuelBar.value = player.CurrentAttackFuelAmount / player.Data.MaxAttackFuelAmount;
             var gearTossState = player.states[Player.State.GearToss] as PlayerGearTossState;
-            float GearTossCDLeft = gearTossState.LastUsedTime + player.Data.GearShootCoolDown - Time.time;
+            var GearTossCDLeft = gearTossState.LastUsedTime + player.Data.GearShootCoolDown - Time.time;
             gearTossIcon.value = GearTossCDLeft / player.Data.GearShootCoolDown;
             gearTossCDText.text = FormatCooldown(GearTossCDLeft);
-
         }
 
         private string FormatCooldown(float cooldown)
@@ -51,7 +47,6 @@ namespace BTG
                 return "0." + Mathf.CeilToInt(cooldown * 10f);
 
             return Mathf.CeilToInt(cooldown).ToString();
-            
         }
     }
 }

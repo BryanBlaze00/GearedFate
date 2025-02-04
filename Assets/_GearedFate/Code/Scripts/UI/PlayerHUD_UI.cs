@@ -15,16 +15,17 @@ namespace BTG
     /// </summary>
     public class PlayerHUD_UI : MonoBehaviour
     {
-        [Header("Player Bars")]
-        [SerializeField] private Image _healthBar;
+        [Header("Player Bars")] [SerializeField]
+        private Image _healthBar;
+
         [SerializeField] private Image _fuelBar;
 
-        [Header("Boss Bars")]
-        [SerializeField] private Image _BossBar1;
+        [Header("Boss Bars")] [SerializeField] private Image _BossBar1;
         [SerializeField] private Image _BossBar2;
 
-        [Header("Ability Wheel")]
-        [SerializeField] private Image _topCD;
+        [Header("Ability Wheel")] [SerializeField]
+        private Image _topCD;
+
         [SerializeField] private Image _downCD;
         [SerializeField] private Image _leftCD;
         [SerializeField] private Image _rightCD;
@@ -60,12 +61,12 @@ namespace BTG
 
             // some abilities don't have a cooldown, so we'll use animation time remaining instead
             var currentAnim = player.Anim.GetCurrentAnimatorStateInfo(0);
-            int currentAnimHash = currentAnim.shortNameHash;
-            float animFracRemaining = 1 - currentAnim.normalizedTime;
+            var currentAnimHash = currentAnim.shortNameHash;
+            var animFracRemaining = 1 - currentAnim.normalizedTime;
             Image cdImage = null;
             Image cdSelected = null;
             TextMeshProUGUI cdText = null;
-            bool animatingCooldown = true;
+            var animatingCooldown = true;
             // Heat Wave
             if (currentAnimHash == Animator.StringToHash(nameof(Player.State.HeatWave)))
             {
@@ -74,14 +75,17 @@ namespace BTG
                 cdText = _heatWaveCDText;
             }
             // Slash
-            else if (currentAnimHash == Animator.StringToHash("Slash") || currentAnimHash == Animator.StringToHash("Slash_1") || currentAnimHash == Animator.StringToHash("Slash_2"))
+            else if (currentAnimHash == Animator.StringToHash("Slash") ||
+                     currentAnimHash == Animator.StringToHash("Slash_1") ||
+                     currentAnimHash == Animator.StringToHash("Slash_2"))
             {
                 cdImage = _downCD;
                 cdSelected = _botSelectedCD;
                 cdText = _slashCDText;
             }
             // FireBlaze
-            else if (currentAnimHash == Animator.StringToHash("ChargeUp") || currentAnimHash == Animator.StringToHash(nameof(Player.State.FireBlaze)))
+            else if (currentAnimHash == Animator.StringToHash("ChargeUp") ||
+                     currentAnimHash == Animator.StringToHash(nameof(Player.State.FireBlaze)))
             {
                 cdImage = _leftCD;
                 cdSelected = _leftSelectedCD;
@@ -96,21 +100,23 @@ namespace BTG
                 _leftSelectedCD.fillAmount = 0;
                 _botSelectedCD.fillAmount = 0;
                 _topSelectedCD.fillAmount = 0;
-                if(_fireBlazeCDText != null)
+                if (_fireBlazeCDText != null)
                     _fireBlazeCDText.text = string.Empty;
                 if (_slashCDText != null)
                     _slashCDText.text = string.Empty;
                 if (_heatWaveCDText != null)
                     _heatWaveCDText.text = string.Empty;
-
-
             }
+
             if (animatingCooldown)
             {
-                if(cdImage.fillMethod == Image.FillMethod.Vertical || cdImage.fillMethod == Image.FillMethod.Horizontal)
+                if (cdImage.fillMethod == Image.FillMethod.Vertical ||
+                    cdImage.fillMethod == Image.FillMethod.Horizontal)
                     cdImage.fillAmount = animFracRemaining;
                 else
-                    cdImage.fillAmount = animFracRemaining * 0.6f + 0.2f; // because of the shape of the images (at time of writing), the first and last 20% or so do nothing, so we scale it to be between 0.2 and 0.8
+                    cdImage.fillAmount =
+                        animFracRemaining * 0.6f +
+                        0.2f; // because of the shape of the images (at time of writing), the first and last 20% or so do nothing, so we scale it to be between 0.2 and 0.8
                 cdSelected.fillAmount = cdImage.fillAmount;
                 if (cdText != null)
                     cdText.text = FormatCooldown(animFracRemaining * currentAnim.length);
@@ -121,8 +127,8 @@ namespace BTG
                 animFracRemaining = 0f;
             const float tossAnimLength = 0.75f;
             var gearTossState = player.states[Player.State.GearToss] as PlayerGearTossState;
-            float totalCD = player.Data.GearShootCoolDown + tossAnimLength;
-            float gearTossCDLeft = animFracRemaining == 0f
+            var totalCD = player.Data.GearShootCoolDown + tossAnimLength;
+            var gearTossCDLeft = animFracRemaining == 0f
                 ? gearTossState.LastUsedTime + player.Data.GearShootCoolDown - Time.time
                 : player.Data.GearShootCoolDown + animFracRemaining * tossAnimLength;
             if (_rightCD.fillMethod == Image.FillMethod.Vertical || _rightCD.fillMethod == Image.FillMethod.Horizontal)
@@ -133,8 +139,8 @@ namespace BTG
             if (_gearTossCDText != null)
                 _gearTossCDText.text = FormatCooldown(gearTossCDLeft);
 
-         // Switched Selected Images
-         SelectAbility(player.CurrentAbility == Player.State.HeatWave, _topSelected, _topSelectedCD); 
+            // Switched Selected Images
+            SelectAbility(player.CurrentAbility == Player.State.HeatWave, _topSelected, _topSelectedCD);
             SelectAbility(player.CurrentAbility == Player.State.Slash, _botSelected, _botSelectedCD);
             SelectAbility(player.CurrentAbility == Player.State.FireBlaze, _leftSelected, _leftSelectedCD);
             SelectAbility(player.CurrentAbility == Player.State.GearToss, _rightSelected, _rightSelectedCD);

@@ -4,11 +4,11 @@
 
 namespace BTG
 {
-   /// <summary>
-   /// IDamagable
-   /// </summary>
-   public interface IDamagable 
-   {
-      void TakeDamage(float damage);
-   }
+    /// <summary>
+    /// IDamagable
+    /// </summary>
+    public interface IDamagable
+    {
+        void TakeDamage(float damage);
+    }
 }

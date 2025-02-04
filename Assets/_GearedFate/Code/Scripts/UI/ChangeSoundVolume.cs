@@ -6,11 +6,9 @@ namespace BTG
 {
     public class ChangeSoundVolume : MonoBehaviour
     {
-        [SerializeField]
-        private AudioSource _audioSource;
+        [SerializeField] private AudioSource _audioSource;
 
-        [SerializeField]
-        private Slider _soundSlider;
+        [SerializeField] private Slider _soundSlider;
 
         protected void Start()
         {

@@ -6,11 +6,14 @@ using UnityEngine;
 
 namespace BTG
 {
-   /// <summary>
-   /// SelfDisabler
-   /// </summary>
-   public class SelfDisabler : MonoBehaviour
-   {
-      public void DisableSelf() => gameObject.SetActive(false);
-   }
+    /// <summary>
+    /// SelfDisabler
+    /// </summary>
+    public class SelfDisabler : MonoBehaviour
+    {
+        public void DisableSelf()
+        {
+            gameObject.SetActive(false);
+        }
+    }
 }

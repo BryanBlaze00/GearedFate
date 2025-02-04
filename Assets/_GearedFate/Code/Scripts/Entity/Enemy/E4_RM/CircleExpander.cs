@@ -7,32 +7,23 @@ namespace BTG
 {
     public class CircleExpander : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject _prefab;
+        [SerializeField] private GameObject _prefab;
 
-        [SerializeField]
-        private float _spawnRate = 0.1f;
+        [SerializeField] private float _spawnRate = 0.1f;
 
-        [SerializeField]
-        private float _expandSpeed = 1f; // Movement speed
+        [SerializeField] private float _expandSpeed = 1f; // Movement speed
 
-        [SerializeField]
-        private float _lifetime = 5f; // How long before despawning
+        [SerializeField] private float _lifetime = 5f; // How long before despawning
 
-        [SerializeField]
-        private float _startingRadius = 0.5f;
+        [SerializeField] private float _startingRadius = 0.5f;
 
-        [SerializeField]
-        private float _circleTolerance = 0.1f;
+        [SerializeField] private float _circleTolerance = 0.1f;
 
-        [SerializeField]
-        private int _quickCircleNumber = 25;
+        [SerializeField] private int _quickCircleNumber = 25;
 
-        [SerializeField]
-        private float _timeBetweenQuickCircle = 0.3f;
+        [SerializeField] private float _timeBetweenQuickCircle = 0.3f;
 
-        [SerializeField]
-        private MinMaxFloat _rotationUpdate;
+        [SerializeField] private MinMaxFloat _rotationUpdate;
 
         private bool _alternate;
 
@@ -50,19 +41,16 @@ namespace BTG
             }
             else
             {
-                for (int i = _instances.Count - 1; i >= 0; i--)
-                {
-                    Destroy(_instances[i].gameObject);
-                }
+                for (var i = _instances.Count - 1; i >= 0; i--) Destroy(_instances[i].gameObject);
                 _instances.Clear();
             }
         }
 
         private IEnumerator SpawnQuickCircle()
         {
-            for (int i = 0; i < _quickCircleNumber; i++)
+            for (var i = 0; i < _quickCircleNumber; i++)
             {
-                SpawnPrefab(_rotationUpdate.Min, Random.Range(0, 2*Mathf.PI), 3f, 2f);
+                SpawnPrefab(_rotationUpdate.Min, Random.Range(0, 2 * Mathf.PI), 3f, 2f);
                 yield return new WaitForSeconds(_timeBetweenQuickCircle);
             }
         }
@@ -71,7 +59,8 @@ namespace BTG
         {
             while (_state)
             {
-                SpawnPrefab(Random.Range(_rotationUpdate.Min, _rotationUpdate.Max), Random.Range(0, 2*Mathf.PI), _expandSpeed, _lifetime);
+                SpawnPrefab(Random.Range(_rotationUpdate.Min, _rotationUpdate.Max), Random.Range(0, 2 * Mathf.PI),
+                    _expandSpeed, _lifetime);
                 yield return new WaitForSeconds(_spawnRate);
             }
         }
@@ -79,7 +68,7 @@ namespace BTG
         private void SpawnPrefab(float rotationSpeed, float angle, float expandingSpeed, float lifeTime)
         {
             _alternate = !_alternate;
-            GameObject instance = Instantiate(_prefab, transform);
+            var instance = Instantiate(_prefab, transform);
             _instances.Add(instance);
             instance.GetComponent<OpenRotatingCircleStrings>().SetAngle(angle);
             instance.GetComponent<OpenRotatingCircleStrings>().SetDirection(_alternate);
@@ -90,10 +79,10 @@ namespace BTG
 
         private IEnumerator ExpandAndDestroy(GameObject obj, float expandingSpeed, float lifeTime)
         {
-            float timer = 0f;
+            var timer = 0f;
             while (timer < lifeTime)
             {
-                obj.GetComponent<OpenRotatingCircleStrings>().SetRadius(_startingRadius + timer*expandingSpeed);
+                obj.GetComponent<OpenRotatingCircleStrings>().SetRadius(_startingRadius + timer * expandingSpeed);
                 timer += Time.deltaTime;
                 yield return null;
             }

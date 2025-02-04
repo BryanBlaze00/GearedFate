@@ -6,19 +6,18 @@ using UnityEngine;
 
 namespace BTG
 {
-	/// <summary>
-	/// GearboundSentinel
-	/// </summary>
-	public class ClockworkSwarm : MonoBehaviour
-	{
-		public enum State
-		{
-			Idle,
+    /// <summary>
+    /// GearboundSentinel
+    /// </summary>
+    public class ClockworkSwarm : MonoBehaviour
+    {
+        public enum State
+        {
+            Idle
+        }
 
-		}
-		private void Start()
-		{
-
-		}
-	}
+        private void Start()
+        {
+        }
+    }
 }

@@ -6,25 +6,20 @@ namespace BTG
 {
     public class GoToSettings : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject _settingScreen;
+        [SerializeField] private GameObject _settingScreen;
 
-        [SerializeField]
-        private GameObject _mainMenuScreen;
+        [SerializeField] private GameObject _mainMenuScreen;
 
-        [SerializeField]
-        private GameObject _title;
+        [SerializeField] private GameObject _title;
 
-        [SerializeField]
-        private Image _fadingPanel;
+        [SerializeField] private Image _fadingPanel;
 
-        [SerializeField]
-        private Button _settingsButton;
+        [SerializeField] private Button _settingsButton;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        private void Start()
         {
-             _settingsButton.onClick.AddListener(GoSettings);
+            _settingsButton.onClick.AddListener(GoSettings);
         }
 
         private void GoSettings()
@@ -40,10 +35,7 @@ namespace BTG
             _settingScreen.SetActive(true);
             _mainMenuScreen.SetActive(false);
 
-            if (_title)
-            {
-                _title.SetActive(false);
-            }
+            if (_title) _title.SetActive(false);
         }
     }
 }

@@ -14,8 +14,7 @@ namespace BTG
     public class GearSpritesData : ScriptableObject
     {
         // Sprite sheet with the gear animations, sprites should be name with a number at the end.
-        [SerializeField]
-        private Texture2D _gearSpriteSheet;
+        [SerializeField] private Texture2D _gearSpriteSheet;
 
         private Sprite[] _gearSprites;
 
@@ -51,8 +50,7 @@ namespace BTG
         {
             // Find the first numeric portion of the name (e.g., "x_10" -> 10)
             var numbers = new string(name.Where(char.IsDigit).ToArray());
-            return int.TryParse(numbers, out int result) ? result : 0;
+            return int.TryParse(numbers, out var result) ? result : 0;
         }
-
     }
 }

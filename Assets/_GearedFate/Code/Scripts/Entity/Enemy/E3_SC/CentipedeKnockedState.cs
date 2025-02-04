@@ -10,7 +10,8 @@ namespace BTG
 
         private float _timeToGetBack = 3f;
 
-        public CentipedeKnockedState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId, SteamCentipede steamCentipede)
+        public CentipedeKnockedState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId,
+            SteamCentipede steamCentipede)
             : base(fsm, steamCentipede)
         {
             _animId = animationId;
@@ -32,9 +33,7 @@ namespace BTG
         public override void OnFrameUpdate()
         {
             if (Time.time > _knockedTime + _timeToGetBack)
-            {
                 fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Chase]);
-            }
         }
 
         public override void OnPhysicsUpdate()

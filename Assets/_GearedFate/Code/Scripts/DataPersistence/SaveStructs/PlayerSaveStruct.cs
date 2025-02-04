@@ -9,14 +9,11 @@ namespace BTG
     [Serializable]
     public struct PlayerSaveStruct
     {
-        [SerializeField]
-        private Vector3 _position;
+        [SerializeField] private Vector3 _position;
 
-        [SerializeField]
-        private float _fuel;
+        [SerializeField] private float _fuel;
 
-        [SerializeField]
-        private float _health;
+        [SerializeField] private float _health;
 
         public Vector3 Position => _position;
 

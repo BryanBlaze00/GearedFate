@@ -13,7 +13,7 @@ namespace BTG
         {
             get
             {
-                if (rootTransform == null) 
+                if (rootTransform == null)
                 {
                     if (transform.parent != null) // Check if there's a parent
                     {
@@ -25,9 +25,10 @@ namespace BTG
                         rootTransform = transform; // Or rootTransform = null;
                     }
                 }
+
                 return rootTransform;
             }
-            private set { rootTransform = value; }
+            private set => rootTransform = value;
         }
     }
 }

@@ -6,10 +6,12 @@ namespace BTG
     public class GCDashState : GCBaseState
     {
         private Vector2 _dashStartingPosition;
-        public GCDashState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId) : base(fsm,
+
+        public GCDashState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy,
+            int animId) : base(fsm,
             enemy, animId)
         {
-            MultiStepSmb smb = GreatCreator.Animator.GetBehaviours<MultiStepSmb>().First(x => x.Id == "Dash");
+            var smb = GreatCreator.Animator.GetBehaviours<MultiStepSmb>().First(x => x.Id == "Dash");
             smb.OnStepReached += HandleDashStepReached;
         }
 
@@ -49,7 +51,6 @@ namespace BTG
 
         public override void OnEnter()
         {
-
             PlayAnimation();
             GreatCreator.Agent.isStopped = true;
             GreatCreator.Rigidbody.bodyType = RigidbodyType2D.Dynamic;
@@ -57,11 +58,10 @@ namespace BTG
 
         public override void OnExit()
         {
-            Debug.Log($"distance from start to end dash {Vector2.Distance(_dashStartingPosition, GreatCreator.transform.position)}");
+            Debug.Log(
+                $"distance from start to end dash {Vector2.Distance(_dashStartingPosition, GreatCreator.transform.position)}");
             if (Vector2.Distance(_dashStartingPosition, GreatCreator.transform.position) < 2)
-            {
                 GreatCreator.StartCoroutine(GoToCenter());
-            }
 
             GreatCreator.Rigidbody.bodyType = RigidbodyType2D.Kinematic;
         }

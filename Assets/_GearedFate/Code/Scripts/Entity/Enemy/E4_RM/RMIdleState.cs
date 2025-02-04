@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace BTG
 {
-    public class RMIdleState  : RMBaseState
+    public class RMIdleState : RMBaseState
     {
         private float _enterTime;
 
@@ -10,8 +10,9 @@ namespace BTG
 
         private bool _lastStateCircleStorm;
 
-        public RMIdleState(FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm, RustedMarionette marionette, int highAnimId, int lowAnimId)
-            : base(fsm, marionette,  highAnimId,  lowAnimId)
+        public RMIdleState(FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm, RustedMarionette marionette,
+            int highAnimId, int lowAnimId)
+            : base(fsm, marionette, highAnimId, lowAnimId)
         {
         }
 

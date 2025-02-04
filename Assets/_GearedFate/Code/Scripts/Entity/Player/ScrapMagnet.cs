@@ -11,15 +11,12 @@ namespace BTG
     public class ScrapMagnet : MonoBehaviour
     {
         // Reference to the player's transform
-        [SerializeField]
-        private Player _player;
+        [SerializeField] private Player _player;
 
-        [SerializeField]
-        private float reachTime = 1.0f;
+        [SerializeField] private float reachTime = 1.0f;
 
         // Time it takes for the scrap to reach the player
-        [SerializeField]
-        private float _proximityThreshold = 0.5f;
+        [SerializeField] private float _proximityThreshold = 0.5f;
 
         private IEnumerator MoveToPlayer(Scrap scrap)
         {
@@ -29,7 +26,8 @@ namespace BTG
             while (Vector3.Distance(scrap.transform.position, _player.transform.position) > _proximityThreshold)
             {
                 t += Time.deltaTime / reachTime;
-                scrap.transform.position = Vector3.Lerp(scrap.transform.position, _player.transform.position, Mathf.SmoothStep(0.0f, 1.0f, t));
+                scrap.transform.position = Vector3.Lerp(scrap.transform.position, _player.transform.position,
+                    Mathf.SmoothStep(0.0f, 1.0f, t));
                 yield return null; // Wait for the next frame
             }
 
@@ -40,10 +38,7 @@ namespace BTG
         private void OnTriggerEnter2D(Collider2D other)
         {
             // Trigger the magnet effect if the scrap enters the Players trigger zone
-            if (other.TryGetComponent(out Scrap scrap))
-            {
-                StartCoroutine(MoveToPlayer(scrap));
-            }
+            if (other.TryGetComponent(out Scrap scrap)) StartCoroutine(MoveToPlayer(scrap));
         }
     }
 }

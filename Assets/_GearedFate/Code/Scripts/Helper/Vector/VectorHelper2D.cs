@@ -8,51 +8,51 @@ namespace BTG
         // Define the cardinal and diagonal directions (don't change the order, that will break some method)
         private static Vector2[] _directions = new Vector2[]
         {
-            new Vector2(0, 1),  // Up
-            new Vector2(1, 1),  // Top-right
-            new Vector2(1, 0),  // Right
-            new Vector2(1, -1),  // Bottom-right
-            new Vector2(0, -1), // Down
-            new Vector2(-1, -1),// Bottom-left
-            new Vector2(-1, 0), // Left
-            new Vector2(-1, 1), // Top-left
+            new(0, 1), // Up
+            new(1, 1), // Top-right
+            new(1, 0), // Right
+            new(1, -1), // Bottom-right
+            new(0, -1), // Down
+            new(-1, -1), // Bottom-left
+            new(-1, 0), // Left
+            new(-1, 1) // Top-left
         };
 
         private static Vector2[] _cardinalDirections = new Vector2[]
         {
-            new Vector2(0, 1),  // Up
-            new Vector2(1, 0),  // Right
-            new Vector2(0, -1), // Down
-            new Vector2(-1, 0), // Left
+            new(0, 1), // Up
+            new(1, 0), // Right
+            new(0, -1), // Down
+            new(-1, 0) // Left
         };
 
         public enum Direction
         {
-             Top = 0,
-             TopRight =1,
-             Right = 2,
-             BottomRight = 3,
-             Bottom = 4,
-             BottomLeft = 5,
-             Left = 6,
-             TopLeft = 7,
+            Top = 0,
+            TopRight = 1,
+            Right = 2,
+            BottomRight = 3,
+            Bottom = 4,
+            BottomLeft = 5,
+            Left = 6,
+            TopLeft = 7
         }
 
         public static Direction ClosestCardinalOrDiagonal(Vector2 vector)
         {
             // Normalize the input vector
-            Vector2 normalizedVector = vector.normalized;
+            var normalizedVector = vector.normalized;
 
-            int chosenDirectionIndex = 0;
-            int i = 0;
+            var chosenDirectionIndex = 0;
+            var i = 0;
 
             // Find the closest direction
-            Vector2 closestDirection = _directions[0];
-            float maxDot = Vector2.Dot(normalizedVector, closestDirection);
+            var closestDirection = _directions[0];
+            var maxDot = Vector2.Dot(normalizedVector, closestDirection);
 
-            foreach (Vector2 direction in _directions)
+            foreach (var direction in _directions)
             {
-                float dot = Vector2.Dot(normalizedVector, direction.normalized);
+                var dot = Vector2.Dot(normalizedVector, direction.normalized);
                 if (dot > maxDot)
                 {
                     chosenDirectionIndex = i;
@@ -63,24 +63,24 @@ namespace BTG
                 i++;
             }
 
-            return (Direction) chosenDirectionIndex;
+            return (Direction)chosenDirectionIndex;
         }
 
         public static Direction ClosestCardinal(Vector2 vector)
         {
             // Normalize the input vector
-            Vector2 normalizedVector = vector.normalized;
+            var normalizedVector = vector.normalized;
 
-            int chosenDirectionIndex = 0;
-            int i = 0;
+            var chosenDirectionIndex = 0;
+            var i = 0;
 
             // Find the closest direction
-            Vector2 closestDirection = _cardinalDirections[0];
-            float maxDot = Vector2.Dot(normalizedVector, closestDirection);
+            var closestDirection = _cardinalDirections[0];
+            var maxDot = Vector2.Dot(normalizedVector, closestDirection);
 
-            foreach (Vector2 direction in _cardinalDirections)
+            foreach (var direction in _cardinalDirections)
             {
-                float dot = Vector2.Dot(normalizedVector, direction.normalized);
+                var dot = Vector2.Dot(normalizedVector, direction.normalized);
                 if (dot > maxDot)
                 {
                     chosenDirectionIndex = i;
@@ -91,7 +91,7 @@ namespace BTG
                 i++;
             }
 
-            return (Direction) chosenDirectionIndex;
+            return (Direction)chosenDirectionIndex;
         }
 
         public static Vector2 VectorFromDirection(Direction direction)

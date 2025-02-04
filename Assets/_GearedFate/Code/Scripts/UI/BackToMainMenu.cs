@@ -7,14 +7,12 @@ namespace BTG
 {
     public class BackToMainMenu : MonoBehaviour
     {
-        [SerializeField]
-        private Image _fadingPanel;
+        [SerializeField] private Image _fadingPanel;
 
-        [SerializeField]
-        private Button _backToMenuButton;
+        [SerializeField] private Button _backToMenuButton;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        private void Start()
         {
             _backToMenuButton.onClick.AddListener(GoMenu);
         }

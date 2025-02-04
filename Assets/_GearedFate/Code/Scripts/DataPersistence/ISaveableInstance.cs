@@ -8,9 +8,9 @@ namespace BTG
     /// </summary>
     public interface ISaveableInstance
     {
-          /// <summary>
-          /// The "type" of the object as used in the Pooling system.
-          /// </summary>
-          public PooledObjectType PooledObjectType { get; }
+        /// <summary>
+        /// The "type" of the object as used in the Pooling system.
+        /// </summary>
+        public PooledObjectType PooledObjectType { get; }
     }
 }

@@ -4,11 +4,11 @@
 
 namespace BTG
 {
-   /// <summary>
-   /// IFollowPlayer
-   /// </summary>
-   public interface IFollowPlayer 
-   {
-      void FollowPlayer();
-   }
+    /// <summary>
+    /// IFollowPlayer
+    /// </summary>
+    public interface IFollowPlayer
+    {
+        void FollowPlayer();
+    }
 }

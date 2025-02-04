@@ -10,16 +10,16 @@ using BTG;
 
 public class Credits : MonoBehaviour
 {
-   [SerializeField] private float _waitForCredits = 0.5f;
+    [SerializeField] private float _waitForCredits = 0.5f;
 
-   private void Start()
-   {
-      StartCoroutine(DisplayCredits());
-   }
+    private void Start()
+    {
+        StartCoroutine(DisplayCredits());
+    }
 
-   private IEnumerator DisplayCredits()
-   {
-      yield return new WaitForSeconds(_waitForCredits);
-      GameManager.Instance.LoadMainMenu();
-   }
+    private IEnumerator DisplayCredits()
+    {
+        yield return new WaitForSeconds(_waitForCredits);
+        GameManager.Instance.LoadMainMenu();
+    }
 }

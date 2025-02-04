@@ -10,7 +10,8 @@ namespace BTG
 
         private VectorHelper2D.Direction _circleDirection;
 
-        public CentipedeChargeState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId, SteamCentipede steamCentipede) : base(fsm, steamCentipede)
+        public CentipedeChargeState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId,
+            SteamCentipede steamCentipede) : base(fsm, steamCentipede)
         {
             _animId = animationId;
         }
@@ -21,10 +22,7 @@ namespace BTG
             Centipede.SetSpeed(Centipede.ChargeSpeed);
             Centipede.SetAnimations(_animId, true);
 
-            if (Centipede.IsReachingTrajectoryEndNextStep())
-            {
-                Centipede.ExpandTrajectory(ComputeChargeAimPosition());
-            }
+            if (Centipede.IsReachingTrajectoryEndNextStep()) Centipede.ExpandTrajectory(ComputeChargeAimPosition());
         }
 
         public override void OnExit()
@@ -35,10 +33,7 @@ namespace BTG
         {
             Centipede.MoveAlongTrajectory();
 
-            if (!Centipede.IsReachingTrajectoryEndNextStep())
-            {
-                return;
-            }
+            if (!Centipede.IsReachingTrajectoryEndNextStep()) return;
 
             fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Chase]);
         }

@@ -8,7 +8,8 @@ namespace BTG
 
         private float _timeBeforeStateChange = 2f;
 
-        public RMStringMazeState(FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm, RustedMarionette marionette, int highAnimId, int lowAnimId)
+        public RMStringMazeState(FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm,
+            RustedMarionette marionette, int highAnimId, int lowAnimId)
             : base(fsm, marionette, highAnimId, lowAnimId)
         {
         }
@@ -25,9 +26,7 @@ namespace BTG
         private void HandleHitTaken()
         {
             if (Time.time > _enterTime + _timeBeforeStateChange)
-            {
                 fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.Idle]);
-            }
         }
 
         public override void OnExit()
@@ -38,7 +37,6 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-
         }
 
         public override void OnPhysicsUpdate()

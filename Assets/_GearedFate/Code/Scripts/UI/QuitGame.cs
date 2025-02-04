@@ -6,8 +6,7 @@ namespace BTG
 {
     public class QuitGame : MonoBehaviour
     {
-        [SerializeField]
-        private Button _quitButton;
+        [SerializeField] private Button _quitButton;
 
         protected void Awake()
         {

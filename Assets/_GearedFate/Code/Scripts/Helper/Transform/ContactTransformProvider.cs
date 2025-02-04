@@ -7,7 +7,6 @@ namespace BTG
     /// </summary>
     public class ContactTransformProvider : MonoBehaviour
     {
-        [field:SerializeField]
-        public Transform ContactTransform { get; private set; }
+        [field: SerializeField] public Transform ContactTransform { get; private set; }
     }
 }

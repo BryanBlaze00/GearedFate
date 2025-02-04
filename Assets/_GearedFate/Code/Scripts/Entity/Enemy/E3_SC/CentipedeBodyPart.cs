@@ -8,8 +8,7 @@ namespace BTG
     {
         public event Action OnBodyPartDeath;
 
-        [field:SerializeField]
-        public Animator Animator { get; private set; }
+        [field: SerializeField] public Animator Animator { get; private set; }
 
         private int _animMoveX;
 
@@ -17,14 +16,11 @@ namespace BTG
 
         private SteamCentipede _steamCentipede;
 
-        [field:SerializeField]
-        public float MaxHealth { get; private set; }
+        [field: SerializeField] public float MaxHealth { get; private set; }
 
-        [SerializeField]
-        private float _damageDealt = 10;
+        [SerializeField] private float _damageDealt = 10;
 
-        [SerializeField]
-        private float _knockBack = 10;
+        [SerializeField] private float _knockBack = 10;
 
         public float CurrentHealth { get; private set; }
 
@@ -42,14 +38,15 @@ namespace BTG
             {
                 // no damage and a bit less knockback if not attacking
                 player.TakeDamage(_steamCentipede.IsAttacking ? _damageDealt : 0);
-                player.GetComponent<Knockback>().GetKnockedBack(transform, _steamCentipede.IsAttacking  ? _knockBack : _knockBack/3);
+                player.GetComponent<Knockback>()
+                    .GetKnockedBack(transform, _steamCentipede.IsAttacking ? _knockBack : _knockBack / 3);
             }
         }
 
         public void SetAnimationDirectionParameter(Vector2 tangent)
         {
             Animator.SetFloat(_animMoveX, tangent.normalized.x);
-            Animator.SetFloat(_animMoveY,  tangent.normalized.y);
+            Animator.SetFloat(_animMoveY, tangent.normalized.y);
         }
 
         public void SetAnimationSpeed(float speed)
@@ -77,10 +74,7 @@ namespace BTG
                 GetComponent<HitFlash>().HitFlashRoutine();
             }
 
-            if (CurrentHealth == 0)
-            {
-                OnBodyPartDeath?.Invoke();
-            }
+            if (CurrentHealth == 0) OnBodyPartDeath?.Invoke();
         }
 
         public void Heal(float addedHealth)

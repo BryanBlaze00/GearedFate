@@ -6,94 +6,94 @@ using UnityEngine;
 
 namespace BTG
 {
-   /// <summary>
-   /// Cutscene Manager class to manage cutscene dialogues and transitions.
-   /// </summary>
-   using TMPro;
-   using System.Collections;
-   using UnityEngine.UI;
+    /// <summary>
+    /// Cutscene Manager class to manage cutscene dialogues and transitions.
+    /// </summary>
+    using TMPro;
+    using System.Collections;
+    using UnityEngine.UI;
 
-   public class CutsceneManager : MonoBehaviour
-   {
-      [Header("Cutscene Settings")]
-      [Header("Dialogue Settings")]
-      [SerializeField] TextMeshProUGUI _dialogueText;
-      [SerializeField] string[] _dialogueLines;
-      [SerializeField] float _typingSpeed = 0.05f; // Adjust this for typing speed
+    public class CutsceneManager : MonoBehaviour
+    {
+        [Header("Cutscene Settings")] [Header("Dialogue Settings")] [SerializeField]
+        private TextMeshProUGUI _dialogueText;
 
-      [Header("Button Settings")]
-      [SerializeField] Button _nextButton;
-      [SerializeField] Button _skipButton;
+        [SerializeField] private string[] _dialogueLines;
+        [SerializeField] private float _typingSpeed = 0.05f; // Adjust this for typing speed
 
-      [Header("Avatar Settings")]
-      [SerializeField] GameObject _bossAvatar;
+        [Header("Button Settings")] [SerializeField]
+        private Button _nextButton;
 
-      private UISpriteAnimation _bossAvatarAnim;
-      private int _currentLineIndex = 0;
+        [SerializeField] private Button _skipButton;
 
-      private void Awake()
-      {
-         _bossAvatarAnim = _bossAvatar.GetComponent<UISpriteAnimation>();
-         _nextButton.onClick.AddListener(NextDialogue);
-         _skipButton.onClick.AddListener(SkipCutscene);
-         
-      }
+        [Header("Avatar Settings")] [SerializeField]
+        private GameObject _bossAvatar;
 
-      private void Start()
-      {
-         Elevator.Instance.ActivateElevatorAnim();
-         _dialogueText.text = string.Empty;
+        private UISpriteAnimation _bossAvatarAnim;
+        private int _currentLineIndex = 0;
 
-         // Start the first dialogue
-         StartCoroutine(TypeText(_dialogueLines[_currentLineIndex]));
-         _bossAvatarAnim.PlayUIAnim();
-      }
+        private void Awake()
+        {
+            _bossAvatarAnim = _bossAvatar.GetComponent<UISpriteAnimation>();
+            _nextButton.onClick.AddListener(NextDialogue);
+            _skipButton.onClick.AddListener(SkipCutscene);
+        }
 
-      /// <summary>
-      /// Type the text letter by letter.
-      /// </summary>
-      IEnumerator TypeText(string line)
-      {
-         _nextButton.interactable = false;
+        private void Start()
+        {
+            Elevator.Instance.ActivateElevatorAnim();
+            _dialogueText.text = string.Empty;
 
-         _dialogueText.text = string.Empty;
-         foreach (char letter in line)
-         {
-            _dialogueText.text += letter;
-            yield return new WaitForSeconds(_typingSpeed);
-         }
+            // Start the first dialogue
+            StartCoroutine(TypeText(_dialogueLines[_currentLineIndex]));
+            _bossAvatarAnim.PlayUIAnim();
+        }
 
-         _nextButton.interactable = true;
-         // _bossAvatarAnim.StopUIAnim(); // Stop the avatar animation
-      }
+        /// <summary>
+        /// Type the text letter by letter.
+        /// </summary>
+        private IEnumerator TypeText(string line)
+        {
+            _nextButton.interactable = false;
 
-      /// <summary>
-      /// Move to the next dialogue line.
-      /// </summary>
-      public void NextDialogue()
-      {
-         // Move to the next line
-         _currentLineIndex++;
+            _dialogueText.text = string.Empty;
+            foreach (var letter in line)
+            {
+                _dialogueText.text += letter;
+                yield return new WaitForSeconds(_typingSpeed);
+            }
 
-         // Check if we've reached the end of the dialogue
-         if (_currentLineIndex >= _dialogueLines.Length)
-         {
-            // Load the next level if we've reached the end of the dialogue
+            _nextButton.interactable = true;
+            // _bossAvatarAnim.StopUIAnim(); // Stop the avatar animation
+        }
+
+        /// <summary>
+        /// Move to the next dialogue line.
+        /// </summary>
+        public void NextDialogue()
+        {
+            // Move to the next line
+            _currentLineIndex++;
+
+            // Check if we've reached the end of the dialogue
+            if (_currentLineIndex >= _dialogueLines.Length)
+            {
+                // Load the next level if we've reached the end of the dialogue
+                GameManager.Instance.LoadNextLevel();
+                return;
+            }
+
+            StartCoroutine(TypeText(_dialogueLines[_currentLineIndex]));
+            // _bossAvatarAnim.PlayUIAnim(); // Play the avatar animation
+        }
+
+        /// <summary>
+        /// Skip the cutscene.
+        /// </summary>
+        public void SkipCutscene()
+        {
+            // Load the next level if we skip the cutscene
             GameManager.Instance.LoadNextLevel();
-            return;
-         }
-
-         StartCoroutine(TypeText(_dialogueLines[_currentLineIndex]));
-         // _bossAvatarAnim.PlayUIAnim(); // Play the avatar animation
-      }
-
-      /// <summary>
-      /// Skip the cutscene.
-      /// </summary>
-      public void SkipCutscene()
-      {
-         // Load the next level if we skip the cutscene
-         GameManager.Instance.LoadNextLevel();
-      }
-   }
+        }
+    }
 }

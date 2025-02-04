@@ -27,32 +27,31 @@ namespace BTG
         /// </summary>
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
-            foreach (var e in source)
-            {
-                action(e);
-            }
+            foreach (var e in source) action(e);
             return source;
         }
 
         /// <summary>
         /// Returns the index of <paramref name="toFind"></paramref> if it's found in <paramref name="array"></paramref>, or -1 if it isn't
         /// </summary>
-        public static int IndexOf<T>(this T[] array, T toFind) => Array.IndexOf(array, toFind);
+        public static int IndexOf<T>(this T[] array, T toFind)
+        {
+            return Array.IndexOf(array, toFind);
+        }
+
         /// <summary>
         /// Returns the index of <paramref name="toFind"></paramref> if it's found in <paramref name="source"></paramref>, or -1 if it isn't
         /// </summary>
         public static int IndexOf<T>(this IEnumerable<T> source, T toFind, IEqualityComparer<T> comparer = null)
         {
-            int i = 0;
+            var i = 0;
             comparer ??= EqualityComparer<T>.Default;
             foreach (var item in source)
             {
-                if (comparer.Equals(item, toFind))
-                {
-                    return i;
-                }
+                if (comparer.Equals(item, toFind)) return i;
                 i++;
             }
+
             return -1;
         }
     }

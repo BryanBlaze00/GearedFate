@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace BTG
 {
-    public class CentipedeCircleState: CentipedeBaseState
+    public class CentipedeCircleState : CentipedeBaseState
     {
         private readonly int _animId;
 
@@ -76,10 +76,7 @@ namespace BTG
             }
 
 
-            if (!Centipede.IsReachingTrajectoryEndNextStep())
-            {
-                return;
-            }
+            if (!Centipede.IsReachingTrajectoryEndNextStep()) return;
 
             if (Centipede.DistanceToTarget > _chasingDistance)
             {
@@ -91,15 +88,11 @@ namespace BTG
                 {
                     // choose randomly between charging or death circle
                     if (Random.Range(0, 10) > 3f)
-                    {
                         fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Charge]);
-                    }
                     else
-                    {
                         fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.DeathCircle]);
-                    }
-
                 }
+
                 Centipede.ExpandTrajectory(ComputeCircleAimPosition());
                 _firstCircling = false;
             }
@@ -117,21 +110,17 @@ namespace BTG
 
         private Vector2 ComputeCircleAimPosition()
         {
-            Vector2 directionFromPlayerToHead = Centipede.VectorToTarget;
+            var directionFromPlayerToHead = Centipede.VectorToTarget;
 
             // if not circling yet, choose as a node the closest cardinal point at the defined circling distance.
             if (_firstCircling)
-            {
                 _circleDirection = VectorHelper2D.ClosestCardinalOrDiagonal(directionFromPlayerToHead);
-            }
             else
-            {
                 _circleDirection = VectorHelper2D.NextClockWiseDirection(_circleDirection);
-            }
 
-            Vector2 nodeDirection = VectorHelper2D.VectorFromDirection(_circleDirection);
+            var nodeDirection = VectorHelper2D.VectorFromDirection(_circleDirection);
 
-            return (Vector2)Centipede.Target.position + (nodeDirection * _circlingDistance);
+            return (Vector2)Centipede.Target.position + nodeDirection * _circlingDistance;
         }
     }
 }

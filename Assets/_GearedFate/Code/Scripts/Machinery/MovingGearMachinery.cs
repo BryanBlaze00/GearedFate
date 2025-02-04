@@ -9,11 +9,10 @@ namespace BTG
     public class MovingGearMachinery : AbstractMovingMachinery
     {
         // Reference to the gear animation script
-        [SerializeField]
-        private GearAnim _gearAnim;
+        [SerializeField] private GearAnim _gearAnim;
         private SpriteRenderer parentSpriteRenderer;
 
-        private void Awake() 
+        private void Awake()
         {
             parentSpriteRenderer = GetComponentInParent<SpriteRenderer>();
         }
@@ -26,19 +25,19 @@ namespace BTG
 
         protected override void MoveEntity(Transform entity)
         {
-            float angle = (1f/_gearAnim.FullCircleRotationNumbers)*360f;
+            var angle = 1f / _gearAnim.FullCircleRotationNumbers * 360f;
 
             if (entity.TryGetComponent(out ContactTransformProvider contactTransformProvider))
             {
                 // If the feet are not the 0,0 position of the entity we move, we must be careful and not directly rotate the entity.
                 // Instead, we rotate a gameObject at the position of the feet, to know where the feet should end up.
-                GameObject temp = new GameObject();
+                var temp = new GameObject();
                 temp.transform.position = contactTransformProvider.ContactTransform.position;
                 temp.transform.RotateAround(transform.position, Vector3.forward, -angle);
 
                 // When figuring out where the feet should be, it's straightforward :
                 // The entity should end up at the feet position + the distance between the entity center and its feet.
-                Vector3 offset = entity.position - contactTransformProvider.ContactTransform.position;
+                var offset = entity.position - contactTransformProvider.ContactTransform.position;
                 entity.transform.position = temp.transform.position + offset;
 
                 // TODO use pooling instead
@@ -47,13 +46,9 @@ namespace BTG
             else
             {
                 if (parentSpriteRenderer.flipX == false)
-                {
                     entity.RotateAround(transform.position, Vector3.forward, -angle);
-                }
                 else
-                {
                     entity.RotateAround(transform.position, Vector3.forward, +angle);
-                }
             }
         }
     }

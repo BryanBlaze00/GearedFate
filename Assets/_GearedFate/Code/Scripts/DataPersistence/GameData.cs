@@ -8,8 +8,7 @@ namespace BTG
     [Serializable]
     public class GameData
     {
-        [SerializeField]
-        private SerializableDictionary<PooledObjectType, int> _assetsToInstantiateIds = new();
+        [SerializeField] private SerializableDictionary<PooledObjectType, int> _assetsToInstantiateIds = new();
 
         // Incremented each time it's used, allows tracking which minion save struct is loaded next in MinionsData.
         private int _minionCurrentLoadedIndex;
@@ -35,7 +34,7 @@ namespace BTG
         /// </summary>
         public void AddAssetIndexToInstantiate(PooledObjectType id)
         {
-            _assetsToInstantiateIds.TryGetValue(id, out int currentCount);
+            _assetsToInstantiateIds.TryGetValue(id, out var currentCount);
             _assetsToInstantiateIds[id] = currentCount + 1;
         }
 
@@ -44,7 +43,7 @@ namespace BTG
         /// </summary>
         public MinionSaveStruct GetNextMinionData()
         {
-            MinionSaveStruct data = MinionsData[_minionCurrentLoadedIndex];
+            var data = MinionsData[_minionCurrentLoadedIndex];
             _minionCurrentLoadedIndex++;
             return data;
         }

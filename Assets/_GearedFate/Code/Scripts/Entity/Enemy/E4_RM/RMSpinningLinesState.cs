@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace BTG
 {
-    public class RMSpinningLinesState: RMBaseState
+    public class RMSpinningLinesState : RMBaseState
     {
         private float _enterTime;
 
@@ -12,7 +12,8 @@ namespace BTG
 
         private bool _isAttacking = false;
 
-        public RMSpinningLinesState(FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm, RustedMarionette marionette, int highAnimId, int lowAnimId)
+        public RMSpinningLinesState(FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm,
+            RustedMarionette marionette, int highAnimId, int lowAnimId)
             : base(fsm, marionette, highAnimId, lowAnimId)
         {
         }
@@ -39,9 +40,7 @@ namespace BTG
             }
 
             if (Time.time > _enterTime + _timeBeforeStateChange)
-            {
                 fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.Idle]);
-            }
         }
 
         public override void OnPhysicsUpdate()

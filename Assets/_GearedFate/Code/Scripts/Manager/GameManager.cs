@@ -8,63 +8,71 @@ using UnityEngine.SceneManagement;
 
 namespace BTG
 {
-	/// <summary>
-	/// GameManager class to manage game scenes and transitions. Also other possible Settings (define when needed).
-	/// </summary>
-	public class GameManager : PersistentSingleton<GameManager>
-	{
-		// ... other game manager code ...
+    /// <summary>
+    /// GameManager class to manage game scenes and transitions. Also other possible Settings (define when needed).
+    /// </summary>
+    public class GameManager : PersistentSingleton<GameManager>
+    {
+        // ... other game manager code ...
 
-		[Header("Scene Settings")]
-		[SerializeField] string mainMenuScene = "MainMenu";
-		[SerializeField] string gameOver = "GameOver";
-		[SerializeField] string credits = "Credits";
-		// [SerializeField] string introScene = "IntroScene";
-		[SerializeField]
-		string[] bossLevelScenes = { "BossLevel 1", "BossLevel 2", "BossLevel 3",
-																		"BossLevel 4", "BossLevel 5" };
-		[SerializeField]
-		string[] cutsceneScenes = { "Cutscene 0", "Cutscene 1", "Cutscene 2",
-																	"Cutscene 3","Cutscene 4", "Cutscene 5" };
+        [Header("Scene Settings")] [SerializeField]
+        private string mainMenuScene = "MainMenu";
 
-		private string currentScene;
+        [SerializeField] private string gameOver = "GameOver";
 
-		protected override void Awake() // Use protected override for Singleton's Awake
-		{
-			base.Awake(); // Important: Call the base Singleton Awake!
+        [SerializeField] private string credits = "Credits";
 
-			currentScene = SceneManager.GetActiveScene().name;
-		}
+        // [SerializeField] string introScene = "IntroScene";
+        [SerializeField] private string[] bossLevelScenes =
+        {
+            "BossLevel 1", "BossLevel 2", "BossLevel 3",
+            "BossLevel 4", "BossLevel 5"
+        };
 
-		public void LoadMainMenu()
-		{
-			AudioManager.instance.PlayMenuClip();
-			LoadScene(mainMenuScene);
-		}
+        [SerializeField] private string[] cutsceneScenes =
+        {
+            "Cutscene 0", "Cutscene 1", "Cutscene 2",
+            "Cutscene 3", "Cutscene 4", "Cutscene 5"
+        };
 
-		public void StartGame()
-		{
-			LoadScene("Cutscene 0");
-		}
+        private string currentScene;
 
-		public string GetCurrentScene()
-		{
-			return currentScene;
-		}
+        protected override void Awake() // Use protected override for Singleton's Awake
+        {
+            base.Awake(); // Important: Call the base Singleton Awake!
 
-		public string[] GetCutsceneScenes()
-		{
-			return cutsceneScenes;
-		}
+            currentScene = SceneManager.GetActiveScene().name;
+        }
 
-		public string[] GetBossLevelScenes()
-		{
-			return bossLevelScenes;
-		}
+        public void LoadMainMenu()
+        {
+            AudioManager.instance.PlayMenuClip();
+            LoadScene(mainMenuScene);
+        }
 
-		public void LoadNextLevel()
-		{
-			/*
+        public void StartGame()
+        {
+            LoadScene("Cutscene 0");
+        }
+
+        public string GetCurrentScene()
+        {
+            return currentScene;
+        }
+
+        public string[] GetCutsceneScenes()
+        {
+            return cutsceneScenes;
+        }
+
+        public string[] GetBossLevelScenes()
+        {
+            return bossLevelScenes;
+        }
+
+        public void LoadNextLevel()
+        {
+            /*
          int currentLevelIndex = -1;
 
          for (int i = 0; i < bossLevelScenes.Length; i++)
@@ -120,41 +128,43 @@ namespace BTG
             Debug.LogError("Boss level index out of range: " + levelIndex);
          }
          */
-			int currentBuildScene = SceneManager.GetActiveScene().buildIndex;
-			if (currentBuildScene >= 10)
-			{
-				LoadMainMenu();
-			}
-			else
-			{
-				SceneManager.LoadScene(++currentBuildScene);
-				if(currentBuildScene % 2 != 0)
-					AudioManager.instance.PlayCorrrectClip(currentBuildScene);
-			}
-		}
+            var currentBuildScene = SceneManager.GetActiveScene().buildIndex;
+            if (currentBuildScene >= 10)
+            {
+                LoadMainMenu();
+            }
+            else
+            {
+                SceneManager.LoadScene(++currentBuildScene);
+                if (currentBuildScene % 2 != 0)
+                    AudioManager.instance.PlayCorrrectClip(currentBuildScene);
+            }
+        }
 
-		private void LoadScene(string sceneName)
-		{
-			currentScene = sceneName;
-			SceneManager.LoadScene(sceneName);
-		}
+        private void LoadScene(string sceneName)
+        {
+            currentScene = sceneName;
+            SceneManager.LoadScene(sceneName);
+        }
 
-		public void RestartLevel()
-		{
-			LoadScene(currentScene);
-		}
-		public void LoadGameOver()
-		{
-			LoadScene(gameOver);
-		}
-		public void LoadCredits()
-		{
-			LoadScene(credits);
-		}
+        public void RestartLevel()
+        {
+            LoadScene(currentScene);
+        }
 
-		public void QuitGame()
-		{
-			Application.Quit();
-		}
-	}
+        public void LoadGameOver()
+        {
+            LoadScene(gameOver);
+        }
+
+        public void LoadCredits()
+        {
+            LoadScene(credits);
+        }
+
+        public void QuitGame()
+        {
+            Application.Quit();
+        }
+    }
 }

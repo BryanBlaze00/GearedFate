@@ -4,11 +4,11 @@
 
 namespace BTG
 {
-   /// <summary>
-   /// ICollectable
-   /// </summary>
-   public interface IThrowable 
-   {
-      void Throw();
-   }
+    /// <summary>
+    /// ICollectable
+    /// </summary>
+    public interface IThrowable
+    {
+        void Throw();
+    }
 }
