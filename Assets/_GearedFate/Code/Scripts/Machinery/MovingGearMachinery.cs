@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace BTG
@@ -46,9 +45,13 @@ namespace BTG
             else
             {
                 if (this.parentSpriteRenderer.flipX == false)
+                {
                     entity.RotateAround(this.transform.position, Vector3.forward, -angle);
+                }
                 else
+                {
                     entity.RotateAround(this.transform.position, Vector3.forward, +angle);
+                }
             }
         }
     }

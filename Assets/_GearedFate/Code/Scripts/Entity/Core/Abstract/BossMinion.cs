@@ -2,7 +2,6 @@
 // Copyright (c) BTG. All rights reserved.
 //
 
-using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -70,7 +69,10 @@ namespace BTG
 
         protected virtual void MoveToTarget(Transform target)
         {
-            if (target != null && this.agent.enabled) this.agent.SetDestination(target.position);
+            if (target != null && this.agent.enabled)
+            {
+                this.agent.SetDestination(target.position);
+            }
         }
 
         /// No need to make it virtual as the task is always gonna be same
@@ -78,7 +80,10 @@ namespace BTG
         {
             Debug.Log("Ouch! from " + this.name + " for " + amount + " damage.");
             this.health -= amount;
-            if (this.health <= 0) this.Die();
+            if (this.health <= 0)
+            {
+                this.Die();
+            }
         }
 
         protected void OnEnable()

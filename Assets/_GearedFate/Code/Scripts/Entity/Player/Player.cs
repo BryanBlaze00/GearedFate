@@ -139,7 +139,10 @@ namespace BTG
         private void Update()
         {
             this.fsm.CurrentState.OnFrameUpdate();
-            if (this._lastHit + 1f < Time.time) this.isInvulnerable = false;
+            if (this._lastHit + 1f < Time.time)
+            {
+                this.isInvulnerable = false;
+            }
         }
 
         private void FixedUpdate()
@@ -156,7 +159,10 @@ namespace BTG
                 if (inBounds)
                 {
                     this.OutOfBoundsTime--;
-                    if (this.OutOfBoundsTime < 0f) this.OutOfBoundsTime = 0f;
+                    if (this.OutOfBoundsTime < 0f)
+                    {
+                        this.OutOfBoundsTime = 0f;
+                    }
                 }
                 else
                 {
@@ -172,7 +178,10 @@ namespace BTG
                             searchRadius += 0.5f;
                         }
 
-                        if (found) this.transform.position = hit.position;
+                        if (found)
+                        {
+                            this.transform.position = hit.position;
+                        }
                     }
                 }
             }
@@ -185,7 +194,10 @@ namespace BTG
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (this.isInvulnerable) return;
+            if (this.isInvulnerable)
+            {
+                return;
+            }
         }
 
         #endregion Unity CallBacks
@@ -194,7 +206,11 @@ namespace BTG
 
         public void SetLookDir()
         {
-            if (this.Input.MoveInput == Vector2.zero) return;
+            if (this.Input.MoveInput == Vector2.zero)
+            {
+                return;
+            }
+
             this.CurrentDirection = this.Input.MoveInput;
             this.Anim.SetFloat(this.AnimMoveX, this.Input.MoveInput.x);
             this.Anim.SetFloat(this.AnimMoveY, this.Input.MoveInput.y);
@@ -209,7 +225,10 @@ namespace BTG
         public void BurnAttackFuel(float fuel)
         {
             this.CurrentAttackFuelAmount -= fuel;
-            if (this.CurrentAttackFuelAmount < 0) this.CurrentAttackFuelAmount = 0;
+            if (this.CurrentAttackFuelAmount < 0)
+            {
+                this.CurrentAttackFuelAmount = 0;
+            }
         }
 
         public void ShootGear()
@@ -217,7 +236,10 @@ namespace BTG
             var obj = ObjectPool.Instance.GetPooledObject(this.GearData.PooledObjectType);
             obj.transform.position = this.ShootPos.position;
 
-            if (obj.TryGetComponent(out Projectile projectile)) projectile.SetUnaffectedLayer(this.gameObject.layer);
+            if (obj.TryGetComponent(out Projectile projectile))
+            {
+                projectile.SetUnaffectedLayer(this.gameObject.layer);
+            }
 
             AudioManager.Instance.PlaySFX(this.ShootGearAudio);
             obj.SetActive(true);
@@ -233,7 +255,10 @@ namespace BTG
 
         public void TakeDamage(float damage)
         {
-            if (this.isInvulnerable) return;
+            if (this.isInvulnerable)
+            {
+                return;
+            }
 
             if (this.CurrentHealth > 0)
             {

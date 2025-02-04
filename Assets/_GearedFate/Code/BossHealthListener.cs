@@ -1,6 +1,5 @@
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace BTG
@@ -22,14 +21,19 @@ namespace BTG
             this._boss = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IBoss>().FirstOrDefault();
 #if UNITY_EDITOR
          if (this._boss == null)
-                Debug.LogError($"No {nameof(IBoss)} object found in scene");
+         {
+             Debug.LogError($"No {nameof(IBoss)} object found in scene");
+         }
 #endif
       }
 
         private void Update()
         {
             if (this._boss == null)
+            {
                 return;
+            }
+
             float normalizedLife = this._boss.CurrentHealth / this._boss.MaxHealth;
             if (normalizedLife > 0.5f)
             {

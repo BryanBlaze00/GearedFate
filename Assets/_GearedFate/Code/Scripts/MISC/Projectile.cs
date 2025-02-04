@@ -32,7 +32,10 @@ namespace BTG
         private void OnEnable()
         {
             this.coroutineHandle = Timing.RunCoroutine(this._Disable().CancelWith(this.gameObject));
-            if (this.rb == null) this.rb = this.GetComponent<Rigidbody2D>();
+            if (this.rb == null)
+            {
+                this.rb = this.GetComponent<Rigidbody2D>();
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -40,7 +43,11 @@ namespace BTG
             // Do nothing if the collided game object is the on the unnafected layer or if it can't take damages
             // TODO : Some objects should stop projectiles, like walls, maybe have a IStopProjectileInterface to deal with that.
             if (collision.gameObject.layer == this._unaffectedLayer ||
-                !collision.TryGetComponent(out IDamagable damageable)) return;
+                !collision.TryGetComponent(out IDamagable damageable))
+            {
+                return;
+            }
+
             Debug.Log("Projectile hit");
             damageable.TakeDamage(this.Data.Damage);
             this.gameObject.SetActive(false);

@@ -2,10 +2,8 @@
 // Copyright (c) BTG. All rights reserved.
 //
 
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
 
 namespace BTG
 {
@@ -41,21 +39,34 @@ namespace BTG
 
         public void OnAbilityChange(InputAction.CallbackContext ctx)
         {
-            if (ctx.performed) this.player.ChangeCurrentAbility((int)ctx.ReadValue<float>());
+            if (ctx.performed)
+            {
+                this.player.ChangeCurrentAbility((int)ctx.ReadValue<float>());
+            }
         }
 
         public void OnDash(InputAction.CallbackContext ctx) //Might change later to call an event instead of using bool
         {
             if (ctx.performed)
+            {
                 this.DashPressed = true;
-            else if (ctx.canceled) this.DashPressed = false;
+            }
+            else if (ctx.canceled)
+            {
+                this.DashPressed = false;
+            }
         }
 
         public void OnAttack(InputAction.CallbackContext ctx)
         {
             if (ctx.performed)
+            {
                 this.AttackPressed = true;
-            else if (ctx.canceled) this.AttackPressed = false;
+            }
+            else if (ctx.canceled)
+            {
+                this.AttackPressed = false;
+            }
         }
 
 

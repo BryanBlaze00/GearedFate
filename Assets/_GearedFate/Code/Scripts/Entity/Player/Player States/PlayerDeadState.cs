@@ -32,7 +32,10 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            if (Time.time > this.time + 3f) GameManager.Instance.LoadMainMenu();
+            if (Time.time > this.time + 3f)
+            {
+                GameManager.Instance.LoadMainMenu();
+            }
         }
 
         public override void OnPhysicsUpdate()

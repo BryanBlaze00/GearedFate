@@ -22,7 +22,10 @@ namespace BTG
             this.Centipede.SetSpeed(this.Centipede.ChargeSpeed);
             this.Centipede.SetAnimations(this._animId, true);
 
-            if (this.Centipede.IsReachingTrajectoryEndNextStep()) this.Centipede.ExpandTrajectory(this.ComputeChargeAimPosition());
+            if (this.Centipede.IsReachingTrajectoryEndNextStep())
+            {
+                this.Centipede.ExpandTrajectory(this.ComputeChargeAimPosition());
+            }
         }
 
         public override void OnExit()
@@ -33,7 +36,10 @@ namespace BTG
         {
             this.Centipede.MoveAlongTrajectory();
 
-            if (!this.Centipede.IsReachingTrajectoryEndNextStep()) return;
+            if (!this.Centipede.IsReachingTrajectoryEndNextStep())
+            {
+                return;
+            }
 
             this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Chase]);
         }

@@ -59,7 +59,11 @@ namespace BTG
 
         public override void OnPhysicsUpdate()
         {
-            if (this.gearboundSentinel.TargetPlayer == null) this.gearboundSentinel.TargetPlayer = Object.FindObjectsByType<Player>(FindObjectsSortMode.None).Random();
+            if (this.gearboundSentinel.TargetPlayer == null)
+            {
+                this.gearboundSentinel.TargetPlayer = Object.FindObjectsByType<Player>(FindObjectsSortMode.None).Random();
+            }
+
             if (this.gearboundSentinel.TargetPlayer == null)
             {
                 Debug.LogError("There is no TargetPlayer set on " + nameof(this.gearboundSentinel));
@@ -72,7 +76,10 @@ namespace BTG
             this.UpdateDestination(vecToTarget, distToTarget);
 
             this.AttackCooldown -= Time.fixedDeltaTime;
-            if (this.AttackCooldown < 0f) this.SelectAttack(distToTarget);
+            if (this.AttackCooldown < 0f)
+            {
+                this.SelectAttack(distToTarget);
+            }
 
             base.OnPhysicsUpdate();
 
@@ -140,7 +147,11 @@ namespace BTG
                     var newDest = (Vector2)this.gearboundSentinel.transform.position + targetVector *
                         (this.gearboundSentinel.CurSpeed * Time.fixedDeltaTime * vecMultiplier);
                     var success = this.gearboundSentinel.NavMeshAgent.SetDestination(newDest);
-                    if (!success) Debug.LogError("Failed?");
+                    if (!success)
+                    {
+                        Debug.LogError("Failed?");
+                    }
+
                     yield return new WaitForFixedUpdate();
                     wait -= Time.fixedDeltaTime;
                 }
@@ -212,9 +223,13 @@ namespace BTG
                         {
                             // if far away, throw bombs; else, shoot
                             if (distToTarget > 4f)
+                            {
                                 this.fsm.SwitchState(this.gearboundSentinel.States[GearboundSentinel.State.Bomb]);
+                            }
                             else
+                            {
                                 this.fsm.SwitchState(this.gearboundSentinel.States[GearboundSentinel.State.Shoot]);
+                            }
                         }
                         else
                         {

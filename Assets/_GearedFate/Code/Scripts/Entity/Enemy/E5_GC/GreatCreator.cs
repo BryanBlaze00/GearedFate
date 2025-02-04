@@ -5,10 +5,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace BTG
@@ -121,7 +119,9 @@ namespace BTG
             {
                 collision.collider.GetComponent<Player>().Knockback.GetKnockedBack(this.transform, 1f);
                 if (this._fsm.CurrentState.GetType() == typeof(GCDashState))
+                {
                     collision.collider.GetComponent<Player>().TakeDamage(10f);
+                }
             }
         }
 
@@ -175,7 +175,10 @@ namespace BTG
                 }
             }
 
-            if (this.CurrentHealth == 0) Elevator.Instance.ActivateElevator();
+            if (this.CurrentHealth == 0)
+            {
+                Elevator.Instance.ActivateElevator();
+            }
 
             this.OnHitTaken?.Invoke();
         }

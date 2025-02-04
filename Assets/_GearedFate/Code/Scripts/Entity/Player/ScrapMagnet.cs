@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace BTG
 {
@@ -39,7 +37,10 @@ namespace BTG
         private void OnTriggerEnter2D(Collider2D other)
         {
             // Trigger the magnet effect if the scrap enters the Players trigger zone
-            if (other.TryGetComponent(out Scrap scrap)) this.StartCoroutine(this.MoveToPlayer(scrap));
+            if (other.TryGetComponent(out Scrap scrap))
+            {
+                this.StartCoroutine(this.MoveToPlayer(scrap));
+            }
         }
     }
 }

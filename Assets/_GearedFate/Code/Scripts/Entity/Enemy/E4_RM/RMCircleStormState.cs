@@ -40,7 +40,10 @@ namespace BTG
                 this.Marionette.CircleSpawner.SetSpawningState(true);
             }
 
-            if (Time.time > this._enterTime + this._timeBeforeStateChange) this.fsm.SwitchState(this.Marionette._states[RustedMarionette.RustedMarionetteState.Idle]);
+            if (Time.time > this._enterTime + this._timeBeforeStateChange)
+            {
+                this.fsm.SwitchState(this.Marionette._states[RustedMarionette.RustedMarionetteState.Idle]);
+            }
         }
 
         public override void OnPhysicsUpdate()

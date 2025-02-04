@@ -76,10 +76,18 @@ namespace BTG
 
         public GameObject GetPooledObject(PooledObjectType type)
         {
-            if (!this.PooledObjects.ContainsKey(type)) return null;
+            if (!this.PooledObjects.ContainsKey(type))
+            {
+                return null;
+            }
+
             for (var i = 0; i < this.PooledObjects[type].Count; i++)
+            {
                 if (!this.PooledObjects[type][i].activeInHierarchy)
+                {
                     return this.PooledObjects[type][i];
+                }
+            }
 
             if (this.objectsToPool[type].ShouldExpand)
             {
@@ -131,7 +139,11 @@ namespace BTG
             var item = this.objectsToPool[type];
 
             var pooledObjects = new List<GameObject>();
-            for (var i = 0; i < item.AmountToPool; i++) pooledObjects.Add(this.AddObjectToPool(item));
+            for (var i = 0; i < item.AmountToPool; i++)
+            {
+                pooledObjects.Add(this.AddObjectToPool(item));
+            }
+
             this.PooledObjects.Add(type, pooledObjects);
         }
     }

@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace BTG
 {
+    using System;
+    using System.Collections.Generic;
+    using UnityEngine;
+
     /// <summary>
     /// A State machine behaviour that will call events at different normalized times in the state
     /// </summary>

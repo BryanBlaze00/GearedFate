@@ -1,5 +1,3 @@
-using System;
-using System.Threading;
 using Game.Core.Rendering;
 using UnityEngine;
 
@@ -107,12 +105,17 @@ namespace BTG
             for (var i = 0; i < this._circlePointsNumber; i++)
             {
                 if (i < this._firstStringPoints)
+                {
                     this._firstString.Points.Add(new Vector2(Mathf.Cos(this._startingAngle + this._angle * i) * this._radius,
                         Mathf.Sin(this._startingAngle + this._angle * i) * this._radius));
+                }
+
                 if (i >= this._firstStringPoints + this._firstEmptySpacePoints &&
                     i < this._firstStringPoints + this._firstEmptySpacePoints + this._secondStringPoints)
+                {
                     this._secondString.Points.Add(new Vector2(Mathf.Cos(this._startingAngle + this._angle * i) * this._radius,
                         Mathf.Sin(this._startingAngle + this._angle * i) * this._radius));
+                }
             }
 
             this._firstString.SetMaxPoints(this._firstStringPoints);
@@ -127,9 +130,13 @@ namespace BTG
         private void UpdateAngle()
         {
             if (this._turnClockwise)
+            {
                 this._startingAngle -= this._angle;
+            }
             else
+            {
                 this._startingAngle += this._angle;
+            }
         }
 
         private void IsOnCircle()
@@ -152,7 +159,9 @@ namespace BTG
                         this.transform.position,
                         this._radius, startSecondEmptyPoint, endSecondEmptyPoint,
                         closestPointOnCircle))
+                {
                     return;
+                }
 
                 this._target.GetComponent<Player>().TakeDamage(this._damage);
                 this._target.GetComponent<Player>().Knockback.GetKnockedBack(closestPointOnCircle, this._knockback);
@@ -177,7 +186,9 @@ namespace BTG
             // Check if the point is on the circle
             var distSq = (point - center).sqrMagnitude;
             if (!Mathf.Approximately(distSq, radius * radius))
+            {
                 return false; // Not on the circle
+            }
 
             // Compute the point's angle relative to the center
             var pointAngle = Mathf.Atan2(point.y - center.y, point.x - center.x);
@@ -185,15 +196,19 @@ namespace BTG
 
             // Compute start and end angle
             var startAngle = Mathf.Atan2(startPoint.y - center.y, startPoint.x - center.x);
-            startAngle = (startAngle + 2 * Mathf.PI) % (2 * Mathf.PI);
+            startAngle = (startAngle + (2 * Mathf.PI)) % (2 * Mathf.PI);
 
             var endAngle = Mathf.Atan2(endPoint.y - center.y, endPoint.x - center.x);
             endAngle = (endAngle + 2 * Mathf.PI) % (2 * Mathf.PI);
 
             if (startAngle < endAngle)
+            {
                 return startAngle <= pointAngle && pointAngle <= endAngle;
+            }
             else
+            {
                 return startAngle < pointAngle || endAngle > pointAngle;
+            }
         }
     }
 }

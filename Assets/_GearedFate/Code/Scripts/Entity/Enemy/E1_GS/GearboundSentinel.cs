@@ -2,14 +2,9 @@
 // Copyright (c) BTG. All rights reserved.
 //
 
-using NaughtyAttributes;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
 
 namespace BTG
 {
@@ -59,7 +54,10 @@ namespace BTG
             {
                 this.curSpeed = value;
                 this.NavMeshAgent.speed = this.curSpeed;
-                if (this.NavMeshAgent.velocity.magnitude > this.curSpeed) this.NavMeshAgent.velocity = this.NavMeshAgent.velocity.normalized * this.curSpeed;
+                if (this.NavMeshAgent.velocity.magnitude > this.curSpeed)
+                {
+                    this.NavMeshAgent.velocity = this.NavMeshAgent.velocity.normalized * this.curSpeed;
+                }
             }
         }
 
@@ -97,15 +95,26 @@ namespace BTG
 
         private void Awake()
         {
-            if (this.NavMeshAgent == null) this.NavMeshAgent = this.GetComponent<NavMeshAgent>();
+            if (this.NavMeshAgent == null)
+            {
+                this.NavMeshAgent = this.GetComponent<NavMeshAgent>();
+            }
+
             this.NavMeshAgent.updateRotation = false;
             this.NavMeshAgent.updateUpAxis = false;
             this.ResetMoveSpeed();
             this.CurrentHealth = this.Data.MaxHealth;
             this.Phase = 0;
 
-            if (this.Animator == null) this.Animator = this.GetComponentInChildren<Animator>();
-            if (this.AudioSource == null) this.AudioSource = this.GetComponent<AudioSource>();
+            if (this.Animator == null)
+            {
+                this.Animator = this.GetComponentInChildren<Animator>();
+            }
+
+            if (this.AudioSource == null)
+            {
+                this.AudioSource = this.GetComponent<AudioSource>();
+            }
 
             this.AddState(new GSIntroState(this.fsm, State.Intro, this));
             this.AddState(new GSChaseState(this.fsm, State.Chase, this));
@@ -128,7 +137,9 @@ namespace BTG
         public void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.TryGetComponent<Knockback>(out var knockback))
+            {
                 knockback.GetKnockedBack(this.transform, 5f);
+            }
         }
 
         public void ResetMoveSpeed()
@@ -177,7 +188,10 @@ namespace BTG
         public void TakeDamage(float damage)
         {
             if (this.CurrentHealth <= 0)
+            {
                 return; // don't repeatedly die
+            }
+
             this.CurrentHealth -= damage;
             this.HitFlash.HitFlashRoutine();
             if (this.CurrentHealth <= 0)
@@ -186,7 +200,10 @@ namespace BTG
                 this.fsm.SwitchState(this.States[State.Dying]);
             }
 
-            if (this.Phase < this.Data.StageTransitionHealthPercentage.Count && this.CurrentHealth < this.Data.MaxHealth * this.Data.StageTransitionHealthPercentage[this.Phase]) this.Phase++;
+            if (this.Phase < this.Data.StageTransitionHealthPercentage.Count && this.CurrentHealth < this.Data.MaxHealth * this.Data.StageTransitionHealthPercentage[this.Phase])
+            {
+                this.Phase++;
+            }
         }
     }
 }

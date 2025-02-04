@@ -47,7 +47,10 @@ namespace BTG
                 return;
             }
 
-            if (this.chargingUp) return;
+            if (this.chargingUp)
+            {
+                return;
+            }
 
             var input = this.player.Input.MoveInput;
             this.player.RB.linearVelocity = input * this.data.FireBlazeMoveSpeed;
@@ -67,8 +70,12 @@ namespace BTG
                 this.data.FireBlazeDistance,
                 this.data.EnemyLayerMask);
             foreach (var collision in collisions)
+            {
                 if (collision.collider.TryGetComponent(out IDamagable damagable))
+                {
                     damagable.TakeDamage(this.data.FireBlazeDPS * Time.deltaTime);
+                }
+            }
 
             Debug.DrawRay(
                 this.player.Blaze.transform.position,

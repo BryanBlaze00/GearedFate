@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -55,10 +54,17 @@ namespace BTG
             }
             else
             {
-                for (var i = this._rotatingLines.Count - 1; i >= 0; i--) this._rotatingLines[i].gameObject.SetActive(false);
+                for (var i = this._rotatingLines.Count - 1; i >= 0; i--)
+                {
+                    this._rotatingLines[i].gameObject.SetActive(false);
+                }
+
                 this._rotatingLines.Clear();
 
-                if (this._protectionInstance != null) this._protectionInstance.SetActive(false);
+                if (this._protectionInstance != null)
+                {
+                    this._protectionInstance.SetActive(false);
+                }
             }
         }
 
@@ -69,7 +75,7 @@ namespace BTG
 
             for (var i = 0; i < count; i++)
             {
-                var angle = 2 * Mathf.PI / count * i + offset; // Evenly spaced angle
+                var angle = (2 * Mathf.PI / count * i) + offset; // Evenly spaced angle
                 directions.Add(angle);
             }
 

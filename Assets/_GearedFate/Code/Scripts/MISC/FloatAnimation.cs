@@ -2,7 +2,6 @@
 // Copyright (c) BTG. All rights reserved.
 //
 
-using System.Collections;
 using UnityEngine;
 
 namespace BTG

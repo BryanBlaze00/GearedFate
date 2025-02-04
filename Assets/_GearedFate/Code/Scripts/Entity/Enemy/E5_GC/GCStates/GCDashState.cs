@@ -60,7 +60,10 @@ namespace BTG
         {
             Debug.Log(
                 $"distance from start to end dash {Vector2.Distance(this._dashStartingPosition, this.GreatCreator.transform.position)}");
-            if (Vector2.Distance(this._dashStartingPosition, this.GreatCreator.transform.position) < 2) this.GreatCreator.StartCoroutine(this.GoToCenter());
+            if (Vector2.Distance(this._dashStartingPosition, this.GreatCreator.transform.position) < 2)
+            {
+                this.GreatCreator.StartCoroutine(this.GoToCenter());
+            }
 
             this.GreatCreator.Rigidbody.bodyType = RigidbodyType2D.Kinematic;
         }

@@ -29,7 +29,10 @@ namespace BTG
             this.Clear();
 
             // Loop through the list of keys and values and add each key/value pair to the dictionary
-            for (var i = 0; i < this._keys.Count; i++) this.Add(this._keys[i], this._values[i]);
+            for (var i = 0; i < this._keys.Count; i++)
+            {
+                this.Add(this._keys[i], this._values[i]);
+            }
         }
     }
 }

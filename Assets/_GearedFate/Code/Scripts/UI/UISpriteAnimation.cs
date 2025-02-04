@@ -29,7 +29,10 @@ namespace BTG
 
         private void OnEnable()
         {
-            if (GameManager.Instance.GetCurrentScene() == "MainMenu") this.PlayUIAnim();
+            if (GameManager.Instance.GetCurrentScene() == "MainMenu")
+            {
+                this.PlayUIAnim();
+            }
         }
 
         /// <summary>
@@ -69,7 +72,9 @@ namespace BTG
 
             if (option)
                 // Optional: Reset sprite after animation completes
+            {
                 this._image.sprite = this._spriteArray[0];
+            }
         }
 
         /// <summary>
@@ -79,10 +84,17 @@ namespace BTG
         private IEnumerator PlayAnimUI()
         {
             yield return new WaitForSeconds(this._speed);
-            if (this._indexSprite >= this._spriteArray.Length) this._indexSprite = 0;
+            if (this._indexSprite >= this._spriteArray.Length)
+            {
+                this._indexSprite = 0;
+            }
+
             this._image.sprite = this._spriteArray[this._indexSprite];
             this._indexSprite += 1;
-            if (this.IsDone == false) this._coroutineAnim = this.StartCoroutine(this.PlayAnimUI());
+            if (this.IsDone == false)
+            {
+                this._coroutineAnim = this.StartCoroutine(this.PlayAnimUI());
+            }
         }
     }
 }

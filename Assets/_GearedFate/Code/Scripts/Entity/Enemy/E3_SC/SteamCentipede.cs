@@ -2,13 +2,11 @@
 // Copyright (c) BTG. All rights reserved.
 //
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
-using Object = UnityEngine.Object;
 
 namespace BTG
 {
@@ -187,7 +185,10 @@ namespace BTG
                 Elevator.Instance.ActivateElevator(); // Blaze added this line for level transition
             }
 
-            if (this._bodyParts.Count > 1) Destroy(deadBodyPart.gameObject);
+            if (this._bodyParts.Count > 1)
+            {
+                Destroy(deadBodyPart.gameObject);
+            }
 
             this.RegularSpeed *= this.AccelerationWhenLosingBodyPart;
             this.ChargeSpeed *= this.AccelerationWhenLosingBodyPart;
@@ -238,7 +239,10 @@ namespace BTG
                 this._finiteStateMachine.SwitchState(this._states[CentipedeState.Charge]);
             }
 
-            if (other.TryGetComponent(out HealthScrap healthScrap)) healthScrap.ApplyEffect(this);
+            if (other.TryGetComponent(out HealthScrap healthScrap))
+            {
+                healthScrap.ApplyEffect(this);
+            }
 
             if (other.gameObject.GetComponent<DestructableObject>() && this.IsAttacking)
             {
@@ -258,18 +262,28 @@ namespace BTG
             this._totalSplineLength = this._trajectory.CalculateLength();
 
             // Gotta recompute the correct spline position for each body parts since the spline length changed.
-            for (var i = 0; i < this._bodyParts.Count; i++) this._currentPositionsOnSpline[i] *= lengthBeforeShorteningNode / this._totalSplineLength;
+            for (var i = 0; i < this._bodyParts.Count; i++)
+            {
+                this._currentPositionsOnSpline[i] *= lengthBeforeShorteningNode / this._totalSplineLength;
+            }
         }
 
         public void SetSpeed(float value)
         {
             this.Speed = value;
-            for (var i = 0; i < this._bodyParts.Count; i++) this._bodyParts[i].GetComponent<CentipedeBodyPart>().SetAnimationSpeed(value / 3);
+            for (var i = 0; i < this._bodyParts.Count; i++)
+            {
+                this._bodyParts[i].GetComponent<CentipedeBodyPart>().SetAnimationSpeed(value / 3);
+            }
         }
 
         public void KnockOutAnimate()
         {
-            for (var i = 0; i < this._bodyParts.Count - 1; i++) this._bodyParts[i].GetComponent<CentipedeBodyPart>().SetAnimationSpeed(0);
+            for (var i = 0; i < this._bodyParts.Count - 1; i++)
+            {
+                this._bodyParts[i].GetComponent<CentipedeBodyPart>().SetAnimationSpeed(0);
+            }
+
             this._bodyParts.Last().GetComponent<CentipedeBodyPart>().SetAnimationSpeed(1f);
         }
 
@@ -284,7 +298,10 @@ namespace BTG
             this._totalSplineLength = this._trajectory.CalculateLength();
 
             // Gotta recompute the correct spline position for each body parts since the spline length changed.
-            for (var i = 0; i < this._bodyParts.Count; i++) this._currentPositionsOnSpline[i] *= lengthBeforeAddingNode / this._totalSplineLength;
+            for (var i = 0; i < this._bodyParts.Count; i++)
+            {
+                this._currentPositionsOnSpline[i] *= lengthBeforeAddingNode / this._totalSplineLength;
+            }
         }
 
         public void SetAnimations(int animId, bool isWalking)

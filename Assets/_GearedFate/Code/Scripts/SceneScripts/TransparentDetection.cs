@@ -1,5 +1,4 @@
 using System.Collections;
-using System.ComponentModel.Design;
 using BTG;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -26,8 +25,13 @@ public class TransparentDetection : MonoBehaviour
         if (other.TryGetComponent(out Player _))
         {
             if (this.spriteRenderer != null)
+            {
                 this.StartCoroutine(this.FadeRoutine(this.spriteRenderer, this.fadeTime, this.spriteRenderer.color.a, this.transparancyAmount));
-            else if (this.tilemap != null) this.StartCoroutine(this.FadeRoutine(this.tilemap, this.fadeTime, this.tilemap.color.a, this.transparancyAmount));
+            }
+            else if (this.tilemap != null)
+            {
+                this.StartCoroutine(this.FadeRoutine(this.tilemap, this.fadeTime, this.tilemap.color.a, this.transparancyAmount));
+            }
         }
     }
 
@@ -36,8 +40,13 @@ public class TransparentDetection : MonoBehaviour
         if (other.TryGetComponent(out Player _))
         {
             if (this.spriteRenderer != null && this.gameObject.activeSelf)
+            {
                 this.StartCoroutine(this.FadeRoutine(this.spriteRenderer, this.fadeTime, this.spriteRenderer.color.a, 1f));
-            else if (this.tilemap != null) this.StartCoroutine(this.FadeRoutine(this.tilemap, this.fadeTime, this.tilemap.color.a, 1f));
+            }
+            else if (this.tilemap != null)
+            {
+                this.StartCoroutine(this.FadeRoutine(this.tilemap, this.fadeTime, this.tilemap.color.a, 1f));
+            }
         }
     }
 

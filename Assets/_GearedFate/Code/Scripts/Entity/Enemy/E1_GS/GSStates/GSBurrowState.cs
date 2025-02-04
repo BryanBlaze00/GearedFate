@@ -66,7 +66,9 @@ namespace BTG
             base.OnPhysicsUpdate();
 
             if (this.Animating) // don't move or play moving sounds when intro/outro animation are playing. Also prevents it calling EndBurrow repeatedly
+            {
                 return;
+            }
 
             this.BurrowTimer -= Time.fixedDeltaTime;
             if (this.BurrowTimer <= 0f)
@@ -89,7 +91,10 @@ namespace BTG
         public IEnumerator StartBurrow()
         {
             this.Animating = true;
-            if (this.gearboundSentinel.AudioBurrow) this.gearboundSentinel.AudioSource.PlayOneShot(this.gearboundSentinel.AudioBurrow);
+            if (this.gearboundSentinel.AudioBurrow)
+            {
+                this.gearboundSentinel.AudioSource.PlayOneShot(this.gearboundSentinel.AudioBurrow);
+            }
 
             this.gearboundSentinel.CurSpeed = 0f;
             this.gearboundSentinel.Animator.speed = 1f;
@@ -112,7 +117,11 @@ namespace BTG
         public IEnumerator EndBurrow()
         {
             this.gearboundSentinel.AudioSource.pitch = 1f;
-            if (this.gearboundSentinel.AudioUnBurrow) this.gearboundSentinel.AudioSource.PlayOneShot(this.gearboundSentinel.AudioUnBurrow);
+            if (this.gearboundSentinel.AudioUnBurrow)
+            {
+                this.gearboundSentinel.AudioSource.PlayOneShot(this.gearboundSentinel.AudioUnBurrow);
+            }
+
             this.Animating = true;
             this.gearboundSentinel.Animator.speed = 2f; // play faster until the hit
             this.gearboundSentinel.CurSpeed = 0f;
@@ -130,8 +139,12 @@ namespace BTG
                     LayerMask.GetMask("Player")) // todo: config radius
                 .Where(x => !x.isTrigger); // the player's feet
             foreach (var hit in hits)
+            {
                 if (hit.TryGetComponent<Player>(out var player))
+                {
                     player.TakeDamage(this.gearboundSentinel.Data.BurrowDamage);
+                }
+            }
 
             // wait until just before animation end to enable collisions
             yield return new WaitForSeconds(
@@ -145,7 +158,11 @@ namespace BTG
 
             this.gearboundSentinel.ResetMoveSpeed();
             // in the last phase, GS throws bombs when he pops up
-            if (this.gearboundSentinel.Phase == 2) this.fsm.SwitchState(this.gearboundSentinel.States[GearboundSentinel.State.Bomb]);
+            if (this.gearboundSentinel.Phase == 2)
+            {
+                this.fsm.SwitchState(this.gearboundSentinel.States[GearboundSentinel.State.Bomb]);
+            }
+
             this.fsm.SwitchState(this.gearboundSentinel.States[GearboundSentinel.State.Chase]);
         }
     }

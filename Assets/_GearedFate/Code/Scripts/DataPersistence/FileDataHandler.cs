@@ -23,7 +23,10 @@ namespace BTG
             var fullPath = Path.Combine(this._dataDirPath, this._dataFileName);
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
 
-            if (!File.Exists(fullPath)) return null;
+            if (!File.Exists(fullPath))
+            {
+                return null;
+            }
 
             string dataToLoad;
 

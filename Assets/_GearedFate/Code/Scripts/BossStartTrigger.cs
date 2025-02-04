@@ -10,12 +10,21 @@ namespace BTG
         private void Awake()
         {
             if (this.TryGetComponent(out SpriteRenderer sr))
+            {
                 sr.enabled = false;
+            }
+
             if (this.Boss == null)
+            {
                 this.Boss = (MonoBehaviour)FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include,
                     FindObjectsSortMode.None).OfType<IBoss>().FirstOrDefault();
+            }
+
             if (this.Boss == null)
+            {
                 Debug.LogError(nameof(BossStartTrigger) + " doesn't have a boss");
+            }
+
             this.Boss.gameObject.SetActive(false);
         }
 

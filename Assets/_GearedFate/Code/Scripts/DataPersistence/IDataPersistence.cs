@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace BTG
 {
     public interface IDataPersistence

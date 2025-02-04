@@ -2,7 +2,6 @@
 // Copyright (c) BTG. All rights reserved.
 //
 
-using System.Data;
 using UnityEngine;
 
 namespace BTG
@@ -37,7 +36,11 @@ namespace BTG
             pos.parent.rotation = Quaternion.Euler(0, 0, angle + 90);
 
             var collisions = Physics2D.OverlapCircleAll(pos.position, this.data.SlashRadius, this.data.EnemyLayerMask);
-            foreach (var collision in collisions) collision.GetComponent<IDamagable>()?.TakeDamage(this.data.SlashDamage);
+            foreach (var collision in collisions)
+            {
+                collision.GetComponent<IDamagable>()?.TakeDamage(this.data.SlashDamage);
+            }
+
             this.startTime = Time.time;
         }
 

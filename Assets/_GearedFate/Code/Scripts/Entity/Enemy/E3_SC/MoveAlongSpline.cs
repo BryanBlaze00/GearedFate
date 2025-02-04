@@ -128,7 +128,10 @@ namespace BTG
             this._totalSplineLength = this._splineContainer.CalculateLength();
 
             // Gotta recompute the correct spline position for each body parts since the spline length changed.
-            for (var i = 0; i < this._movingAlongSpline.Count; i++) this._currentPositionsOnSpline[i] *= lengthBeforeAddingNode / this._totalSplineLength;
+            for (var i = 0; i < this._movingAlongSpline.Count; i++)
+            {
+                this._currentPositionsOnSpline[i] *= lengthBeforeAddingNode / this._totalSplineLength;
+            }
         }
 
         private Vector3 NextPositionBehindPlayer(Vector3 playerPosition, Vector3 lastPosition)

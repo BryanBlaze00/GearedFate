@@ -2,7 +2,6 @@
 // Copyright (c) BTG. All rights reserved.
 //
 
-using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -58,7 +57,10 @@ namespace BTG
 
         private void OnValidate()
         {
-            if (this.StageTransitionHealthPercentage.Count > 3) this.StageTransitionHealthPercentage.RemoveRange(3, this.StageTransitionHealthPercentage.Count - 3);
+            if (this.StageTransitionHealthPercentage.Count > 3)
+            {
+                this.StageTransitionHealthPercentage.RemoveRange(3, this.StageTransitionHealthPercentage.Count - 3);
+            }
         }
     }
 }

@@ -41,9 +41,15 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            if (Time.time > this.startTime + this.data.KnockBackTime) this.player.RB.linearVelocity = Vector2.zero;
+            if (Time.time > this.startTime + this.data.KnockBackTime)
+            {
+                this.player.RB.linearVelocity = Vector2.zero;
+            }
 
-            if (Time.time < this.startTime + this.data.HitStunTime) return;
+            if (Time.time < this.startTime + this.data.HitStunTime)
+            {
+                return;
+            }
 
             this.fsm.SwitchState(
                 Input.MoveInput == Vector2.zero ? this.player.states[Player.State.Idle] : this.player.states[Player.State.Move]

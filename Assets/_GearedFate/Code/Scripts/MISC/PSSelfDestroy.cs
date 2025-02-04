@@ -20,7 +20,10 @@ namespace BTG
 
         private void Update()
         {
-            if (this.ps && !this.ps.IsAlive()) this.DestroySelfAnimEvent();
+            if (this.ps && !this.ps.IsAlive())
+            {
+                this.DestroySelfAnimEvent();
+            }
         }
 
         private void DestroySelfAnimEvent()

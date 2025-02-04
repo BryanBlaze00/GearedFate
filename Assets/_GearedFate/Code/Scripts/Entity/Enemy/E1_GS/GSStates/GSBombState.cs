@@ -4,7 +4,6 @@
 
 using DayenCreation;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace BTG
@@ -47,7 +46,10 @@ namespace BTG
             }
 
             if (!veryFast)
+            {
                 this.gearboundSentinel.Animator.speed = this.gearboundSentinel.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / timeBetweenBombs;
+            }
+
             for (var i = 0; i < 3 + this.gearboundSentinel.Phase; i++) // 3, 4, 5
             {
                 // pick a random direction's bomb position as the origin rather than having to do maths or consistently being off in the same direction.
@@ -66,25 +68,41 @@ namespace BTG
                 this.gearboundSentinel.Animator.Play("Bomb Throw Blend Tree", -1, veryFast ? time / animationLength : 0f);
                 yield return new WaitForSeconds(timeBetweenBombs);
                 if (this.gearboundSentinel.AudioBombThrow != null)
+                {
                     this.gearboundSentinel.AudioSource.PlayOneShot(
                         this.gearboundSentinel.AudioBombThrow,
                         this.gearboundSentinel.CalculateVolume(timeBetweenBombs));
+                }
+
                 var cardinal = vec.SnapToCardinal();
                 Transform spawnTransform = null;
                 if (cardinal.x > 0)
+                {
                     spawnTransform = this.gearboundSentinel.BombRightPos;
+                }
                 else if (cardinal.x < 0)
+                {
                     spawnTransform = this.gearboundSentinel.BombLeftPos;
+                }
+
                 if (cardinal.y > 0)
+                {
                     spawnTransform = this.gearboundSentinel.BombUpPos;
+                }
                 else if (cardinal.y < 0)
+                {
                     spawnTransform = this.gearboundSentinel.BombDownPos;
+                }
+
                 var bomb = Object.Instantiate(
                     this.gearboundSentinel.BombPrefab, spawnTransform.position,
                     Quaternion.identity);
                 const float bombSpeedMult = 1.5f; // arbitrary
                 if (vec.magnitude > 7f) // arbitrary target distance limit
+                {
                     vec = vec.normalized * 7f;
+                }
+
                 bomb.GetComponent<Rigidbody2D>().linearVelocity = vec * bombSpeedMult;
 
                 time += timeBetweenBombs;

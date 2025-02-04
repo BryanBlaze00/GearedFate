@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,10 +40,15 @@ namespace BTG
         private string FormatCooldown(float cooldown)
         {
             if (cooldown <= 0)
+            {
                 return "";
+            }
+
             if (cooldown < 0.9f)
                 // display one decimal after the zero
+            {
                 return "0." + Mathf.CeilToInt(cooldown * 10f);
+            }
 
             return Mathf.CeilToInt(cooldown).ToString();
         }

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace BTG
 {
@@ -30,7 +29,10 @@ namespace BTG
         public void SetSpawningState(bool isSpawning)
         {
             this._isSpawning = isSpawning;
-            if (isSpawning) this.StartCoroutine(this.SpawnRoutine());
+            if (isSpawning)
+            {
+                this.StartCoroutine(this.SpawnRoutine());
+            }
         }
 
         private IEnumerator SpawnRoutine()

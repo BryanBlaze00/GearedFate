@@ -1,13 +1,8 @@
-//
-// Copyright (c) BTG. All rights reserved.
-//
-
-using NaughtyAttributes;
-using UnityEngine;
-using UnityEngine.AI;
-
 namespace BTG
 {
+    using UnityEngine;
+    using UnityEngine.AI;
+
     /// <summary>
     /// BombMinion is a class that will control the behavior of the bomb minion enemy.
     /// </summary>
@@ -28,7 +23,11 @@ namespace BTG
         {
             if (other.TryGetComponent(out Player player))
             {
-                if (player.isInvulnerable) return;
+                if (player.isInvulnerable)
+                {
+                    return;
+                }
+
                 this.agent.enabled = false;
                 player.GetComponent<Knockback>().GetKnockedBack(this.transform, this.explodeKnockBackAmt);
                 player.TakeDamage(this.explosionDmgAmt);

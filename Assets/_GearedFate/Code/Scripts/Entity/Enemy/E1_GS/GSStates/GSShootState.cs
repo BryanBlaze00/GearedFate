@@ -4,7 +4,6 @@
 
 using DayenCreation;
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 
 namespace BTG
@@ -56,13 +55,22 @@ namespace BTG
             var cardinal = direction.SnapToCardinal();
             Transform spawnTransform = null;
             if (cardinal.x > 0)
+            {
                 spawnTransform = this.gearboundSentinel.EyeShootRightPos;
+            }
             else if (cardinal.x < 0)
+            {
                 spawnTransform = this.gearboundSentinel.EyeShootLeftPos;
+            }
+
             if (cardinal.y > 0)
+            {
                 spawnTransform = this.gearboundSentinel.EyeShootUpPos;
+            }
             else if (cardinal.y < 0)
+            {
                 spawnTransform = this.gearboundSentinel.EyeShootDownPos;
+            }
 
             var GO = ObjectPool.Instance.GetPooledObject(this.gearboundSentinel.ProjectileData.PooledObjectType);
             GO.transform.position = spawnTransform.position;
@@ -75,7 +83,10 @@ namespace BTG
             yield return null; // TODO: Can we remove this?
             var projAnim = projAnimator.GetCurrentAnimatorClipInfo(0);
             if (projAnim.Length > 0)
+            {
                 projAnimator.speed = projAnim[0].clip.length / windUp;
+            }
+
             yield return new WaitForSeconds(windUp);
             projAnimator.Play("DirectionalProj_Moving");
             GO.GetComponent<Rigidbody2D>().linearVelocity =
@@ -138,18 +149,25 @@ namespace BTG
 
                 yield return new WaitForSeconds(wait);
                 if (this.gearboundSentinel.AudioLaserShot)
+                {
                     this.gearboundSentinel.AudioSource.PlayOneShot(
                         this.gearboundSentinel.AudioLaserShot,
                         this.gearboundSentinel.CalculateVolume(delayBetweenShots));
+                }
+
                 yield return this.gearboundSentinel.StartCoroutine(this.ShootProjectile(vec, wait, angleQuat));
             }
 
             // wait a moment before going to the next state
             yield return new WaitForSeconds(0.5f);
             if (phasePattern >= 2) // go from 360 spray straight into burrow
+            {
                 this.fsm.SwitchState(this.gearboundSentinel.States[GearboundSentinel.State.Burrow]);
+            }
             else
+            {
                 this.fsm.SwitchState(this.gearboundSentinel.States[GearboundSentinel.State.Chase]);
+            }
         }
     }
 }

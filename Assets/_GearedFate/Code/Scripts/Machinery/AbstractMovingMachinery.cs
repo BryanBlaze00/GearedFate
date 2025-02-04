@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace BTG
 {
@@ -26,29 +24,44 @@ namespace BTG
             // For a transform to be moved, it needs to have a collider tagged Movable Collider, and it needs to provide a root transform.
             if (other.CompareTag("MovableCollider") &&
                 other.TryGetComponent(out RootTransformProvider rootTransformProvider))
+            {
                 if (rootTransformProvider.RootTransform)
+                {
                     this._entitiesToMove.Add(rootTransformProvider.RootTransform);
+                }
+            }
         }
 
         protected void OnTriggerExit2D(Collider2D other)
         {
             if (other.CompareTag("MovableCollider") &&
                 other.TryGetComponent(out RootTransformProvider rootTransformProvider))
+            {
                 if (rootTransformProvider.RootTransform)
+                {
                     this._entitiesToMove.Remove(rootTransformProvider.RootTransform);
+                }
+            }
         }
 
         protected void OnTriggerStay2D(Collider2D other)
         {
             if (other.CompareTag("MovableCollider") &&
                 other.TryGetComponent(out RootTransformProvider rootTransformProvider))
+            {
                 if (rootTransformProvider.RootTransform)
+                {
                     this._entitiesToMove.Add(rootTransformProvider.RootTransform);
+                }
+            }
         }
 
         protected void MoveEntities()
         {
-            foreach (var entity in this._entitiesToMove) this.MoveEntity(entity);
+            foreach (var entity in this._entitiesToMove)
+            {
+                this.MoveEntity(entity);
+            }
         }
     }
 }

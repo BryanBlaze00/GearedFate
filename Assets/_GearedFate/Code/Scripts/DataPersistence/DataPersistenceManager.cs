@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -45,18 +43,26 @@ namespace BTG
         public void LoadGame()
         {
             this._gameData = this._dataHandler.Load();
-            if (this._gameData == null) this.NewGame();
+            if (this._gameData == null)
+            {
+                this.NewGame();
+            }
 
             foreach (var pair in this._gameData.AssetToInstantiates)
+            {
                 for (var i = 0; i < pair.Value; i++)
                 {
                     var obj = ObjectPool.Instance.GetPooledObject(pair.Key);
                     obj.SetActive(true);
                 }
+            }
 
             this.FindAllDataPersistence();
 
-            foreach (var dataPersistenceObject in this._dataPersistencesObjects) dataPersistenceObject.LoadData(this._gameData);
+            foreach (var dataPersistenceObject in this._dataPersistencesObjects)
+            {
+                dataPersistenceObject.LoadData(this._gameData);
+            }
 
             this._gameData.CleanAfterLoad();
         }
@@ -68,7 +74,11 @@ namespace BTG
             foreach (var dataPersistenceObject in this._dataPersistencesObjects)
             {
                 // Instance that need to be saved register in the game data using their pooled object type.
-                if (dataPersistenceObject is ISaveableInstance saveableInstance) this._gameData.AddAssetIndexToInstantiate(saveableInstance.PooledObjectType);
+                if (dataPersistenceObject is ISaveableInstance saveableInstance)
+                {
+                    this._gameData.AddAssetIndexToInstantiate(saveableInstance.PooledObjectType);
+                }
+
                 dataPersistenceObject.SaveData(ref this._gameData);
             }
 

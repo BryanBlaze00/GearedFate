@@ -22,11 +22,13 @@ namespace BTG
             this.gameObject.SetInactive(this._destroyWaitTime);
             var results = Physics2D.CircleCastAll(this.transform.position, this._explosionRadius, Vector2.up, 0f);
             foreach (var result in results)
+            {
                 if (result.collider.TryGetComponent(out Player player))
                 {
                     player.GetComponent<Knockback>().GetKnockedBack(this.transform, this.explodeKnockBack);
                     player.TakeDamage(this.explosionDamage);
                 }
+            }
         }
     }
 }

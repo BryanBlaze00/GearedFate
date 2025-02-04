@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -36,15 +35,25 @@ namespace BTG
                     return;
                 }
 
-                if (this.GoingToCenter) return;
+                if (this.GoingToCenter)
+                {
+                    return;
+                }
 
                 var canMoveAway = this.CanMoveAwayFromPlayer(out var AwayPosition);
 
                 if (canMoveAway)
+                {
                     this.GreatCreator.Agent.SetDestination(AwayPosition);
+                }
                 else if (!canMoveAway && this.GreatCreator.Stage == 0)
+                {
                     this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.Dash]);
-                else if (!canMoveAway && this.GreatCreator.Stage > 0) this.GreatCreator.StartCoroutine(this.GoToCenter());
+                }
+                else if (!canMoveAway && this.GreatCreator.Stage > 0)
+                {
+                    this.GreatCreator.StartCoroutine(this.GoToCenter());
+                }
             }
         }
 
@@ -81,12 +90,18 @@ namespace BTG
             Vector3 targetPosition = (Vector2)this.GreatCreator.Target.position - this.GreatCreator.DirectionToTarget * this.GreatCreator.SafeDistance + side;
 
             // Find a valid NavMesh position close to the target
-            if (NavMesh.SamplePosition(targetPosition, out var hit, 3, NavMesh.AllAreas)) this.GreatCreator.Agent.SetDestination(hit.position);
+            if (NavMesh.SamplePosition(targetPosition, out var hit, 3, NavMesh.AllAreas))
+            {
+                this.GreatCreator.Agent.SetDestination(hit.position);
+            }
 
             targetPosition = (Vector2)this.GreatCreator.Target.position - this.GreatCreator.DirectionToTarget * this.GreatCreator.SafeDistance - side;
 
             // Find a valid NavMesh position close to the target
-            if (NavMesh.SamplePosition(targetPosition, out hit, 3, NavMesh.AllAreas)) this.GreatCreator.Agent.SetDestination(hit.position);
+            if (NavMesh.SamplePosition(targetPosition, out hit, 3, NavMesh.AllAreas))
+            {
+                this.GreatCreator.Agent.SetDestination(hit.position);
+            }
         }
     }
 }

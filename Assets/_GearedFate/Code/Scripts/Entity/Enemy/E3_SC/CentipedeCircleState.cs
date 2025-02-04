@@ -76,7 +76,10 @@ namespace BTG
             }
 
 
-            if (!this.Centipede.IsReachingTrajectoryEndNextStep()) return;
+            if (!this.Centipede.IsReachingTrajectoryEndNextStep())
+            {
+                return;
+            }
 
             if (this.Centipede.DistanceToTarget > this._chasingDistance)
             {
@@ -88,9 +91,13 @@ namespace BTG
                 {
                     // choose randomly between charging or death circle
                     if (Random.Range(0, 10) > 3f)
+                    {
                         this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Charge]);
+                    }
                     else
+                    {
                         this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.DeathCircle]);
+                    }
                 }
 
                 this.Centipede.ExpandTrajectory(this.ComputeCircleAimPosition());
@@ -114,9 +121,13 @@ namespace BTG
 
             // if not circling yet, choose as a node the closest cardinal point at the defined circling distance.
             if (this._firstCircling)
+            {
                 this._circleDirection = VectorHelper2D.ClosestCardinalOrDiagonal(directionFromPlayerToHead);
+            }
             else
+            {
                 this._circleDirection = VectorHelper2D.NextClockWiseDirection(this._circleDirection);
+            }
 
             var nodeDirection = VectorHelper2D.VectorFromDirection(this._circleDirection);
 

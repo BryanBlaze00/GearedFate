@@ -32,7 +32,10 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            if (Time.time > this._knockedTime + this._timeToGetBack) this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Chase]);
+            if (Time.time > this._knockedTime + this._timeToGetBack)
+            {
+                this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Chase]);
+            }
         }
 
         public override void OnPhysicsUpdate()

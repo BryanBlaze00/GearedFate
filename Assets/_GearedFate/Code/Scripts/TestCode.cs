@@ -31,7 +31,10 @@ namespace BTG
             var hit = Physics2D.Raycast(this.transform.position, Vector2.down, 2, LayerMask.GetMask("Ground"));
             Debug.DrawRay(this.transform.position, Vector2.down * 2);
             Debug.Log(hit.collider);
-            if (hit) Debug.Log(hit.collider.name);
+            if (hit)
+            {
+                Debug.Log(hit.collider.name);
+            }
         }
 
         private void OnDrawGizmos()

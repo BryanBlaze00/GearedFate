@@ -36,7 +36,10 @@ namespace BTG
             this._firstCircling = true;
             this._timer = 0;
 
-            if (this.Centipede.IsReachingTrajectoryEndNextStep()) this.Centipede.ExpandTrajectory(this.ComputeDeathCirclePosition());
+            if (this.Centipede.IsReachingTrajectoryEndNextStep())
+            {
+                this.Centipede.ExpandTrajectory(this.ComputeDeathCirclePosition());
+            }
         }
 
         public override void OnExit()
@@ -49,7 +52,10 @@ namespace BTG
             this.Centipede.MoveAlongTrajectory();
 
 
-            if (!this.Centipede.IsReachingTrajectoryEndNextStep()) return;
+            if (!this.Centipede.IsReachingTrajectoryEndNextStep())
+            {
+                return;
+            }
 
             if (Vector2.Distance(this.Centipede.Target.position, this._originalTargetPosition) > this._initialDistanceToTarget)
             {
@@ -57,7 +63,11 @@ namespace BTG
             }
             else
             {
-                if (this._timer > this._timeToReachMinimalDistance) this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Charge]);
+                if (this._timer > this._timeToReachMinimalDistance)
+                {
+                    this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Charge]);
+                }
+
                 this.Centipede.ExpandTrajectory(this.ComputeDeathCirclePosition());
             }
         }

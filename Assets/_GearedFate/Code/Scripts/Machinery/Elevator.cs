@@ -24,7 +24,10 @@ namespace BTG
             this._animator = this.GetComponent<Animator>();
             this._animator.SetBool("isFlying", false);
 
-            if (this._exitLevelTrigger != null && this._exitLevelTrigger.activeSelf) this._exitLevelTrigger.SetActive(false);
+            if (this._exitLevelTrigger != null && this._exitLevelTrigger.activeSelf)
+            {
+                this._exitLevelTrigger.SetActive(false);
+            }
         }
 
         private void Start()
@@ -59,7 +62,9 @@ namespace BTG
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent(out Player _) && this._animator.GetBool("isFlying"))
+            {
                 GameManager.Instance.LoadNextLevel();
+            }
         }
 
         private void CutSceneCheckActivate()
@@ -67,8 +72,12 @@ namespace BTG
             // Check if the current scene is a cutscene scene
             var cutsceneScenes = GameManager.Instance.GetCutsceneScenes();
             foreach (var scene in cutsceneScenes)
+            {
                 if (scene == GameManager.Instance.GetCurrentScene())
+                {
                     this.ActivateElevatorAnim();
+                }
+            }
         }
     }
 }

@@ -43,9 +43,15 @@ namespace UnityUtils
 
         protected virtual void InitializeSingleton()
         {
-            if (!Application.isPlaying) return;
+            if (!Application.isPlaying)
+            {
+                return;
+            }
 
-            if (this.AutoUnparentOnAwake) this.transform.SetParent(null);
+            if (this.AutoUnparentOnAwake)
+            {
+                this.transform.SetParent(null);
+            }
 
             if (instance == null)
             {
@@ -54,7 +60,10 @@ namespace UnityUtils
             }
             else
             {
-                if (instance != this) Destroy(this.gameObject);
+                if (instance != this)
+                {
+                    Destroy(this.gameObject);
+                }
             }
         }
     }

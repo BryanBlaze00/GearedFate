@@ -39,7 +39,10 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            if (Time.time >= this.startTime + this.data.DashTime) this.OnDashFinish(); //TODO: Replace with animation finish event
+            if (Time.time >= this.startTime + this.data.DashTime)
+            {
+                this.OnDashFinish(); //TODO: Replace with animation finish event
+            }
         }
 
         public override void OnPhysicsUpdate()

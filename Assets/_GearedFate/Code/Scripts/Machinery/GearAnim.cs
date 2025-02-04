@@ -3,9 +3,6 @@
 //
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 namespace BTG
@@ -54,7 +51,10 @@ namespace BTG
 
         protected void Update()
         {
-            if (this._previousUpdateTime + this._rotateSpeed > Time.time) return;
+            if (this._previousUpdateTime + this._rotateSpeed > Time.time)
+            {
+                return;
+            }
 
             this._previousUpdateTime = Time.time;
 

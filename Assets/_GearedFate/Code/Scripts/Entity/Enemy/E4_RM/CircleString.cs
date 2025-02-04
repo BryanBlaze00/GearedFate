@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Game.Core.Rendering;
 using UnityEngine;
 
@@ -27,7 +26,11 @@ namespace BTG
             this._multiLine.Points.Clear();
             this._angle = 2 * Mathf.PI / (this._pointsNumber - 1);
 
-            for (var i = 0; i < this._pointsNumber; i++) this._multiLine.Points.Add(new Vector2(Mathf.Sin(this._angle * i) * this._radius, Mathf.Cos(this._angle * i) * this._radius));
+            for (var i = 0; i < this._pointsNumber; i++)
+            {
+                this._multiLine.Points.Add(new Vector2(Mathf.Sin(this._angle * i) * this._radius, Mathf.Cos(this._angle * i) * this._radius));
+            }
+
             this._multiLine.SetMaxPoints(this._pointsNumber + 2);
             this._multiLine.ApplyPointPositionChanges();
             this._multiLine.RefreshMaterial();

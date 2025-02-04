@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace BTG
@@ -87,15 +86,20 @@ namespace BTG
         private void AngleFromHead()
         {
             for (var i = 0; i < this._bodyParts.Count; i++)
+            {
                 Debug.Log(
                     $"angle bodyPart {i} : {Vector2.SignedAngle(Vector2.down, this._head.position - this._bodyParts[i].position)}");
+            }
         }
 
         private void DifferenceWithInitial()
         {
             float sum = 0;
             for (var i = 0; i < this._bodyParts.Count; i++)
+            {
                 sum += Vector2.Distance(this._bodyParts[i].position, this._initialPositions[i]);
+            }
+
             Debug.Log($"difference initial bodyPart : {sum}");
         }
 
@@ -104,14 +108,19 @@ namespace BTG
         {
             this._angles.Clear();
             for (var i = 0; i < this._bodyParts.Count; i++)
+            {
                 this._angles.Add((this._range + i * this._rangeDelay) / 2 -
                                  Vector2.SignedAngle(Vector2.down, this._head.position - this._bodyParts[i].position));
+            }
         }
 
         private void RegisterInitialPosition()
         {
             this._initialPositions.Clear();
-            for (var i = 0; i < this._bodyParts.Count; i++) this._initialPositions.Add(this._bodyParts[i].position);
+            for (var i = 0; i < this._bodyParts.Count; i++)
+            {
+                this._initialPositions.Add(this._bodyParts[i].position);
+            }
         }
     }
 }

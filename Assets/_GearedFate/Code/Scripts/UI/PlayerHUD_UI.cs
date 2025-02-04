@@ -2,10 +2,8 @@
 // Copyright (c) BTG. All rights reserved.
 //
 
-using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Playables;
 using UnityEngine.UI;
 
 namespace BTG
@@ -100,28 +98,49 @@ namespace BTG
                 this._leftSelectedCD.fillAmount = 0;
                 this._botSelectedCD.fillAmount = 0;
                 this._topSelectedCD.fillAmount = 0;
-                if (this._fireBlazeCDText != null) this._fireBlazeCDText.text = string.Empty;
-                if (this._slashCDText != null) this._slashCDText.text = string.Empty;
-                if (this._heatWaveCDText != null) this._heatWaveCDText.text = string.Empty;
+                if (this._fireBlazeCDText != null)
+                {
+                    this._fireBlazeCDText.text = string.Empty;
+                }
+
+                if (this._slashCDText != null)
+                {
+                    this._slashCDText.text = string.Empty;
+                }
+
+                if (this._heatWaveCDText != null)
+                {
+                    this._heatWaveCDText.text = string.Empty;
+                }
             }
 
             if (animatingCooldown)
             {
                 if (cdImage.fillMethod == Image.FillMethod.Vertical ||
                     cdImage.fillMethod == Image.FillMethod.Horizontal)
+                {
                     cdImage.fillAmount = animFracRemaining;
+                }
                 else
+                {
                     cdImage.fillAmount =
                         animFracRemaining * 0.6f +
                         0.2f; // because of the shape of the images (at time of writing), the first and last 20% or so do nothing, so we scale it to be between 0.2 and 0.8
+                }
+
                 cdSelected.fillAmount = cdImage.fillAmount;
                 if (cdText != null)
+                {
                     cdText.text = this.FormatCooldown(animFracRemaining * currentAnim.length);
+                }
             }
 
             // Gear Toss
             if (currentAnimHash != Animator.StringToHash("GearToss"))
+            {
                 animFracRemaining = 0f;
+            }
+
             const float tossAnimLength = 0.75f;
             var gearTossState = this.player.states[Player.State.GearToss] as PlayerGearTossState;
             var totalCD = this.player.Data.GearShootCoolDown + tossAnimLength;
@@ -129,11 +148,19 @@ namespace BTG
                 ? gearTossState.LastUsedTime + this.player.Data.GearShootCoolDown - Time.time
                 : this.player.Data.GearShootCoolDown + animFracRemaining * tossAnimLength;
             if (this._rightCD.fillMethod == Image.FillMethod.Vertical || this._rightCD.fillMethod == Image.FillMethod.Horizontal)
+            {
                 this._rightCD.fillAmount = gearTossCDLeft / totalCD;
+            }
             else
+            {
                 this._rightCD.fillAmount = gearTossCDLeft / totalCD * 0.6f + 0.2f; // see above
+            }
+
             this._rightSelectedCD.fillAmount = this._rightCD.fillAmount;
-            if (this._gearTossCDText != null) this._gearTossCDText.text = this.FormatCooldown(gearTossCDLeft);
+            if (this._gearTossCDText != null)
+            {
+                this._gearTossCDText.text = this.FormatCooldown(gearTossCDLeft);
+            }
 
             // Switched Selected Images
             this.SelectAbility(this.player.CurrentAbility == Player.State.HeatWave, this._topSelected, this._topSelectedCD);
@@ -167,10 +194,15 @@ namespace BTG
         private string FormatCooldown(float cooldown)
         {
             if (cooldown <= 0)
+            {
                 return "";
+            }
+
             if (cooldown < 0.9f)
                 // display one decimal after the zero
+            {
                 return "0." + Mathf.CeilToInt(cooldown * 10f);
+            }
 
             return Mathf.CeilToInt(cooldown).ToString();
         }

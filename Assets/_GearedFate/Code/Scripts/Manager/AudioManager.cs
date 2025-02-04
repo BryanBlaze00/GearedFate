@@ -3,7 +3,6 @@
 //
 
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityUtils;
 
 namespace BTG

@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace BTG
 {
     public abstract class CentipedeBaseState : BaseState<SteamCentipede.CentipedeState>

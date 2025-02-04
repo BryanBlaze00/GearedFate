@@ -3,7 +3,6 @@
 //
 
 using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BTG
@@ -43,7 +42,10 @@ namespace BTG
                 return;
             }
 
-            if (this.GreatCreator.Stage >= 1 && this.fsm.CurrentState.GetType() != typeof(GCSpinState) && this.fsm.CurrentState.GetType() != typeof(GCTransformationState)) this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.Spin]);
+            if (this.GreatCreator.Stage >= 1 && this.fsm.CurrentState.GetType() != typeof(GCSpinState) && this.fsm.CurrentState.GetType() != typeof(GCTransformationState))
+            {
+                this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.Spin]);
+            }
         }
 
         protected IEnumerator GoToCenter()
@@ -52,7 +54,9 @@ namespace BTG
             var timer = Time.time;
             this.GreatCreator.Agent.SetDestination(Vector3.zero);
             while (timer + 3 > Time.time || Vector2.Distance(this.GreatCreator.transform.position, Vector2.zero) > 1)
+            {
                 yield return null;
+            }
 
             _goingToCenter = false;
         }

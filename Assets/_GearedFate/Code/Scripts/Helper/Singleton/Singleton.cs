@@ -41,7 +41,10 @@ namespace UnityUtils
 
         protected virtual void InitializeSingleton()
         {
-            if (!Application.isPlaying) return;
+            if (!Application.isPlaying)
+            {
+                return;
+            }
 
             if (instance == null)
             {
@@ -49,7 +52,10 @@ namespace UnityUtils
             }
             else
             {
-                if (instance != this) Destroy(this.gameObject);
+                if (instance != this)
+                {
+                    Destroy(this.gameObject);
+                }
             }
         }
     }

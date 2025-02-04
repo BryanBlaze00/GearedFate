@@ -32,7 +32,10 @@ namespace BTG
             this._sprites = new Sprite[this._animSpritesCount];
 
 
-            for (var i = 0; i < this._animSpritesCount; i++) this._sprites[i] = this._objBreakRenderer.sprite;
+            for (var i = 0; i < this._animSpritesCount; i++)
+            {
+                this._sprites[i] = this._objBreakRenderer.sprite;
+            }
 
             // Debug.Log("Sprites: " + _sprites.Length);
         }

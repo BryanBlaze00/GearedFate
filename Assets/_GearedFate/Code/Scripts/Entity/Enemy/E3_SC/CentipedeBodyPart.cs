@@ -74,7 +74,10 @@ namespace BTG
                 this.GetComponent<HitFlash>().HitFlashRoutine();
             }
 
-            if (this.CurrentHealth == 0) this.OnBodyPartDeath?.Invoke();
+            if (this.CurrentHealth == 0)
+            {
+                this.OnBodyPartDeath?.Invoke();
+            }
         }
 
         public void Heal(float addedHealth)

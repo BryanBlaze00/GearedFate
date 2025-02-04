@@ -2,8 +2,6 @@
 // Copyright (c) BTG. All rights reserved.
 //
 
-using System.Numerics;
-using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -110,10 +108,17 @@ namespace BTG
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (this._CurrentState != DrillMinionState.Charge) return;
+            if (this._CurrentState != DrillMinionState.Charge)
+            {
+                return;
+            }
+
             if (other.TryGetComponent(out Player player))
             {
-                if (player.isInvulnerable) return;
+                if (player.isInvulnerable)
+                {
+                    return;
+                }
 
                 this._animator.SetTrigger("Attack"); // Blaze added this line
                 this._CurrentState = DrillMinionState.Retreat;

@@ -35,7 +35,10 @@ namespace BTG
             this._settingScreen.SetActive(false);
             this._mainMenuScreen.SetActive(true);
 
-            if (this._title) this._title.SetActive(true);
+            if (this._title)
+            {
+                this._title.SetActive(true);
+            }
         }
     }
 }

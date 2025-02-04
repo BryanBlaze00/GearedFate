@@ -2,7 +2,6 @@
 // Copyright (c) BTG. All rights reserved.
 //
 
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -62,7 +61,11 @@ namespace BTG
 
         private void HandleVolume(string param, float value)
         {
-            if (value < 1) value = 0.001f;
+            if (value < 1)
+            {
+                value = 0.001f;
+            }
+
             this.musicMaster.SetFloat(param, this.SliderToDB(value));
             PlayerPrefs.SetFloat(param, value);
         }

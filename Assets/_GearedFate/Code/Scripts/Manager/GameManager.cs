@@ -137,7 +137,9 @@ namespace BTG
             {
                 SceneManager.LoadScene(++currentBuildScene);
                 if (currentBuildScene % 2 != 0)
+                {
                     AudioManager.instance.PlayCorrrectClip(currentBuildScene);
+                }
             }
         }
 

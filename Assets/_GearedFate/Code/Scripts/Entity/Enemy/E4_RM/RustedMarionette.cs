@@ -1,13 +1,9 @@
-//
-// Copyright (c) BTG. All rights reserved.
-//
-
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace BTG
 {
+    using System;
+    using System.Collections.Generic;
+    using UnityEngine;
+
     /// <summary>
     /// GearboundSentinel
     /// </summary>
@@ -38,11 +34,11 @@ namespace BTG
 
         public enum RustedMarionetteState
         {
-            Death,
-            CircleStorm,
-            Idle,
-            CirclingLines,
-            StringMaze
+            Death = 0,
+            CircleStorm = 1,
+            Idle = 2,
+            CirclingLines = 3,
+            StringMaze = 4,
         }
 
         private void Start()
@@ -84,7 +80,11 @@ namespace BTG
 
             this.CurrentHealth = Mathf.Max(0f, this.CurrentHealth - damage);
 
-            if (this.CurrentHealth == 0) Elevator.Instance.ActivateElevator();
+            if (this.CurrentHealth == 0)
+            {
+                Elevator.Instance.ActivateElevator();
+            }
+
             this.OnHitTaken?.Invoke();
         }
 

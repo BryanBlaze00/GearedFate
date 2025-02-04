@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using NUnit.Framework;
 using UnityEngine;
 
 namespace BTG
@@ -41,7 +40,11 @@ namespace BTG
             }
             else
             {
-                for (var i = this._instances.Count - 1; i >= 0; i--) Destroy(this._instances[i].gameObject);
+                for (var i = this._instances.Count - 1; i >= 0; i--)
+                {
+                    Destroy(this._instances[i].gameObject);
+                }
+
                 this._instances.Clear();
             }
         }

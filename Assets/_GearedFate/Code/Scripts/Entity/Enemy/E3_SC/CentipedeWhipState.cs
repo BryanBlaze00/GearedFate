@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,7 +53,10 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            if (this._whipFinished) this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Chase]);
+            if (this._whipFinished)
+            {
+                this.fsm.SwitchState(this.Centipede[SteamCentipede.CentipedeState.Chase]);
+            }
         }
 
         public override void OnPhysicsUpdate()
@@ -115,21 +117,29 @@ namespace BTG
         private void RegisterInitialPosition()
         {
             this._initialPositions.Clear();
-            for (var i = 0; i < this.Centipede.BodyPartsCount; i++) this._initialPositions.Add(this.Centipede[i].position);
+            for (var i = 0; i < this.Centipede.BodyPartsCount; i++)
+            {
+                this._initialPositions.Add(this.Centipede[i].position);
+            }
         }
 
         private void ComputeAngles()
         {
             this._angles.Clear();
             for (var i = 0; i < this.Centipede.BodyPartsCount; i++)
+            {
                 this._angles.Add((this._range + i * this._rangeDelay) / 2 - Vector2.SignedAngle(
                     this._angleVector,
                     this.Centipede.HeadPosition - (Vector2)this.Centipede[i].position));
+            }
         }
 
         private void ResetPosition()
         {
-            for (var i = 0; i < this.Centipede.BodyPartsCount; i++) this.Centipede[i].position = this._initialPositions[i];
+            for (var i = 0; i < this.Centipede.BodyPartsCount; i++)
+            {
+                this.Centipede[i].position = this._initialPositions[i];
+            }
         }
     }
 }

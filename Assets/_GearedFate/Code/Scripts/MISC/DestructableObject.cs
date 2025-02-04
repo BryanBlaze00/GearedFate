@@ -2,9 +2,7 @@
 // Copyright (c) BTG. All rights reserved.
 //
 
-using NavMeshPlus.Components;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace BTG
 {
@@ -39,10 +37,12 @@ namespace BTG
             if (this._currentHealth <= 0)
             {
                 if (this._destroyEffect != null)
+                {
                     Instantiate(
                         this._destroyEffect,
                         this.transform.position,
                         Quaternion.identity); // Instantiate the destroy effect
+                }
 
                 this.RandomizedItemDrop();
                 // doesn't work to update navmesh:

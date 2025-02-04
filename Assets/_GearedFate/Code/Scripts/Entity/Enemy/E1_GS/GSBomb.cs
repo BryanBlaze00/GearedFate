@@ -1,7 +1,5 @@
-using DayenCreation;
 using System.Collections;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace BTG
@@ -19,11 +17,27 @@ namespace BTG
 
         private void OnEnable()
         {
-            if (this.rb == null) this.rb = this.GetComponent<Rigidbody2D>();
-            if (this.col == null) this.col = this.GetComponents<Collider2D>().First(x => !x.isTrigger);
+            if (this.rb == null)
+            {
+                this.rb = this.GetComponent<Rigidbody2D>();
+            }
+
+            if (this.col == null)
+            {
+                this.col = this.GetComponents<Collider2D>().First(x => !x.isTrigger);
+            }
+
             this.col.enabled = false;
-            if (this.Animator == null) this.Animator = this.GetComponentInChildren<Animator>();
-            if (this.AudioSource == null) this.AudioSource = this.GetComponent<AudioSource>();
+            if (this.Animator == null)
+            {
+                this.Animator = this.GetComponentInChildren<Animator>();
+            }
+
+            if (this.AudioSource == null)
+            {
+                this.AudioSource = this.GetComponent<AudioSource>();
+            }
+
             this.StartCoroutine(this.Explode());
             this.StartCoroutine(this.PhysicsThrow());
         }
@@ -37,13 +51,19 @@ namespace BTG
                 .Where(x => !x.isTrigger); // the player's feet
             this.col.enabled = false;
             foreach (var hit in hits)
+            {
                 if (hit.TryGetComponent<Player>(out var player))
                 {
                     Debug.Log("Bomb hit player");
                     player.TakeDamage(this.Damage);
                 }
+            }
 
-            if (this.AudioSource != null) this.AudioSource.Play();
+            if (this.AudioSource != null)
+            {
+                this.AudioSource.Play();
+            }
+
             yield return new WaitForSeconds(1.5f); // make sure explosion finished
             this.gameObject.SetActive(false);
         }
@@ -76,7 +96,10 @@ namespace BTG
                     bouncesLeft--;
                 }
 
-                if (bouncesLeft == 0) this.rb.linearVelocity = Vector2.zero;
+                if (bouncesLeft == 0)
+                {
+                    this.rb.linearVelocity = Vector2.zero;
+                }
 
                 yield return new WaitForFixedUpdate();
                 time += Time.fixedDeltaTime;

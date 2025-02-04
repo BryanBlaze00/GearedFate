@@ -2,8 +2,6 @@
 // Copyright (c) BTG. All rights reserved.
 //
 
-using UnityEngine;
-
 namespace BTG
 {
     /// <summary>
@@ -27,9 +25,15 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            if (this.IsReadyToSpawn()) this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.Swarm]);
+            if (this.IsReadyToSpawn())
+            {
+                this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.Swarm]);
+            }
 
-            if (this.GreatCreator.DistanceToTarget < this.GreatCreator.SafeDistance) this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.RunAway]);
+            if (this.GreatCreator.DistanceToTarget < this.GreatCreator.SafeDistance)
+            {
+                this.fsm.SwitchState(this.GreatCreator.States[GreatCreator.GreatCreatorState.RunAway]);
+            }
         }
 
         public override void OnPhysicsUpdate()
