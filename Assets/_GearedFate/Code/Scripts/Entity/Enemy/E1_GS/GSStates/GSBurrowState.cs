@@ -5,8 +5,6 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.AI;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 namespace BTG
 {

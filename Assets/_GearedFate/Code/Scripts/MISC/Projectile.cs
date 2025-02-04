@@ -5,8 +5,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using MEC;
-using Unity.VisualScripting;
-using System.Collections;
 
 namespace BTG
 {
@@ -34,7 +32,7 @@ namespace BTG
 
 		private void OnEnable()
 		{
-			coroutineHandle = Timing.RunCoroutine(_Disable().CancelWith(gameObject)); 
+			coroutineHandle = Timing.RunCoroutine(_Disable().CancelWith(gameObject));
 			if(rb == null)
 				rb = GetComponent<Rigidbody2D>();
 		}

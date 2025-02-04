@@ -22,7 +22,7 @@ namespace BTG
         /// <summary>
         /// Use the key to know which asset to load, and the value to know how much.
         /// </summary>
-        public ICollection<KeyValuePair<PooledObjectType, int>> AssetToInstantiates => _assetsToInstantiateIds.AsReadOnlyCollection();
+        public ICollection<KeyValuePair<PooledObjectType, int>> AssetToInstantiates => _assetsToInstantiateIds;
 
         public GameData()
         {
