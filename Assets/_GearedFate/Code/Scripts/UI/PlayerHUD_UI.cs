@@ -217,7 +217,7 @@ namespace BTG
         {
             if (cooldown <= 0)
             {
-                return "";
+                return string.Empty;
             }
 
             if (cooldown < 0.9f)

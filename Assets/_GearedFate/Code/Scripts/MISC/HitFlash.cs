@@ -33,16 +33,16 @@ namespace BTG
 
         public void HitFlashRoutine()
         {
-            StartCoroutine(_ChainRoutine());
+            StartCoroutine(ChainRoutine());
         }
 
-        private IEnumerator _ChainRoutine()
+        private IEnumerator ChainRoutine()
         {
-            yield return StartCoroutine(_FlashRoutine(redFlashColor, redFlashDuration));
-            yield return StartCoroutine(_FlashRoutine(whiteFlashColor, whiteFlashDuration));
+            yield return StartCoroutine(FlashRoutine(redFlashColor, redFlashDuration));
+            yield return StartCoroutine(FlashRoutine(whiteFlashColor, whiteFlashDuration));
         }
 
-        private IEnumerator _FlashRoutine(Color color, float duration)
+        private IEnumerator FlashRoutine(Color color, float duration)
         {
             material.SetColor("_FlashColor", color);
 

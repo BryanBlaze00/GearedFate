@@ -10,12 +10,12 @@ namespace BTG
     public abstract class BaseState<State>
         where State : Enum
     {
-        protected readonly FiniteStateMachine<State> fsm;
-
         protected BaseState(FiniteStateMachine<State> fsm)
         {
-            this.fsm = fsm;
+            Fsm = fsm;
         }
+
+        protected FiniteStateMachine<State> Fsm { get; private set; }
 
         public abstract void OnEnter();
 

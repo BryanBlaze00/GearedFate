@@ -41,7 +41,7 @@
 
         private float _totalSplineLength;
 
-        private List<float> _currentPositionsOnSpline = new();
+        private List<float> _currentPositionsOnSpline = new ();
 
         [SerializeField]
         private float _circleDistance;

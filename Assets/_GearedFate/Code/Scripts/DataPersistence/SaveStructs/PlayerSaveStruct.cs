@@ -18,17 +18,17 @@
         [SerializeField]
         private float _health;
 
-        public Vector3 Position => _position;
-
-        public float Fuel => _fuel;
-
-        public float Health => _health;
-
         public PlayerSaveStruct(Vector3 position, float fuel, float health)
         {
             _position = position;
             _fuel = fuel;
             _health = health;
         }
+
+        public Vector3 Position => _position;
+
+        public float Fuel => _fuel;
+
+        public float Health => _health;
     }
 }

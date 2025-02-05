@@ -1,10 +1,10 @@
-﻿#if UNITY_EDITOR
-using UnityEditor;
-#endif
-using UnityEngine;
-
-namespace BTG
+﻿namespace BTG
 {
+#if UNITY_EDITOR
+    using UnityEditor;
+#endif
+    using UnityEngine;
+
     using System.Linq;
 
     /// <summary>

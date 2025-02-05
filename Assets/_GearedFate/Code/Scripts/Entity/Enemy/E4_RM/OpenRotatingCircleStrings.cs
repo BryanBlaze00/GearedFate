@@ -166,11 +166,15 @@
 
                 if (IsPointInArc(
                         transform.position,
-                        _radius, startFirstEmptyPoint, endFirstEmptyPoint,
+                        _radius,
+                        startFirstEmptyPoint,
+                        endFirstEmptyPoint,
                         closestPointOnCircle)
                     || IsPointInArc(
                         transform.position,
-                        _radius, startSecondEmptyPoint, endSecondEmptyPoint,
+                        _radius,
+                        startSecondEmptyPoint,
+                        endSecondEmptyPoint,
                         closestPointOnCircle))
                 {
                     return;
@@ -193,8 +197,7 @@
             return center + (direction * radius); // Scale and offset
         }
 
-        private static bool IsPointInArc(Vector2 center, float radius, Vector2 startPoint, Vector2 endPoint,
-            Vector2 point)
+        private static bool IsPointInArc(Vector2 center, float radius, Vector2 startPoint, Vector2 endPoint, Vector2 point)
         {
             // Check if the point is on the circle
             var distSq = (point - center).sqrMagnitude;

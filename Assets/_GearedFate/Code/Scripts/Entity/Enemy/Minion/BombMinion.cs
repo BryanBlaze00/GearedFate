@@ -30,11 +30,11 @@
                     return;
                 }
 
-                agent.enabled = false;
+                Agent.enabled = false;
                 player.GetComponent<Knockback>().GetKnockedBack(transform, explodeKnockBackAmt);
                 player.TakeDamage(explosionDmgAmt);
-                Instantiate(explosionEffect, transform.position, Quaternion.identity);
-                gameObject.SetInactive(destroyWaitTime);
+                Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
+                gameObject.SetInactive(DestroyWaitTime);
             }
         }
     }

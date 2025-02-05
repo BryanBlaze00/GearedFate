@@ -8,23 +8,23 @@
     {
         public event Action OnBodyPartDeath;
 
-        [field: SerializeField]
-        public Animator Animator { get; private set; }
-
         private int _animMoveX;
 
         private int _animMoveY;
 
         private SteamCentipede _steamCentipede;
 
-        [field: SerializeField]
-        public float MaxHealth { get; private set; }
-
         [SerializeField]
         private float _damageDealt = 10;
 
         [SerializeField]
         private float _knockBack = 10;
+
+        [field: SerializeField]
+        public Animator Animator { get; private set; }
+
+        [field: SerializeField]
+        public float MaxHealth { get; private set; }
 
         public float CurrentHealth { get; private set; }
 

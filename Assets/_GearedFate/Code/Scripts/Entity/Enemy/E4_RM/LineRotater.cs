@@ -6,30 +6,6 @@
     public class LineRotater : MonoBehaviour
     {
         [SerializeField]
-        private GameObject _linePrefab;
-
-        [SerializeField]
-        private GameObject _protectionPrefab;
-
-        [SerializeField]
-        private float _spawnRateProtection = 0.1f;
-
-        [SerializeField]
-        private float _protectionExpandSpeed = 1f;
-
-        [SerializeField]
-        private float _protectionPeriod = 2f; // Movement speed
-
-        [SerializeField]
-        private float _lifetimeProtection = 5f; // How long before despawning
-
-        [SerializeField]
-        private float _startingRadiusProtection = 0.5f;
-
-        [SerializeField]
-        private float _circleTolerance = 0.1f;
-
-        [SerializeField]
         private int _lineNumber = 1;
 
         [SerializeField]
@@ -40,7 +16,7 @@
         // private bool _rotateClockwise = true;
         private GameObject _protectionInstance;
 
-        private List<RotatingLine> _rotatingLines = new();
+        private List<RotatingLine> _rotatingLines = new ();
 
         private bool _isSpawning;
 

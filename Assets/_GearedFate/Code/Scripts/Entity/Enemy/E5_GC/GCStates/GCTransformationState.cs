@@ -15,7 +15,7 @@
         private void HandleEndTransformation(int obj)
         {
             GreatCreator.Agent.isStopped = false;
-            fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
+            Fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
         }
 
         public override void OnEnter()

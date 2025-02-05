@@ -17,9 +17,9 @@
         // how long it takes to whip from left to right
         private float _frequency = 0.5f;
 
-        private readonly List<float> _angles = new();
+        private readonly List<float> _angles = new ();
 
-        private readonly List<Vector2> _initialPositions = new();
+        private readonly List<Vector2> _initialPositions = new ();
 
         private Vector2 _angleVector;
 
@@ -55,7 +55,7 @@
         {
             if (_whipFinished)
             {
-                fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Chase]);
+                Fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Chase]);
             }
         }
 
@@ -72,7 +72,8 @@
                 for (var i = 0; i < Centipede.BodyPartsCount; i++)
                 {
                     Centipede[i].RotateAround(
-                        Centipede.HeadPosition, Vector3.forward,
+                        Centipede.HeadPosition,
+                        Vector3.forward,
                         -(_angles[i] / _frequency) * Time.deltaTime);
                     Centipede[i].rotation = Quaternion.identity;
                 }
@@ -87,8 +88,10 @@
                 for (var i = 0; i < Centipede.BodyPartsCount; i++)
                 {
                     Centipede[i].RotateAround(
-                        Centipede.HeadPosition, Vector3.forward,
+                        Centipede.HeadPosition,
+                        Vector3.forward,
                         (_range + (i * _rangeDelay)) / _frequency * Time.deltaTime);
+
                     Centipede[i].rotation = Quaternion.identity;
                 }
 
@@ -102,8 +105,10 @@
                 for (var i = 0; i < Centipede.BodyPartsCount; i++)
                 {
                     Centipede[i].RotateAround(
-                        Centipede.HeadPosition, Vector3.forward,
+                        Centipede.HeadPosition,
+                        Vector3.forward,
                         -((_range + (i * _rangeDelay) - _angles[i]) / _frequency) * Time.deltaTime);
+
                     Centipede[i].rotation = Quaternion.identity;
                 }
 

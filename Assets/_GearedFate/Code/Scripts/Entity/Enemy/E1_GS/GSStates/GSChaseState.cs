@@ -12,6 +12,7 @@ namespace BTG
     /// </summary>
     public class GSChaseState : GSBaseState
     {
+
         public Vector3 TargetPos;
         public float AttackCooldown = 99f; // only counts down from this state
         private int circlingDirection = -1;
@@ -19,8 +20,9 @@ namespace BTG
         private bool wasMoving;
         private Coroutine switchCirclingCoroutine;
 
-        public GSChaseState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state,
-            GearboundSentinel gs)
+        private const float RunAwayDistance = 3f;
+
+        public GSChaseState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state, GearboundSentinel gs)
             : base(fsm, state, gs)
         {
             switchCirclingCoroutine ??= gs.StartCoroutine(SwitchCirlingDir(0.5f, 3f));
@@ -52,11 +54,6 @@ namespace BTG
             base.OnExit();
         }
 
-        public override void OnFrameUpdate()
-        {
-            base.OnFrameUpdate();
-        }
-
         public override void OnPhysicsUpdate()
         {
             if (gearboundSentinel.TargetPlayer == null)
@@ -86,8 +83,6 @@ namespace BTG
             // TODO: Switch to attack/burrow states based on distance, timers, etc.
         }
 
-        private const float runAwayDistance = 3f;
-
         private void UpdateDestination(Vector3 diffToTarget, float distToTarget)
         {
             const float distanceMargin = 1f;
@@ -101,7 +96,7 @@ namespace BTG
             // else if too close to target, run away from them
             else if (distToTarget < gearboundSentinel.CurDistanceGoal - distanceMargin)
             {
-                var runAwayVec = -diffToTarget.normalized * runAwayDistance;
+                var runAwayVec = -diffToTarget.normalized * RunAwayDistance;
                 TargetPos = gearboundSentinel.transform.position + runAwayVec;
             }
 
@@ -120,9 +115,10 @@ namespace BTG
             while (isActive)
             {
                 Vector2 targetVector = Vector3.zero;
-                NavMeshPath navMeshPath = new();
+                NavMeshPath navMeshPath = new ();
+
                 // TODO: area mask
-                if (NavMesh.SamplePosition(TargetPos, out var hit, runAwayDistance, gearboundSentinel.NavMeshAgent.areaMask))
+                if (NavMesh.SamplePosition(TargetPos, out var hit, RunAwayDistance, gearboundSentinel.NavMeshAgent.areaMask))
                 {
                     TargetPos = hit.position;
                     if (gearboundSentinel.NavMeshAgent.CalculatePath(TargetPos, navMeshPath) &&
@@ -206,7 +202,7 @@ namespace BTG
                 case 0:
                     // fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Bomb]); break; // TODO: Comment out whole line. This is for testing.
                     // random between bombs and shoot (shotgun spray)
-                    fsm.SwitchState(
+                    Fsm.SwitchState(
                         gearboundSentinel.States[
                         CollectionExtensions.SelectRandom(
                             GearboundSentinel.State.Bomb,
@@ -216,7 +212,7 @@ namespace BTG
                     // choose randomly between burrow or attack (bomb or shoot)
                     if (Random.Range(0, 2) == 0)
                     {
-                        fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Burrow]);
+                        Fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Burrow]);
                     }
                     else
                     {
@@ -227,16 +223,16 @@ namespace BTG
                             // if far away, throw bombs; else, shoot
                             if (distToTarget > 4f)
                             {
-                                fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Bomb]);
+                                Fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Bomb]);
                             }
                             else
                             {
-                                fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Shoot]);
+                                Fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Shoot]);
                             }
                         }
                         else
                         {
-                            fsm.SwitchState(
+                            Fsm.SwitchState(
                                 gearboundSentinel.States[
                                 CollectionExtensions.SelectRandom(
                                     GearboundSentinel.State.Bomb,
@@ -247,7 +243,7 @@ namespace BTG
                     break;
                 default: // last phase
                     // Random between bombs or shoot, with shoot being twice as likely (360 spray transitions to burrow when done)
-                    fsm.SwitchState(
+                    Fsm.SwitchState(
                         gearboundSentinel.States[
                         CollectionExtensions.SelectRandom(
                             GearboundSentinel.State.Bomb,

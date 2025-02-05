@@ -11,8 +11,7 @@ namespace BTG
     /// </summary>
     public class GSBombState : GSBaseState
     {
-        public GSBombState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state,
-            GearboundSentinel gs)
+        public GSBombState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state, GearboundSentinel gs)
             : base(fsm, state, gs)
         {
         }
@@ -38,6 +37,7 @@ namespace BTG
             yield return null;
             var animationLength = gearboundSentinel.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
             var time = 0f;
+
             if (veryFast)
             {
                 yield return new WaitForSeconds(animationLength / 2f);
@@ -49,7 +49,7 @@ namespace BTG
                 gearboundSentinel.Animator.speed = gearboundSentinel.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / timeBetweenBombs;
             }
 
-            for (var i = 0; i < 3 + gearboundSentinel.Phase; i++) // 3, 4, 5
+            for (int i = 0; i < 3 + gearboundSentinel.Phase; i++)
             {
                 // pick a random direction's bomb position as the origin rather than having to do maths or consistently being off in the same direction.
                 var shotCalculationOrigin = CollectionExtensions.SelectRandom(
@@ -95,10 +95,14 @@ namespace BTG
                 }
 
                 var bomb = Object.Instantiate(
-                    gearboundSentinel.BombPrefab, spawnTransform.position,
+                    gearboundSentinel.BombPrefab,
+                    spawnTransform.position,
                     Quaternion.identity);
+
                 const float bombSpeedMult = 1.5f; // arbitrary
-                if (vec.magnitude > 7f) // arbitrary target distance limit
+
+                // arbitrary target distance limit
+                if (vec.magnitude > 7f)
                 {
                     vec = vec.normalized * 7f;
                 }
@@ -108,7 +112,7 @@ namespace BTG
                 time += timeBetweenBombs;
             }
 
-            fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Chase]);
+            Fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Chase]);
         }
 
         public override void OnExit()

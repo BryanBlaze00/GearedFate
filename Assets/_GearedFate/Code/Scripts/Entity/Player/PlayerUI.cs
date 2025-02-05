@@ -45,12 +45,11 @@
         {
             if (cooldown <= 0)
             {
-                return "";
+                return string.Empty;
             }
 
-            if (cooldown < 0.9f)
-
             // display one decimal after the zero
+            if (cooldown < 0.9f)
             {
                 return "0." + Mathf.CeilToInt(cooldown * 10f);
             }

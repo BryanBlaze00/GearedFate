@@ -11,12 +11,12 @@ namespace BTG
         /// <summary>
         /// Minimum value
         /// </summary>
-        public float Min;
+        public float Min { get; private set; }
 
         /// <summary>
         /// Maximum value
         /// </summary>
-        public float Max;
+        public float Max { get; private set; }
 
         public MinMaxFloat()
         {

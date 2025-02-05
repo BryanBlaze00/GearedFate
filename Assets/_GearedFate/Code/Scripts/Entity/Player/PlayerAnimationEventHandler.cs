@@ -12,15 +12,19 @@ namespace BTG
     {
         public event Action OnChargeUpFinishedEvent;
 
+        public event Action OnSpinChargeUpEvent;
+
+        public event Action OnSpinFinishedEvent;
+
+        public event Action OnGearTossEvent;
+
+        public event Action OnGearTossFinishedEvent;
+
         [SerializeField]
         private void OnChargeUpFinished()
         {
             OnChargeUpFinishedEvent.Invoke();
         }
-
-        public event Action OnSpinChargeUpEvent;
-
-        public event Action OnSpinFinishedEvent;
 
         [SerializeField]
         private void OnSpinChargeUp()
@@ -33,10 +37,6 @@ namespace BTG
         {
             OnSpinFinishedEvent.Invoke();
         }
-
-        public event Action OnGearTossEvent;
-
-        public event Action OnGearTossFinishedEvent;
 
         [SerializeField]
         private void OnGearToss()

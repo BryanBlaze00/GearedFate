@@ -33,7 +33,7 @@
         private void HandleAnimationEnd()
         {
             GreatCreator.Agent.isStopped = false;
-            fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
+            Fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
         }
 
         private void HandleEndDash()

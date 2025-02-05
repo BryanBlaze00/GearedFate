@@ -42,7 +42,7 @@ namespace BTG
             {
                 if (Input.AttackPressed)
                 {
-                    fsm.SwitchState(player.states[player.CurrentAbility]);
+                    Fsm.SwitchState(player.states[player.CurrentAbility]);
                     return true;
                 }
 
@@ -56,7 +56,7 @@ namespace BTG
             {
                 if (Input.DashPressed && ((PlayerDashState)player.states[Player.State.Dash]).CanDash)
                 {
-                    fsm.SwitchState(player.states[Player.State.Dash]);
+                    Fsm.SwitchState(player.states[Player.State.Dash]);
                     return true;
                 }
 

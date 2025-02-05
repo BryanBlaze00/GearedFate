@@ -27,13 +27,13 @@
             GreatCreator.SetAnimationMoveParameters(GreatCreator.Agent.velocity);
             if (GreatCreator.DistanceToTarget > GreatCreator.SafeDistance)
             {
-                fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
+                Fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
             }
             else
             {
                 if (IsReadyToSpawn() && GreatCreator.Stage == 0)
                 {
-                    fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Swarm]);
+                    Fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Swarm]);
                     return;
                 }
 
@@ -50,7 +50,7 @@
                 }
                 else if (!canMoveAway && GreatCreator.Stage == 0)
                 {
-                    fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Dash]);
+                    Fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Dash]);
                 }
                 else if (!canMoveAway && GreatCreator.Stage > 0)
                 {

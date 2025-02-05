@@ -6,14 +6,26 @@
 
     public class GSBomb : MonoBehaviour
     {
-        public float WindupTime;
-        public float BlastRadius;
-        public float Damage;
+        [SerializeField]
+        private float WindupTime;
 
-        public Animator Animator;
-        public Rigidbody2D rb;
-        public Collider2D col;
-        public AudioSource AudioSource;
+        [SerializeField]
+        private float BlastRadius;
+
+        [SerializeField]
+        private float Damage;
+
+        [SerializeField]
+        private Animator Animator;
+
+        [SerializeField]
+        private Rigidbody2D rb;
+
+        [SerializeField]
+        private Collider2D col;
+
+        [SerializeField]
+        private AudioSource AudioSource;
 
         private void OnEnable()
         {

@@ -10,8 +10,11 @@
 
         private bool _lastStateCircleStorm;
 
-        public RMIdleState(FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm, RustedMarionette marionette,
-            int highAnimId, int lowAnimId)
+        public RMIdleState(
+            FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm,
+            RustedMarionette marionette,
+            int highAnimId,
+            int lowAnimId)
             : base(fsm, marionette, highAnimId, lowAnimId)
         {
         }
@@ -38,12 +41,12 @@
             {
                 if (_lastStateCircleStorm)
                 {
-                    fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.CirclingLines]);
+                    Fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.CirclingLines]);
                     _lastStateCircleStorm = false;
                 }
                 else
                 {
-                    fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.CircleStorm]);
+                    Fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.CircleStorm]);
                     _lastStateCircleStorm = true;
                 }
             }

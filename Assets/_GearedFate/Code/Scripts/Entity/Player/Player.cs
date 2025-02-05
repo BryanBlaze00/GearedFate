@@ -27,18 +27,23 @@ namespace BTG
             Dead,
         }
 
-        // TODO: if hit, immobilize/ invulnerabity for a moment and continue flashing (done from main script)
+        public readonly Dictionary<State, PlayerBaseState> states = new ();
 
+        [HideInInspector]
+        public bool isInvulnerable;
+
+        public float OutOfBoundsTime = 0f;
+
+        private readonly List<State> abilities = new ();
+
+        private int currentAbilityIndex;
+
+        private readonly FiniteStateMachine<State> fsm = new ();
 
         [field: SerializeField]
         public PlayerData Data { get; private set; }
 
         public PlayerInputHandler Input { get; private set; }
-
-        private readonly FiniteStateMachine<State> fsm = new();
-        public readonly Dictionary<State, PlayerBaseState> states = new();
-        [HideInInspector]
-        public bool isInvulnerable;
 
         public float CurrentHealth { get; private set; }
 
@@ -46,14 +51,7 @@ namespace BTG
 
         public Vector2 CurrentDirection { get; private set; }
 
-        public float OutOfBoundsTime = 0f;
-
-        private readonly List<State> abilities = new();
-        private int currentAbilityIndex;
-
         public State CurrentAbility { get; private set; }
-
-
 
         [field: SerializeField]
         public PlayerInfoSO PlayerInfo { get; private set; }
@@ -91,19 +89,158 @@ namespace BTG
         private HitFlash hitFlash;
 
         private float _lastHit;
-        public AudioClip HurtAudio;
 
-        public AudioClip ShootGearAudio;
+        [field:SerializeField]
+        public AudioClip HurtAudio { get; private set; }
 
-        public AudioClip HealAudio;
+        [field:SerializeField]
+        public AudioClip ShootGearAudio { get; private set; }
 
-        public AudioClip DashAudio;
+        [field:SerializeField]
+        public AudioClip HealAudio { get; private set; }
 
-        public AudioClip SlashAudio;
+        [field:SerializeField]
+        public AudioClip DashAudio { get; private set; }
 
-        public AudioClip DeathAudio;
+        [field:SerializeField]
+        public AudioClip SlashAudio { get; private set; }
 
-        public AudioClip FlameBeam;
+        [field:SerializeField]
+        public AudioClip DeathAudio { get; private set; }
+
+        [field:SerializeField]
+        public AudioClip FlameBeam { get; private set; }
+
+        public void SetLookDir()
+        {
+            if (Input.MoveInput == Vector2.zero)
+            {
+                return;
+            }
+
+            CurrentDirection = Input.MoveInput;
+            Anim.SetFloat(AnimMoveX, Input.MoveInput.x);
+            Anim.SetFloat(AnimMoveY, Input.MoveInput.y);
+            CheckIfShouldFlip();
+        }
+
+        public void CheckIfShouldFlip()
+        {
+            renderer.flipX = Input.MoveInput.x == -1;
+        }
+
+        public void BurnAttackFuel(float fuel)
+        {
+            CurrentAttackFuelAmount -= fuel;
+            if (CurrentAttackFuelAmount < 0)
+            {
+                CurrentAttackFuelAmount = 0;
+            }
+        }
+
+        public void ShootGear()
+        {
+            var obj = ObjectPool.Instance.GetPooledObject(GearData.PooledObjectType);
+            obj.transform.position = ShootPos.position;
+
+            if (obj.TryGetComponent(out Projectile projectile))
+            {
+                projectile.SetUnaffectedLayer(gameObject.layer);
+            }
+
+            AudioManager.Instance.PlaySFX(ShootGearAudio);
+            obj.SetActive(true);
+            obj.GetComponent<Rigidbody2D>().linearVelocity = CurrentDirection * GearData.Speed;
+
+            BurnAttackFuel(Data.GearFuelBurnAmount);
+        }
+
+        public void BlastHeatWave()
+        {
+            Instantiate(HeatWave, ShootPos.position, Quaternion.identity);
+        }
+
+        public void TakeDamage(float damage)
+        {
+            if (isInvulnerable)
+            {
+                return;
+            }
+
+            if (CurrentHealth > 0)
+            {
+                CurrentHealth -= damage;
+                if (damage > 0)
+                {
+                    AudioManager.Instance.PlaySFX(HurtAudio);
+                    StartCoroutine(SetInvulnerable());
+                    hitFlash.HitFlashRoutine();
+                    _lastHit = Time.time;
+                    Debug.Log("Health: " + CurrentHealth);
+                }
+
+                fsm.SwitchState(
+                    CurrentHealth <= 0 ? states[State.Dead] : states[State.Hit]);
+            }
+        }
+
+        public void Heal(float heal)
+        {
+            AudioManager.Instance.PlaySFX(HealAudio);
+            CurrentHealth = Mathf.Min(CurrentHealth + heal, Data.Health);
+        }
+
+        public void Refuel(float fuel)
+        {
+            AudioManager.Instance.PlaySFX(HealAudio);
+            CurrentAttackFuelAmount = Mathf.Min(CurrentAttackFuelAmount + fuel, Data.MaxAttackFuelAmount);
+        }
+
+        public void ChangeCurrentAbility(int value)
+        {
+            currentAbilityIndex += value + 4; /// if cA = 0 & value = -1 then cA = 0 - 1 + 4 => cA = 3
+            currentAbilityIndex %= 4; /// if cA = 3 & value = 1 then cA = (3 + 1)%4 = 0
+            CurrentAbility = abilities[currentAbilityIndex];
+        }
+
+        public void LoadData(GameData data)
+        {
+            transform.position = data.PlayerData.Position;
+            CurrentHealth = data.PlayerData.Health;
+            CurrentAttackFuelAmount = data.PlayerData.Fuel;
+        }
+
+        public void SaveData(ref GameData data)
+        {
+            data.PlayerData = new PlayerSaveStruct(transform.position, CurrentAttackFuelAmount, CurrentHealth);
+        }
+
+        private void LateUpdate()
+        {
+            MyDebug();
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (isInvulnerable)
+            {
+                return;
+            }
+        }
+
+        private IEnumerator SetInvulnerable()
+        {
+            yield return null;
+            isInvulnerable = true;
+        }
+
+        private void MyDebug()
+        {
+        }
+
+        private void OnDrawGizmos()
+        {
+        }
 
         private void Awake()
         {
@@ -122,21 +259,27 @@ namespace BTG
             states.Add(
                 State.HeatWave,
                 new PlayerHeatWave(fsm, this, Data, Animator.StringToHash(nameof(State.HeatWave))));
+
             states.Add(
                 State.GearToss,
                 new PlayerGearTossState(fsm, this, Data, Animator.StringToHash(nameof(State.GearToss))));
+
             states.Add(
                 State.FireBlaze,
                 new PlayerFireBlazeState(
-                    fsm, this,
+                    fsm,
+                    this,
                     Data,
                     Animator.StringToHash("ChargeUp"))); ///Charges up before plays fireblaze Animation
+
             states.Add(
                 State.Hit,
                 new PlayerHitState(
-                    fsm, this,
+                    fsm,
+                    this,
                     Data,
                     Animator.StringToHash(nameof(State.Idle)))); // TODO: change to hit (No animation yet)
+
             states.Add(State.Dead, new PlayerDeadState(fsm, this, Data, Animator.StringToHash(nameof(State.Dead))));
 
             abilities.Add(State.Slash);
@@ -208,138 +351,6 @@ namespace BTG
                     }
                 }
             }
-        }
-
-        private void LateUpdate()
-        {
-            MyDebug();
-        }
-
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (isInvulnerable)
-            {
-                return;
-            }
-        }
-
-        public void SetLookDir()
-        {
-            if (Input.MoveInput == Vector2.zero)
-            {
-                return;
-            }
-
-            CurrentDirection = Input.MoveInput;
-            Anim.SetFloat(AnimMoveX, Input.MoveInput.x);
-            Anim.SetFloat(AnimMoveY, Input.MoveInput.y);
-            CheckIfShouldFlip();
-        }
-
-        public void CheckIfShouldFlip()
-        {
-            renderer.flipX = Input.MoveInput.x == -1;
-        }
-
-        public void BurnAttackFuel(float fuel)
-        {
-            CurrentAttackFuelAmount -= fuel;
-            if (CurrentAttackFuelAmount < 0)
-            {
-                CurrentAttackFuelAmount = 0;
-            }
-        }
-
-        public void ShootGear()
-        {
-            var obj = ObjectPool.Instance.GetPooledObject(GearData.PooledObjectType);
-            obj.transform.position = ShootPos.position;
-
-            if (obj.TryGetComponent(out Projectile projectile))
-            {
-                projectile.SetUnaffectedLayer(gameObject.layer);
-            }
-
-            AudioManager.Instance.PlaySFX(ShootGearAudio);
-            obj.SetActive(true);
-            obj.GetComponent<Rigidbody2D>().linearVelocity = CurrentDirection * GearData.Speed;
-
-            BurnAttackFuel(Data.GearFuelBurnAmount);
-        }
-
-        public void BlastHeatWave()
-        {
-            Instantiate(HeatWave, ShootPos.position, Quaternion.identity);
-        }
-
-        public void TakeDamage(float damage)
-        {
-            if (isInvulnerable)
-            {
-                return;
-            }
-
-            if (CurrentHealth > 0)
-            {
-                CurrentHealth -= damage;
-                if (damage > 0)
-                {
-                    AudioManager.Instance.PlaySFX(HurtAudio);
-                    StartCoroutine(SetInvulnerable());
-                    hitFlash.HitFlashRoutine();
-                    _lastHit = Time.time;
-                    Debug.Log("Health: " + CurrentHealth);
-                }
-
-                fsm.SwitchState(
-                    CurrentHealth <= 0 ? states[State.Dead] : states[State.Hit]
-                );
-            }
-        }
-
-        private IEnumerator SetInvulnerable()
-        {
-            yield return null;
-            isInvulnerable = true;
-        }
-
-        public void Heal(float heal)
-        {
-            AudioManager.Instance.PlaySFX(HealAudio);
-            CurrentHealth = Mathf.Min(CurrentHealth + heal, Data.Health);
-        }
-
-        public void Refuel(float fuel)
-        {
-            AudioManager.Instance.PlaySFX(HealAudio);
-            CurrentAttackFuelAmount = Mathf.Min(CurrentAttackFuelAmount + fuel, Data.MaxAttackFuelAmount);
-        }
-
-        public void ChangeCurrentAbility(int value)
-        {
-            currentAbilityIndex += value + 4; /// if cA = 0 & value = -1 then cA = 0 - 1 + 4 => cA = 3
-            currentAbilityIndex %= 4; /// if cA = 3 & value = 1 then cA = (3 + 1)%4 = 0
-            CurrentAbility = abilities[currentAbilityIndex];
-        }
-
-        private void MyDebug()
-        {
-        }
-
-        private void OnDrawGizmos()
-        {
-        }
-
-        public void LoadData(GameData data)
-        {
-            transform.position = data.PlayerData.Position;
-            CurrentHealth = data.PlayerData.Health;
-            CurrentAttackFuelAmount = data.PlayerData.Fuel;
-        }
-
-        public void SaveData(ref GameData data)
-        {
-            data.PlayerData = new PlayerSaveStruct(transform.position, CurrentAttackFuelAmount, CurrentHealth);
         }
     }
 }

@@ -11,8 +11,7 @@ namespace BTG
     /// </summary>
     public class GSShootState : GSBaseState
     {
-        public GSShootState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state,
-            GearboundSentinel gs)
+        public GSShootState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state, GearboundSentinel gs)
             : base(fsm, state, gs)
         {
         }
@@ -163,13 +162,15 @@ namespace BTG
 
             // wait a moment before going to the next state
             yield return new WaitForSeconds(0.5f);
-            if (phasePattern >= 2) // go from 360 spray straight into burrow
+
+            // go from 360 spray straight into burrow
+            if (phasePattern >= 2)
             {
-                fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Burrow]);
+                Fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Burrow]);
             }
             else
             {
-                fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Chase]);
+                Fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Chase]);
             }
         }
     }

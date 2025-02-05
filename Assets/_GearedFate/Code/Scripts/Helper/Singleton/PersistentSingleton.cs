@@ -11,11 +11,6 @@
 
         public static bool HasInstance => instance != null;
 
-        public static T TryGetInstance()
-        {
-            return HasInstance ? instance : null;
-        }
-
         public static T Instance
         {
             get
@@ -32,6 +27,11 @@
 
                 return instance;
             }
+        }
+
+        public static T TryGetInstance()
+        {
+            return HasInstance ? instance : null;
         }
 
         /// <summary>

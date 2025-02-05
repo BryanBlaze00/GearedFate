@@ -10,8 +10,7 @@ namespace BTG
     /// </summary>
     public class GSIntroState : GSBaseState
     {
-        public GSIntroState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state,
-            GearboundSentinel gs)
+        public GSIntroState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state, GearboundSentinel gs)
             : base(fsm, state, gs)
         {
         }
@@ -29,7 +28,7 @@ namespace BTG
         {
             // TODO: Some kind of intro animation?
             yield return new WaitForSeconds(1f);
-            fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Chase]);
+            Fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Chase]);
         }
 
         public override void OnExit()

@@ -18,10 +18,6 @@ namespace BTG
 
         private static bool _goingToCenter = false;
 
-        public GreatCreator GreatCreator { get; }
-
-        public bool GoingToCenter => _goingToCenter;
-
         public GCBaseState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy,
             int animId)
             : base(fsm)
@@ -32,19 +28,17 @@ namespace BTG
             enemy.OnHitTaken += HandleHitTaken;
         }
 
-        private void HandleHitTaken()
-        {
-            if (GreatCreator.CurrentHealth == 0)
-            {
-                fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Death]);
-                return;
-            }
+        public GreatCreator GreatCreator { get; }
 
-            if (GreatCreator.Stage >= 1 && fsm.CurrentState.GetType() != typeof(GCSpinState) && fsm.CurrentState.GetType() != typeof(GCTransformationState))
-            {
-                fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Spin]);
-            }
-        }
+        public bool GoingToCenter => _goingToCenter;
+
+        public abstract override void OnEnter();
+
+        public abstract override void OnExit();
+
+        public abstract override void OnFrameUpdate();
+
+        public abstract override void OnPhysicsUpdate();
 
         protected IEnumerator GoToCenter()
         {
@@ -81,12 +75,18 @@ namespace BTG
             GreatCreator.Animator.Play(_animId);
         }
 
-        public abstract override void OnEnter();
+        private void HandleHitTaken()
+        {
+            if (GreatCreator.CurrentHealth == 0)
+            {
+                Fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Death]);
+                return;
+            }
 
-        public abstract override void OnExit();
-
-        public abstract override void OnFrameUpdate();
-
-        public abstract override void OnPhysicsUpdate();
+            if (GreatCreator.Stage >= 1 && Fsm.CurrentState.GetType() != typeof(GCSpinState) && Fsm.CurrentState.GetType() != typeof(GCTransformationState))
+            {
+                Fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Spin]);
+            }
+        }
     }
 }

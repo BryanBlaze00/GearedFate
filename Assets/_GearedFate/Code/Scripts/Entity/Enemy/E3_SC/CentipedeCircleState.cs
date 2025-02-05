@@ -83,7 +83,7 @@
 
             if (Centipede.DistanceToTarget > _chasingDistance)
             {
-                fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Chase]);
+                Fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Chase]);
             }
             else
             {
@@ -92,11 +92,11 @@
                     // choose randomly between charging or death circle
                     if (Random.Range(0, 10) > 3f)
                     {
-                        fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Charge]);
+                        Fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Charge]);
                     }
                     else
                     {
-                        fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.DeathCircle]);
+                        Fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.DeathCircle]);
                     }
                 }
 

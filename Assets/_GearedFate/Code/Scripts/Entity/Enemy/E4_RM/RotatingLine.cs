@@ -82,15 +82,15 @@
             }
         }
 
-        private static Vector2 GetClosestPointOnLine(Vector2 A, Vector2 B, Vector2 P)
+        private static Vector2 GetClosestPointOnLine(Vector2 a, Vector2 b, Vector2 p)
         {
-            var AB = B - A; // Line direction
-            var AP = P - A; // Vector from A to P
+            var ab = b - a; // Line direction
+            var ap = p - a; // Vector from A to P
 
-            var t = Vector2.Dot(AP, AB) / Vector2.Dot(AB, AB); // Projection factor
+            var t = Vector2.Dot(ap, ab) / Vector2.Dot(ab, ab); // Projection factor
             t = Mathf.Clamp01(t); // Clamp to segment
 
-            return A + (t * AB); // Closest point on the segment
+            return a + (t * ab); // Closest point on the segment
         }
     }
 }

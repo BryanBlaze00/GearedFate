@@ -140,7 +140,7 @@ namespace DayenCreation
         public static Vector2 RandomPointInAnnulus(this Vector2 origin, float minRadius, float maxRadius)
         {
             var angle = Random.value * Mathf.PI * 2f;
-            Vector2 direction = new(Mathf.Cos(angle), Mathf.Sin(angle));
+            Vector2 direction = new (Mathf.Cos(angle), Mathf.Sin(angle));
 
             // Squaring and then square-rooting radii to ensure uniform distribution within the annulus
             var minRadiusSquared = minRadius * minRadius;

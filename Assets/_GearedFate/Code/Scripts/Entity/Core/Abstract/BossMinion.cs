@@ -1,5 +1,4 @@
 ﻿// Copyright (c) BTG. All rights reserved.
-
 namespace BTG
 {
     using UnityEngine;
@@ -17,46 +16,56 @@ namespace BTG
     public abstract class BossMinion : MonoBehaviour, IDamagable
     {
         [Header("Boss Minion Stats")]
-        [SerializeField]
-        protected float health = 100f;
+        [field:SerializeField]
+        protected float Health { get; private set; }
 
-        [SerializeField]
-        protected float speed = 3.5f;
-        [SerializeField]
-        protected float attackCooldown = 2f;
-        [SerializeField]
-        protected float attackRange = 2f;
-        [SerializeField]
-        protected float knockBackAmt = 3f;
-        [SerializeField]
-        protected float destroyWaitTime = 2f;
-        [SerializeField]
-        protected GameObject explosionEffect;
-        [SerializeField]
-        protected Transform target;
+        [field:SerializeField]
+        protected float Speed { get; private set; }
 
-        protected Rigidbody2D rb;
-        protected NavMeshAgent agent;
+        [field:SerializeField]
+        protected float AttackCooldown { get; private set; }
+
+        [field:SerializeField]
+        protected float AttackRange { get; private set; }
+
+        [field:SerializeField]
+        protected float KnockBackAmt { get; private set; }
+
+        [field:SerializeField]
+        protected float DestroyWaitTime { get; private set; }
+
+        [field:SerializeField]
+        protected GameObject ExplosionEffect { get; private set; }
+
+        [field:SerializeField]
+        protected Transform Target { get; private set; }
+
+        [field:SerializeField]
+        protected Rigidbody2D Rb { get; private set; }
+
+        [field:SerializeField]
+        protected NavMeshAgent Agent { get; private set; }
+
         private float attackTimer;
 
         protected virtual void Awake()
         {
-            rb = GetComponent<Rigidbody2D>();
-            agent = GetComponent<NavMeshAgent>();
+            Rb = GetComponent<Rigidbody2D>();
+            Agent = GetComponent<NavMeshAgent>();
             NMAgentSetup();
-            target = FindAnyObjectByType<Player>().transform;
+            Target = FindAnyObjectByType<Player>().transform;
         }
 
         protected virtual void Start()
         {
-            attackTimer = attackCooldown;
+            attackTimer = AttackCooldown;
         }
 
         protected virtual void Update()
         {
-            if (target != null)
+            if (Target != null)
             {
-                MoveToTarget(target);
+                MoveToTarget(Target);
                 HandleAttack();
             }
         }
@@ -66,18 +75,18 @@ namespace BTG
         protected virtual void HandleAttack()
         {
             attackTimer -= Time.deltaTime;
-            if (attackTimer <= 0 && Vector3.Distance(transform.position, target.position) <= attackRange)
+            if (attackTimer <= 0 && Vector3.Distance(transform.position, Target.position) <= AttackRange)
             {
                 Attack();
-                attackTimer = attackCooldown;
+                attackTimer = AttackCooldown;
             }
         }
 
         protected virtual void MoveToTarget(Transform target)
         {
-            if (target != null && agent.enabled)
+            if (target != null && Agent.enabled)
             {
-                agent.SetDestination(target.position);
+                Agent.SetDestination(target.position);
             }
         }
 
@@ -85,8 +94,8 @@ namespace BTG
         public void TakeDamage(float amount)
         {
             Debug.Log("Ouch! from " + name + " for " + amount + " damage.");
-            health -= amount;
-            if (health <= 0)
+            Health -= amount;
+            if (Health <= 0)
             {
                 Die();
             }
@@ -94,21 +103,21 @@ namespace BTG
 
         protected void OnEnable()
         {
-            agent.enabled = true;
+            Agent.enabled = true;
         }
 
         protected virtual void Die()
         {
-            agent.enabled = false;
-            Instantiate(explosionEffect, transform.position, Quaternion.identity);
-            gameObject.SetInactive(destroyWaitTime);
+            Agent.enabled = false;
+            Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
+            gameObject.SetInactive(DestroyWaitTime);
         }
 
         protected virtual void NMAgentSetup()
         {
-            agent.speed = speed;
-            agent.updateRotation = false;
-            agent.updateUpAxis = false;
+            Agent.speed = Speed;
+            Agent.updateRotation = false;
+            Agent.updateUpAxis = false;
         }
     }
 }

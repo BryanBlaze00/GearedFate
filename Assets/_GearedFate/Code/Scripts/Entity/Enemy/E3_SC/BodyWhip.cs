@@ -25,9 +25,9 @@
 
         private float _timer = 0;
 
-        private List<Vector2> _initialPositions = new();
+        private List<Vector2> _initialPositions = new ();
 
-        private List<float> _angles = new();
+        private List<float> _angles = new ();
 
         private void Start()
         {
@@ -47,8 +47,10 @@
                 for (var i = 0; i < _bodyParts.Count; i++)
                 {
                     _bodyParts[i].RotateAround(
-                        _head.transform.position, Vector3.forward,
+                        _head.transform.position,
+                        Vector3.forward,
                         _angles[i] / _frequency * Time.deltaTime);
+
                     _bodyParts[i].rotation = Quaternion.identity;
                 }
 

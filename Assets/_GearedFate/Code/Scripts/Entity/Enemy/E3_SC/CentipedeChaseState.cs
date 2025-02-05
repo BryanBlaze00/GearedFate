@@ -8,8 +8,11 @@
 
         private readonly float _chasingDistance;
 
-        public CentipedeChaseState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId,
-            SteamCentipede steamCentipede, float chasingDistance)
+        public CentipedeChaseState(
+            FiniteStateMachine<SteamCentipede.CentipedeState> fsm,
+            int animationId,
+            SteamCentipede steamCentipede,
+            float chasingDistance)
             : base(fsm, steamCentipede)
         {
             _animId = animationId;
@@ -42,7 +45,7 @@
 
             if (Centipede.DistanceToTarget < _chasingDistance)
             {
-                fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Circle]);
+                Fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Circle]);
             }
             else
             {

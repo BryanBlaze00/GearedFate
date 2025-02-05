@@ -37,7 +37,7 @@
 
         private bool _state;
 
-        private List<GameObject> _instances = new();
+        private List<GameObject> _instances = new ();
 
         public void SetCircleExpand(bool state)
         {
@@ -71,9 +71,12 @@
         {
             while (_state)
             {
-                SpawnPrefab(Random.Range(_rotationUpdate.Min, _rotationUpdate.Max), Random.Range(0, 2 * Mathf.PI),
+                SpawnPrefab(
+                    Random.Range(_rotationUpdate.Min, _rotationUpdate.Max),
+                    Random.Range(0, 2 * Mathf.PI),
                     _expandSpeed,
                     _lifetime);
+
                 yield return new WaitForSeconds(_spawnRate);
             }
         }

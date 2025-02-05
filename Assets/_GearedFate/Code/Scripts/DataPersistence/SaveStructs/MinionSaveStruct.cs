@@ -15,14 +15,14 @@
         [SerializeField]
         private float _health;
 
-        public Vector3 Position => _position;
-
-        public float Health => _health;
-
         public MinionSaveStruct(Vector3 position, float health)
         {
             _position = position;
             _health = health;
         }
+
+        public Vector3 Position => _position;
+
+        public float Health => _health;
     }
 }

@@ -42,7 +42,7 @@ namespace BTG
 
             if (Input.MoveInput == Vector2.zero)
             {
-                fsm.SwitchState(player.states[Player.State.Idle]);
+                Fsm.SwitchState(player.states[Player.State.Idle]);
             }
         }
 

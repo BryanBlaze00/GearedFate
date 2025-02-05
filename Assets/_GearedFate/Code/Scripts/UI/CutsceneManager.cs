@@ -3,13 +3,13 @@
 namespace BTG
 {
     using System.Collections;
-    /// <summary>
-    /// Cutscene Manager class to manage cutscene dialogues and transitions.
-    /// </summary>
     using TMPro;
     using UnityEngine;
     using UnityEngine.UI;
 
+    /// <summary>
+    /// Cutscene Manager class to manage cutscene dialogues and transitions.
+    /// </summary>
     public class CutsceneManager : MonoBehaviour
     {
         [Header("Cutscene Settings")]

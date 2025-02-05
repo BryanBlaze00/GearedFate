@@ -13,7 +13,7 @@
 
         private void HandleEndSpin(int obj)
         {
-            fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.RunAway]);
+            Fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.RunAway]);
         }
 
         public override void OnEnter()

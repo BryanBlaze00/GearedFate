@@ -162,10 +162,10 @@ namespace BTG
             // in the last phase, GS throws bombs when he pops up
             if (gearboundSentinel.Phase == 2)
             {
-                fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Bomb]);
+                Fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Bomb]);
             }
 
-            fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Chase]);
+            Fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Chase]);
         }
     }
 }

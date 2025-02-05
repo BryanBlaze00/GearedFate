@@ -9,6 +9,15 @@
     /// </summary>
     public class RustedMarionette : MonoBehaviour, IDamagable, IBoss
     {
+        public enum RustedMarionetteState
+        {
+            Death = 0,
+            CircleStorm = 1,
+            Idle = 2,
+            CirclingLines = 3,
+            StringMaze = 4,
+        }
+
         public event Action OnHitTaken;
 
         [field: SerializeField]
@@ -31,36 +40,11 @@
 
         private Player _player;
 
-        private readonly FiniteStateMachine<RustedMarionetteState> _fsm = new();
+        private readonly FiniteStateMachine<RustedMarionetteState> _fsm = new ();
 
-        public readonly Dictionary<RustedMarionetteState, RMBaseState> _states = new();
+        public readonly Dictionary<RustedMarionetteState, RMBaseState> _states = new ();
 
         public float CurrentHealth { get; private set; }
-
-        public enum RustedMarionetteState
-        {
-            Death = 0,
-            CircleStorm = 1,
-            Idle = 2,
-            CirclingLines = 3,
-            StringMaze = 4,
-        }
-
-        private void Start()
-        {
-            _player = FindFirstObjectByType<Player>();
-            var death = Animator.StringToHash(nameof(RustedMarionetteState.Death));
-            var spin = Animator.StringToHash("Spin");
-            CurrentHealth = MaxHealth;
-
-            _states.Add(RustedMarionetteState.Idle, new RMIdleState(_fsm, this, spin, spin));
-            _states.Add(RustedMarionetteState.Death, new RMDeathState(_fsm, this, death, death));
-            _states.Add(RustedMarionetteState.CircleStorm, new RMCircleStormState(_fsm, this, spin, spin));
-            _states.Add(RustedMarionetteState.CirclingLines, new RMSpinningLinesState(_fsm, this, spin, spin));
-            _states.Add(RustedMarionetteState.StringMaze, new RMStringMazeState(_fsm, this, spin, spin));
-
-            _fsm.Initialize(_states[RustedMarionetteState.CirclingLines]);
-        }
 
         public void TakeDamage(float damage)
         {
@@ -96,6 +80,22 @@
         protected void Update()
         {
             _fsm.CurrentState.OnFrameUpdate();
+        }
+
+        protected void Start()
+        {
+            _player = FindFirstObjectByType<Player>();
+            var death = Animator.StringToHash(nameof(RustedMarionetteState.Death));
+            var spin = Animator.StringToHash("Spin");
+            CurrentHealth = MaxHealth;
+
+            _states.Add(RustedMarionetteState.Idle, new RMIdleState(_fsm, this, spin, spin));
+            _states.Add(RustedMarionetteState.Death, new RMDeathState(_fsm, this, death, death));
+            _states.Add(RustedMarionetteState.CircleStorm, new RMCircleStormState(_fsm, this, spin, spin));
+            _states.Add(RustedMarionetteState.CirclingLines, new RMSpinningLinesState(_fsm, this, spin, spin));
+            _states.Add(RustedMarionetteState.StringMaze, new RMStringMazeState(_fsm, this, spin, spin));
+
+            _fsm.Initialize(_states[RustedMarionetteState.CirclingLines]);
         }
     }
 }

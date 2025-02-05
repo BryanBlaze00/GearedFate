@@ -33,7 +33,7 @@ namespace BTG
         {
             base.Awake();
             _animator = GetComponent<Animator>(); // Blaze added this line
-            _startingSpeed = agent.speed; // Blaze added this line
+            _startingSpeed = Agent.speed; // Blaze added this line
         }
 
         protected override void Update()
@@ -60,7 +60,7 @@ namespace BTG
         protected void Idle()
         {
             _stateTimer += Time.deltaTime;
-            if (_stateTimer >= attackCooldown)
+            if (_stateTimer >= AttackCooldown)
             {
                 _CurrentState = DrillMinionState.Charge;
                 _stateTimer = 0.0f;
@@ -69,28 +69,28 @@ namespace BTG
 
         protected void MoveIntoPosition()
         {
-            MoveToTarget(target);
-            if (agent.remainingDistance <= 10)
+            MoveToTarget(Target);
+            if (Agent.remainingDistance <= 10)
             {
                 _CurrentState = DrillMinionState.Charge;
-                agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+                Agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
 
-                agent.speed *= 2;
+                Agent.speed *= 2;
             }
         }
 
         protected override void Attack()
         {
-            MoveToTarget(target);
+            MoveToTarget(Target);
             _stateTimer += Time.deltaTime;
             if (_stateTimer >= 2)
             {
                 _CurrentState = DrillMinionState.Idle;
                 _stateTimer = 0.0f;
-                agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
+                Agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
 
                 // agent.speed /= 2; // Blaze commented this line
-                agent.speed = _startingSpeed; // Blaze adden this line
+                Agent.speed = _startingSpeed; // Blaze adden this line
             }
         }
 
@@ -121,10 +121,10 @@ namespace BTG
 
                 _animator.SetTrigger("Attack"); // Blaze added this line
                 _CurrentState = DrillMinionState.Retreat;
-                agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
-                agent.speed *= 2;
+                Agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
+                Agent.speed *= 2;
                 player.TakeDamage(touchDmgAmt);
-                player.GetComponent<Knockback>().GetKnockedBack(transform, knockBackAmt); // Blaze added this line
+                player.GetComponent<Knockback>().GetKnockedBack(transform, KnockBackAmt); // Blaze added this line
             }
         }
     }

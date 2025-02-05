@@ -6,7 +6,6 @@
 
     public class BossHealthListener : MonoBehaviour
     {
-
         [SerializeField]
         private Image _firstBossBar;
 

@@ -8,9 +8,9 @@
     /// </summary>
     public class FileDataHandler
     {
-        private string _dataDirPath = "";
+        private string _dataDirPath = string.Empty;
 
-        private string _dataFileName = "";
+        private string _dataFileName = string.Empty;
 
         public FileDataHandler(string dataDirPath, string dataFileName)
         {

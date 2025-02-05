@@ -12,7 +12,6 @@ namespace BTG
     public class GameManager : PersistentSingleton<GameManager>
     {
         // ... other game manager code ...
-
         [Header("Scene Settings")]
         [SerializeField]
         private string mainMenuScene = "MainMenu";

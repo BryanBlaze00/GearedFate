@@ -34,7 +34,7 @@
         {
             if (Time.time > _knockedTime + _timeToGetBack)
             {
-                fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Chase]);
+                Fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Chase]);
             }
         }
 

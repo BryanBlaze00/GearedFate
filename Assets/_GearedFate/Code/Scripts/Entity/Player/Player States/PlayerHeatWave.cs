@@ -46,9 +46,8 @@ namespace BTG
 
         public void SwitchState()
         {
-            fsm.SwitchState(
-                Input.MoveInput == Vector2.zero ? player.states[Player.State.Idle] : player.states[Player.State.Move]
-            );
+            Fsm.SwitchState(
+                Input.MoveInput == Vector2.zero ? player.states[Player.State.Idle] : player.states[Player.State.Move]);
         }
     }
 }

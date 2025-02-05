@@ -27,7 +27,7 @@ namespace BTG
 
         public Action OnHitTaken;
 
-        public readonly Dictionary<GreatCreatorState, GCBaseState> States = new();
+        public readonly Dictionary<GreatCreatorState, GCBaseState> States = new ();
 
         [field: SerializeField]
         public float MoveSpeed { get; private set; }
@@ -78,7 +78,7 @@ namespace BTG
 
         public Vector2 DirectionToTarget => (transform.position - _player.position).normalized;
 
-        private readonly FiniteStateMachine<GreatCreatorState> _fsm = new();
+        private readonly FiniteStateMachine<GreatCreatorState> _fsm = new ();
 
         [SerializeField]
         private Transform _spawnPos;

@@ -7,6 +7,15 @@
     {
         public MonoBehaviour Boss;
 
+        public void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.TryGetComponent(out Player _))
+            {
+                Boss.gameObject.SetActive(true);
+                gameObject.SetActive(false);
+            }
+        }
+
         private void Awake()
         {
             if (TryGetComponent(out SpriteRenderer sr))
@@ -27,15 +36,6 @@
             }
 
             Boss.gameObject.SetActive(false);
-        }
-
-        public void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.TryGetComponent(out Player _))
-            {
-                Boss.gameObject.SetActive(true);
-                gameObject.SetActive(false);
-            }
         }
     }
 }

@@ -41,7 +41,7 @@ namespace BTG
         {
             if (!Input.AttackPressed || player.CurrentAttackFuelAmount == 0)
             {
-                fsm.SwitchState(player.states[Player.State.Idle]);
+                Fsm.SwitchState(player.states[Player.State.Idle]);
                 return;
             }
 
@@ -79,8 +79,8 @@ namespace BTG
                 player.Blaze.transform.position,
                 player.CurrentDirection * data.FireBlazeDistance); ///visualization for now
 
-            ///I think since this is basically fire, we can keep it at fixed distance despite any enemy falls under it or not.
-            ///We don't have to change anything from current code that way
+            /// I think since this is basically fire, we can keep it at fixed distance despite any enemy falls under it or not.
+            /// We don't have to change anything from current code that way
 
             player.BurnAttackFuel(Time.deltaTime * data.FireBlazeBurnRate);
         }

@@ -59,13 +59,13 @@
 
             if (Vector2.Distance(Centipede.Target.position, _originalTargetPosition) > _initialDistanceToTarget)
             {
-                fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Charge]);
+                Fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Charge]);
             }
             else
             {
                 if (_timer > _timeToReachMinimalDistance)
                 {
-                    fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Charge]);
+                    Fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Charge]);
                 }
 
                 Centipede.ExpandTrajectory(ComputeDeathCirclePosition());

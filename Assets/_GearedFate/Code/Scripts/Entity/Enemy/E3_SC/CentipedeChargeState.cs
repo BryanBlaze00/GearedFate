@@ -42,7 +42,7 @@
                 return;
             }
 
-            fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Chase]);
+            Fsm.SwitchState(Centipede[SteamCentipede.CentipedeState.Chase]);
         }
 
         public override void OnPhysicsUpdate()

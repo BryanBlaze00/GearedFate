@@ -39,8 +39,8 @@ namespace BTG
 #if UNITY_EDITOR
         public string debugCurState;
 #endif
-        private readonly FiniteStateMachine<State> fsm = new();
-        public readonly Dictionary<State, GSBaseState> States = new();
+        private readonly FiniteStateMachine<State> fsm = new ();
+        public readonly Dictionary<State, GSBaseState> States = new ();
 
         public float CurrentHealth { get; private set; }
 
@@ -66,34 +66,77 @@ namespace BTG
         private float curSpeed;
 
         [Header("Assign References")]
-        public GSData Data;
-        public NavMeshAgent NavMeshAgent;
-        public Animator Animator;
-        public Player TargetPlayer;
-        public GameObject BombPrefab;
-        public ProjectileData ProjectileData;
-        public GameObject Shadow;
-        public HitFlash HitFlash;
-        public AudioSource AudioSource;
-        public AudioClip AudioBombThrow;
-        public AudioClip AudioBurrow;
-        public AudioClip AudioBurrowing;
-        public AudioClip AudioUnBurrow;
+        [field:SerializeField]
+        public GSData Data { get; private set; }
 
-        public AudioClip AudioLaserShot;
+        [field:SerializeField]
+        public NavMeshAgent NavMeshAgent { get; private set; }
 
-        // public AudioClip AudioZapClap;
-        public AudioClip AudioDeath;
-        public AudioClip AudioMovement;
+        [field:SerializeField]
+        public Animator Animator { get; private set; }
 
-        public Transform EyeShootUpPos;
-        public Transform EyeShootRightPos;
-        public Transform EyeShootDownPos;
-        public Transform EyeShootLeftPos;
-        public Transform BombUpPos;
-        public Transform BombRightPos;
-        public Transform BombDownPos;
-        public Transform BombLeftPos;
+        [field:SerializeField]
+        public Player TargetPlayer { get; set; }
+
+        [field:SerializeField]
+        public GameObject BombPrefab { get; private set; }
+
+        [field:SerializeField]
+        public ProjectileData ProjectileData { get; private set; }
+
+        [field:SerializeField]
+        public GameObject Shadow { get; private set; }
+
+        [field:SerializeField]
+        public HitFlash HitFlash { get; private set; }
+
+        [field:SerializeField]
+        public AudioSource AudioSource { get; private set; }
+
+        [field:SerializeField]
+        public AudioClip AudioBombThrow { get; private set; }
+
+        [field:SerializeField]
+        public AudioClip AudioBurrow { get; private set; }
+
+        [field:SerializeField]
+        public AudioClip AudioBurrowing { get; private set; }
+
+        [field:SerializeField]
+        public AudioClip AudioUnBurrow { get; private set; }
+
+        [field:SerializeField]
+        public AudioClip AudioLaserShot { get; private set; }
+
+        [field:SerializeField]
+        public AudioClip AudioDeath { get; private set; }
+
+        [field:SerializeField]
+        public AudioClip AudioMovement { get; private set; }
+
+        [field:SerializeField]
+        public Transform EyeShootUpPos { get; private set; }
+
+        [field:SerializeField]
+        public Transform EyeShootRightPos { get; private set; }
+
+        [field:SerializeField]
+        public Transform EyeShootDownPos { get; private set; }
+
+        [field:SerializeField]
+        public Transform EyeShootLeftPos { get; private set; }
+
+        [field:SerializeField]
+        public Transform BombUpPos { get; private set; }
+
+        [field:SerializeField]
+        public Transform BombRightPos { get; private set; }
+
+        [field:SerializeField]
+        public Transform BombDownPos { get; private set; }
+
+        [field:SerializeField]
+        public Transform BombLeftPos { get; private set; }
 
         private void Awake()
         {

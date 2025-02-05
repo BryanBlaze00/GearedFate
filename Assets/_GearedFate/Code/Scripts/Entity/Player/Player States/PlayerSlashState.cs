@@ -49,7 +49,7 @@ namespace BTG
 
             if (Time.time > startTime + data.SlashCoolDown)
             {
-                fsm.SwitchState(
+                Fsm.SwitchState(
                     player.Input.MoveInput == Vector2.zero
                         ? player.states[Player.State.Idle]
                         : player.states[Player.State.Move]);

@@ -14,7 +14,9 @@
 
         protected RMBaseState(
             FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm,
-            RustedMarionette marionette, int highAnimId, int lowAnimId)
+            RustedMarionette marionette,
+            int highAnimId,
+            int lowAnimId)
             : base(fsm)
         {
             Marionette = marionette;
@@ -29,7 +31,7 @@
             if (Marionette.CurrentHealth == 0)
             {
                 Debug.Log("dead marionette");
-                fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.Death]);
+                Fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.Death]);
                 return;
             }
 
@@ -37,14 +39,14 @@
             {
                 Debug.Log("go full maze");
                 _phase++;
-                fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.StringMaze]);
+                Fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.StringMaze]);
             }
 
             if (Marionette.CurrentHealth / Marionette.MaxHealth < 0.4f && _phase == 1)
             {
                 Debug.Log("go full maze");
                 _phase++;
-                fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.StringMaze]);
+                Fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.StringMaze]);
             }
         }
 

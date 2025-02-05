@@ -14,7 +14,9 @@
 
         public RMCircleStormState(
             FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm,
-            RustedMarionette marionette, int highAnimId, int lowAnimId)
+            RustedMarionette marionette,
+            int highAnimId,
+            int lowAnimId)
             : base(fsm, marionette, highAnimId, lowAnimId)
         {
         }
@@ -43,7 +45,7 @@
 
             if (Time.time > _enterTime + _timeBeforeStateChange)
             {
-                fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.Idle]);
+                Fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.Idle]);
             }
         }
 

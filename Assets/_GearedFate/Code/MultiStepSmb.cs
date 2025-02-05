@@ -9,14 +9,14 @@
     /// </summary>
     public class MultiStepSmb : StateMachineBehaviour
     {
-        public event Action<int> OnStepReached;
-
         private int _nextStepIndex;
 
         private float _nextStep;
 
         [SerializeField]
         private List<float> _steps;
+
+        public event Action<int> OnStepReached;
 
         [field: SerializeField]
         public string Id { get; private set; }
