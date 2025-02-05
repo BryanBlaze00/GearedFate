@@ -67,62 +67,6 @@ namespace BTG
 
         public void LoadNextLevel()
         {
-            /*
-         int currentLevelIndex = -1;
-
-         for (int i = 0; i < bossLevelScenes.Length; i++)
-         {
-            if (currentScene == bossLevelScenes[i] || currentScene == cutsceneScenes[i])
-            {
-               currentLevelIndex = i;
-               break;
-            }
-         }
-
-         if (currentLevelIndex == -1 && currentScene == introScene)
-         {
-            LoadCutscene(0);
-            return;
-         }
-
-         if (currentLevelIndex < bossLevelScenes.Length - 1)
-         {
-            LoadCutscene(currentLevelIndex + 1);
-         }
-         else if (currentLevelIndex == bossLevelScenes.Length - 1)
-         {
-            Debug.Log("Game Completed!");
-            LoadMainMenu();
-         }
-         else
-         {
-            Debug.LogWarning("No next level defined or invalid current scene: " + currentScene);
-         }
-      }
-
-      private void LoadCutscene(int index)
-      {
-         if (index < cutsceneScenes.Length)
-         {
-            LoadScene(cutsceneScenes[index]);
-         }
-         else
-         {
-            Debug.LogError("Cutscene index out of range: " + index);
-         }
-      }
-
-      public void LoadBossLevel(int levelIndex)
-      {
-         if (levelIndex >= 0 && levelIndex < bossLevelScenes.Length)
-         {
-            LoadScene(bossLevelScenes[levelIndex]);
-         }
-         else
-         {
-            Debug.LogError("Boss level index out of range: " + levelIndex);
-         }
-         */
             var currentBuildScene = SceneManager.GetActiveScene().buildIndex;
             if (currentBuildScene >= 10)
             {
