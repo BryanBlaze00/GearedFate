@@ -310,33 +310,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cffdb135ef6b1d43ae7e1d7edd032a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugCurState: 
-  Phase: 0
-  CurDistanceGoal: 0
-  Data: {fileID: 11400000, guid: 1982d17a6e87dc24a8aa4290810e5678, type: 2}
-  NavMeshAgent: {fileID: 6199605390704650370}
-  Animator: {fileID: 3203987332069286622}
-  TargetPlayer: {fileID: 0}
-  BombPrefab: {fileID: 7481787785307734997, guid: 2352820a529a77c4c9f34c16d7fd9727, type: 3}
-  ProjectileData: {fileID: 11400000, guid: b68a06545b2949c4298b1bcbe21796d8, type: 2}
-  Shadow: {fileID: 5451295380628356732}
-  HitFlash: {fileID: 8426307920769490221}
-  AudioSource: {fileID: -5941579148717609859}
-  AudioBombThrow: {fileID: 8300000, guid: 6fe816428d3840c4bb78332132756bb4, type: 3}
-  AudioBurrow: {fileID: 8300000, guid: 9c1d98664c2d2004c9c307baa4e9dc77, type: 3}
-  AudioBurrowing: {fileID: 8300000, guid: ea165ed14a9d2094592a87d321cfc00e, type: 3}
-  AudioUnBurrow: {fileID: 8300000, guid: ea165ed14a9d2094592a87d321cfc00e, type: 3}
-  AudioLaserShot: {fileID: 8300000, guid: 13adef329c438c9428b2f2e0dc5cc09a, type: 3}
-  AudioDeath: {fileID: 8300000, guid: 1164ecaf9a4f8b24789076201bbcaed5, type: 3}
-  AudioMovement: {fileID: 8300000, guid: 3bb28115ae603e84dbbc174d3b2a329c, type: 3}
-  EyeShootUpPos: {fileID: 3487220992303352476}
-  EyeShootRightPos: {fileID: 7610073447020596479}
-  EyeShootDownPos: {fileID: 5116516137103639610}
-  EyeShootLeftPos: {fileID: 6944129123647960192}
-  BombUpPos: {fileID: 4106147556835466201}
-  BombRightPos: {fileID: 22645617598856465}
-  BombDownPos: {fileID: 593098249381754324}
-  BombLeftPos: {fileID: 159148073245941075}
+  <Data>k__BackingField: {fileID: 11400000, guid: 1982d17a6e87dc24a8aa4290810e5678, type: 2}
+  <NavMeshAgent>k__BackingField: {fileID: 6199605390704650370}
+  <Animator>k__BackingField: {fileID: 3203987332069286622}
+  <TargetPlayer>k__BackingField: {fileID: 0}
+  <BombPrefab>k__BackingField: {fileID: 7481787785307734997, guid: 2352820a529a77c4c9f34c16d7fd9727, type: 3}
+  <ProjectileData>k__BackingField: {fileID: 11400000, guid: b68a06545b2949c4298b1bcbe21796d8, type: 2}
+  <Shadow>k__BackingField: {fileID: 5451295380628356732}
+  <HitFlash>k__BackingField: {fileID: 8426307920769490221}
+  <AudioSource>k__BackingField: {fileID: -5941579148717609859}
+  <AudioBombThrow>k__BackingField: {fileID: 8300000, guid: 6fe816428d3840c4bb78332132756bb4, type: 3}
+  <AudioBurrow>k__BackingField: {fileID: 8300000, guid: 9c1d98664c2d2004c9c307baa4e9dc77, type: 3}
+  <AudioBurrowing>k__BackingField: {fileID: 8300000, guid: 9c1d98664c2d2004c9c307baa4e9dc77, type: 3}
+  <AudioUnBurrow>k__BackingField: {fileID: 8300000, guid: ea165ed14a9d2094592a87d321cfc00e, type: 3}
+  <AudioLaserShot>k__BackingField: {fileID: 8300000, guid: 13adef329c438c9428b2f2e0dc5cc09a, type: 3}
+  <AudioDeath>k__BackingField: {fileID: 8300000, guid: 1164ecaf9a4f8b24789076201bbcaed5, type: 3}
+  <AudioMovement>k__BackingField: {fileID: 8300000, guid: 3bb28115ae603e84dbbc174d3b2a329c, type: 3}
+  <EyeShootUpPos>k__BackingField: {fileID: 3487220992303352476}
+  <EyeShootRightPos>k__BackingField: {fileID: 7610073447020596479}
+  <EyeShootDownPos>k__BackingField: {fileID: 5116516137103639610}
+  <EyeShootLeftPos>k__BackingField: {fileID: 6944129123647960192}
+  <BombUpPos>k__BackingField: {fileID: 4106147556835466201}
+  <BombRightPos>k__BackingField: {fileID: 22645617598856465}
+  <BombDownPos>k__BackingField: {fileID: 593098249381754324}
+  <BombLeftPos>k__BackingField: {fileID: 159148073245941075}
 --- !u!195 &6199605390704650370
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -74,7 +74,6 @@ namespace BTG
         [field:SerializeField]
         public Animator Animator { get; private set; }
 
-        [field:SerializeField]
         public Player TargetPlayer { get; set; }
 
         [field:SerializeField]

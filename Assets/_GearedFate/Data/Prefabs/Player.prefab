@@ -513,23 +513,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 595b7aca195ea6640b7ea2c2f713563f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _renderer: {fileID: 7757672541182163451}
   <Data>k__BackingField: {fileID: 11400000, guid: 65439a5f739a2eb4ea476913a8a5bfac, type: 2}
-  isInvulnerable: 0
-  OutOfBoundsTime: 0
   <PlayerInfo>k__BackingField: {fileID: 11400000, guid: b8d39fd6f393c9b4aac08ca4860ad148, type: 2}
   <GearData>k__BackingField: {fileID: 11400000, guid: 2c258dc240bacdd4cbe2b2cff66a4f2d, type: 2}
   <HeatWave>k__BackingField: {fileID: 4413460649490024321, guid: 043789644329aa04d933798256ee0b8f, type: 3}
   <Blaze>k__BackingField: {fileID: 8086516626664474756}
   <ShootPos>k__BackingField: {fileID: 441986909813360495}
   <SlashPos>k__BackingField: {fileID: 1342614299073342815}
-  renderer: {fileID: 7757672541182163451}
-  HurtAudio: {fileID: 8300000, guid: 41929b66caee3d347af9630b39376231, type: 3}
-  ShootGearAudio: {fileID: 8300000, guid: 017842c6abf75284c81f20133bf12a52, type: 3}
-  HealAudio: {fileID: 8300000, guid: 7c1195c03873a0e4e81769f2b4b4ee3f, type: 3}
-  DashAudio: {fileID: 8300000, guid: 40fa45c196569bf4fa2006f27c48ea16, type: 3}
-  SlashAudio: {fileID: 8300000, guid: 634da3765321c114e8aff5e08f4a0add, type: 3}
-  DeathAudio: {fileID: 8300000, guid: de5c0c75e79146240b516e46b0293137, type: 3}
-  FlameBeam: {fileID: 8300000, guid: f5ad79b45b2eb024cb4f49ce0252c2e0, type: 3}
+  <HurtAudio>k__BackingField: {fileID: 8300000, guid: 41929b66caee3d347af9630b39376231, type: 3}
+  <ShootGearAudio>k__BackingField: {fileID: 8300000, guid: 017842c6abf75284c81f20133bf12a52, type: 3}
+  <HealAudio>k__BackingField: {fileID: 8300000, guid: 7c1195c03873a0e4e81769f2b4b4ee3f, type: 3}
+  <DashAudio>k__BackingField: {fileID: 8300000, guid: 40fa45c196569bf4fa2006f27c48ea16, type: 3}
+  <SlashAudio>k__BackingField: {fileID: 8300000, guid: 634da3765321c114e8aff5e08f4a0add, type: 3}
+  <DeathAudio>k__BackingField: {fileID: 8300000, guid: de5c0c75e79146240b516e46b0293137, type: 3}
+  <FlameBeam>k__BackingField: {fileID: 8300000, guid: f5ad79b45b2eb024cb4f49ce0252c2e0, type: 3}
 --- !u!114 &8104047845149832181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -752,7 +750,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd0220c8aa35a7f4d9b475e84230b93f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isKnockedback: 0
 --- !u!114 &6831222671577796688
 MonoBehaviour:
   m_ObjectHideFlags: 0
