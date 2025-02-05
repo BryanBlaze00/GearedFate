@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using UnityEngine;
 
@@ -12,7 +12,8 @@ namespace BTG
 
         private bool _isAttacking = false;
 
-        public RMSpinningLinesState(FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm,
+        public RMSpinningLinesState(
+            FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm,
             RustedMarionette marionette, int highAnimId, int lowAnimId)
             : base(fsm, marionette, highAnimId, lowAnimId)
         {

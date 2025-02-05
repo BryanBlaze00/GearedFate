@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -9,7 +9,8 @@ namespace BTG
     /// </summary>
     public class PlayerMoveState : PlayerBaseState
     {
-        public PlayerMoveState(FiniteStateMachine<Player.State> fsm, Player player, PlayerData data, int animId) : base(
+        public PlayerMoveState(FiniteStateMachine<Player.State> fsm, Player player, PlayerData data, int animId)
+            : base(
             fsm, player, data, animId)
         {
         }

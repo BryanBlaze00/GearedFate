@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using PrimeTween;
     using UnityEngine;

@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using UnityEngine;
 
@@ -8,7 +8,8 @@ namespace BTG
 
         private float _timeBeforeStateChange = 2f;
 
-        public RMStringMazeState(FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm,
+        public RMStringMazeState(
+            FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm,
             RustedMarionette marionette, int highAnimId, int lowAnimId)
             : base(fsm, marionette, highAnimId, lowAnimId)
         {

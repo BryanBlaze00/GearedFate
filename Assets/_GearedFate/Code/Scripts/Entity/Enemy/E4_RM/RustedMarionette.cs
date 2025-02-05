@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using System;
     using System.Collections.Generic;
@@ -31,9 +31,9 @@ namespace BTG
 
         private Player _player;
 
-        private readonly FiniteStateMachine<RustedMarionetteState> _fsm = new ();
+        private readonly FiniteStateMachine<RustedMarionetteState> _fsm = new();
 
-        public readonly Dictionary<RustedMarionetteState, RMBaseState> _states = new ();
+        public readonly Dictionary<RustedMarionetteState, RMBaseState> _states = new();
 
         public float CurrentHealth { get; private set; }
 

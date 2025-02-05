@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -9,17 +9,19 @@ namespace BTG
     /// </summary>
     public class PlayerDashState : PlayerBaseState
     {
-        public float LastUsedTime { get; private set; }
 
         private float startTime;
 
-        public bool CanDash => Time.time > LastUsedTime + data.DashCoolDown;
-
-        public PlayerDashState(FiniteStateMachine<Player.State> fsm, Player player, PlayerData data, int animId) : base(
+        public PlayerDashState(FiniteStateMachine<Player.State> fsm, Player player, PlayerData data, int animId)
+            : base(
             fsm, player, data, animId)
         {
             LastUsedTime = Time.time - data.DashCoolDown;
         }
+
+        public float LastUsedTime { get; private set; }
+
+        public bool CanDash => Time.time > LastUsedTime + data.DashCoolDown;
 
         public override void OnEnter()
         {
@@ -41,7 +43,7 @@ namespace BTG
         {
             if (Time.time >= startTime + data.DashTime)
             {
-                OnDashFinish(); //TODO: Replace with animation finish event
+                OnDashFinish(); // TODO: Replace with animation finish event
             }
         }
 

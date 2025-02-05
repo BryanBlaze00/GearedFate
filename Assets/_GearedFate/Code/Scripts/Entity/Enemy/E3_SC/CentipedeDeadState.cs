@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     public class CentipedeDeadState : CentipedeBaseState
     {

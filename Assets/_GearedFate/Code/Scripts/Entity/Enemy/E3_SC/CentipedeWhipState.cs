@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using System.Collections;
     using System.Collections.Generic;
@@ -17,9 +17,9 @@ namespace BTG
         // how long it takes to whip from left to right
         private float _frequency = 0.5f;
 
-        private readonly List<float> _angles = new ();
+        private readonly List<float> _angles = new();
 
-        private readonly List<Vector2> _initialPositions = new ();
+        private readonly List<Vector2> _initialPositions = new();
 
         private Vector2 _angleVector;
 
@@ -27,8 +27,8 @@ namespace BTG
 
         private bool _whipFinished;
 
-        public CentipedeWhipState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId,
-            SteamCentipede steamCentipede) : base(fsm, steamCentipede)
+        public CentipedeWhipState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId, SteamCentipede steamCentipede)
+            : base(fsm, steamCentipede)
         {
             _animId = animationId;
         }

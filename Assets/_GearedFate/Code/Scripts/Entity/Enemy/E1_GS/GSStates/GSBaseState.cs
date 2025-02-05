@@ -11,7 +11,8 @@ namespace BTG
         public GearboundSentinel.State State;
 
         public GSBaseState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state,
-            GearboundSentinel gs) : base(fsm)
+            GearboundSentinel gs)
+            : base(fsm)
         {
             gearboundSentinel = gs;
             State = state;
@@ -19,7 +20,7 @@ namespace BTG
 
         public override void OnEnter()
         {
-            //TODO: Play animations
+            // TODO: Play animations
             gearboundSentinel.AudioSource.pitch = 1f;
             gearboundSentinel.EnableColliders(); // workaround rare bug where colliders got stuck disabled
         }

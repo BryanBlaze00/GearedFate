@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -10,9 +10,24 @@ namespace BTG
     /// </summary>
     public class GSDyingState : GSBaseState
     {
-        public GSDyingState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state,
-            GearboundSentinel gs) : base(fsm, state, gs)
+        public GSDyingState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state, GearboundSentinel gs)
+            : base(fsm, state, gs)
         {
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+        }
+
+        public override void OnFrameUpdate()
+        {
+            base.OnFrameUpdate();
+        }
+
+        public override void OnPhysicsUpdate()
+        {
+            base.OnPhysicsUpdate();
         }
 
         public override void OnEnter()
@@ -44,7 +59,9 @@ namespace BTG
             Debug.Log("This code shouldn't run because all coroutines should be stopped.");
             var animationLength = gearboundSentinel.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
             var played = 0f;
-            while (true) // prevents other stuff from changing the animation
+
+            // prevents other stuff from changing the animation
+            while (true)
             {
                 played += Time.deltaTime;
                 var progress = played / animationLength;
@@ -52,21 +69,6 @@ namespace BTG
                 gearboundSentinel.transform.position = pos;
                 yield return null;
             }
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
-        }
-
-        public override void OnFrameUpdate()
-        {
-            base.OnFrameUpdate();
-        }
-
-        public override void OnPhysicsUpdate()
-        {
-            base.OnPhysicsUpdate();
         }
     }
 }

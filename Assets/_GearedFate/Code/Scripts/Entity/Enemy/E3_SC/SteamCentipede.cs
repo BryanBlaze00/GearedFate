@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -85,13 +85,13 @@ namespace BTG
 
         private Transform _target;
 
-        private readonly List<float> _currentPositionsOnSpline = new ();
+        private readonly List<float> _currentPositionsOnSpline = new();
 
-        private readonly FiniteStateMachine<CentipedeState> _finiteStateMachine = new ();
+        private readonly FiniteStateMachine<CentipedeState> _finiteStateMachine = new();
 
-        private readonly Dictionary<CentipedeState, CentipedeBaseState> _states = new ();
+        private readonly Dictionary<CentipedeState, CentipedeBaseState> _states = new();
 
-        private readonly List<Transform> _bodyParts = new ();
+        private readonly List<Transform> _bodyParts = new();
 
         private float _maxHealth;
 
@@ -143,43 +143,52 @@ namespace BTG
             Speed = RegularSpeed;
 
             // Add the fsm states of the centipede
-            _states.Add(CentipedeState.Chase,
+            _states.Add(
+                CentipedeState.Chase,
                 new CentipedeChaseState(
                     _finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Chase)), this,
                     ChasingDistance));
 
-            _states.Add(CentipedeState.Circle,
+            _states.Add(
+                CentipedeState.Circle,
                 new CentipedeCircleState(
-                    _finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Chase)),
+                    _finiteStateMachine,
+                    Animator.StringToHash(nameof(CentipedeState.Chase)),
                     this,
                     ChasingDistance,
                     CirclingDistance,
                     MinimumTimeBeforeCharge,
                     MaximumTimeBeforeCharge));
 
-            _states.Add(CentipedeState.Charge,
+            _states.Add(
+                CentipedeState.Charge,
                 new CentipedeChargeState(
-                    _finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Chase)),
-                    this));
-            _states.Add(CentipedeState.DeathCircle,
+                    _finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Chase)), this));
+
+            _states.Add(
+                CentipedeState.DeathCircle,
                 new CentipedeDeathCircleState(
-                    _finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Chase)),
-                    this));
-            _states.Add(CentipedeState.Whip,
+                    _finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Chase)), this));
+
+            _states.Add(
+                CentipedeState.Whip,
                 new CentipedeWhipState(_finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Chase)), this));
-            _states.Add(CentipedeState.Knocked,
+
+            _states.Add(
+                CentipedeState.Knocked,
                 new CentipedeKnockedState(
-                    _finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Knocked)),
-                    this));
-            _states.Add(CentipedeState.Dead,
+                    _finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Knocked)), this));
+
+            _states.Add(
+                CentipedeState.Dead,
                 new CentipedeDeadState(_finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Dead)), this));
+
             _finiteStateMachine.Initialize(_states[CentipedeState.Chase]);
 
             // Find it's target
             _target = FindFirstObjectByType<Player>().transform;
 
             _maxHealth = _bodyParts.Sum(x => x.GetComponent<CentipedeBodyPart>().MaxHealth);
-            ;
         }
 
         private void HandleBodyPartDeath()

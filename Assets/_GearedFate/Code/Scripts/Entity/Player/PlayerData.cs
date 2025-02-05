@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -11,7 +11,7 @@ namespace BTG
     [CreateAssetMenu(fileName = "newEntityData", menuName = "Data/Entity/Player/Player Data")]
     public class PlayerData : ScriptableObject
     {
-        //TODO: These are previous Code. Will change according to our needs
+        // TODO: These are previous Code. Will change according to our needs
         [field: Header("Base Data")]
         [field: SerializeField]
         public float Health { get; private set; } = 50;
@@ -54,7 +54,7 @@ namespace BTG
         public float FireBlazeMoveSpeed { get; private set; } = 3;
 
         [field: SerializeField]
-        public Vector2 FireBlazeDimension { get; private set; } = new (0.5f, .1f);
+        public Vector2 FireBlazeDimension { get; private set; } = new(0.5f, .1f);
 
         [field: SerializeField]
         public float FireBlazeDistance { get; private set; } = 2.5f;

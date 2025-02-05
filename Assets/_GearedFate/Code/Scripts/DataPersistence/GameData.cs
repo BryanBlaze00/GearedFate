@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using System;
     using System.Collections.Generic;
@@ -8,7 +8,7 @@ namespace BTG
     public class GameData
     {
         [SerializeField]
-        private SerializableDictionary<PooledObjectType, int> _assetsToInstantiateIds = new ();
+        private SerializableDictionary<PooledObjectType, int> _assetsToInstantiateIds = new();
 
         // Incremented each time it's used, allows tracking which minion save struct is loaded next in MinionsData.
         private int _minionCurrentLoadedIndex;
@@ -16,7 +16,7 @@ namespace BTG
         public PlayerSaveStruct PlayerData;
 
         // Contains save data for each minion that need to be reloaded.
-        public List<MinionSaveStruct> MinionsData = new ();
+        public List<MinionSaveStruct> MinionsData = new();
 
         /// <summary>
         /// Use the key to know which asset to load, and the value to know how much.

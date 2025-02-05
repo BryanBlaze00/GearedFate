@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -44,9 +44,9 @@ namespace BTG
     {
         [SerializeField]
         private List<ObjectToPoolWrapper> objectsToPoolList;
-        private readonly Dictionary<PooledObjectType, ObjectToPoolInfo> objectsToPool = new ();
+        private readonly Dictionary<PooledObjectType, ObjectToPoolInfo> objectsToPool = new();
 
-        public Dictionary<PooledObjectType, List<GameObject>> PooledObjects { get; } = new ();
+        public Dictionary<PooledObjectType, List<GameObject>> PooledObjects { get; } = new();
 
         protected override void Awake()
         {
@@ -118,7 +118,7 @@ namespace BTG
 #endif
             }
 
-            ObjectToPoolInfo item = new (GO, amt, exp);
+            ObjectToPoolInfo item = new(GO, amt, exp);
             objectsToPool.Add(type, item);
             ObjectPoolItemToPooledObject(type);
         }

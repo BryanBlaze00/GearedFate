@@ -1,11 +1,11 @@
-namespace BTG
+﻿namespace BTG
 {
     using System.Linq;
 
     public class GCSpinState : GCBaseState
     {
-        public GCSpinState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId) :
-            base(fsm, enemy, animId)
+        public GCSpinState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId)
+            : base(fsm, enemy, animId)
         {
             var smb = GreatCreator.Animator.GetBehaviours<MultiStepSmb>().First(x => x.Id == "Spin");
             smb.OnStepReached += HandleEndSpin;

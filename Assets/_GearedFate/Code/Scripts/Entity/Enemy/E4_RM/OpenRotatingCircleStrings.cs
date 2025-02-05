@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using Game.Core.Rendering;
     using UnityEngine;
@@ -118,14 +118,16 @@ namespace BTG
             {
                 if (i < _firstStringPoints)
                 {
-                    _firstString.Points.Add(new Vector2(Mathf.Cos(_startingAngle + (_angle * i)) * _radius,
+                    _firstString.Points.Add(new Vector2(
+                        Mathf.Cos(_startingAngle + (_angle * i)) * _radius,
                         Mathf.Sin(_startingAngle + (_angle * i)) * _radius));
                 }
 
                 if (i >= _firstStringPoints + _firstEmptySpacePoints &&
                     i < _firstStringPoints + _firstEmptySpacePoints + _secondStringPoints)
                 {
-                    _secondString.Points.Add(new Vector2(Mathf.Cos(_startingAngle + (_angle * i)) * _radius,
+                    _secondString.Points.Add(new Vector2(
+                        Mathf.Cos(_startingAngle + (_angle * i)) * _radius,
                         Mathf.Sin(_startingAngle + (_angle * i)) * _radius));
                 }
             }

@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using UnityEngine;
 
@@ -21,7 +21,8 @@ namespace BTG
         private float _timer;
 
         public CentipedeDeathCircleState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId,
-            SteamCentipede steamCentipede) : base(fsm, steamCentipede)
+            SteamCentipede steamCentipede)
+            : base(fsm, steamCentipede)
         {
             _animId = animationId;
         }

@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using System.Collections.Generic;
     using UnityEngine;
@@ -11,7 +11,7 @@ namespace BTG
         /// <summary>
         /// Keep track of the entity this machinery should move.
         /// </summary>
-        private readonly HashSet<Transform> _entitiesToMove = new ();
+        private readonly HashSet<Transform> _entitiesToMove = new();
 
         /// <summary>
         /// Method called for each entity that should be moved. The movement differs depending on the machinery.

@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using UnityEngine;
 
@@ -9,7 +9,8 @@ namespace BTG
         private readonly float _chasingDistance;
 
         public CentipedeChaseState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId,
-            SteamCentipede steamCentipede, float chasingDistance) : base(fsm, steamCentipede)
+            SteamCentipede steamCentipede, float chasingDistance)
+            : base(fsm, steamCentipede)
         {
             _animId = animationId;
             _chasingDistance = chasingDistance;

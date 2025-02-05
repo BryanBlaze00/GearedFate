@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using System.Collections;
     using System.Collections.Generic;
@@ -37,7 +37,7 @@ namespace BTG
 
         private bool _state;
 
-        private List<GameObject> _instances = new ();
+        private List<GameObject> _instances = new();
 
         public void SetCircleExpand(bool state)
         {

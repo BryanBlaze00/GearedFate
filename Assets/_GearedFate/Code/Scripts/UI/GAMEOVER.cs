@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -6,7 +6,7 @@ namespace BTG
     using UnityEngine.UI;
 
     /// <summary>
-    /// GAMEOVER 
+    /// GAMEOVER
     /// </summary>
     public class GameOver : MonoBehaviour
     {

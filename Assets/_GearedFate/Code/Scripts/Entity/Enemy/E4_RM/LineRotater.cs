@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using System.Collections.Generic;
     using UnityEngine;
@@ -40,7 +40,7 @@ namespace BTG
         // private bool _rotateClockwise = true;
         private GameObject _protectionInstance;
 
-        private List<RotatingLine> _rotatingLines = new ();
+        private List<RotatingLine> _rotatingLines = new();
 
         private bool _isSpawning;
 

@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -20,7 +20,8 @@ namespace BTG
         private Coroutine switchCirclingCoroutine;
 
         public GSChaseState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state,
-            GearboundSentinel gs) : base(fsm, state, gs)
+            GearboundSentinel gs)
+            : base(fsm, state, gs)
         {
             switchCirclingCoroutine ??= gs.StartCoroutine(SwitchCirlingDir(0.5f, 3f));
         }
@@ -103,7 +104,9 @@ namespace BTG
                 var runAwayVec = -diffToTarget.normalized * runAwayDistance;
                 TargetPos = gearboundSentinel.transform.position + runAwayVec;
             }
-            else // we're within margin of distance goal
+
+            // we're within margin of distance goal
+            else
             {
                 // rotate target position 30 deg around the player, using circlingDirection for clockwise or ccw
                 var vecFromPlayer = gearboundSentinel.transform.position - gearboundSentinel.TargetPlayer.transform.position;
@@ -117,10 +120,9 @@ namespace BTG
             while (isActive)
             {
                 Vector2 targetVector = Vector3.zero;
-                NavMeshPath navMeshPath = new ();
-                if (NavMesh.SamplePosition(
-                        TargetPos, out var hit, runAwayDistance,
-                        gearboundSentinel.NavMeshAgent.areaMask)) //TODO: area mask
+                NavMeshPath navMeshPath = new();
+                // TODO: area mask
+                if (NavMesh.SamplePosition(TargetPos, out var hit, runAwayDistance, gearboundSentinel.NavMeshAgent.areaMask))
                 {
                     TargetPos = hit.position;
                     if (gearboundSentinel.NavMeshAgent.CalculatePath(TargetPos, navMeshPath) &&
@@ -202,7 +204,7 @@ namespace BTG
             switch (gearboundSentinel.Phase)
             {
                 case 0:
-                    //fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Bomb]); break; // TODO: Comment out whole line. This is for testing.
+                    // fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Bomb]); break; // TODO: Comment out whole line. This is for testing.
                     // random between bombs and shoot (shotgun spray)
                     fsm.SwitchState(
                         gearboundSentinel.States[

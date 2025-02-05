@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -44,7 +44,7 @@ namespace BTG
             }
         }
 
-        public void OnDash(InputAction.CallbackContext ctx) //Might change later to call an event instead of using bool
+        public void OnDash(InputAction.CallbackContext ctx) // Might change later to call an event instead of using bool
         {
             if (ctx.performed)
             {

@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -12,7 +12,8 @@ namespace BTG
     public class GSShootState : GSBaseState
     {
         public GSShootState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state,
-            GearboundSentinel gs) : base(fsm, state, gs)
+            GearboundSentinel gs)
+            : base(fsm, state, gs)
         {
         }
 
@@ -114,15 +115,15 @@ namespace BTG
                 _ => 1 / gearboundSentinel.Data.Stage2Spray360RotationsPerSecond / gearboundSentinel.Data.Stage2Spray360ProjPerRotation // seconds per rotation divided by projCount
             };
 
-            //bool circle = Mathf.Approximately(spreadDeg, 360f);
-            //if (circle)
+            // bool circle = Mathf.Approximately(spreadDeg, 360f);
+            // if (circle)
             //    // temporarily increase for spread calculations
             //    numBullets++;
 
             var rotPerShot = spreadDeg / (numBullets - 1);
             var startRot = Vector2.SignedAngle(Vector2.up, centerDirection) - (spreadDeg / 2f);
 
-            //if(circle)
+            // if(circle)
             //    // remove temporary increase; the last bullet won't be spawned because that'll be the start of the circle
             //    numBullets--;
             for (var i = 0; i < numBullets; i++)

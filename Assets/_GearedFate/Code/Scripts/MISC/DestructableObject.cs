@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -53,7 +53,7 @@ namespace BTG
                 RandomizedItemDrop();
 
                 // doesn't work to update navmesh:
-                //GameObject.FindObjectsByType<NavMeshSurface>(FindObjectsSortMode.None).ForEach(x => x.UpdateNavMesh(x.navMeshData));
+                // GameObject.FindObjectsByType<NavMeshSurface>(FindObjectsSortMode.None).ForEach(x => x.UpdateNavMesh(x.navMeshData));
                 Destroy(gameObject); // Destroy the object
             }
         }

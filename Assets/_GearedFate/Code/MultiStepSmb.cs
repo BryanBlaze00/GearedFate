@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using System;
     using System.Collections.Generic;
@@ -18,7 +18,7 @@ namespace BTG
         [SerializeField]
         private List<float> _steps;
 
-        [field:SerializeField]
+        [field: SerializeField]
         public string Id { get; private set; }
 
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state

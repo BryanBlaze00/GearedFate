@@ -1,4 +1,4 @@
-// Copyright (c) Dayen Creation. All rights reserved.
+﻿// Copyright (c) Dayen Creation. All rights reserved.
 
 namespace DayenCreation
 {

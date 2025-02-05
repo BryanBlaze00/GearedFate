@@ -13,7 +13,10 @@
         {
             var list = source.ToList();
             if (list.Count == 0)
+            {
                 throw new InvalidOperationException("No elements in source collection");
+            }
+
             return list[UnityEngine.Random.Range(0, list.Count)];
         }
 
@@ -27,7 +30,11 @@
         /// </summary>
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
-            foreach (var e in source) action(e);
+            foreach (var e in source)
+            {
+                action(e);
+            }
+
             return source;
         }
 
@@ -48,7 +55,11 @@
             comparer ??= EqualityComparer<T>.Default;
             foreach (var item in source)
             {
-                if (comparer.Equals(item, toFind)) return i;
+                if (comparer.Equals(item, toFind))
+                {
+                    return i;
+                }
+
                 i++;
             }
 

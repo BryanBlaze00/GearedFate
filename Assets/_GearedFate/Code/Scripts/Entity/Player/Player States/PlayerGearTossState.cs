@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -15,8 +15,8 @@ namespace BTG
             player.CurrentAttackFuelAmount > data.GearFuelBurnAmount &&
                                 Time.time > LastUsedTime + data.GearShootCoolDown;
 
-        public PlayerGearTossState(FiniteStateMachine<Player.State> fsm, Player player, PlayerData data, int animId) :
-            base(fsm, player, data, animId)
+        public PlayerGearTossState(FiniteStateMachine<Player.State> fsm, Player player, PlayerData data, int animId)
+            : base(fsm, player, data, animId)
         {
             LastUsedTime = Time.time - data.GearShootCoolDown;
 

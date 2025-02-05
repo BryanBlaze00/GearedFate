@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -7,7 +7,8 @@ namespace BTG
     /// <summary>
     /// Base Super Class for entity states
     /// </summary>
-    public abstract class BaseState<State> where State : Enum
+    public abstract class BaseState<State>
+        where State : Enum
     {
         protected readonly FiniteStateMachine<State> fsm;
 

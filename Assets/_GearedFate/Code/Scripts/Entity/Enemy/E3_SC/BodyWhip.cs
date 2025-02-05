@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using System.Collections;
     using System.Collections.Generic;
@@ -25,9 +25,9 @@ namespace BTG
 
         private float _timer = 0;
 
-        private List<Vector2> _initialPositions = new ();
+        private List<Vector2> _initialPositions = new();
 
-        private List<float> _angles = new ();
+        private List<float> _angles = new();
 
         private void Start()
         {

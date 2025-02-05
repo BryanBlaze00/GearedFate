@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -11,7 +11,8 @@ namespace BTG
     {
         private float time;
 
-        public PlayerDeadState(FiniteStateMachine<Player.State> fsm, Player player, PlayerData data, int animId) : base(
+        public PlayerDeadState(FiniteStateMachine<Player.State> fsm, Player player, PlayerData data, int animId)
+            : base(
             fsm, player, data, animId)
         {
         }

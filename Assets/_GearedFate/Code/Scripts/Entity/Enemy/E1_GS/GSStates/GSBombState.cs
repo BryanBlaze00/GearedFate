@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -12,7 +12,8 @@ namespace BTG
     public class GSBombState : GSBaseState
     {
         public GSBombState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state,
-            GearboundSentinel gs) : base(fsm, state, gs)
+            GearboundSentinel gs)
+            : base(fsm, state, gs)
         {
         }
 
@@ -57,7 +58,8 @@ namespace BTG
                     gearboundSentinel.BombDownPos,
                     gearboundSentinel.BombLeftPos);
                 Vector2 vec = gearboundSentinel.TargetPlayer.transform.position - shotCalculationOrigin.position
-                              + new Vector3(Random.Range(-2f, 2f),
+                              + new Vector3(
+                                  Random.Range(-2f, 2f),
                                   Random.Range(-2f, 2f)); // add some randomness to the target position
                 gearboundSentinel.Animator.SetFloat("AttackDirX", vec.x);
                 gearboundSentinel.Animator.SetFloat("AttackDirY", vec.y);

@@ -96,7 +96,7 @@ namespace BTG
 
         protected void Retreat()
         {
-            //TODO: move away from player for a bit
+            // TODO: move away from player for a bit
             _stateTimer += Time.deltaTime;
             if (_stateTimer >= 4)
             {

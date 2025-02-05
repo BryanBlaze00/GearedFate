@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -11,7 +11,8 @@ namespace BTG
     public class GSIntroState : GSBaseState
     {
         public GSIntroState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state,
-            GearboundSentinel gs) : base(fsm, state, gs)
+            GearboundSentinel gs)
+            : base(fsm, state, gs)
         {
         }
 

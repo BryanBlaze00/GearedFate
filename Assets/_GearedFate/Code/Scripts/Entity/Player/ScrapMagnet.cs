@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using System.Collections;
     using UnityEngine;
@@ -27,7 +27,8 @@ namespace BTG
             while (Vector3.Distance(scrap.transform.position, _player.transform.position) > _proximityThreshold)
             {
                 t += Time.deltaTime / reachTime;
-                scrap.transform.position = Vector3.Lerp(scrap.transform.position,
+                scrap.transform.position = Vector3.Lerp(
+                    scrap.transform.position,
                     _player.transform.position,
                     Mathf.SmoothStep(0.0f, 1.0f, t));
                 yield return null; // Wait for the next frame

@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using TMPro;
     using UnityEngine;
@@ -50,7 +50,7 @@ namespace BTG
 
             if (cooldown < 0.9f)
 
-                // display one decimal after the zero
+            // display one decimal after the zero
             {
                 return "0." + Mathf.CeilToInt(cooldown * 10f);
             }

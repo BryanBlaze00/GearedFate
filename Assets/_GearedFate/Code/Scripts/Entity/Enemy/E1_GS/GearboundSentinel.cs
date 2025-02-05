@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -18,7 +18,7 @@ namespace BTG
     ///  - Spinning 360 spray right before burrowing?
     ///  - Throw bombs when pop up from burrow?
     ///  - Switch target distance constantly? Increase movement speed?
-    ///  
+    ///
     /// Different bullet patterns:
     ///  - shotgun spray (narrow or wide)
     ///  - spinning 360 degree spray
@@ -39,8 +39,8 @@ namespace BTG
 #if UNITY_EDITOR
         public string debugCurState;
 #endif
-        private readonly FiniteStateMachine<State> fsm = new ();
-        public readonly Dictionary<State, GSBaseState> States = new ();
+        private readonly FiniteStateMachine<State> fsm = new();
+        public readonly Dictionary<State, GSBaseState> States = new();
 
         public float CurrentHealth { get; private set; }
 
@@ -82,7 +82,7 @@ namespace BTG
 
         public AudioClip AudioLaserShot;
 
-        //public AudioClip AudioZapClap;
+        // public AudioClip AudioZapClap;
         public AudioClip AudioDeath;
         public AudioClip AudioMovement;
 
@@ -151,7 +151,8 @@ namespace BTG
 
         public float CalculateVolume(float delayBetweenSounds)
         {
-            return Mathf.Min((-0.05f / (delayBetweenSounds + 0.05f)) + (10f / 9f),
+            return Mathf.Min(
+                (-0.05f / (delayBetweenSounds + 0.05f)) + (10f / 9f),
                 1f); // quick formula to make fast repeated sounds not too loud
         }
 

@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using UnityEngine;
 
@@ -12,8 +12,10 @@ namespace BTG
 
         private int _lowAnimId;
 
-        protected RMBaseState(FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm,
-            RustedMarionette marionette, int highAnimId, int lowAnimId) : base(fsm)
+        protected RMBaseState(
+            FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm,
+            RustedMarionette marionette, int highAnimId, int lowAnimId)
+            : base(fsm)
         {
             Marionette = marionette;
             Marionette.OnHitTaken += HandleHitTaken;

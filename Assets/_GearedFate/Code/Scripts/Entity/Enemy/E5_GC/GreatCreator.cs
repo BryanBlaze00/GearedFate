@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -27,7 +27,7 @@ namespace BTG
 
         public Action OnHitTaken;
 
-        public readonly Dictionary<GreatCreatorState, GCBaseState> States = new ();
+        public readonly Dictionary<GreatCreatorState, GCBaseState> States = new();
 
         [field: SerializeField]
         public float MoveSpeed { get; private set; }
@@ -78,7 +78,7 @@ namespace BTG
 
         public Vector2 DirectionToTarget => (transform.position - _player.position).normalized;
 
-        private readonly FiniteStateMachine<GreatCreatorState> _fsm = new ();
+        private readonly FiniteStateMachine<GreatCreatorState> _fsm = new();
 
         [SerializeField]
         private Transform _spawnPos;
@@ -94,18 +94,24 @@ namespace BTG
             Agent.updateUpAxis = false;
             _player = FindFirstObjectByType<Player>().transform;
 
-            States.Add(GreatCreatorState.Idle,
+            States.Add(
+                GreatCreatorState.Idle,
                 new GCIdleState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Idle))));
-            States.Add(GreatCreatorState.Swarm,
+            States.Add(
+                GreatCreatorState.Swarm,
                 new GCSwarmState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Swarm))));
             States.Add(GreatCreatorState.RunAway, new GCRunAwayState(_fsm, this, Animator.StringToHash("Walk")));
-            States.Add(GreatCreatorState.Dash,
+            States.Add(
+                GreatCreatorState.Dash,
                 new GCDashState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Dash))));
-            States.Add(GreatCreatorState.Transform,
+            States.Add(
+                GreatCreatorState.Transform,
                 new GCTransformationState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Transform))));
-            States.Add(GreatCreatorState.Spin,
+            States.Add(
+                GreatCreatorState.Spin,
                 new GCSpinState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Spin))));
-            States.Add(GreatCreatorState.Death,
+            States.Add(
+                GreatCreatorState.Death,
                 new GCDeathState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Death))));
 
             _fsm.Initialize(States[GreatCreatorState.Idle]);

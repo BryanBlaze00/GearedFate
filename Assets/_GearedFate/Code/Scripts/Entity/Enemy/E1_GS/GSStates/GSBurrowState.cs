@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -17,7 +17,8 @@ namespace BTG
         private float initialVolume;
 
         public GSBurrowState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state,
-            GearboundSentinel gs) : base(fsm, state, gs)
+            GearboundSentinel gs)
+            : base(fsm, state, gs)
         {
         }
 

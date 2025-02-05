@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -9,7 +9,7 @@ namespace BTG
     public class MinMaxFloat
     {
         /// <summary>
-        /// Minimum value 
+        /// Minimum value
         /// </summary>
         public float Min;
 

@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -6,7 +6,7 @@ namespace BTG
     /// <summary>
     /// Cutscene Manager class to manage cutscene dialogues and transitions.
     /// </summary>
-using TMPro;
+    using TMPro;
     using UnityEngine;
     using UnityEngine.UI;
 

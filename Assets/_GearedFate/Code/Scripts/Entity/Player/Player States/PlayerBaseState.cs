@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -13,8 +13,8 @@ namespace BTG
         protected readonly PlayerData data;
         private readonly int animId;
 
-        public PlayerBaseState(FiniteStateMachine<Player.State> fsm, Player player, PlayerData data, int animId) :
-            base(fsm)
+        public PlayerBaseState(FiniteStateMachine<Player.State> fsm, Player player, PlayerData data, int animId)
+            : base(fsm)
         {
             this.player = player;
             this.data = data;

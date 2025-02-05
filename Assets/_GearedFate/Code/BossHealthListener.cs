@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using System.Linq;
     using UnityEngine;
@@ -21,11 +21,11 @@ namespace BTG
             _boss = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None).OfType<IBoss>().FirstOrDefault();
 #if UNITY_EDITOR
             if (_boss == null)
-         {
-             Debug.LogError($"No {nameof(IBoss)} object found in scene");
-         }
+            {
+                Debug.LogError($"No {nameof(IBoss)} object found in scene");
+            }
 #endif
-      }
+        }
 
         private void Update()
         {

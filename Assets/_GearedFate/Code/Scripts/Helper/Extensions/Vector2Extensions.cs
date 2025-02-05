@@ -1,4 +1,4 @@
-// Copyright (c) Dayen Creation. All rights reserved.
+﻿// Copyright (c) Dayen Creation. All rights reserved.
 
 namespace DayenCreation
 {
@@ -130,7 +130,7 @@ namespace DayenCreation
         }
 
         /// <summary>
-        /// Computes a random point in an annulus (a ring-shaped area) based on minimum and 
+        /// Computes a random point in an annulus (a ring-shaped area) based on minimum and
         /// maximum radius values around a central Vector2 point (origin).
         /// </summary>
         /// <param name="origin">The center Vector2 point of the annulus.</param>
@@ -140,7 +140,7 @@ namespace DayenCreation
         public static Vector2 RandomPointInAnnulus(this Vector2 origin, float minRadius, float maxRadius)
         {
             var angle = Random.value * Mathf.PI * 2f;
-            Vector2 direction = new (Mathf.Cos(angle), Mathf.Sin(angle));
+            Vector2 direction = new(Mathf.Cos(angle), Mathf.Sin(angle));
 
             // Squaring and then square-rooting radii to ensure uniform distribution within the annulus
             var minRadiusSquared = minRadius * minRadius;
@@ -159,11 +159,19 @@ namespace DayenCreation
         {
             Vector2 result;
             if (Mathf.Abs(vector.x) > Mathf.Abs(vector.y))
+            {
                 result = new Vector2(Mathf.Sign(vector.x), 0);
+            }
             else
+            {
                 result = new Vector2(0, Mathf.Sign(vector.y));
+            }
+
             if (!normalize)
+            {
                 result *= vector.magnitude;
+            }
+
             return result;
         }
     }

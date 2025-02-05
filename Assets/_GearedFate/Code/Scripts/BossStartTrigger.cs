@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using System.Linq;
     using UnityEngine;
@@ -16,7 +16,8 @@ namespace BTG
 
             if (Boss == null)
             {
-                Boss = (MonoBehaviour)FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include,
+                Boss = (MonoBehaviour)FindObjectsByType<MonoBehaviour>(
+                    FindObjectsInactive.Include,
                     FindObjectsSortMode.None).OfType<IBoss>().FirstOrDefault();
             }
 

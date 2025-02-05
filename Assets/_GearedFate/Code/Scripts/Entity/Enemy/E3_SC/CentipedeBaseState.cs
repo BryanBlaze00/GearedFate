@@ -1,11 +1,11 @@
-namespace BTG
+﻿namespace BTG
 {
     public abstract class CentipedeBaseState : BaseState<SteamCentipede.CentipedeState>
     {
         protected SteamCentipede Centipede { get; }
 
-        protected CentipedeBaseState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, SteamCentipede centipede) :
-            base(fsm)
+        protected CentipedeBaseState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, SteamCentipede centipede)
+            : base(fsm)
         {
             Centipede = centipede;
         }

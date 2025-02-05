@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 /**
  * This class is responsible for parallaxing the background.

@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -7,7 +7,7 @@ namespace BTG
     using UnityEngine.UI;
 
     /// <summary>
-    /// PlayerHUD_UI 
+    /// PlayerHUD_UI
     /// </summary>
     public class PlayerHUD_UI : MonoBehaviour
     {
@@ -222,7 +222,7 @@ namespace BTG
 
             if (cooldown < 0.9f)
 
-                // display one decimal after the zero
+            // display one decimal after the zero
             {
                 return "0." + Mathf.CeilToInt(cooldown * 10f);
             }

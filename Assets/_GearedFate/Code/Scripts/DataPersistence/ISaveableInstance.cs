@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     /// <summary>
     /// Implement this interface for objects that are instantiated at runtime and that need to be persistent.

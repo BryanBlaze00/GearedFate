@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -28,9 +28,9 @@ namespace BTG
         public PooledObjectType PooledObjectType { get; private set; }
 
         [field: SerializeField]
-        public ProjectileEffect Effect { get; private set; } //TODO: Might be implemented later
+        public ProjectileEffect Effect { get; private set; } // TODO: Might be implemented later
 
         [field: SerializeField]
-        public float EffectData { get; private set; } //TODO: Might be implemented later
+        public float EffectData { get; private set; } // TODO: Might be implemented later
     }
 }

@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -13,8 +13,13 @@ namespace BTG
         {
             if (other.gameObject.CompareTag("MovableCollider") &&
                 GameManager.Instance.GetCurrentScene() == "BossLevel 5")
+            {
                 GameManager.Instance.LoadCredits();
-            else if (other.gameObject.CompareTag("MovableCollider")) GameManager.Instance.LoadNextLevel();
+            }
+            else if (other.gameObject.CompareTag("MovableCollider"))
+            {
+                GameManager.Instance.LoadNextLevel();
+            }
         }
     }
 }

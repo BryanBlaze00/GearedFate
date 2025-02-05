@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -7,17 +7,18 @@ namespace BTG
     /// <summary>
     /// Base Super Class for entity states
     /// </summary>
-    public class FiniteStateMachine<State> where State : Enum
+    public class FiniteStateMachine<TState>
+        where TState : Enum
     {
-        public BaseState<State> CurrentState { get; private set; }
+        public BaseState<TState> CurrentState { get; private set; }
 
-        public void Initialize(BaseState<State> startState)
+        public void Initialize(BaseState<TState> startState)
         {
             CurrentState = startState;
             CurrentState.OnEnter();
         }
 
-        public void SwitchState(BaseState<State> nextState)
+        public void SwitchState(BaseState<TState> nextState)
         {
             CurrentState.OnExit();
             CurrentState = nextState;

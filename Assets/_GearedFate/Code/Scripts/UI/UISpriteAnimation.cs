@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -73,7 +73,7 @@ namespace BTG
 
             if (option)
 
-                // Optional: Reset sprite after animation completes
+            // Optional: Reset sprite after animation completes
             {
                 _image.sprite = _spriteArray[0];
             }

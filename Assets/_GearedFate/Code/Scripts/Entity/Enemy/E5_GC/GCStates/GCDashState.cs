@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using System.Linq;
     using UnityEngine;
@@ -7,9 +7,8 @@ namespace BTG
     {
         private Vector2 _dashStartingPosition;
 
-        public GCDashState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy,
-            int animId) : base(fsm,
-            enemy, animId)
+        public GCDashState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId)
+            : base(fsm, enemy, animId)
         {
             var smb = GreatCreator.Animator.GetBehaviours<MultiStepSmb>().First(x => x.Id == "Dash");
             smb.OnStepReached += HandleDashStepReached;

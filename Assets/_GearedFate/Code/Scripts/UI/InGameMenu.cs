@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using PrimeTween;
     using UnityEngine;
@@ -51,7 +51,7 @@ namespace BTG
 
                 var windowHeight = Screen.height;
 
-                //TODO maybe change anchor before
+                // TODO maybe change anchor before
                 Sequence.Create(1, CycleMode.Restart, 0f, true)
                     .Group(Tween.UIAnchoredPositionY(_mainMenuPanel, windowHeight / 2, 0.3f))
                     .Chain(Tween.UIAnchoredPositionY(_mainMenuPanel, (windowHeight / 2) + 5, 0.2f))

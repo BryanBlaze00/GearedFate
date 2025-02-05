@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using UnityEngine;
     using UnityEngine.AI;
@@ -26,7 +26,7 @@ namespace BTG
             var col = Physics2D.OverlapCircle(transform.position, 1, LayerMask.GetMask("Ground"));
             if (col != null)
             {
-                //Debug.Log(col.name);
+                // Debug.Log(col.name);
             }
 
             var hit = Physics2D.Raycast(transform.position, Vector2.down, 2, LayerMask.GetMask("Ground"));

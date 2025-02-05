@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -23,7 +23,8 @@ namespace BTG
         public bool GoingToCenter => _goingToCenter;
 
         public GCBaseState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy,
-            int animId) : base(fsm)
+            int animId)
+            : base(fsm)
         {
             GreatCreator = enemy;
             _animId = animId;

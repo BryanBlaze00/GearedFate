@@ -1,9 +1,9 @@
-namespace BTG
+﻿namespace BTG
 {
     public class GCDeathState : GCBaseState
     {
-        public GCDeathState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId) :
-            base(fsm, enemy, animId)
+        public GCDeathState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId)
+            : base(fsm, enemy, animId)
         {
         }
 

@@ -2,7 +2,8 @@
 {
     using UnityEngine;
 
-    public class PersistentSingleton<T> : MonoBehaviour where T : Component
+    public class PersistentSingleton<T> : MonoBehaviour
+        where T : Component
     {
         public bool AutoUnparentOnAwake = true;
 

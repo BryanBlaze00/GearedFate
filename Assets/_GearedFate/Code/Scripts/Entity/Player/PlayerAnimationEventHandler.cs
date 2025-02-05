@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -10,8 +10,6 @@ namespace BTG
     /// </summary>
     public class PlayerAnimationEventHandler : MonoBehaviour
     {
-        #region FireBlaze
-
         public event Action OnChargeUpFinishedEvent;
 
         [SerializeField]
@@ -19,10 +17,6 @@ namespace BTG
         {
             OnChargeUpFinishedEvent.Invoke();
         }
-
-        #endregion FireBlaze
-
-        #region FireSpin
 
         public event Action OnSpinChargeUpEvent;
 
@@ -39,8 +33,6 @@ namespace BTG
         {
             OnSpinFinishedEvent.Invoke();
         }
-
-        #endregion FireSpin
 
         public event Action OnGearTossEvent;
 

@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using UnityEngine;
 
@@ -33,7 +33,8 @@ namespace BTG
             float chasingDistance,
             float circlingDistance,
             float minTimeBeforeCharge,
-            float maxTimeBeforeCharge) : base(fsm, steamCentipede)
+            float maxTimeBeforeCharge)
+            : base(fsm, steamCentipede)
         {
             _animId = animationId;
             _chasingDistance = chasingDistance;

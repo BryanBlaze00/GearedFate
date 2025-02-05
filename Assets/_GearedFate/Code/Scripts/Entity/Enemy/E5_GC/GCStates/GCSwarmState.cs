@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -9,8 +9,8 @@ namespace BTG
     /// </summary>
     public class GCSwarmState : GCBaseState
     {
-        public GCSwarmState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId) :
-            base(fsm, enemy, animId)
+        public GCSwarmState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId)
+            : base(fsm, enemy, animId)
         {
             enemy.AnimationEventHandler.OnSpawnFinished += HandleSpawnFinished;
         }

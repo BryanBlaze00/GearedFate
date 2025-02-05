@@ -1,11 +1,12 @@
-namespace BTG
+﻿namespace BTG
 {
     using System.Linq;
 
     public class GCTransformationState : GCBaseState
     {
         public GCTransformationState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy,
-            int animId) : base(fsm, enemy, animId)
+            int animId)
+            : base(fsm, enemy, animId)
         {
             var smb = GreatCreator.Animator.GetBehaviours<MultiStepSmb>().First(x => x.Id == "Transform");
             smb.OnStepReached += HandleEndTransformation;

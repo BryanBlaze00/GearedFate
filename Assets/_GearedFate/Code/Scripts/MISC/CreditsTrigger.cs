@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -11,7 +11,10 @@ namespace BTG
     {
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent<Player>(out var player)) GameManager.Instance.LoadCredits();
+            if (other.TryGetComponent<Player>(out var player))
+            {
+                GameManager.Instance.LoadCredits();
+            }
         }
     }
 }

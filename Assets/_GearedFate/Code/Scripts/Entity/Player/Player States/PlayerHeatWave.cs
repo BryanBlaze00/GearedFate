@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -9,7 +9,8 @@ namespace BTG
     /// </summary>
     public class PlayerHeatWave : PlayerBaseState
     {
-        public PlayerHeatWave(FiniteStateMachine<Player.State> fsm, Player player, PlayerData data, int animId) : base(
+        public PlayerHeatWave(FiniteStateMachine<Player.State> fsm, Player player, PlayerData data, int animId)
+            : base(
             fsm, player, data, animId)
         {
             player.AnimEvent.OnSpinChargeUpEvent += BlastWave;

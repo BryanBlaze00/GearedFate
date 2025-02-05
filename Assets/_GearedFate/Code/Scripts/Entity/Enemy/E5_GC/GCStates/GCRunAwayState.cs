@@ -1,4 +1,4 @@
-namespace BTG
+﻿namespace BTG
 {
     using UnityEngine;
     using UnityEngine.AI;
@@ -6,7 +6,9 @@ namespace BTG
     public class GCRunAwayState : GCBaseState
     {
         public GCRunAwayState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy,
-            int animId) : base(fsm,
+            int animId)
+            : base(
+                fsm,
             enemy, animId)
         {
         }

@@ -1,11 +1,11 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
     using UnityEngine;
 
     /// <summary>
-    /// RandomUtility class to provide random utility functions. 
+    /// RandomUtility class to provide random utility functions.
     /// </summary>
     public static class RandomUtilily
     {

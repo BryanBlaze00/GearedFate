@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -7,8 +7,8 @@ namespace BTG
     /// </summary>
     public class GCIdleState : GCBaseState
     {
-        public GCIdleState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId) :
-            base(fsm, enemy, animId)
+        public GCIdleState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId)
+            : base(fsm, enemy, animId)
         {
         }
 

@@ -1,4 +1,4 @@
-// Copyright (c) BTG. All rights reserved.
+﻿// Copyright (c) BTG. All rights reserved.
 
 namespace BTG
 {
@@ -27,17 +27,16 @@ namespace BTG
             Dead,
         }
 
-        //TODO: if hit, immobilize/ invulnerabity for a moment and continue flashing (done from main script)
+        // TODO: if hit, immobilize/ invulnerabity for a moment and continue flashing (done from main script)
 
-        #region Player Control Fields
 
         [field: SerializeField]
         public PlayerData Data { get; private set; }
 
         public PlayerInputHandler Input { get; private set; }
 
-        private readonly FiniteStateMachine<State> fsm = new ();
-        public readonly Dictionary<State, PlayerBaseState> states = new ();
+        private readonly FiniteStateMachine<State> fsm = new();
+        public readonly Dictionary<State, PlayerBaseState> states = new();
         [HideInInspector]
         public bool isInvulnerable;
 
@@ -49,14 +48,12 @@ namespace BTG
 
         public float OutOfBoundsTime = 0f;
 
-        private readonly List<State> abilities = new ();
+        private readonly List<State> abilities = new();
         private int currentAbilityIndex;
 
         public State CurrentAbility { get; private set; }
 
-        #endregion Player Control Fields
 
-        #region Reference Fields
 
         [field: SerializeField]
         public PlayerInfoSO PlayerInfo { get; private set; }
@@ -94,9 +91,6 @@ namespace BTG
         private HitFlash hitFlash;
 
         private float _lastHit;
-
-        #endregion Reference Fields
-
         public AudioClip HurtAudio;
 
         public AudioClip ShootGearAudio;
@@ -110,8 +104,6 @@ namespace BTG
         public AudioClip DeathAudio;
 
         public AudioClip FlameBeam;
-
-        #region Unity CallBacks
 
         private void Awake()
         {
@@ -127,21 +119,24 @@ namespace BTG
             states.Add(State.Move, new PlayerMoveState(fsm, this, Data, Animator.StringToHash(nameof(State.Move))));
             states.Add(State.Dash, new PlayerDashState(fsm, this, Data, Animator.StringToHash(nameof(State.Dash))));
             states.Add(State.Slash, new PlayerSlashState(fsm, this, Data, Animator.StringToHash(nameof(State.Slash))));
-            states.Add(State.HeatWave,
+            states.Add(
+                State.HeatWave,
                 new PlayerHeatWave(fsm, this, Data, Animator.StringToHash(nameof(State.HeatWave))));
             states.Add(
                 State.GearToss,
                 new PlayerGearTossState(fsm, this, Data, Animator.StringToHash(nameof(State.GearToss))));
-            states.Add(State.FireBlaze,
+            states.Add(
+                State.FireBlaze,
                 new PlayerFireBlazeState(
                     fsm, this,
                     Data,
                     Animator.StringToHash("ChargeUp"))); ///Charges up before plays fireblaze Animation
-            states.Add(State.Hit,
+            states.Add(
+                State.Hit,
                 new PlayerHitState(
                     fsm, this,
                     Data,
-                    Animator.StringToHash(nameof(State.Idle)))); //TODO: change to hit (No animation yet)
+                    Animator.StringToHash(nameof(State.Idle)))); // TODO: change to hit (No animation yet)
             states.Add(State.Dead, new PlayerDeadState(fsm, this, Data, Animator.StringToHash(nameof(State.Dead))));
 
             abilities.Add(State.Slash);
@@ -197,7 +192,7 @@ namespace BTG
                     OutOfBoundsTime += Time.fixedDeltaTime;
                     if (OutOfBoundsTime >= 6f)
                     {
-                        //Debug.LogError("Player out of bounds!");
+                        // Debug.LogError("Player out of bounds!");
                         var found = false;
                         var searchRadius = 0.5f;
                         while (!found && searchRadius < 10f)
@@ -227,10 +222,6 @@ namespace BTG
                 return;
             }
         }
-
-        #endregion Unity CallBacks
-
-        #region Other Methods
 
         public void SetLookDir()
         {
@@ -338,8 +329,6 @@ namespace BTG
         private void OnDrawGizmos()
         {
         }
-
-        #endregion Other Methods
 
         public void LoadData(GameData data)
         {
