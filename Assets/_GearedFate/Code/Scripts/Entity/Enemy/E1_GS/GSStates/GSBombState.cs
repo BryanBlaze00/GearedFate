@@ -18,24 +18,24 @@ namespace BTG
 
         public override void OnEnter()
         {
-            gearboundSentinel.CurSpeed = 0f;
+            GearboundSentinel.CurSpeed = 0f;
             base.OnEnter();
-            gearboundSentinel.StartCoroutine(ThrowBombs());
+            GearboundSentinel.StartCoroutine(ThrowBombs());
         }
 
         public IEnumerator ThrowBombs()
         {
-            var timeBetweenBombs = gearboundSentinel.Phase switch // TODO: Make configurable
+            var timeBetweenBombs = GearboundSentinel.Phase switch // TODO: Make configurable
             {
                 0 => 0.6f,
                 1 => 0.4f,
                 _ => 0.15f
             };
             var veryFast = timeBetweenBombs < 0.25f;
-            gearboundSentinel.Animator.speed = 1f;
-            gearboundSentinel.Animator.Play("Bomb Throw Blend Tree", -1, 0f);
+            GearboundSentinel.Animator.speed = 1f;
+            GearboundSentinel.Animator.Play("Bomb Throw Blend Tree", -1, 0f);
             yield return null;
-            var animationLength = gearboundSentinel.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
+            var animationLength = GearboundSentinel.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
             var time = 0f;
 
             if (veryFast)
@@ -46,56 +46,56 @@ namespace BTG
 
             if (!veryFast)
             {
-                gearboundSentinel.Animator.speed = gearboundSentinel.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / timeBetweenBombs;
+                GearboundSentinel.Animator.speed = GearboundSentinel.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / timeBetweenBombs;
             }
 
-            for (int i = 0; i < 3 + gearboundSentinel.Phase; i++)
+            for (int i = 0; i < 3 + GearboundSentinel.Phase; i++)
             {
                 // pick a random direction's bomb position as the origin rather than having to do maths or consistently being off in the same direction.
                 var shotCalculationOrigin = CollectionExtensions.SelectRandom(
-                    gearboundSentinel.BombUpPos,
-                    gearboundSentinel.BombRightPos,
-                    gearboundSentinel.BombDownPos,
-                    gearboundSentinel.BombLeftPos);
-                Vector2 vec = gearboundSentinel.TargetPlayer.transform.position - shotCalculationOrigin.position
+                    GearboundSentinel.BombUpPos,
+                    GearboundSentinel.BombRightPos,
+                    GearboundSentinel.BombDownPos,
+                    GearboundSentinel.BombLeftPos);
+                Vector2 vec = GearboundSentinel.TargetPlayer.transform.position - shotCalculationOrigin.position
                               + new Vector3(
                                   Random.Range(-2f, 2f),
                                   Random.Range(-2f, 2f)); // add some randomness to the target position
-                gearboundSentinel.Animator.SetFloat("AttackDirX", vec.x);
-                gearboundSentinel.Animator.SetFloat("AttackDirY", vec.y);
+                GearboundSentinel.Animator.SetFloat("AttackDirX", vec.x);
+                GearboundSentinel.Animator.SetFloat("AttackDirY", vec.y);
 
                 // if almost instant, resume at current time but re-run the blend tree to rotate correctly. If not instant, restart the throw animation
-                gearboundSentinel.Animator.Play("Bomb Throw Blend Tree", -1, veryFast ? time / animationLength : 0f);
+                GearboundSentinel.Animator.Play("Bomb Throw Blend Tree", -1, veryFast ? time / animationLength : 0f);
                 yield return new WaitForSeconds(timeBetweenBombs);
-                if (gearboundSentinel.AudioBombThrow != null)
+                if (GearboundSentinel.AudioBombThrow != null)
                 {
-                    gearboundSentinel.AudioSource.PlayOneShot(
-                        gearboundSentinel.AudioBombThrow,
-                        gearboundSentinel.CalculateVolume(timeBetweenBombs));
+                    GearboundSentinel.AudioSource.PlayOneShot(
+                        GearboundSentinel.AudioBombThrow,
+                        GearboundSentinel.CalculateVolume(timeBetweenBombs));
                 }
 
                 var cardinal = vec.SnapToCardinal();
                 Transform spawnTransform = null;
                 if (cardinal.x > 0)
                 {
-                    spawnTransform = gearboundSentinel.BombRightPos;
+                    spawnTransform = GearboundSentinel.BombRightPos;
                 }
                 else if (cardinal.x < 0)
                 {
-                    spawnTransform = gearboundSentinel.BombLeftPos;
+                    spawnTransform = GearboundSentinel.BombLeftPos;
                 }
 
                 if (cardinal.y > 0)
                 {
-                    spawnTransform = gearboundSentinel.BombUpPos;
+                    spawnTransform = GearboundSentinel.BombUpPos;
                 }
                 else if (cardinal.y < 0)
                 {
-                    spawnTransform = gearboundSentinel.BombDownPos;
+                    spawnTransform = GearboundSentinel.BombDownPos;
                 }
 
                 var bomb = Object.Instantiate(
-                    gearboundSentinel.BombPrefab,
+                    GearboundSentinel.BombPrefab,
                     spawnTransform.position,
                     Quaternion.identity);
 
@@ -112,12 +112,12 @@ namespace BTG
                 time += timeBetweenBombs;
             }
 
-            Fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Chase]);
+            Fsm.SwitchState(GearboundSentinel[GearboundSentinel.State.Chase]);
         }
 
         public override void OnExit()
         {
-            gearboundSentinel.ResetMoveSpeed();
+            GearboundSentinel.ResetMoveSpeed();
             base.OnExit();
         }
 

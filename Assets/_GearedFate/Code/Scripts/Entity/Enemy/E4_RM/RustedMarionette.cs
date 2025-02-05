@@ -9,6 +9,14 @@
     /// </summary>
     public class RustedMarionette : MonoBehaviour, IDamagable, IBoss
     {
+        private readonly FiniteStateMachine<RustedMarionetteState> _fsm = new ();
+
+        private readonly Dictionary<RustedMarionetteState, RMBaseState> _states = new ();
+
+        private Player _player;
+
+        public event Action OnHitTaken;
+
         public enum RustedMarionetteState
         {
             Death = 0,
@@ -17,8 +25,6 @@
             CirclingLines = 3,
             StringMaze = 4,
         }
-
-        public event Action OnHitTaken;
 
         [field: SerializeField]
         public CircleSpawner CircleSpawner { get; private set; }
@@ -38,13 +44,9 @@
         [field: SerializeField]
         public float MaxHealth { get; private set; }
 
-        private Player _player;
-
-        private readonly FiniteStateMachine<RustedMarionetteState> _fsm = new ();
-
-        public readonly Dictionary<RustedMarionetteState, RMBaseState> _states = new ();
-
         public float CurrentHealth { get; private set; }
+
+        public RMBaseState this[RustedMarionetteState key] => _states[key];
 
         public void TakeDamage(float damage)
         {

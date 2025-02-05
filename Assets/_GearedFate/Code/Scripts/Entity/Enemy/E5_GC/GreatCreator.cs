@@ -14,6 +14,17 @@ namespace BTG
     /// </summary>
     public class GreatCreator : MonoBehaviour, IDamagable, IBoss
     {
+        private readonly Dictionary<GreatCreatorState, GCBaseState> _states = new ();
+
+        private readonly FiniteStateMachine<GreatCreatorState> _fsm = new ();
+
+        [SerializeField]
+        private Transform _spawnPos;
+
+        private Transform _player;
+
+        public event Action OnHitTaken;
+
         public enum GreatCreatorState
         {
             Idle,
@@ -24,10 +35,6 @@ namespace BTG
             Spin,
             Death,
         }
-
-        public Action OnHitTaken;
-
-        public readonly Dictionary<GreatCreatorState, GCBaseState> States = new ();
 
         [field: SerializeField]
         public float MoveSpeed { get; private set; }
@@ -53,10 +60,10 @@ namespace BTG
         public GreatCreatorAnimationEventHandler AnimationEventHandler { get; private set; }
 
         [field: SerializeField]
-        public MinMaxInt SwarmAmount;
+        public MinMaxInt SwarmAmount { get; private set; }
 
         [field: SerializeField]
-        public MinMaxFloat SwarmCoolDown;
+        public MinMaxFloat SwarmCoolDown { get; private set; }
 
         [field: SerializeField]
         public float DashForce { get; private set; }
@@ -78,71 +85,15 @@ namespace BTG
 
         public Vector2 DirectionToTarget => (transform.position - _player.position).normalized;
 
-        private readonly FiniteStateMachine<GreatCreatorState> _fsm = new ();
-
-        [SerializeField]
-        private Transform _spawnPos;
-
         [field: SerializeField]
         public NavMeshAgent Agent { get; private set; }
 
-        private Transform _player;
+        public GCBaseState this[GreatCreatorState key] => _states[key];
 
-        private void Start()
+        public void SetAnimationMoveParameters(Vector2 move)
         {
-            Agent.updateRotation = false;
-            Agent.updateUpAxis = false;
-            _player = FindFirstObjectByType<Player>().transform;
-
-            States.Add(
-                GreatCreatorState.Idle,
-                new GCIdleState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Idle))));
-            States.Add(
-                GreatCreatorState.Swarm,
-                new GCSwarmState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Swarm))));
-            States.Add(GreatCreatorState.RunAway, new GCRunAwayState(_fsm, this, Animator.StringToHash("Walk")));
-            States.Add(
-                GreatCreatorState.Dash,
-                new GCDashState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Dash))));
-            States.Add(
-                GreatCreatorState.Transform,
-                new GCTransformationState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Transform))));
-            States.Add(
-                GreatCreatorState.Spin,
-                new GCSpinState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Spin))));
-            States.Add(
-                GreatCreatorState.Death,
-                new GCDeathState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Death))));
-
-            _fsm.Initialize(States[GreatCreatorState.Idle]);
-            Stage = 0;
-            CurrentHealth = MaxHealth;
-
-            AnimMoveX = Animator.StringToHash("MoveX");
-            AnimMoveY = Animator.StringToHash("MoveY");
-        }
-
-        private void Update()
-        {
-            _fsm.CurrentState.OnFrameUpdate();
-        }
-
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            if (collision.collider.CompareTag("Player"))
-            {
-                collision.collider.GetComponent<Player>().Knockback.GetKnockedBack(transform, 1f);
-                if (_fsm.CurrentState.GetType() == typeof(GCDashState))
-                {
-                    collision.collider.GetComponent<Player>().TakeDamage(10f);
-                }
-            }
-        }
-
-        public void SetAnimationMoveParameters(Vector2 Move)
-        {
-            Animator.SetFloat(AnimMoveX, Move.x);
-            Animator.SetFloat(AnimMoveY, Move.y);
+            Animator.SetFloat(AnimMoveX, move.x);
+            Animator.SetFloat(AnimMoveY, move.y);
         }
 
         public void SpawnMinions(int amount)
@@ -167,24 +118,24 @@ namespace BTG
                 Stage++;
                 if (Stage == 1)
                 {
-                    _fsm.SwitchState(States[GreatCreatorState.Transform]);
-                    ((GCRunAwayState)States[GreatCreatorState.RunAway]).SetAnimation(
+                    _fsm.SwitchState(_states[GreatCreatorState.Transform]);
+                    ((GCRunAwayState)_states[GreatCreatorState.RunAway]).SetAnimation(
                         Animator.StringToHash("WalkPhase2FourArms"));
-                    ((GCSpinState)States[GreatCreatorState.Swarm]).SetAnimation(Animator.StringToHash("Spin"));
+                    ((GCSpinState)_states[GreatCreatorState.Swarm]).SetAnimation(Animator.StringToHash("Spin"));
                 }
 
                 if (Stage == 2)
                 {
-                    ((GCRunAwayState)States[GreatCreatorState.RunAway]).SetAnimation(
+                    ((GCRunAwayState)_states[GreatCreatorState.RunAway]).SetAnimation(
                         Animator.StringToHash("WalkPhase2ThreeArms"));
-                    _fsm.SwitchState(States[GreatCreatorState.RunAway]);
+                    _fsm.SwitchState(_states[GreatCreatorState.RunAway]);
                 }
 
                 if (Stage == 3)
                 {
-                    ((GCRunAwayState)States[GreatCreatorState.RunAway]).SetAnimation(
+                    ((GCRunAwayState)_states[GreatCreatorState.RunAway]).SetAnimation(
                         Animator.StringToHash("WalkPhase2TwoArms"));
-                    _fsm.SwitchState(States[GreatCreatorState.RunAway]);
+                    _fsm.SwitchState(_states[GreatCreatorState.RunAway]);
                 }
             }
 
@@ -223,6 +174,57 @@ namespace BTG
                 laser.transform.position = transform.position;
                 laser.GetComponent<Rigidbody2D>().linearVelocity = start * 5;
                 start = Quaternion.AngleAxis(30, Vector3.forward) * start;
+            }
+        }
+
+        private void Start()
+        {
+            Agent.updateRotation = false;
+            Agent.updateUpAxis = false;
+            _player = FindFirstObjectByType<Player>().transform;
+
+            _states.Add(
+                GreatCreatorState.Idle,
+                new GCIdleState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Idle))));
+            _states.Add(
+                GreatCreatorState.Swarm,
+                new GCSwarmState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Swarm))));
+            _states.Add(GreatCreatorState.RunAway, new GCRunAwayState(_fsm, this, Animator.StringToHash("Walk")));
+            _states.Add(
+                GreatCreatorState.Dash,
+                new GCDashState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Dash))));
+            _states.Add(
+                GreatCreatorState.Transform,
+                new GCTransformationState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Transform))));
+            _states.Add(
+                GreatCreatorState.Spin,
+                new GCSpinState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Spin))));
+            _states.Add(
+                GreatCreatorState.Death,
+                new GCDeathState(_fsm, this, Animator.StringToHash(nameof(GreatCreatorState.Death))));
+
+            _fsm.Initialize(_states[GreatCreatorState.Idle]);
+            Stage = 0;
+            CurrentHealth = MaxHealth;
+
+            AnimMoveX = Animator.StringToHash("MoveX");
+            AnimMoveY = Animator.StringToHash("MoveY");
+        }
+
+        private void Update()
+        {
+            _fsm.CurrentState.OnFrameUpdate();
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.collider.CompareTag("Player"))
+            {
+                collision.collider.GetComponent<Player>().Knockback.GetKnockedBack(transform, 1f);
+                if (_fsm.CurrentState.GetType() == typeof(GCDashState))
+                {
+                    collision.collider.GetComponent<Player>().TakeDamage(10f);
+                }
             }
         }
     }

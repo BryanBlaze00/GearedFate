@@ -26,6 +26,12 @@ namespace BTG
     /// </summary>
     public class GearboundSentinel : MonoBehaviour, IDamagable, IBoss
     {
+        private readonly FiniteStateMachine<State> _fsm = new ();
+
+        private readonly Dictionary<State, GSBaseState> _states = new ();
+
+        private float _curSpeed;
+
         public enum State
         {
             Intro,
@@ -36,34 +42,27 @@ namespace BTG
             Dying,
         }
 
-#if UNITY_EDITOR
-        public string debugCurState;
-#endif
-        private readonly FiniteStateMachine<State> fsm = new ();
-        public readonly Dictionary<State, GSBaseState> States = new ();
+        public int Phase { get; set; }
+
+        public float CurDistanceGoal { get; set; }
 
         public float CurrentHealth { get; private set; }
 
         float IBoss.MaxHealth => Data.MaxHealth;
 
-        public int Phase = 0;
-        public float CurDistanceGoal;
-
         public float CurSpeed
         {
-            get => curSpeed;
+            get => _curSpeed;
             set
             {
-                curSpeed = value;
-                NavMeshAgent.speed = curSpeed;
-                if (NavMeshAgent.velocity.magnitude > curSpeed)
+                _curSpeed = value;
+                NavMeshAgent.speed = _curSpeed;
+                if (NavMeshAgent.velocity.magnitude > _curSpeed)
                 {
-                    NavMeshAgent.velocity = NavMeshAgent.velocity.normalized * curSpeed;
+                    NavMeshAgent.velocity = NavMeshAgent.velocity.normalized * _curSpeed;
                 }
             }
         }
-
-        private float curSpeed;
 
         [Header("Assign References")]
         [field:SerializeField]
@@ -138,36 +137,7 @@ namespace BTG
         [field:SerializeField]
         public Transform BombLeftPos { get; private set; }
 
-        private void Awake()
-        {
-            if (NavMeshAgent == null)
-            {
-                NavMeshAgent = GetComponent<NavMeshAgent>();
-            }
-
-            NavMeshAgent.updateRotation = false;
-            NavMeshAgent.updateUpAxis = false;
-            ResetMoveSpeed();
-            CurrentHealth = Data.MaxHealth;
-            Phase = 0;
-
-            if (Animator == null)
-            {
-                Animator = GetComponentInChildren<Animator>();
-            }
-
-            if (AudioSource == null)
-            {
-                AudioSource = GetComponent<AudioSource>();
-            }
-
-            AddState(new GSIntroState(fsm, State.Intro, this));
-            AddState(new GSChaseState(fsm, State.Chase, this));
-            AddState(new GSBurrowState(fsm, State.Burrow, this));
-            AddState(new GSShootState(fsm, State.Shoot, this));
-            AddState(new GSBombState(fsm, State.Bomb, this));
-            AddState(new GSDyingState(fsm, State.Dying, this));
-        }
+        public GSBaseState this[State key] => _states[key];
 
         public void EnableColliders()
         {
@@ -199,38 +169,6 @@ namespace BTG
                 1f); // quick formula to make fast repeated sounds not too loud
         }
 
-        private void AddState(GSBaseState GSstate)
-        {
-            States.Add(GSstate.State, GSstate);
-        }
-
-        private void Start()
-        {
-            CurDistanceGoal = Data.BaseDistanceGoal;
-            fsm.Initialize(States[State.Intro]);
-        }
-
-        private void Update()
-        {
-#if UNITY_EDITOR
-            debugCurState = fsm.CurrentState.ToString();
-#endif
-            fsm.CurrentState.OnFrameUpdate();
-        }
-
-        private void FixedUpdate()
-        {
-            fsm.CurrentState.OnPhysicsUpdate();
-            var corners = NavMeshAgent.path?.corners;
-
-            if (corners != null && corners.Length >= 2)
-            {
-                var movingDir = corners[1] - transform.position;
-                Animator.SetFloat("MoveDirX", movingDir.x);
-                Animator.SetFloat("MoveDirY", movingDir.y);
-            }
-        }
-
         public void TakeDamage(float damage)
         {
             if (CurrentHealth <= 0)
@@ -243,12 +181,72 @@ namespace BTG
             if (CurrentHealth <= 0)
             {
                 CurrentHealth = 0;
-                fsm.SwitchState(States[State.Dying]);
+                _fsm.SwitchState(_states[State.Dying]);
             }
 
             if (Phase < Data.StageTransitionHealthPercentage.Count && CurrentHealth < Data.MaxHealth * Data.StageTransitionHealthPercentage[Phase])
             {
                 Phase++;
+            }
+        }
+
+        private void Awake()
+        {
+            if (NavMeshAgent == null)
+            {
+                NavMeshAgent = GetComponent<NavMeshAgent>();
+            }
+
+            NavMeshAgent.updateRotation = false;
+            NavMeshAgent.updateUpAxis = false;
+            ResetMoveSpeed();
+            CurrentHealth = Data.MaxHealth;
+            Phase = 0;
+
+            if (Animator == null)
+            {
+                Animator = GetComponentInChildren<Animator>();
+            }
+
+            if (AudioSource == null)
+            {
+                AudioSource = GetComponent<AudioSource>();
+            }
+
+            AddState(new GSIntroState(_fsm, State.Intro, this));
+            AddState(new GSChaseState(_fsm, State.Chase, this));
+            AddState(new GSBurrowState(_fsm, State.Burrow, this));
+            AddState(new GSShootState(_fsm, State.Shoot, this));
+            AddState(new GSBombState(_fsm, State.Bomb, this));
+            AddState(new GSDyingState(_fsm, State.Dying, this));
+        }
+
+        private void AddState(GSBaseState gsState)
+        {
+            _states.Add(gsState.State, gsState);
+        }
+
+        private void Start()
+        {
+            CurDistanceGoal = Data.BaseDistanceGoal;
+            _fsm.Initialize(_states[State.Intro]);
+        }
+
+        private void Update()
+        {
+            _fsm.CurrentState.OnFrameUpdate();
+        }
+
+        private void FixedUpdate()
+        {
+            _fsm.CurrentState.OnPhysicsUpdate();
+            var corners = NavMeshAgent.path?.corners;
+
+            if (corners != null && corners.Length >= 2)
+            {
+                var movingDir = corners[1] - transform.position;
+                Animator.SetFloat("MoveDirX", movingDir.x);
+                Animator.SetFloat("MoveDirY", movingDir.y);
             }
         }
     }

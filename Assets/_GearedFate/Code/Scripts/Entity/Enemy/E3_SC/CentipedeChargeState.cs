@@ -10,8 +10,7 @@
 
         private VectorHelper2D.Direction _circleDirection;
 
-        public CentipedeChargeState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId,
-            SteamCentipede steamCentipede)
+        public CentipedeChargeState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId, SteamCentipede steamCentipede)
             : base(fsm, steamCentipede)
         {
             _animId = animationId;

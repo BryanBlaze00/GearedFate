@@ -14,40 +14,6 @@
             smb.OnStepReached += HandleDashStepReached;
         }
 
-        private void HandleDashStepReached(int step)
-        {
-            switch (step)
-            {
-                case 0:
-                    HandleStartDash();
-                    break;
-                case 1:
-                    HandleEndDash();
-                    break;
-                case 2:
-                    HandleAnimationEnd();
-                    break;
-            }
-        }
-
-        private void HandleAnimationEnd()
-        {
-            GreatCreator.Agent.isStopped = false;
-            Fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
-        }
-
-        private void HandleEndDash()
-        {
-            GreatCreator.Rigidbody.linearVelocity = Vector2.zero;
-        }
-
-        private void HandleStartDash()
-        {
-            _dashStartingPosition = GreatCreator.transform.position;
-            GreatCreator.SetAnimationMoveParameters(-GreatCreator.DirectionToTarget);
-            GreatCreator.Rigidbody.AddForce(-GreatCreator.DashForce * GreatCreator.DirectionToTarget);
-        }
-
         public override void OnEnter()
         {
             PlayAnimation();
@@ -73,6 +39,40 @@
 
         public override void OnPhysicsUpdate()
         {
+        }
+
+        private void HandleDashStepReached(int step)
+        {
+            switch (step)
+            {
+                case 0:
+                    HandleStartDash();
+                    break;
+                case 1:
+                    HandleEndDash();
+                    break;
+                case 2:
+                    HandleAnimationEnd();
+                    break;
+            }
+        }
+
+        private void HandleAnimationEnd()
+        {
+            GreatCreator.Agent.isStopped = false;
+            Fsm.SwitchState(GreatCreator[GreatCreator.GreatCreatorState.Idle]);
+        }
+
+        private void HandleEndDash()
+        {
+            GreatCreator.Rigidbody.linearVelocity = Vector2.zero;
+        }
+
+        private void HandleStartDash()
+        {
+            _dashStartingPosition = GreatCreator.transform.position;
+            GreatCreator.SetAnimationMoveParameters(-GreatCreator.DirectionToTarget);
+            GreatCreator.Rigidbody.AddForce(-GreatCreator.DashForce * GreatCreator.DirectionToTarget);
         }
     }
 }

@@ -14,6 +14,6 @@ namespace BTG
     public class PlayerInfoSO : ScriptableObject
     {
         [ReadOnly]
-        public Vector2 position;
+        private Vector2 _position;
     }
 }

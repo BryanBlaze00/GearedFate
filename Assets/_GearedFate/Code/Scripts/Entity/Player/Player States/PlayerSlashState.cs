@@ -23,20 +23,20 @@ namespace BTG
 
         public override void OnEnter()
         {
-            AudioManager.Instance.PlaySFX(player.SlashAudio);
+            AudioManager.Instance.PlaySFX(Player.SlashAudio);
             var id = Random.Range(0, 3);
-            player.Anim.Play(slashIds[id]);
+            Player.Anim.Play(slashIds[id]);
 
-            var direction = player.CurrentDirection;
+            var direction = Player.CurrentDirection;
             var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            var pos = player.SlashPos;
+            var pos = Player.SlashPos;
 
             pos.parent.rotation = Quaternion.Euler(0, 0, angle + 90);
 
-            var collisions = Physics2D.OverlapCircleAll(pos.position, data.SlashRadius, data.EnemyLayerMask);
+            var collisions = Physics2D.OverlapCircleAll(pos.position, Data.SlashRadius, Data.EnemyLayerMask);
             foreach (var collision in collisions)
             {
-                collision.GetComponent<IDamagable>()?.TakeDamage(data.SlashDamage);
+                collision.GetComponent<IDamagable>()?.TakeDamage(Data.SlashDamage);
             }
 
             startTime = Time.time;
@@ -44,15 +44,15 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            player.RB.linearVelocity = data.MoveSpeed * player.Input.MoveInput;
-            player.SetLookDir();
+            Player.RB.linearVelocity = Data.MoveSpeed * Player.Input.MoveInput;
+            Player.SetLookDir();
 
-            if (Time.time > startTime + data.SlashCoolDown)
+            if (Time.time > startTime + Data.SlashCoolDown)
             {
                 Fsm.SwitchState(
-                    player.Input.MoveInput == Vector2.zero
-                        ? player.states[Player.State.Idle]
-                        : player.states[Player.State.Move]);
+                    Player.Input.MoveInput == Vector2.zero
+                        ? Player[Player.State.Idle]
+                        : Player[Player.State.Move]);
             }
         }
     }

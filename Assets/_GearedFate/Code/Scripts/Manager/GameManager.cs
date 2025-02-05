@@ -39,16 +39,9 @@ namespace BTG
 
         private string currentScene;
 
-        protected override void Awake() // Use protected override for Singleton's Awake
-        {
-            base.Awake(); // Important: Call the base Singleton Awake!
-
-            currentScene = SceneManager.GetActiveScene().name;
-        }
-
         public void LoadMainMenu()
         {
-            AudioManager.instance.PlayMenuClip();
+            AudioManager.Instance.PlayMenuClip();
             LoadScene(mainMenuScene);
         }
 
@@ -140,15 +133,9 @@ namespace BTG
                 SceneManager.LoadScene(++currentBuildScene);
                 if (currentBuildScene % 2 != 0)
                 {
-                    AudioManager.instance.PlayCorrrectClip(currentBuildScene);
+                    AudioManager.Instance.PlayCorrrectClip(currentBuildScene);
                 }
             }
-        }
-
-        private void LoadScene(string sceneName)
-        {
-            currentScene = sceneName;
-            SceneManager.LoadScene(sceneName);
         }
 
         public void RestartLevel()
@@ -169,6 +156,19 @@ namespace BTG
         public void QuitGame()
         {
             Application.Quit();
+        }
+
+        protected override void Awake() // Use protected override for Singleton's Awake
+        {
+            base.Awake(); // Important: Call the base Singleton Awake!
+
+            currentScene = SceneManager.GetActiveScene().name;
+        }
+
+        private void LoadScene(string sceneName)
+        {
+            currentScene = sceneName;
+            SceneManager.LoadScene(sceneName);
         }
     }
 }

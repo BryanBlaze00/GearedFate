@@ -8,16 +8,6 @@ namespace BTG
     [System.Serializable]
     public class MinMaxInt
     {
-        /// <summary>
-        /// Minimum value
-        /// </summary>
-        public int Min;
-
-        /// <summary>
-        /// Maximum value
-        /// </summary>
-        public int Max;
-
         public MinMaxInt()
         {
             Min = 0;
@@ -34,5 +24,15 @@ namespace BTG
             Min = min;
             Max = max;
         }
+
+        /// <summary>
+        /// Minimum value
+        /// </summary>
+        public int Min { get; }
+
+        /// <summary>
+        /// Maximum value
+        /// </summary>
+        public int Max { get; }
     }
 }

@@ -7,6 +7,7 @@ namespace BTG
     using UnityEngine;
     using UnityEngine.AI;
     using UnityEngine.SceneManagement;
+    using UnityEngine.Serialization;
 
     /// <summary>
     /// Base Super Class for entity states
@@ -14,6 +15,24 @@ namespace BTG
     [RequireComponent(typeof(Rigidbody2D))]
     public class Player : MonoBehaviour, IDamagable, IDataPersistence, IHealable, IRefuelable
     {
+        private readonly Dictionary<State, PlayerBaseState> _states = new ();
+
+        private readonly List<State> _abilities = new ();
+
+        private readonly FiniteStateMachine<State> _fsm = new ();
+
+        private float _outOfBoundsTime = 0f;
+
+        private int _currentAbilityIndex;
+
+        private HitFlash _hitFlash;
+
+        private float _lastHit;
+
+        [FormerlySerializedAs("renderer")]
+        [SerializeField]
+        private SpriteRenderer _renderer;
+
         public enum State
         {
             Idle,
@@ -27,18 +46,7 @@ namespace BTG
             Dead,
         }
 
-        public readonly Dictionary<State, PlayerBaseState> states = new ();
-
-        [HideInInspector]
-        public bool isInvulnerable;
-
-        public float OutOfBoundsTime = 0f;
-
-        private readonly List<State> abilities = new ();
-
-        private int currentAbilityIndex;
-
-        private readonly FiniteStateMachine<State> fsm = new ();
+        public bool IsInvulnerable { get; set; }
 
         [field: SerializeField]
         public PlayerData Data { get; private set; }
@@ -71,9 +79,6 @@ namespace BTG
         [field: SerializeField]
         public Transform SlashPos { get; private set; }
 
-        [SerializeField]
-        private new SpriteRenderer renderer;
-
         public PlayerAnimationEventHandler AnimEvent { get; private set; }
 
         public Knockback Knockback { get; private set; }
@@ -85,10 +90,6 @@ namespace BTG
         public int AnimMoveX { get; private set; }
 
         public int AnimMoveY { get; private set; }
-
-        private HitFlash hitFlash;
-
-        private float _lastHit;
 
         [field:SerializeField]
         public AudioClip HurtAudio { get; private set; }
@@ -111,6 +112,8 @@ namespace BTG
         [field:SerializeField]
         public AudioClip FlameBeam { get; private set; }
 
+        public PlayerBaseState this[State key] => _states[key];
+
         public void SetLookDir()
         {
             if (Input.MoveInput == Vector2.zero)
@@ -126,7 +129,7 @@ namespace BTG
 
         public void CheckIfShouldFlip()
         {
-            renderer.flipX = Input.MoveInput.x == -1;
+            _renderer.flipX = Input.MoveInput.x == -1;
         }
 
         public void BurnAttackFuel(float fuel)
@@ -162,7 +165,7 @@ namespace BTG
 
         public void TakeDamage(float damage)
         {
-            if (isInvulnerable)
+            if (IsInvulnerable)
             {
                 return;
             }
@@ -174,13 +177,13 @@ namespace BTG
                 {
                     AudioManager.Instance.PlaySFX(HurtAudio);
                     StartCoroutine(SetInvulnerable());
-                    hitFlash.HitFlashRoutine();
+                    _hitFlash.HitFlashRoutine();
                     _lastHit = Time.time;
                     Debug.Log("Health: " + CurrentHealth);
                 }
 
-                fsm.SwitchState(
-                    CurrentHealth <= 0 ? states[State.Dead] : states[State.Hit]);
+                _fsm.SwitchState(
+                    CurrentHealth <= 0 ? _states[State.Dead] : _states[State.Hit]);
             }
         }
 
@@ -198,9 +201,9 @@ namespace BTG
 
         public void ChangeCurrentAbility(int value)
         {
-            currentAbilityIndex += value + 4; /// if cA = 0 & value = -1 then cA = 0 - 1 + 4 => cA = 3
-            currentAbilityIndex %= 4; /// if cA = 3 & value = 1 then cA = (3 + 1)%4 = 0
-            CurrentAbility = abilities[currentAbilityIndex];
+            _currentAbilityIndex += value + 4; /// if cA = 0 & value = -1 then cA = 0 - 1 + 4 => cA = 3
+            _currentAbilityIndex %= 4; /// if cA = 3 & value = 1 then cA = (3 + 1)%4 = 0
+            CurrentAbility = _abilities[_currentAbilityIndex];
         }
 
         public void LoadData(GameData data)
@@ -212,7 +215,7 @@ namespace BTG
 
         public void SaveData(ref GameData data)
         {
-            data.PlayerData = new PlayerSaveStruct(transform.position, CurrentAttackFuelAmount, CurrentHealth);
+            data.SavePlayerData(new PlayerSaveStruct(transform.position, CurrentAttackFuelAmount, CurrentHealth));
         }
 
         private void LateUpdate()
@@ -222,7 +225,7 @@ namespace BTG
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (isInvulnerable)
+            if (IsInvulnerable)
             {
                 return;
             }
@@ -231,7 +234,7 @@ namespace BTG
         private IEnumerator SetInvulnerable()
         {
             yield return null;
-            isInvulnerable = true;
+            IsInvulnerable = true;
         }
 
         private void MyDebug()
@@ -249,43 +252,43 @@ namespace BTG
             var body = transform.Find("Graphics").Find("Body");
             Anim = body.GetComponent<Animator>();
             AnimEvent = body.GetComponent<PlayerAnimationEventHandler>();
-            hitFlash = GetComponentInChildren<HitFlash>();
+            _hitFlash = GetComponentInChildren<HitFlash>();
             Knockback = GetComponentInChildren<Knockback>();
 
-            states.Add(State.Idle, new PlayerIdleState(fsm, this, Data, Animator.StringToHash(nameof(State.Idle))));
-            states.Add(State.Move, new PlayerMoveState(fsm, this, Data, Animator.StringToHash(nameof(State.Move))));
-            states.Add(State.Dash, new PlayerDashState(fsm, this, Data, Animator.StringToHash(nameof(State.Dash))));
-            states.Add(State.Slash, new PlayerSlashState(fsm, this, Data, Animator.StringToHash(nameof(State.Slash))));
-            states.Add(
+            _states.Add(State.Idle, new PlayerIdleState(_fsm, this, Data, Animator.StringToHash(nameof(State.Idle))));
+            _states.Add(State.Move, new PlayerMoveState(_fsm, this, Data, Animator.StringToHash(nameof(State.Move))));
+            _states.Add(State.Dash, new PlayerDashState(_fsm, this, Data, Animator.StringToHash(nameof(State.Dash))));
+            _states.Add(State.Slash, new PlayerSlashState(_fsm, this, Data, Animator.StringToHash(nameof(State.Slash))));
+            _states.Add(
                 State.HeatWave,
-                new PlayerHeatWave(fsm, this, Data, Animator.StringToHash(nameof(State.HeatWave))));
+                new PlayerHeatWave(_fsm, this, Data, Animator.StringToHash(nameof(State.HeatWave))));
 
-            states.Add(
+            _states.Add(
                 State.GearToss,
-                new PlayerGearTossState(fsm, this, Data, Animator.StringToHash(nameof(State.GearToss))));
+                new PlayerGearTossState(_fsm, this, Data, Animator.StringToHash(nameof(State.GearToss))));
 
-            states.Add(
+            _states.Add(
                 State.FireBlaze,
                 new PlayerFireBlazeState(
-                    fsm,
+                    _fsm,
                     this,
                     Data,
                     Animator.StringToHash("ChargeUp"))); ///Charges up before plays fireblaze Animation
 
-            states.Add(
+            _states.Add(
                 State.Hit,
                 new PlayerHitState(
-                    fsm,
+                    _fsm,
                     this,
                     Data,
                     Animator.StringToHash(nameof(State.Idle)))); // TODO: change to hit (No animation yet)
 
-            states.Add(State.Dead, new PlayerDeadState(fsm, this, Data, Animator.StringToHash(nameof(State.Dead))));
+            _states.Add(State.Dead, new PlayerDeadState(_fsm, this, Data, Animator.StringToHash(nameof(State.Dead))));
 
-            abilities.Add(State.Slash);
-            abilities.Add(State.FireBlaze);
-            abilities.Add(State.HeatWave);
-            abilities.Add(State.GearToss);
+            _abilities.Add(State.Slash);
+            _abilities.Add(State.FireBlaze);
+            _abilities.Add(State.HeatWave);
+            _abilities.Add(State.GearToss);
         }
 
         private void Start()
@@ -293,26 +296,26 @@ namespace BTG
             CurrentHealth = Data.Health;
             CurrentAttackFuelAmount = Data.MaxAttackFuelAmount;
             CurrentDirection = Vector2.down;
-            currentAbilityIndex = 0;
-            CurrentAbility = abilities[currentAbilityIndex];
+            _currentAbilityIndex = 0;
+            CurrentAbility = _abilities[_currentAbilityIndex];
             Blaze.SetActive(false);
             AnimMoveX = Animator.StringToHash("MoveX");
             AnimMoveY = Animator.StringToHash("MoveY");
-            fsm.Initialize(states[State.Idle]);
+            _fsm.Initialize(_states[State.Idle]);
         }
 
         private void Update()
         {
-            fsm.CurrentState.OnFrameUpdate();
+            _fsm.CurrentState.OnFrameUpdate();
             if (_lastHit + 1f < Time.time)
             {
-                isInvulnerable = false;
+                IsInvulnerable = false;
             }
         }
 
         private void FixedUpdate()
         {
-            fsm.CurrentState.OnPhysicsUpdate();
+            _fsm.CurrentState.OnPhysicsUpdate();
 
             // make sure the player isn't stuck out of bounds
             var walkMask = 1 << NavMesh.GetAreaFromName("Walkable");
@@ -320,20 +323,21 @@ namespace BTG
             var inBounds = NavMesh.SamplePosition(transform.position, out var hit, 0.1f, walkMask);
             var sceneName = SceneManager.GetActiveScene().name;
 
-            if (sceneName.Contains("Boss") || sceneName.Contains("boss")) // it's getting hackier and hackier
+            // it's getting hackier and hackier
+            if (sceneName.Contains("Boss") || sceneName.Contains("boss"))
             {
                 if (inBounds)
                 {
-                    OutOfBoundsTime--;
-                    if (OutOfBoundsTime < 0f)
+                    _outOfBoundsTime--;
+                    if (_outOfBoundsTime < 0f)
                     {
-                        OutOfBoundsTime = 0f;
+                        _outOfBoundsTime = 0f;
                     }
                 }
                 else
                 {
-                    OutOfBoundsTime += Time.fixedDeltaTime;
-                    if (OutOfBoundsTime >= 6f)
+                    _outOfBoundsTime += Time.fixedDeltaTime;
+                    if (_outOfBoundsTime >= 6f)
                     {
                         // Debug.LogError("Player out of bounds!");
                         var found = false;

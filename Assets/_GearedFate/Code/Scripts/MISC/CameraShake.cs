@@ -11,12 +11,7 @@ namespace BTG
     [RequireComponent(typeof(CinemachineBasicMultiChannelPerlin))]
     public class CameraShake : MonoBehaviour
     {
-        private CinemachineBasicMultiChannelPerlin noise;
-
-        private void Start()
-        {
-            noise = GetComponent<CinemachineBasicMultiChannelPerlin>();
-        }
+        private CinemachineBasicMultiChannelPerlin _noise;
 
         public void OnCamerShake()
         {
@@ -26,23 +21,28 @@ namespace BTG
 
         public void ShakeCamera(float duration, float amplitude, float frequency)
         {
-            if (noise != null)
+            if (_noise != null)
             {
-                noise.AmplitudeGain = amplitude;
-                noise.FrequencyGain = frequency;
+                _noise.AmplitudeGain = amplitude;
+                _noise.FrequencyGain = frequency;
             }
 
             StartCoroutine(StopShakeAfterDelay(duration));
+        }
+
+        private void Start()
+        {
+            _noise = GetComponent<CinemachineBasicMultiChannelPerlin>();
         }
 
         private System.Collections.IEnumerator StopShakeAfterDelay(float delay)
         {
             yield return new WaitForSeconds(delay);
 
-            if (noise != null)
+            if (_noise != null)
             {
-                noise.AmplitudeGain = 0f;
-                noise.FrequencyGain = 0f;
+                _noise.AmplitudeGain = 0f;
+                _noise.FrequencyGain = 0f;
             }
         }
     }

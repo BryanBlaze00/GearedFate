@@ -7,22 +7,25 @@ namespace BTG
     /// </summary>
     public class GSBaseState : BaseState<GearboundSentinel.State>
     {
-        protected GearboundSentinel gearboundSentinel;
-        public GearboundSentinel.State State;
+        private GearboundSentinel _gearboundSentinel;
+        private GearboundSentinel.State _state;
 
-        public GSBaseState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state,
-            GearboundSentinel gs)
+        public GSBaseState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state, GearboundSentinel gs)
             : base(fsm)
         {
-            gearboundSentinel = gs;
-            State = state;
+            _gearboundSentinel = gs;
+            _state = state;
         }
+
+        public GearboundSentinel.State State => _state;
+
+        protected GearboundSentinel GearboundSentinel => _gearboundSentinel;
 
         public override void OnEnter()
         {
             // TODO: Play animations
-            gearboundSentinel.AudioSource.pitch = 1f;
-            gearboundSentinel.EnableColliders(); // workaround rare bug where colliders got stuck disabled
+            _gearboundSentinel.AudioSource.pitch = 1f;
+            _gearboundSentinel.EnableColliders(); // workaround rare bug where colliders got stuck disabled
         }
 
         public override void OnExit()

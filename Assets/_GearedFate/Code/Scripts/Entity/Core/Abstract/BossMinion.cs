@@ -15,6 +15,8 @@ namespace BTG
     [RequireComponent(typeof(Knockback))]
     public abstract class BossMinion : MonoBehaviour, IDamagable
     {
+        private float _attackTimer;
+
         [Header("Boss Minion Stats")]
         [field:SerializeField]
         protected float Health { get; private set; }
@@ -46,7 +48,16 @@ namespace BTG
         [field:SerializeField]
         protected NavMeshAgent Agent { get; private set; }
 
-        private float attackTimer;
+        // No need to make it virtual as the task is always gonna be same
+        public void TakeDamage(float amount)
+        {
+            Debug.Log("Ouch! from " + name + " for " + amount + " damage.");
+            Health -= amount;
+            if (Health <= 0)
+            {
+                Die();
+            }
+        }
 
         protected virtual void Awake()
         {
@@ -58,7 +69,7 @@ namespace BTG
 
         protected virtual void Start()
         {
-            attackTimer = AttackCooldown;
+            _attackTimer = AttackCooldown;
         }
 
         protected virtual void Update()
@@ -72,32 +83,21 @@ namespace BTG
 
         protected abstract void Attack();
 
-        protected virtual void HandleAttack()
+        protected void HandleAttack()
         {
-            attackTimer -= Time.deltaTime;
-            if (attackTimer <= 0 && Vector3.Distance(transform.position, Target.position) <= AttackRange)
+            _attackTimer -= Time.deltaTime;
+            if (_attackTimer <= 0 && Vector3.Distance(transform.position, Target.position) <= AttackRange)
             {
                 Attack();
-                attackTimer = AttackCooldown;
+                _attackTimer = AttackCooldown;
             }
         }
 
-        protected virtual void MoveToTarget(Transform target)
+        protected void MoveToTarget(Transform target)
         {
             if (target != null && Agent.enabled)
             {
                 Agent.SetDestination(target.position);
-            }
-        }
-
-        /// No need to make it virtual as the task is always gonna be same
-        public void TakeDamage(float amount)
-        {
-            Debug.Log("Ouch! from " + name + " for " + amount + " damage.");
-            Health -= amount;
-            if (Health <= 0)
-            {
-                Die();
             }
         }
 
@@ -106,14 +106,14 @@ namespace BTG
             Agent.enabled = true;
         }
 
-        protected virtual void Die()
+        protected void Die()
         {
             Agent.enabled = false;
             Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
             gameObject.SetInactive(DestroyWaitTime);
         }
 
-        protected virtual void NMAgentSetup()
+        protected void NMAgentSetup()
         {
             Agent.speed = Speed;
             Agent.updateRotation = false;

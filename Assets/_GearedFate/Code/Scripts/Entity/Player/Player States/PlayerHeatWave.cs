@@ -19,15 +19,15 @@ namespace BTG
 
         ~PlayerHeatWave()
         {
-            player.AnimEvent.OnSpinChargeUpEvent -= BlastWave;
-            player.AnimEvent.OnSpinFinishedEvent -= SwitchState;
+            Player.AnimEvent.OnSpinChargeUpEvent -= BlastWave;
+            Player.AnimEvent.OnSpinFinishedEvent -= SwitchState;
         }
 
         public override void OnEnter()
         {
             base.OnEnter();
-            AudioManager.Instance.PlaySFX(player.FlameBeam);
-            player.RB.linearVelocity = Vector2.zero;
+            AudioManager.Instance.PlaySFX(Player.FlameBeam);
+            Player.RB.linearVelocity = Vector2.zero;
         }
 
         public override void OnFrameUpdate()
@@ -41,13 +41,13 @@ namespace BTG
 
         public void BlastWave()
         {
-            player.BlastHeatWave();
+            Player.BlastHeatWave();
         }
 
         public void SwitchState()
         {
             Fsm.SwitchState(
-                Input.MoveInput == Vector2.zero ? player.states[Player.State.Idle] : player.states[Player.State.Move]);
+                Input.MoveInput == Vector2.zero ? Player[Player.State.Idle] : Player[Player.State.Move]);
         }
     }
 }

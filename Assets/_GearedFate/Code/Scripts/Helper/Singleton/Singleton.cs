@@ -5,31 +5,31 @@
     public class Singleton<T> : MonoBehaviour
         where T : Component
     {
-        protected static T instance;
+        private static T _instance;
 
-        public static bool HasInstance => instance != null;
-
-        public static T TryGetInstance()
-        {
-            return HasInstance ? instance : null;
-        }
+        public static bool HasInstance => _instance != null;
 
         public static T Instance
         {
             get
             {
-                if (instance == null)
+                if (_instance == null)
                 {
-                    instance = FindAnyObjectByType<T>();
-                    if (instance == null)
+                    _instance = FindAnyObjectByType<T>();
+                    if (_instance == null)
                     {
                         var go = new GameObject(typeof(T).Name + " Auto-Generated");
-                        instance = go.AddComponent<T>();
+                        _instance = go.AddComponent<T>();
                     }
                 }
 
-                return instance;
+                return _instance;
             }
+        }
+
+        public static T TryGetInstance()
+        {
+            return HasInstance ? _instance : null;
         }
 
         /// <summary>
@@ -40,20 +40,20 @@
             InitializeSingleton();
         }
 
-        protected virtual void InitializeSingleton()
+        private void InitializeSingleton()
         {
             if (!Application.isPlaying)
             {
                 return;
             }
 
-            if (instance == null)
+            if (_instance == null)
             {
-                instance = this as T;
+                _instance = this as T;
             }
             else
             {
-                if (instance != this)
+                if (_instance != this)
                 {
                     Destroy(gameObject);
                 }

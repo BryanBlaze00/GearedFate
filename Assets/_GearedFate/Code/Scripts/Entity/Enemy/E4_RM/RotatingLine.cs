@@ -34,6 +34,40 @@
         [SerializeField]
         private float _rotatingTime = 0.1f;
 
+        public void SetAngle(float angle)
+        {
+            _angle = angle;
+        }
+
+        public void SetSpeed(float speed)
+        {
+            _rotationSpeed = speed;
+        }
+
+        private static Vector2 GetClosestPointOnLine(Vector2 a, Vector2 b, Vector2 p)
+        {
+            var ab = b - a; // Line direction
+            var ap = p - a; // Vector from A to P
+
+            var t = Vector2.Dot(ap, ab) / Vector2.Dot(ab, ab); // Projection factor
+            t = Mathf.Clamp01(t); // Clamp to segment
+
+            return a + (t * ab); // Closest point on the segment
+        }
+
+        private void IsOnLine()
+        {
+            var closestPointOnLine = GetClosestPointOnLine(
+                _line.Points[0] + (Vector2)transform.parent.position,
+                _line.Points[1] + (Vector2)transform.parent.position,
+                _target.position);
+            if (Vector2.Distance(closestPointOnLine, _target.position) < _tolerance)
+            {
+                _target.GetComponent<Player>().TakeDamage(_damage);
+                _target.GetComponent<Player>().Knockback.GetKnockedBack(closestPointOnLine, _knockback);
+            }
+        }
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         {
@@ -57,40 +91,6 @@
             }
 
             IsOnLine();
-        }
-
-        public void SetAngle(float angle)
-        {
-            _angle = angle;
-        }
-
-        public void SetSpeed(float speed)
-        {
-            _rotationSpeed = speed;
-        }
-
-        private void IsOnLine()
-        {
-            var closestPointOnLine = GetClosestPointOnLine(
-                _line.Points[0] + (Vector2)transform.parent.position,
-                _line.Points[1] + (Vector2)transform.parent.position,
-                _target.position);
-            if (Vector2.Distance(closestPointOnLine, _target.position) < _tolerance)
-            {
-                _target.GetComponent<Player>().TakeDamage(_damage);
-                _target.GetComponent<Player>().Knockback.GetKnockedBack(closestPointOnLine, _knockback);
-            }
-        }
-
-        private static Vector2 GetClosestPointOnLine(Vector2 a, Vector2 b, Vector2 p)
-        {
-            var ab = b - a; // Line direction
-            var ap = p - a; // Vector from A to P
-
-            var t = Vector2.Dot(ap, ab) / Vector2.Dot(ab, ab); // Projection factor
-            t = Mathf.Clamp01(t); // Clamp to segment
-
-            return a + (t * ab); // Closest point on the segment
         }
     }
 }

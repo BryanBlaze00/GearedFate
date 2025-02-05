@@ -4,18 +4,11 @@
 
     public class GCTransformationState : GCBaseState
     {
-        public GCTransformationState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy,
-            int animId)
+        public GCTransformationState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId)
             : base(fsm, enemy, animId)
         {
             var smb = GreatCreator.Animator.GetBehaviours<MultiStepSmb>().First(x => x.Id == "Transform");
             smb.OnStepReached += HandleEndTransformation;
-        }
-
-        private void HandleEndTransformation(int obj)
-        {
-            GreatCreator.Agent.isStopped = false;
-            Fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
         }
 
         public override void OnEnter()
@@ -34,6 +27,12 @@
 
         public override void OnPhysicsUpdate()
         {
+        }
+
+        private void HandleEndTransformation(int obj)
+        {
+            GreatCreator.Agent.isStopped = false;
+            Fsm.SwitchState(GreatCreator[GreatCreator.GreatCreatorState.Idle]);
         }
     }
 }

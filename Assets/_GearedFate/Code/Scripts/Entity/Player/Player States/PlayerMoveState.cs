@@ -37,12 +37,12 @@ namespace BTG
                 return;
             }
 
-            player.RB.linearVelocity = Input.MoveInput * data.MoveSpeed;
-            player.SetLookDir();
+            Player.RB.linearVelocity = Input.MoveInput * Data.MoveSpeed;
+            Player.SetLookDir();
 
             if (Input.MoveInput == Vector2.zero)
             {
-                Fsm.SwitchState(player.states[Player.State.Idle]);
+                Fsm.SwitchState(Player[Player.State.Idle]);
             }
         }
 

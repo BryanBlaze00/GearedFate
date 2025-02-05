@@ -1,29 +1,33 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 /**
  * This class is responsible for parallaxing the background.
  */
 public class Parallax : MonoBehaviour
 {
+    [FormerlySerializedAs("parallaxOffset")]
     [SerializeField]
-    private float parallaxOffset = -0.30f;
-    private Camera cam;
-    private Vector2 startPosition;
+    private float _parallaxOffset = -0.30f;
 
-    private Vector2 travel => (Vector2)cam.transform.position - startPosition;
+    private Camera _cam;
+
+    private Vector2 _startPosition;
+
+    private Vector2 Travel => (Vector2)_cam.transform.position - _startPosition;
 
     private void Awake()
     {
-        cam = Camera.main;
+        _cam = Camera.main;
     }
 
     private void Start()
     {
-        startPosition = transform.position;
+        _startPosition = transform.position;
     }
 
     private void FixedUpdate()
     {
-        transform.position = startPosition + (travel * parallaxOffset);
+        transform.position = _startPosition + (Travel * _parallaxOffset);
     }
 }

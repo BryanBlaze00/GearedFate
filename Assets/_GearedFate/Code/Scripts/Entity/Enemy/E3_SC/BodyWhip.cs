@@ -64,8 +64,10 @@
                 for (var i = 0; i < _bodyParts.Count; i++)
                 {
                     _bodyParts[i].RotateAround(
-                        _head.transform.position, Vector3.forward,
+                        _head.transform.position,
+                        Vector3.forward,
                         -((_range + (i * _rangeDelay)) / _frequency) * Time.deltaTime);
+
                     _bodyParts[i].rotation = Quaternion.identity;
                 }
 
@@ -79,8 +81,10 @@
                 for (var i = 0; i < _bodyParts.Count; i++)
                 {
                     _bodyParts[i].RotateAround(
-                        _head.transform.position, Vector3.forward,
+                        _head.transform.position,
+                        Vector3.forward,
                         (_range + (i * _rangeDelay) - _angles[i]) / _frequency * Time.deltaTime);
+
                     _bodyParts[i].rotation = Quaternion.identity;
                 }
 

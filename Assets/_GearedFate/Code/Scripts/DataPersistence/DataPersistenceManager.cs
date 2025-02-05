@@ -23,17 +23,6 @@
         // Helper class to serialize / unserialize data and save it to file.
         private FileDataHandler _dataHandler;
 
-        private void Start()
-        {
-            _dataHandler = new FileDataHandler(Application.persistentDataPath, _saveFileName);
-            LoadGame();
-        }
-
-        private void OnApplicationQuit()
-        {
-            SaveGame();
-        }
-
         // TODO : Call that from a menu "Start" button
         public void NewGame()
         {
@@ -92,6 +81,17 @@
                 FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
                     .OfType<IDataPersistence>()
                     .ToList();
+        }
+
+        private void Start()
+        {
+            _dataHandler = new FileDataHandler(Application.persistentDataPath, _saveFileName);
+            LoadGame();
+        }
+
+        private void OnApplicationQuit()
+        {
+            SaveGame();
         }
     }
 }

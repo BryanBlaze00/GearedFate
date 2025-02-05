@@ -41,12 +41,12 @@
             {
                 if (_lastStateCircleStorm)
                 {
-                    Fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.CirclingLines]);
+                    Fsm.SwitchState(Marionette[RustedMarionette.RustedMarionetteState.CirclingLines]);
                     _lastStateCircleStorm = false;
                 }
                 else
                 {
-                    Fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.CircleStorm]);
+                    Fsm.SwitchState(Marionette[RustedMarionette.RustedMarionetteState.CircleStorm]);
                     _lastStateCircleStorm = true;
                 }
             }

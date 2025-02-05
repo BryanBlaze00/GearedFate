@@ -6,76 +6,17 @@ namespace BTG
     using UnityEngine;
     using UnityUtils;
 
-    [System.Serializable]
-    public class ObjectToPoolInfo
-    {
-        [field: SerializeField]
-        public GameObject ObjectToPool { get; private set; }
-
-        [field: SerializeField]
-        [field: Range(2, 100)]
-        public int AmountToPool { get; private set; }
-
-        [field: SerializeField]
-        public bool ShouldExpand { get; private set; }
-
-        public ObjectToPoolInfo(GameObject obj, int amt = 2, bool exp = true)
-        {
-            ObjectToPool = obj;
-            AmountToPool = amt;
-            ShouldExpand = exp;
-        }
-    }
-
-    [System.Serializable]
-    public class ObjectToPoolWrapper
-    {
-        [field: SerializeField]
-        public ObjectToPoolInfo ObjectToPoolInfo { get; private set; }
-
-        [field: SerializeField]
-        public PooledObjectType ObjectType { get; private set; }
-    }
-
     /// <summary>
     /// ObjectPool
     /// </summary>
     public class ObjectPool : Singleton<ObjectPool>
     {
-        [SerializeField]
-        private List<ObjectToPoolWrapper> objectsToPoolList;
         private readonly Dictionary<PooledObjectType, ObjectToPoolInfo> objectsToPool = new ();
 
+        [SerializeField]
+        private List<ObjectToPoolWrapper> objectsToPoolList;
+
         public Dictionary<PooledObjectType, List<GameObject>> PooledObjects { get; } = new ();
-
-        protected override void Awake()
-        {
-            base.Awake();
-
-            foreach (var obj in objectsToPoolList)
-            {
-                if (objectsToPool.ContainsKey(obj.ObjectType))
-                {
-#if UNITY_EDITOR
-                    Debug.LogWarning("Object skipped. Key already exists in pool!!");
-#endif
-                    continue;
-                }
-
-                if (!obj.ObjectToPoolInfo.ObjectToPool)
-                {
-#if UNITY_EDITOR
-                    Debug.LogWarning("Object skipped. Null object Found!!");
-#endif
-                    continue;
-                }
-
-                objectsToPool.Add(obj.ObjectType, obj.ObjectToPoolInfo);
-                ObjectPoolItemToPooledObject(obj.ObjectType);
-            }
-
-            objectsToPoolList = null;
-        }
 
         public GameObject GetPooledObject(PooledObjectType type)
         {
@@ -108,7 +49,7 @@ namespace BTG
             return obj;
         }
 
-        public void AddObject(GameObject GO, int amt, bool exp = true, PooledObjectType type = PooledObjectType.None)
+        public void AddObject(GameObject go, int amt, bool exp = true, PooledObjectType type = PooledObjectType.None)
         {
             if (PooledObjects.ContainsKey(type))
             {
@@ -118,7 +59,7 @@ namespace BTG
 #endif
             }
 
-            ObjectToPoolInfo item = new (GO, amt, exp);
+            ObjectToPoolInfo item = new (go, amt, exp);
             objectsToPool.Add(type, item);
             ObjectPoolItemToPooledObject(type);
         }
@@ -133,6 +74,35 @@ namespace BTG
         public void ReturnPooledObject(GameObject obj)
         {
             obj.SetActive(false);
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            foreach (var obj in objectsToPoolList)
+            {
+                if (objectsToPool.ContainsKey(obj.ObjectType))
+                {
+#if UNITY_EDITOR
+                    Debug.LogWarning("Object skipped. Key already exists in pool!!");
+#endif
+                    continue;
+                }
+
+                if (!obj.ObjectToPoolInfo.ObjectToPool)
+                {
+#if UNITY_EDITOR
+                    Debug.LogWarning("Object skipped. Null object Found!!");
+#endif
+                    continue;
+                }
+
+                objectsToPool.Add(obj.ObjectType, obj.ObjectToPoolInfo);
+                ObjectPoolItemToPooledObject(obj.ObjectType);
+            }
+
+            objectsToPoolList = null;
         }
 
         private void ObjectPoolItemToPooledObject(PooledObjectType type)

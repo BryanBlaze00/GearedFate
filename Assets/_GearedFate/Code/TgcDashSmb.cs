@@ -5,12 +5,6 @@
 
     public class TgcDashSmb : StateMachineBehaviour
     {
-        public event Action OnStartDash;
-
-        public event Action OnDashEnd;
-
-        public event Action OnAnimationEnd;
-
         private bool _dashStartReached;
 
         private bool _dashEndReached;
@@ -25,6 +19,12 @@
 
         [SerializeField]
         private float _animationEndTarget;
+
+        public event Action OnStartDash;
+
+        public event Action OnDashEnd;
+
+        public event Action OnAnimationEnd;
 
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

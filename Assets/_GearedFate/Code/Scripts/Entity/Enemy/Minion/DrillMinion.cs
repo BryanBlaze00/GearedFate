@@ -15,6 +15,11 @@ namespace BTG
         [SerializeField]
         private float touchDmgAmt = 5.0f;
 
+        private Animator _animator; // Blaze added this line
+        private DrillMinionState _currentState = DrillMinionState.Idle;
+        private float _stateTimer = 0.0f;
+        private float _startingSpeed; // Blaze added this line
+
         protected enum DrillMinionState
         {
             Idle,
@@ -23,11 +28,6 @@ namespace BTG
             Retreat,
             Dying,
         }
-
-        private Animator _animator; // Blaze added this line
-        protected DrillMinionState _CurrentState = DrillMinionState.Idle;
-        private float _stateTimer = 0.0f;
-        private float _startingSpeed; // Blaze added this line
 
         protected override void Awake()
         {
@@ -38,7 +38,7 @@ namespace BTG
 
         protected override void Update()
         {
-            switch (_CurrentState)
+            switch (_currentState)
             {
                 case DrillMinionState.Idle:
                     Idle();
@@ -62,7 +62,7 @@ namespace BTG
             _stateTimer += Time.deltaTime;
             if (_stateTimer >= AttackCooldown)
             {
-                _CurrentState = DrillMinionState.Charge;
+                _currentState = DrillMinionState.Charge;
                 _stateTimer = 0.0f;
             }
         }
@@ -72,7 +72,7 @@ namespace BTG
             MoveToTarget(Target);
             if (Agent.remainingDistance <= 10)
             {
-                _CurrentState = DrillMinionState.Charge;
+                _currentState = DrillMinionState.Charge;
                 Agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
 
                 Agent.speed *= 2;
@@ -85,7 +85,7 @@ namespace BTG
             _stateTimer += Time.deltaTime;
             if (_stateTimer >= 2)
             {
-                _CurrentState = DrillMinionState.Idle;
+                _currentState = DrillMinionState.Idle;
                 _stateTimer = 0.0f;
                 Agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
 
@@ -100,27 +100,27 @@ namespace BTG
             _stateTimer += Time.deltaTime;
             if (_stateTimer >= 4)
             {
-                _CurrentState = DrillMinionState.Idle;
+                _currentState = DrillMinionState.Idle;
                 _stateTimer = 0.0f;
             }
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (_CurrentState != DrillMinionState.Charge)
+            if (_currentState != DrillMinionState.Charge)
             {
                 return;
             }
 
             if (other.TryGetComponent(out Player player))
             {
-                if (player.isInvulnerable)
+                if (player.IsInvulnerable)
                 {
                     return;
                 }
 
                 _animator.SetTrigger("Attack"); // Blaze added this line
-                _CurrentState = DrillMinionState.Retreat;
+                _currentState = DrillMinionState.Retreat;
                 Agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
                 Agent.speed *= 2;
                 player.TakeDamage(touchDmgAmt);

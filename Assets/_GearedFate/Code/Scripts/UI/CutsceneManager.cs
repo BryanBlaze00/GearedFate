@@ -36,6 +36,36 @@ namespace BTG
         private UISpriteAnimation _bossAvatarAnim;
         private int _currentLineIndex = 0;
 
+        /// <summary>
+        /// Move to the next dialogue line.
+        /// </summary>
+        public void NextDialogue()
+        {
+            // Move to the next line
+            _currentLineIndex++;
+
+            // Check if we've reached the end of the dialogue
+            if (_currentLineIndex >= _dialogueLines.Length)
+            {
+                // Load the next level if we've reached the end of the dialogue
+                GameManager.Instance.LoadNextLevel();
+                return;
+            }
+
+            StartCoroutine(TypeText(_dialogueLines[_currentLineIndex]));
+
+            // _bossAvatarAnim.PlayUIAnim(); // Play the avatar animation
+        }
+
+        /// <summary>
+        /// Skip the cutscene.
+        /// </summary>
+        public void SkipCutscene()
+        {
+            // Load the next level if we skip the cutscene
+            GameManager.Instance.LoadNextLevel();
+        }
+
         private void Awake()
         {
             _bossAvatarAnim = _bossAvatar.GetComponent<UISpriteAnimation>();
@@ -70,36 +100,6 @@ namespace BTG
             _nextButton.interactable = true;
 
             // _bossAvatarAnim.StopUIAnim(); // Stop the avatar animation
-        }
-
-        /// <summary>
-        /// Move to the next dialogue line.
-        /// </summary>
-        public void NextDialogue()
-        {
-            // Move to the next line
-            _currentLineIndex++;
-
-            // Check if we've reached the end of the dialogue
-            if (_currentLineIndex >= _dialogueLines.Length)
-            {
-                // Load the next level if we've reached the end of the dialogue
-                GameManager.Instance.LoadNextLevel();
-                return;
-            }
-
-            StartCoroutine(TypeText(_dialogueLines[_currentLineIndex]));
-
-            // _bossAvatarAnim.PlayUIAnim(); // Play the avatar animation
-        }
-
-        /// <summary>
-        /// Skip the cutscene.
-        /// </summary>
-        public void SkipCutscene()
-        {
-            // Load the next level if we skip the cutscene
-            GameManager.Instance.LoadNextLevel();
         }
     }
 }

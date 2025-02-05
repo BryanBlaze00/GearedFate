@@ -49,16 +49,6 @@
         private float _startingAngle;
         private int _circlePointsNumber;
 
-        private void Start()
-        {
-            _firstString.CurrentCamera = FindFirstObjectByType<Camera>();
-            _secondString.CurrentCamera = FindFirstObjectByType<Camera>();
-            _circlePointsNumber = _firstStringPoints + _secondStringPoints + _firstEmptySpacePoints + _secondEmptySpacePoints;
-            _angle = 2 * Mathf.PI / (_circlePointsNumber - 1);
-            _nextRotationTime = Time.time + _rotatingTime;
-            _target = FindFirstObjectByType<Player>().transform;
-        }
-
         public void SetDamage(float damage)
         {
             _damage = damage;
@@ -92,6 +82,58 @@
         public void SetDirection(bool clockwise)
         {
             _turnClockwise = clockwise;
+        }
+
+        private static bool IsOnCircle(Vector2 position, Vector2 center, float radius, float tolerance)
+        {
+            var distanceToCenter = Vector2.Distance(position, center);
+            return Mathf.Abs(distanceToCenter - radius) < tolerance;
+        }
+
+        private static Vector2 ClosestPointOnCircle(Vector2 position, Vector2 center, float radius)
+        {
+            var direction = (position - center).normalized; // Get direction
+            return center + (direction * radius); // Scale and offset
+        }
+
+        private static bool IsPointInArc(Vector2 center, float radius, Vector2 startPoint, Vector2 endPoint, Vector2 point)
+        {
+            // Check if the point is on the circle
+            var distSq = (point - center).sqrMagnitude;
+            if (!Mathf.Approximately(distSq, radius * radius))
+            {
+                return false; // Not on the circle
+            }
+
+            // Compute the point's angle relative to the center
+            var pointAngle = Mathf.Atan2(point.y - center.y, point.x - center.x);
+            pointAngle = (pointAngle + (2 * Mathf.PI)) % (2 * Mathf.PI); // Normalize to [0, 2 pi]
+
+            // Compute start and end angle
+            var startAngle = Mathf.Atan2(startPoint.y - center.y, startPoint.x - center.x);
+            startAngle = (startAngle + (2 * Mathf.PI)) % (2 * Mathf.PI);
+
+            var endAngle = Mathf.Atan2(endPoint.y - center.y, endPoint.x - center.x);
+            endAngle = (endAngle + (2 * Mathf.PI)) % (2 * Mathf.PI);
+
+            if (startAngle < endAngle)
+            {
+                return startAngle <= pointAngle && pointAngle <= endAngle;
+            }
+            else
+            {
+                return startAngle < pointAngle || endAngle > pointAngle;
+            }
+        }
+
+        private void Start()
+        {
+            _firstString.CurrentCamera = FindFirstObjectByType<Camera>();
+            _secondString.CurrentCamera = FindFirstObjectByType<Camera>();
+            _circlePointsNumber = _firstStringPoints + _secondStringPoints + _firstEmptySpacePoints + _secondEmptySpacePoints;
+            _angle = 2 * Mathf.PI / (_circlePointsNumber - 1);
+            _nextRotationTime = Time.time + _rotatingTime;
+            _target = FindFirstObjectByType<Player>().transform;
         }
 
         // Update is called once per frame
@@ -182,48 +224,6 @@
 
                 _target.GetComponent<Player>().TakeDamage(_damage);
                 _target.GetComponent<Player>().Knockback.GetKnockedBack(closestPointOnCircle, _knockback);
-            }
-        }
-
-        private static bool IsOnCircle(Vector2 position, Vector2 center, float radius, float tolerance)
-        {
-            var distanceToCenter = Vector2.Distance(position, center);
-            return Mathf.Abs(distanceToCenter - radius) < tolerance;
-        }
-
-        private static Vector2 ClosestPointOnCircle(Vector2 position, Vector2 center, float radius)
-        {
-            var direction = (position - center).normalized; // Get direction
-            return center + (direction * radius); // Scale and offset
-        }
-
-        private static bool IsPointInArc(Vector2 center, float radius, Vector2 startPoint, Vector2 endPoint, Vector2 point)
-        {
-            // Check if the point is on the circle
-            var distSq = (point - center).sqrMagnitude;
-            if (!Mathf.Approximately(distSq, radius * radius))
-            {
-                return false; // Not on the circle
-            }
-
-            // Compute the point's angle relative to the center
-            var pointAngle = Mathf.Atan2(point.y - center.y, point.x - center.x);
-            pointAngle = (pointAngle + (2 * Mathf.PI)) % (2 * Mathf.PI); // Normalize to [0, 2 pi]
-
-            // Compute start and end angle
-            var startAngle = Mathf.Atan2(startPoint.y - center.y, startPoint.x - center.x);
-            startAngle = (startAngle + (2 * Mathf.PI)) % (2 * Mathf.PI);
-
-            var endAngle = Mathf.Atan2(endPoint.y - center.y, endPoint.x - center.x);
-            endAngle = (endAngle + (2 * Mathf.PI)) % (2 * Mathf.PI);
-
-            if (startAngle < endAngle)
-            {
-                return startAngle <= pointAngle && pointAngle <= endAngle;
-            }
-            else
-            {
-                return startAngle < pointAngle || endAngle > pointAngle;
             }
         }
     }

@@ -2,13 +2,13 @@
 {
     public abstract class CentipedeBaseState : BaseState<SteamCentipede.CentipedeState>
     {
-        protected SteamCentipede Centipede { get; }
-
         protected CentipedeBaseState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, SteamCentipede centipede)
             : base(fsm)
         {
             Centipede = centipede;
         }
+
+        protected SteamCentipede Centipede { get; }
 
         public abstract override void OnEnter();
 

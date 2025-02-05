@@ -25,7 +25,7 @@
         {
             if (other.TryGetComponent(out Player player))
             {
-                if (player.isInvulnerable)
+                if (player.IsInvulnerable)
                 {
                     return;
                 }

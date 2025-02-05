@@ -30,12 +30,6 @@ namespace BTG
         // ObjectBreakAnim _objectBreakAnim; TODO: FIX ME
         private float _currentHealth;
 
-        private void Awake()
-        {
-            // _objectBreakAnim = GetComponent<ObjectBreakAnim>(); TODO: FIX ME
-            _currentHealth = _maxHealth;
-        }
-
         public void TakeDamage(float damage)
         {
             _currentHealth -= damage;
@@ -58,17 +52,23 @@ namespace BTG
             }
         }
 
+        private void Awake()
+        {
+            // _objectBreakAnim = GetComponent<ObjectBreakAnim>(); TODO: FIX ME
+            _currentHealth = _maxHealth;
+        }
+
         /// <summary>
         /// Randomized scrap amount and type to drop when destructible object is destroyed.
         /// </summary>
         private void RandomizedItemDrop()
         {
-            var randAmount = RandomUtilily.RandomInt(_minAmountToDrop, _maxAmountToDrop); /// Randomized scrap amount.
+            var randAmount = RandomUtility.RandomInt(_minAmountToDrop, _maxAmountToDrop); /// Randomized scrap amount.
 
             for (var i = 0; i < randAmount; i++)
             {
-                var randObj = RandomUtilily.RandomInt(1, 2); // Randomized object to drop
-                var randChance = RandomUtilily.Chance(_chanceToDrop); // Randomized chance to drop object
+                var randObj = RandomUtility.RandomInt(1, 2); // Randomized object to drop
+                var randChance = RandomUtility.Chance(_chanceToDrop); // Randomized chance to drop object
 
                 if (randObj == 1 && randChance)
                 {

@@ -11,47 +11,31 @@ namespace BTG
     /// </summary>
     public class GSBurrowState : GSBaseState
     {
-        public float BurrowTimer = 99f;
-        public bool Animating = true;
-        private bool isActive = false;
-        private float initialVolume;
+        private float _burrowTimer = 99f;
+        private bool _animating = true;
+        private bool _isActive = false;
+        private float _initialVolume;
 
-        public GSBurrowState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state,
-            GearboundSentinel gs)
+        public GSBurrowState(FiniteStateMachine<GearboundSentinel.State> fsm, GearboundSentinel.State state, GearboundSentinel gs)
             : base(fsm, state, gs)
         {
         }
 
         public override void OnEnter()
         {
-            initialVolume = gearboundSentinel.AudioSource.volume;
-            isActive = true;
-            gearboundSentinel.StartCoroutine(StartBurrow());
+            _initialVolume = GearboundSentinel.AudioSource.volume;
+            _isActive = true;
+            GearboundSentinel.StartCoroutine(StartBurrow());
 
-            BurrowTimer = 6f;
+            _burrowTimer = 6f;
             base.OnEnter();
-        }
-
-        // quick and dirty
-        private IEnumerator DiggingSounds()
-        {
-            gearboundSentinel.AudioSource.volume = initialVolume * 0.5f;
-            while (!Animating && isActive)
-            {
-                gearboundSentinel.AudioSource.clip = gearboundSentinel.AudioBurrowing;
-                gearboundSentinel.AudioSource.pitch = Random.Range(0.75f, 0.8f);
-
-                gearboundSentinel.AudioSource.Play();
-                gearboundSentinel.AudioSource.time = Random.Range(0.5f, 1.3f);
-                yield return new WaitForSeconds(0.5f);
-            }
         }
 
         public override void OnExit()
         {
-            gearboundSentinel.ResetMoveSpeed();
-            isActive = false;
-            gearboundSentinel.AudioSource.volume = initialVolume;
+            GearboundSentinel.ResetMoveSpeed();
+            _isActive = false;
+            GearboundSentinel.AudioSource.volume = _initialVolume;
             base.OnExit();
         }
 
@@ -64,108 +48,125 @@ namespace BTG
         {
             base.OnPhysicsUpdate();
 
-            if (Animating) // don't move or play moving sounds when intro/outro animation are playing. Also prevents it calling EndBurrow repeatedly
+            // don't move or play moving sounds when intro/outro animation are playing. Also prevents it calling EndBurrow repeatedly
+            if (_animating)
             {
                 return;
             }
 
-            BurrowTimer -= Time.fixedDeltaTime;
-            if (BurrowTimer <= 0f)
+            _burrowTimer -= Time.fixedDeltaTime;
+            if (_burrowTimer <= 0f)
             {
-                BurrowTimer = 99f; // Reset in case OnPhysicsUpdate can be called before OnEnter
-                gearboundSentinel.StartCoroutine(EndBurrow());
+                _burrowTimer = 99f; // Reset in case OnPhysicsUpdate can be called before OnEnter
+                GearboundSentinel.StartCoroutine(EndBurrow());
                 return;
             }
 
-            gearboundSentinel.NavMeshAgent.SetDestination(gearboundSentinel.TargetPlayer.transform.position);
-            var diffToTarget = gearboundSentinel.TargetPlayer.transform.position - gearboundSentinel.transform.position;
+            GearboundSentinel.NavMeshAgent.SetDestination(GearboundSentinel.TargetPlayer.transform.position);
+            var diffToTarget = GearboundSentinel.TargetPlayer.transform.position - GearboundSentinel.transform.position;
             const float popUpDistance = 0.1f;
             if (diffToTarget.sqrMagnitude < popUpDistance * popUpDistance)
             {
-                gearboundSentinel.StartCoroutine(EndBurrow());
+                GearboundSentinel.StartCoroutine(EndBurrow());
                 return;
             }
         }
 
         public IEnumerator StartBurrow()
         {
-            Animating = true;
-            if (gearboundSentinel.AudioBurrow)
+            _animating = true;
+            if (GearboundSentinel.AudioBurrow)
             {
-                gearboundSentinel.AudioSource.PlayOneShot(gearboundSentinel.AudioBurrow);
+                GearboundSentinel.AudioSource.PlayOneShot(GearboundSentinel.AudioBurrow);
             }
 
-            gearboundSentinel.CurSpeed = 0f;
-            gearboundSentinel.Animator.speed = 1f;
-            gearboundSentinel.Animator.Play("Burrow", -1, 0f);
+            GearboundSentinel.CurSpeed = 0f;
+            GearboundSentinel.Animator.speed = 1f;
+            GearboundSentinel.Animator.Play("Burrow", -1, 0f);
             yield return null; // TODO: Can we remove this?
             yield return new WaitForSeconds(
-                gearboundSentinel.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length -
+                GearboundSentinel.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length -
                                             0.1f);
 
             // disable collider just before animation finishes
-            gearboundSentinel.DisableColliders();
-            gearboundSentinel.Shadow.SetActive(false);
-            gearboundSentinel.ResetMoveSpeed();
-            gearboundSentinel.CurSpeed *= gearboundSentinel.Data.BurrowSpeedMultiplier;
+            GearboundSentinel.DisableColliders();
+            GearboundSentinel.Shadow.SetActive(false);
+            GearboundSentinel.ResetMoveSpeed();
+            GearboundSentinel.CurSpeed *= GearboundSentinel.Data.BurrowSpeedMultiplier;
             yield return new WaitForSeconds(0.1f);
-            Animating = false;
-            gearboundSentinel.StartCoroutine(DiggingSounds());
-            gearboundSentinel.Animator.Play("Burrowed", -1, 0f);
+            _animating = false;
+            GearboundSentinel.StartCoroutine(DiggingSounds());
+            GearboundSentinel.Animator.Play("Burrowed", -1, 0f);
         }
 
         public IEnumerator EndBurrow()
         {
-            gearboundSentinel.AudioSource.pitch = 1f;
-            if (gearboundSentinel.AudioUnBurrow)
+            GearboundSentinel.AudioSource.pitch = 1f;
+            if (GearboundSentinel.AudioUnBurrow)
             {
-                gearboundSentinel.AudioSource.PlayOneShot(gearboundSentinel.AudioUnBurrow);
+                GearboundSentinel.AudioSource.PlayOneShot(GearboundSentinel.AudioUnBurrow);
             }
 
-            Animating = true;
-            gearboundSentinel.Animator.speed = 2f; // play faster until the hit
-            gearboundSentinel.CurSpeed = 0f;
-            gearboundSentinel.Animator.Play("UnBurrow", -1, 0f);
+            _animating = true;
+            GearboundSentinel.Animator.speed = 2f; // play faster until the hit
+            GearboundSentinel.CurSpeed = 0f;
+            GearboundSentinel.Animator.Play("UnBurrow", -1, 0f);
             const float HitTimeAfterUnburrowStart = 0.1f;
             const float CollisionTimeBeforeUnburrowEnd = 0.4f;
 
             // wait a short moment before dealing damage
             yield return new WaitForSeconds(HitTimeAfterUnburrowStart);
-            gearboundSentinel.Shadow.SetActive(true);
-            gearboundSentinel.Animator.speed = 1f;
+            GearboundSentinel.Shadow.SetActive(true);
+            GearboundSentinel.Animator.speed = 1f;
             var hits = Physics2D
                 .OverlapCircleAll(
-                    gearboundSentinel.transform.position, 1.5f,
+                    GearboundSentinel.transform.position,
+                    1.5f,
                     LayerMask.GetMask("Player")) // todo: config radius
                 .Where(x => !x.isTrigger); // the player's feet
+
             foreach (var hit in hits)
             {
                 if (hit.TryGetComponent<Player>(out var player))
                 {
-                    player.TakeDamage(gearboundSentinel.Data.BurrowDamage);
+                    player.TakeDamage(GearboundSentinel.Data.BurrowDamage);
                 }
             }
 
             // wait until just before animation end to enable collisions
             yield return new WaitForSeconds(
-                gearboundSentinel.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length -
+                GearboundSentinel.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length -
                                             HitTimeAfterUnburrowStart - CollisionTimeBeforeUnburrowEnd);
-            gearboundSentinel.EnableColliders();
+            GearboundSentinel.EnableColliders();
 
             // wait the last bit of the animation
             yield return new WaitForSeconds(CollisionTimeBeforeUnburrowEnd);
 
             // leave Animating true for next time in case OnPhysicsUpdate gets called before OnEnter
-
-            gearboundSentinel.ResetMoveSpeed();
+            GearboundSentinel.ResetMoveSpeed();
 
             // in the last phase, GS throws bombs when he pops up
-            if (gearboundSentinel.Phase == 2)
+            if (GearboundSentinel.Phase == 2)
             {
-                Fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Bomb]);
+                Fsm.SwitchState(GearboundSentinel[GearboundSentinel.State.Bomb]);
             }
 
-            Fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Chase]);
+            Fsm.SwitchState(GearboundSentinel[GearboundSentinel.State.Chase]);
+        }
+
+        // quick and dirty
+        private IEnumerator DiggingSounds()
+        {
+            GearboundSentinel.AudioSource.volume = _initialVolume * 0.5f;
+            while (!_animating && _isActive)
+            {
+                GearboundSentinel.AudioSource.clip = GearboundSentinel.AudioBurrowing;
+                GearboundSentinel.AudioSource.pitch = Random.Range(0.75f, 0.8f);
+
+                GearboundSentinel.AudioSource.Play();
+                GearboundSentinel.AudioSource.time = Random.Range(0.5f, 1.3f);
+                yield return new WaitForSeconds(0.5f);
+            }
         }
     }
 }

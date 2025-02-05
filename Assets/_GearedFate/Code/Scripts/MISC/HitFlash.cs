@@ -21,11 +21,6 @@ namespace BTG
 
         private Material material;
 
-        private void Awake()
-        {
-            material = GetComponent<SpriteRenderer>().material;
-        }
-
         public void SetFlashColor(Color color)
         {
             redFlashColor = color;
@@ -34,6 +29,11 @@ namespace BTG
         public void HitFlashRoutine()
         {
             StartCoroutine(ChainRoutine());
+        }
+
+        protected void Awake()
+        {
+            material = GetComponent<SpriteRenderer>().material;
         }
 
         private IEnumerator ChainRoutine()

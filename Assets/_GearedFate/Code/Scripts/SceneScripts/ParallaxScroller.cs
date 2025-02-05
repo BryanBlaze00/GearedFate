@@ -16,7 +16,10 @@ namespace BTG
         private RawImage _img;
 
         [SerializeField]
-        private float _x, _y;
+        private float _x;
+
+        [SerializeField]
+        private float _y;
 
         private void Update()
         {

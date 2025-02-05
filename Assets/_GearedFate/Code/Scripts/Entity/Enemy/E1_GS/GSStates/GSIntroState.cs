@@ -18,7 +18,7 @@ namespace BTG
         public override void OnEnter()
         {
             base.OnEnter();
-            gearboundSentinel.StartCoroutine(OnEnterCoroutine());
+            GearboundSentinel.StartCoroutine(OnEnterCoroutine());
         }
 
         /// <summary>
@@ -28,22 +28,7 @@ namespace BTG
         {
             // TODO: Some kind of intro animation?
             yield return new WaitForSeconds(1f);
-            Fsm.SwitchState(gearboundSentinel.States[GearboundSentinel.State.Chase]);
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
-        }
-
-        public override void OnFrameUpdate()
-        {
-            base.OnFrameUpdate();
-        }
-
-        public override void OnPhysicsUpdate()
-        {
-            base.OnPhysicsUpdate();
+            Fsm.SwitchState(GearboundSentinel[GearboundSentinel.State.Chase]);
         }
     }
 }

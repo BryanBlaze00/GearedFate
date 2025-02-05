@@ -8,16 +8,6 @@ namespace BTG
     [System.Serializable]
     public class MinMaxFloat
     {
-        /// <summary>
-        /// Minimum value
-        /// </summary>
-        public float Min { get; private set; }
-
-        /// <summary>
-        /// Maximum value
-        /// </summary>
-        public float Max { get; private set; }
-
         public MinMaxFloat()
         {
             Min = 0;
@@ -34,5 +24,15 @@ namespace BTG
             Min = min;
             Max = max;
         }
+
+        /// <summary>
+        /// Minimum value
+        /// </summary>
+        public float Min { get; private set; }
+
+        /// <summary>
+        /// Maximum value
+        /// </summary>
+        public float Max { get; private set; }
     }
 }

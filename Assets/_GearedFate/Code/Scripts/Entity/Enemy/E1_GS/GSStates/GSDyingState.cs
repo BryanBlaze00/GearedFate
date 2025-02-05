@@ -33,10 +33,10 @@ namespace BTG
         public override void OnEnter()
         {
             base.OnEnter(); // TODO: What happens when he dies?
-            gearboundSentinel.StartCoroutine(DieAndStayDead());
-            gearboundSentinel.StopAllCoroutines();
-            gearboundSentinel.GetComponentsInChildren<Collider2D>().ForEach(x => x.enabled = false);
-            Object.Destroy(gearboundSentinel);
+            GearboundSentinel.StartCoroutine(DieAndStayDead());
+            GearboundSentinel.StopAllCoroutines();
+            GearboundSentinel.GetComponentsInChildren<Collider2D>().ForEach(x => x.enabled = false);
+            Object.Destroy(GearboundSentinel);
             GameManager.Instance
                 .StartCoroutine(DelayedElevator()); // start it on GameManager because gearboundSentinel's coroutines will end right after destroy
         }
@@ -50,14 +50,14 @@ namespace BTG
 
         private IEnumerator DieAndStayDead()
         {
-            gearboundSentinel.Animator.speed = 1f;
-            gearboundSentinel.transform.position += new Vector3(0f, -1.05f); // death animation is higher
-            gearboundSentinel.Shadow.SetActive(false);
-            var pos = gearboundSentinel.transform.position;
-            gearboundSentinel.Animator.Play("Death");
+            GearboundSentinel.Animator.speed = 1f;
+            GearboundSentinel.transform.position += new Vector3(0f, -1.05f); // death animation is higher
+            GearboundSentinel.Shadow.SetActive(false);
+            var pos = GearboundSentinel.transform.position;
+            GearboundSentinel.Animator.Play("Death");
             yield return null; // this might break if something sets its animation differently right after death?
             Debug.Log("This code shouldn't run because all coroutines should be stopped.");
-            var animationLength = gearboundSentinel.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
+            var animationLength = GearboundSentinel.Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
             var played = 0f;
 
             // prevents other stuff from changing the animation
@@ -65,8 +65,8 @@ namespace BTG
             {
                 played += Time.deltaTime;
                 var progress = played / animationLength;
-                gearboundSentinel.Animator.Play("Death", -1, Mathf.Min(1f, progress));
-                gearboundSentinel.transform.position = pos;
+                GearboundSentinel.Animator.Play("Death", -1, Mathf.Min(1f, progress));
+                GearboundSentinel.transform.position = pos;
                 yield return null;
             }
         }

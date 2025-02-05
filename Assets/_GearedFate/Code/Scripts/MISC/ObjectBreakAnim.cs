@@ -27,7 +27,16 @@ namespace BTG
 
         private Sprite[] _sprites; // Array of sprites from the spritesheet
         private SpriteRenderer _objBreakRenderer;
-        private bool isBreaking = false;
+        private bool _isBreaking = false;
+
+        public void TriggerBreak()
+        {
+            if (!_isBreaking)
+            {
+                _isBreaking = true;
+                StartCoroutine(Explode());
+            }
+        }
 
         private void Awake()
         {
@@ -42,15 +51,6 @@ namespace BTG
             // Debug.Log("Sprites: " + _sprites.Length);
         }
 
-        public void TriggerBreak()
-        {
-            if (!isBreaking)
-            {
-                isBreaking = true;
-                StartCoroutine(Explode());
-            }
-        }
-
         private IEnumerator Explode()
         {
             for (var i = _animStartIndex; i < _animSpritesCount + _animStartIndex; i++)
@@ -60,7 +60,6 @@ namespace BTG
                 // Debug.Log("AnimSpritesCount: " + _animSpritesCount);
                 // Debug.Log("i: " + i);
                 // Debug.Log("Total: " + (_animSpritesCount + _animStartIndex));
-
                 _objBreakRenderer.sprite = _sprites[i];
                 yield return new WaitForSeconds(_animSpeed);
             }

@@ -15,14 +15,14 @@ namespace BTG
 
         public List<Tag> GetTags => tags;
 
-        public bool HasTag(Tag _tag)
+        public bool HasTag(Tag tag)
         {
-            return tags.Contains(_tag);
+            return tags.Contains(tag);
         }
 
-        public bool HasTag(string _tag)
+        public bool HasTag(string tag)
         {
-            return tags.Exists(t => t.Name.Equals(_tag, System.StringComparison.InvariantCultureIgnoreCase));
+            return tags.Exists(t => t.Name.Equals(tag, System.StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }

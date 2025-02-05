@@ -1,8 +1,8 @@
 ﻿// Copyright (c) BTG. All rights reserved.
 
-using UnityEngine;
 using System.Collections;
 using BTG;
+using UnityEngine;
 
 public class Credits : MonoBehaviour
 {

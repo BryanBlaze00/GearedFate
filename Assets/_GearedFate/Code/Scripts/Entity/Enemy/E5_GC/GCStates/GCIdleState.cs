@@ -25,12 +25,12 @@ namespace BTG
         {
             if (IsReadyToSpawn())
             {
-                Fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Swarm]);
+                Fsm.SwitchState(GreatCreator[GreatCreator.GreatCreatorState.Swarm]);
             }
 
             if (GreatCreator.DistanceToTarget < GreatCreator.SafeDistance)
             {
-                Fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.RunAway]);
+                Fsm.SwitchState(GreatCreator[GreatCreator.GreatCreatorState.RunAway]);
             }
         }
 

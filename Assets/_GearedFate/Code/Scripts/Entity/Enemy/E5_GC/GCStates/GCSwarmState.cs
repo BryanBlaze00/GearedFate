@@ -15,12 +15,6 @@ namespace BTG
             enemy.AnimationEventHandler.OnSpawnFinished += HandleSpawnFinished;
         }
 
-        private void HandleSpawnFinished()
-        {
-            GreatCreator.SpawnMinions(Random.Range(GreatCreator.SwarmAmount.Min, GreatCreator.SwarmAmount.Max));
-            Fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
-        }
-
         public override void OnEnter()
         {
             PlayAnimation();
@@ -37,6 +31,12 @@ namespace BTG
 
         public override void OnPhysicsUpdate()
         {
+        }
+
+        private void HandleSpawnFinished()
+        {
+            GreatCreator.SpawnMinions(Random.Range(GreatCreator.SwarmAmount.Min, GreatCreator.SwarmAmount.Max));
+            Fsm.SwitchState(GreatCreator[GreatCreator.GreatCreatorState.Idle]);
         }
     }
 }

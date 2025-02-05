@@ -9,12 +9,6 @@ namespace BTG
     /// </summary>
     public class PlayerGearTossState : PlayerBaseState
     {
-        public float LastUsedTime { get; private set; }
-
-        public bool CanShoot =>
-            player.CurrentAttackFuelAmount > data.GearFuelBurnAmount &&
-                                Time.time > LastUsedTime + data.GearShootCoolDown;
-
         public PlayerGearTossState(FiniteStateMachine<Player.State> fsm, Player player, PlayerData data, int animId)
             : base(fsm, player, data, animId)
         {
@@ -26,9 +20,16 @@ namespace BTG
 
         ~PlayerGearTossState()
         {
-            player.AnimEvent.OnGearTossEvent -= GearToss;
-            player.AnimEvent.OnGearTossFinishedEvent -= SwitchState;
+            Player.AnimEvent.OnGearTossEvent -= GearToss;
+            Player.AnimEvent.OnGearTossFinishedEvent -= SwitchState;
         }
+
+
+        public float LastUsedTime { get; private set; }
+
+        public bool CanShoot =>
+            Player.CurrentAttackFuelAmount > Data.GearFuelBurnAmount &&
+            Time.time > LastUsedTime + Data.GearShootCoolDown;
 
         public override void OnEnter()
         {
@@ -37,8 +38,8 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            player.RB.linearVelocity = data.MoveSpeed * player.Input.MoveInput;
-            player.SetLookDir();
+            Player.RB.linearVelocity = Data.MoveSpeed * Player.Input.MoveInput;
+            Player.SetLookDir();
         }
 
         public override void OnExit()
@@ -49,13 +50,13 @@ namespace BTG
 
         private void GearToss()
         {
-            player.ShootGear();
+            Player.ShootGear();
         }
 
         private void SwitchState()
         {
             Fsm.SwitchState(
-                Input.MoveInput == Vector2.zero ? player.states[Player.State.Idle] : player.states[Player.State.Move]);
+                Input.MoveInput == Vector2.zero ? Player[Player.State.Idle] : Player[Player.State.Move]);
         }
     }
 }

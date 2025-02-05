@@ -5,33 +5,34 @@
     public class PersistentSingleton<T> : MonoBehaviour
         where T : Component
     {
-        public bool AutoUnparentOnAwake = true;
+        private static T _instance;
 
-        protected static T instance;
+        [SerializeField]
+        private bool _autoUnparentOnAwake = true;
 
-        public static bool HasInstance => instance != null;
+        public static bool HasInstance => _instance != null;
 
         public static T Instance
         {
             get
             {
-                if (instance == null)
+                if (_instance == null)
                 {
-                    instance = FindAnyObjectByType<T>();
-                    if (instance == null)
+                    _instance = FindAnyObjectByType<T>();
+                    if (_instance == null)
                     {
                         var go = new GameObject(typeof(T).Name + " Auto-Generated");
-                        instance = go.AddComponent<T>();
+                        _instance = go.AddComponent<T>();
                     }
                 }
 
-                return instance;
+                return _instance;
             }
         }
 
         public static T TryGetInstance()
         {
-            return HasInstance ? instance : null;
+            return HasInstance ? _instance : null;
         }
 
         /// <summary>
@@ -49,19 +50,19 @@
                 return;
             }
 
-            if (AutoUnparentOnAwake)
+            if (_autoUnparentOnAwake)
             {
                 transform.SetParent(null);
             }
 
-            if (instance == null)
+            if (_instance == null)
             {
-                instance = this as T;
+                _instance = this as T;
                 DontDestroyOnLoad(gameObject);
             }
             else
             {
-                if (instance != this)
+                if (_instance != this)
                 {
                     Destroy(gameObject);
                 }

@@ -3,14 +3,17 @@
     using PrimeTween;
     using UnityEngine;
     using UnityEngine.InputSystem;
+    using UnityEngine.Serialization;
 
     public class InGameMenu : MonoBehaviour
     {
+        [FormerlySerializedAs("_GearOne")]
         [SerializeField]
-        private RectTransform _GearOne;
+        private RectTransform _gearOne;
 
+        [FormerlySerializedAs("_GearTwo")]
         [SerializeField]
-        private RectTransform _GearTwo;
+        private RectTransform _gearTwo;
 
         [SerializeField]
         private RectTransform _mainMenuPanel;
@@ -62,17 +65,17 @@
                     .Chain(Tween.UIAnchoredPositionY(_mainMenuPanel, 0, 0.3f));
 
                 Sequence.Create(1, CycleMode.Restart, 0f, true)
-                    .Group(Tween.UIAnchoredPosition(_GearTwo, new Vector2(60, 60), 1f))
+                    .Group(Tween.UIAnchoredPosition(_gearTwo, new Vector2(60, 60), 1f))
                     .Group(Tween.Rotation(
-                        _GearTwo.transform,
-                        _GearTwo.rotation.eulerAngles + new Vector3(0, 0, 120f),
+                        _gearTwo.transform,
+                        _gearTwo.rotation.eulerAngles + new Vector3(0, 0, 120f),
                         0.3f));
 
                 Sequence.Create(1, CycleMode.Restart, 0f, true)
-                    .Group(Tween.UIAnchoredPosition(_GearOne, new Vector2(0, 65), 1f))
+                    .Group(Tween.UIAnchoredPosition(_gearOne, new Vector2(0, 65), 1f))
                     .Group(Tween.Rotation(
-                        _GearOne.transform,
-                        _GearOne.rotation.eulerAngles + new Vector3(0, 0, 120f),
+                        _gearOne.transform,
+                        _gearOne.rotation.eulerAngles + new Vector3(0, 0, 120f),
                         0.3f));
 
                 Tween.UIAnchoredPositionX(_mainMenuPipe, 500, 1.5f, Ease.Default, 1, CycleMode.Restart, 0f, 0f, true);
@@ -91,16 +94,14 @@
 
                 Tween.UIAnchoredPositionY(_mainMenuPanel, 0, 1f);
                 Sequence.Create(1, CycleMode.Restart, 0f, true)
-                    .Group(Tween.UIAnchoredPosition(_GearTwo, new Vector2(-200, -200), 1f))
+                    .Group(Tween.UIAnchoredPosition(_gearTwo, new Vector2(-200, -200), 1f))
                     .Group(Tween.Rotation(
-                        _GearTwo.transform, Quaternion.Euler(0, 0, 0), 1f, Ease.Default, 1,
-                        CycleMode.Incremental));
+                        _gearTwo.transform, Quaternion.Euler(0, 0, 0), 1f, Ease.Default, 1, CycleMode.Incremental));
 
                 Sequence.Create(1, CycleMode.Restart, 0f, true)
-                    .Group(Tween.UIAnchoredPosition(_GearOne, new Vector2(200, 45), 1f))
+                    .Group(Tween.UIAnchoredPosition(_gearOne, new Vector2(200, 45), 1f))
                     .Group(Tween.Rotation(
-                        _GearOne.transform, Quaternion.Euler(0, 0, 0), 1f, Ease.Default, 1,
-                        CycleMode.Incremental));
+                        _gearOne.transform, Quaternion.Euler(0, 0, 0), 1f, Ease.Default, 1, CycleMode.Incremental));
 
                 Tween.UIAnchoredPositionX(_mainMenuPipe, -100, 1f);
 

@@ -16,7 +16,8 @@
             {
                 if (rootTransform == null)
                 {
-                    if (transform.parent != null) // Check if there's a parent
+                    // Check if there's a parent
+                    if (transform.parent != null)
                     {
                         rootTransform = transform.parent; // Assign the immediate parent
                     }

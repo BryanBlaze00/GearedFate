@@ -11,11 +11,6 @@
             smb.OnStepReached += HandleEndSpin;
         }
 
-        private void HandleEndSpin(int obj)
-        {
-            Fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.RunAway]);
-        }
-
         public override void OnEnter()
         {
             PlayAnimation();
@@ -39,6 +34,11 @@
         public void SetAnimation(int stringToHash)
         {
             SetAnimationId(stringToHash);
+        }
+
+        private void HandleEndSpin(int obj)
+        {
+            Fsm.SwitchState(GreatCreator[GreatCreator.GreatCreatorState.RunAway]);
         }
     }
 }

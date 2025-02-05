@@ -4,8 +4,6 @@
 
     public abstract class RMBaseState : BaseState<RustedMarionette.RustedMarionetteState>
     {
-        protected RustedMarionette Marionette { get; }
-
         private static int _phase;
 
         private int _highAnimId;
@@ -26,29 +24,15 @@
             _highAnimId = highAnimId;
         }
 
-        private void HandleHitTaken()
-        {
-            if (Marionette.CurrentHealth == 0)
-            {
-                Debug.Log("dead marionette");
-                Fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.Death]);
-                return;
-            }
+        protected RustedMarionette Marionette { get; }
 
-            if (Marionette.CurrentHealth / Marionette.MaxHealth < 0.7f && _phase == 0)
-            {
-                Debug.Log("go full maze");
-                _phase++;
-                Fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.StringMaze]);
-            }
+        public abstract override void OnEnter();
 
-            if (Marionette.CurrentHealth / Marionette.MaxHealth < 0.4f && _phase == 1)
-            {
-                Debug.Log("go full maze");
-                _phase++;
-                Fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.StringMaze]);
-            }
-        }
+        public abstract override void OnExit();
+
+        public abstract override void OnFrameUpdate();
+
+        public abstract override void OnPhysicsUpdate();
 
         protected void PlayAnimationHighBodyPart()
         {
@@ -60,12 +44,28 @@
             Marionette.AnimatorHighPart.Play(_lowAnimId);
         }
 
-        public abstract override void OnEnter();
+        private void HandleHitTaken()
+        {
+            if (Marionette.CurrentHealth == 0)
+            {
+                Debug.Log("dead marionette");
+                Fsm.SwitchState(Marionette[RustedMarionette.RustedMarionetteState.Death]);
+                return;
+            }
 
-        public abstract override void OnExit();
+            if (Marionette.CurrentHealth / Marionette.MaxHealth < 0.7f && _phase == 0)
+            {
+                Debug.Log("go full maze");
+                _phase++;
+                Fsm.SwitchState(Marionette[RustedMarionette.RustedMarionetteState.StringMaze]);
+            }
 
-        public abstract override void OnFrameUpdate();
-
-        public abstract override void OnPhysicsUpdate();
+            if (Marionette.CurrentHealth / Marionette.MaxHealth < 0.4f && _phase == 1)
+            {
+                Debug.Log("go full maze");
+                _phase++;
+                Fsm.SwitchState(Marionette[RustedMarionette.RustedMarionetteState.StringMaze]);
+            }
+        }
     }
 }

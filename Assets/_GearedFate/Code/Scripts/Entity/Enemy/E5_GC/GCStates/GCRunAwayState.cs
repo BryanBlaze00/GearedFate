@@ -5,11 +5,8 @@
 
     public class GCRunAwayState : GCBaseState
     {
-        public GCRunAwayState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy,
-            int animId)
-            : base(
-                fsm,
-            enemy, animId)
+        public GCRunAwayState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId)
+            : base(fsm, enemy, animId)
         {
         }
 
@@ -27,13 +24,13 @@
             GreatCreator.SetAnimationMoveParameters(GreatCreator.Agent.velocity);
             if (GreatCreator.DistanceToTarget > GreatCreator.SafeDistance)
             {
-                Fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Idle]);
+                Fsm.SwitchState(GreatCreator[GreatCreator.GreatCreatorState.Idle]);
             }
             else
             {
                 if (IsReadyToSpawn() && GreatCreator.Stage == 0)
                 {
-                    Fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Swarm]);
+                    Fsm.SwitchState(GreatCreator[GreatCreator.GreatCreatorState.Swarm]);
                     return;
                 }
 
@@ -42,15 +39,15 @@
                     return;
                 }
 
-                var canMoveAway = CanMoveAwayFromPlayer(out var AwayPosition);
+                var canMoveAway = CanMoveAwayFromPlayer(out var awayPosition);
 
                 if (canMoveAway)
                 {
-                    GreatCreator.Agent.SetDestination(AwayPosition);
+                    GreatCreator.Agent.SetDestination(awayPosition);
                 }
                 else if (!canMoveAway && GreatCreator.Stage == 0)
                 {
-                    Fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Dash]);
+                    Fsm.SwitchState(GreatCreator[GreatCreator.GreatCreatorState.Dash]);
                 }
                 else if (!canMoveAway && GreatCreator.Stage > 0)
                 {

@@ -20,14 +20,14 @@ namespace BTG
         public override void OnEnter()
         {
             base.OnEnter();
-            if (player.Knockback.isKnockedback)
+            if (Player.Knockback.IsKnockedback)
             {
-                player.RB.linearVelocity = player.Knockback.KnockBackVelocity;
-                player.Knockback.isKnockedback = false;
+                Player.RB.linearVelocity = Player.Knockback.KnockBackVelocity;
+                Player.Knockback.IsKnockedback = false;
             }
             else
             {
-                player.RB.linearVelocity = Vector2.zero;
+                Player.RB.linearVelocity = Vector2.zero;
             }
 
             startTime = Time.time;
@@ -40,18 +40,18 @@ namespace BTG
 
         public override void OnFrameUpdate()
         {
-            if (Time.time > startTime + data.KnockBackTime)
+            if (Time.time > startTime + Data.KnockBackTime)
             {
-                player.RB.linearVelocity = Vector2.zero;
+                Player.RB.linearVelocity = Vector2.zero;
             }
 
-            if (Time.time < startTime + data.HitStunTime)
+            if (Time.time < startTime + Data.HitStunTime)
             {
                 return;
             }
 
             Fsm.SwitchState(
-                Input.MoveInput == Vector2.zero ? player.states[Player.State.Idle] : player.states[Player.State.Move]);
+                Input.MoveInput == Vector2.zero ? Player[Player.State.Idle] : Player[Player.State.Move]);
         }
 
         public override void OnPhysicsUpdate()

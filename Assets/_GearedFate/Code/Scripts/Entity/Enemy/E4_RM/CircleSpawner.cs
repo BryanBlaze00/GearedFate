@@ -43,6 +43,22 @@
             }
         }
 
+        private static List<Vector2> GetEvenlySpacedDirections(int count, float offset)
+        {
+            var directions = new List<Vector2>();
+
+            for (var i = 0; i < count; i++)
+            {
+                var angle = (360f / count * i) + offset; // Evenly spaced angle
+                var radians = angle * Mathf.Deg2Rad; // Convert to radians
+
+                var direction = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
+                directions.Add(direction);
+            }
+
+            return directions;
+        }
+
         private IEnumerator SpawnRoutine()
         {
             while (_isSpawning)
@@ -79,22 +95,6 @@
             }
 
             obj.SetActive(false);
-        }
-
-        private static List<Vector2> GetEvenlySpacedDirections(int count, float offset)
-        {
-            var directions = new List<Vector2>();
-
-            for (var i = 0; i < count; i++)
-            {
-                var angle = (360f / count * i) + offset; // Evenly spaced angle
-                var radians = angle * Mathf.Deg2Rad; // Convert to radians
-
-                var direction = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
-                directions.Add(direction);
-            }
-
-            return directions;
         }
     }
 }

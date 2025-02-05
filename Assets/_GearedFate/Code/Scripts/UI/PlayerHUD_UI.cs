@@ -4,6 +4,7 @@ namespace BTG
 {
     using TMPro;
     using UnityEngine;
+    using UnityEngine.Serialization;
     using UnityEngine.UI;
 
     /// <summary>
@@ -18,11 +19,14 @@ namespace BTG
         [SerializeField]
         private Image _fuelBar;
 
+        [FormerlySerializedAs("_BossBar1")]
         [Header("Boss Bars")]
         [SerializeField]
-        private Image _BossBar1;
+        private Image _bossBar1;
+
+        [FormerlySerializedAs("_BossBar2")]
         [SerializeField]
-        private Image _BossBar2;
+        private Image _bossBar2;
 
         [Header("Ability Wheel")]
         [SerializeField]
@@ -164,7 +168,7 @@ namespace BTG
             }
 
             const float tossAnimLength = 0.75f;
-            var gearTossState = player.states[Player.State.GearToss] as PlayerGearTossState;
+            var gearTossState = player[Player.State.GearToss] as PlayerGearTossState;
             var totalCD = player.Data.GearShootCoolDown + tossAnimLength;
             var gearTossCDLeft = animFracRemaining == 0f
                 ? gearTossState.LastUsedTime + player.Data.GearShootCoolDown - Time.time
@@ -220,9 +224,8 @@ namespace BTG
                 return string.Empty;
             }
 
-            if (cooldown < 0.9f)
-
             // display one decimal after the zero
+            if (cooldown < 0.9f)
             {
                 return "0." + Mathf.CeilToInt(cooldown * 10f);
             }

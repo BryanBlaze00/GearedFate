@@ -17,26 +17,6 @@ namespace BTG
 
         private Animator _animator;
 
-        protected override void Awake()
-        {
-            base.Awake();
-
-            _animator = GetComponent<Animator>();
-            _animator.SetBool("isFlying", false);
-
-            if (_exitLevelTrigger != null && _exitLevelTrigger.activeSelf)
-            {
-                _exitLevelTrigger.SetActive(false);
-            }
-        }
-
-        private void Start()
-        {
-            transform.SetParent(_parentTransform);
-
-            CutSceneCheckActivate();
-        }
-
         public void ActivateElevator()
         {
             _animator.SetBool("isFlying", true);
@@ -57,6 +37,26 @@ namespace BTG
         public void DeactivateElevatorAnim()
         {
             _animator.SetBool("isFlying", false);
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            _animator = GetComponent<Animator>();
+            _animator.SetBool("isFlying", false);
+
+            if (_exitLevelTrigger != null && _exitLevelTrigger.activeSelf)
+            {
+                _exitLevelTrigger.SetActive(false);
+            }
+        }
+
+        private void Start()
+        {
+            transform.SetParent(_parentTransform);
+
+            CutSceneCheckActivate();
         }
 
         private void OnTriggerEnter(Collider other)

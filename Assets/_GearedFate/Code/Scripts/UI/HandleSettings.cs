@@ -4,6 +4,7 @@ namespace BTG
 {
     using UnityEngine;
     using UnityEngine.Audio;
+    using UnityEngine.Serialization;
     using UnityEngine.UI;
 
     /// <summary>
@@ -11,6 +12,30 @@ namespace BTG
     /// </summary>
     public class HandleSettings : MonoBehaviour
     {
+        [FormerlySerializedAs("soundTab")]
+        [SerializeField]
+        private GameObject _soundTab;
+
+        [FormerlySerializedAs("controlsTab")]
+        [SerializeField]
+        private GameObject _controlsTab;
+
+        [FormerlySerializedAs("musicMaster")]
+        [SerializeField]
+        private AudioMixer _musicMaster;
+
+        [FormerlySerializedAs("masterSlider")]
+        [SerializeField]
+        private Slider _masterSlider;
+
+        [FormerlySerializedAs("musicSlider")]
+        [SerializeField]
+        private Slider _musicSlider;
+
+        [FormerlySerializedAs("sfxSlider")]
+        [SerializeField]
+        private Slider _sfxSlider;
+
         public enum SettingsConstant
         {
             MasterVolume,
@@ -18,60 +43,16 @@ namespace BTG
             SFXVolume,
         }
 
-        [SerializeField]
-        private GameObject soundTab;
-        [SerializeField]
-        private GameObject controlsTab;
-        [SerializeField]
-        private AudioMixer musicMaster;
-
-        [SerializeField]
-        private Slider masterSlider;
-        [SerializeField]
-        private Slider musicSlider;
-        [SerializeField]
-        private Slider sfxSlider;
-
-        private void Start()
-        {
-            RefreshSlider();
-            Controls();
-            gameObject.SetActive(false);
-        }
-
         public void Sound()
         {
-            soundTab.SetActive(true);
-            controlsTab.SetActive(false);
+            _soundTab.SetActive(true);
+            _controlsTab.SetActive(false);
         }
 
         public void Controls()
         {
-            soundTab.SetActive(false);
-            controlsTab.SetActive(true);
-        }
-
-        private void RefreshSlider()
-        {
-            masterSlider.value = PlayerPrefs.GetFloat(nameof(SettingsConstant.MasterVolume), 100);
-            musicSlider.value = PlayerPrefs.GetFloat(nameof(SettingsConstant.MusicVolume), 100);
-            sfxSlider.value = PlayerPrefs.GetFloat(nameof(SettingsConstant.SFXVolume), 100);
-        }
-
-        private float SliderToDB(float value)
-        {
-            return Mathf.Log10(value / 100) * 20f;
-        }
-
-        private void HandleVolume(string param, float value)
-        {
-            if (value < 1)
-            {
-                value = 0.001f;
-            }
-
-            musicMaster.SetFloat(param, SliderToDB(value));
-            PlayerPrefs.SetFloat(param, value);
+            _soundTab.SetActive(false);
+            _controlsTab.SetActive(true);
         }
 
         public void OnMasterVolumeChange(float value)
@@ -87,6 +68,36 @@ namespace BTG
         public void OnSFXVolumeChange(float value)
         {
             HandleVolume(nameof(SettingsConstant.SFXVolume), value);
+        }
+
+        private void Start()
+        {
+            RefreshSlider();
+            Controls();
+            gameObject.SetActive(false);
+        }
+
+        private void RefreshSlider()
+        {
+            _masterSlider.value = PlayerPrefs.GetFloat(nameof(SettingsConstant.MasterVolume), 100);
+            _musicSlider.value = PlayerPrefs.GetFloat(nameof(SettingsConstant.MusicVolume), 100);
+            _sfxSlider.value = PlayerPrefs.GetFloat(nameof(SettingsConstant.SFXVolume), 100);
+        }
+
+        private float SliderToDB(float value)
+        {
+            return Mathf.Log10(value / 100) * 20f;
+        }
+
+        private void HandleVolume(string param, float value)
+        {
+            if (value < 1)
+            {
+                value = 0.001f;
+            }
+
+            _musicMaster.SetFloat(param, SliderToDB(value));
+            PlayerPrefs.SetFloat(param, value);
         }
     }
 }

@@ -18,22 +18,14 @@ namespace BTG
         [SerializeField]
         private float _speed = .02f;
 
+        private Coroutine _coroutineAnim;
+        private int _indexSprite;
+        private bool _isDone;
+
         public float AnimationSpeed
         {
             get => _speed;
             private set => _speed = Mathf.Clamp(value, 0.001f, 1f);
-        }
-
-        private Coroutine _coroutineAnim;
-        private int _indexSprite;
-        private bool IsDone;
-
-        private void OnEnable()
-        {
-            if (GameManager.Instance.GetCurrentScene() == "MainMenu")
-            {
-                PlayUIAnim();
-            }
         }
 
         /// <summary>
@@ -41,7 +33,7 @@ namespace BTG
         /// </summary>
         public void PlayUIAnim()
         {
-            IsDone = false;
+            _isDone = false;
             _coroutineAnim = StartCoroutine(PlayAnimUI());
         }
 
@@ -50,7 +42,7 @@ namespace BTG
         /// </summary>
         public void StopUIAnim()
         {
-            IsDone = true;
+            _isDone = true;
             StopCoroutine(_coroutineAnim);
         }
 
@@ -63,6 +55,14 @@ namespace BTG
             StartCoroutine(PlayAnimOnce(option));
         }
 
+        private void OnEnable()
+        {
+            if (GameManager.Instance.GetCurrentScene() == "MainMenu")
+            {
+                PlayUIAnim();
+            }
+        }
+
         private IEnumerator PlayAnimOnce(bool option)
         {
             for (var i = 0; i < _spriteArray.Length; i++)
@@ -71,9 +71,8 @@ namespace BTG
                 yield return new WaitForSeconds(_speed);
             }
 
-            if (option)
-
             // Optional: Reset sprite after animation completes
+            if (option)
             {
                 _image.sprite = _spriteArray[0];
             }
@@ -93,7 +92,7 @@ namespace BTG
 
             _image.sprite = _spriteArray[_indexSprite];
             _indexSprite += 1;
-            if (IsDone == false)
+            if (_isDone == false)
             {
                 _coroutineAnim = StartCoroutine(PlayAnimUI());
             }

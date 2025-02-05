@@ -20,8 +20,7 @@
 
         private float _timer;
 
-        public CentipedeDeathCircleState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId,
-            SteamCentipede steamCentipede)
+        public CentipedeDeathCircleState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId, SteamCentipede steamCentipede)
             : base(fsm, steamCentipede)
         {
             _animId = animationId;

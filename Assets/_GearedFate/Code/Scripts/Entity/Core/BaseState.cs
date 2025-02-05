@@ -7,15 +7,15 @@ namespace BTG
     /// <summary>
     /// Base Super Class for entity states
     /// </summary>
-    public abstract class BaseState<State>
-        where State : Enum
+    public abstract class BaseState<TState>
+        where TState : Enum
     {
-        protected BaseState(FiniteStateMachine<State> fsm)
+        protected BaseState(FiniteStateMachine<TState> fsm)
         {
             Fsm = fsm;
         }
 
-        protected FiniteStateMachine<State> Fsm { get; private set; }
+        protected FiniteStateMachine<TState> Fsm { get; private set; }
 
         public abstract void OnEnter();
 

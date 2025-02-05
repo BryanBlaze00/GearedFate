@@ -13,17 +13,13 @@ namespace BTG
     /// </summary>
     public class SteamCentipede : MonoBehaviour, IHealable, IBoss
     {
-        public enum CentipedeState
-        {
-            Idle,
-            Chase,
-            Circle,
-            Charge,
-            DeathCircle,
-            Whip,
-            Knocked,
-            Dead,
-        }
+        private readonly List<float> _currentPositionsOnSpline = new ();
+
+        private readonly FiniteStateMachine<CentipedeState> _finiteStateMachine = new ();
+
+        private readonly Dictionary<CentipedeState, CentipedeBaseState> _states = new ();
+
+        private readonly List<Transform> _bodyParts = new ();
 
         [SerializeField]
         private float _bodyPartDistance;
@@ -53,17 +49,21 @@ namespace BTG
 
         private Transform _target;
 
-        private readonly List<float> _currentPositionsOnSpline = new ();
-
-        private readonly FiniteStateMachine<CentipedeState> _finiteStateMachine = new ();
-
-        private readonly Dictionary<CentipedeState, CentipedeBaseState> _states = new ();
-
-        private readonly List<Transform> _bodyParts = new ();
-
         private float _maxHealth;
 
         private float _totalSplineLength;
+
+        public enum CentipedeState
+        {
+            Idle,
+            Chase,
+            Circle,
+            Charge,
+            DeathCircle,
+            Whip,
+            Knocked,
+            Dead,
+        }
 
         public float Speed { get; private set; }
 
@@ -103,12 +103,6 @@ namespace BTG
 
         public Vector2 HeadPosition => _bodyParts.Last().position;
 
-        private float HeadPositionOnSpline => _currentPositionsOnSpline.Last();
-
-        public CentipedeBaseState this[CentipedeState key] => _states[key];
-
-        public Transform this[int key] => _bodyParts[key];
-
         public Transform Tail => _bodyParts.First();
 
         public int BodyPartsCount => _bodyParts.Count;
@@ -120,6 +114,12 @@ namespace BTG
         public float MaxHealth => _maxHealth;
 
         public float CurrentHealth => _bodyParts.Sum(x => x.GetComponent<CentipedeBodyPart>().CurrentHealth);
+
+        private float HeadPositionOnSpline => _currentPositionsOnSpline.Last();
+
+        public CentipedeBaseState this[CentipedeState key] => _states[key];
+
+        public Transform this[int key] => _bodyParts[key];
 
         public Vector2 HeadDirection()
         {
@@ -263,7 +263,9 @@ namespace BTG
             _states.Add(
                 CentipedeState.Chase,
                 new CentipedeChaseState(
-                    _finiteStateMachine, Animator.StringToHash(nameof(CentipedeState.Chase)), this,
+                    _finiteStateMachine,
+                    Animator.StringToHash(nameof(CentipedeState.Chase)),
+                    this,
                     ChasingDistance));
 
             _states.Add(

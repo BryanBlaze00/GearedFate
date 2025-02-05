@@ -7,22 +7,25 @@
     [Serializable]
     public class GameData
     {
-        public GameData()
-        {
-            // Starting values for player on new game
-            PlayerData = new PlayerSaveStruct(Vector3.zero, 100, 100);
-        }
-
         [SerializeField]
         private SerializableDictionary<PooledObjectType, int> _assetsToInstantiateIds = new ();
 
         // Incremented each time it's used, allows tracking which minion save struct is loaded next in MinionsData.
         private int _minionCurrentLoadedIndex;
 
-        public PlayerSaveStruct PlayerData;
+        private PlayerSaveStruct _playerData;
 
         // Contains save data for each minion that need to be reloaded.
-        public List<MinionSaveStruct> MinionsData = new ();
+        private List<MinionSaveStruct> _minionsData = new ();
+
+        public GameData()
+        {
+            // Starting values for player on new game
+            _playerData = new PlayerSaveStruct(Vector3.zero, 100, 100);
+        }
+
+        public PlayerSaveStruct PlayerData => _playerData;
+
 
         /// <summary>
         /// Use the key to know which asset to load, and the value to know how much.
@@ -43,9 +46,19 @@
         /// </summary>
         public MinionSaveStruct GetNextMinionData()
         {
-            var data = MinionsData[_minionCurrentLoadedIndex];
+            var data = _minionsData[_minionCurrentLoadedIndex];
             _minionCurrentLoadedIndex++;
             return data;
+        }
+
+        public void AddMinionData(MinionSaveStruct minion)
+        {
+            _minionsData.Add(minion);
+        }
+
+        public void SavePlayerData(PlayerSaveStruct playerData)
+        {
+            _playerData = playerData;
         }
 
         /// <summary>
@@ -54,7 +67,7 @@
         public void CleanAfterLoad()
         {
             _assetsToInstantiateIds.Clear();
-            MinionsData.Clear();
+            _minionsData.Clear();
         }
     }
 }

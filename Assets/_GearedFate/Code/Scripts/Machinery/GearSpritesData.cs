@@ -3,9 +3,8 @@
 #if UNITY_EDITOR
     using UnityEditor;
 #endif
-    using UnityEngine;
-
     using System.Linq;
+    using UnityEngine;
 
     /// <summary>
     /// Simple Scriptable object script to allow storing data about gear sprites in a single location.

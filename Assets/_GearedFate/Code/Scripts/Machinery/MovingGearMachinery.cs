@@ -12,7 +12,7 @@
         private GearAnim _gearAnim;
         private SpriteRenderer parentSpriteRenderer;
 
-        private void Awake()
+        protected void Awake()
         {
             parentSpriteRenderer = GetComponentInParent<SpriteRenderer>();
         }

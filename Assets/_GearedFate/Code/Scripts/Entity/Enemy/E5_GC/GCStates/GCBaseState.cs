@@ -10,16 +10,15 @@ namespace BTG
     /// </summary>
     public abstract class GCBaseState : BaseState<GreatCreator.GreatCreatorState>
     {
-        private int _animId;
-
         private static float _lastSpawnTime;
 
         private static float _nextSpawnTime;
 
         private static bool _goingToCenter = false;
 
-        public GCBaseState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy,
-            int animId)
+        private int _animId;
+
+        public GCBaseState(FiniteStateMachine<GreatCreator.GreatCreatorState> fsm, GreatCreator enemy, int animId)
             : base(fsm)
         {
             GreatCreator = enemy;
@@ -79,13 +78,13 @@ namespace BTG
         {
             if (GreatCreator.CurrentHealth == 0)
             {
-                Fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Death]);
+                Fsm.SwitchState(GreatCreator[GreatCreator.GreatCreatorState.Death]);
                 return;
             }
 
             if (GreatCreator.Stage >= 1 && Fsm.CurrentState.GetType() != typeof(GCSpinState) && Fsm.CurrentState.GetType() != typeof(GCTransformationState))
             {
-                Fsm.SwitchState(GreatCreator.States[GreatCreator.GreatCreatorState.Spin]);
+                Fsm.SwitchState(GreatCreator[GreatCreator.GreatCreatorState.Spin]);
             }
         }
     }

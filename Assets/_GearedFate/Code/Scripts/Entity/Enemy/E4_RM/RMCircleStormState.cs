@@ -45,7 +45,7 @@
 
             if (Time.time > _enterTime + _timeBeforeStateChange)
             {
-                Fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.Idle]);
+                Fsm.SwitchState(Marionette[RustedMarionette.RustedMarionetteState.Idle]);
             }
         }
 

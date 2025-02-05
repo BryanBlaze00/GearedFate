@@ -2,23 +2,31 @@
 {
     using UnityEngine;
     using UnityEngine.AI;
+    using UnityEngine.Serialization;
 
     public class TestCode : MonoBehaviour, IDamagable
     {
+        [FormerlySerializedAs("target")]
         [SerializeField]
-        private Transform target;
-        private NavMeshAgent agent;
+        private Transform _target;
+
+        private NavMeshAgent _agent;
+
+        public void TakeDamage(float damage)
+        {
+            Debug.Log("Ouch!! it hurt about " + damage + "from: " + name);
+        }
 
         private void Awake()
         {
-            agent = GetComponent<NavMeshAgent>();
-            agent.updateRotation = false;
-            agent.updateUpAxis = false;
+            _agent = GetComponent<NavMeshAgent>();
+            _agent.updateRotation = false;
+            _agent.updateUpAxis = false;
         }
 
         private void Update()
         {
-            agent.SetDestination(target.position);
+            _agent.SetDestination(_target.position);
         }
 
         private void TestPhysicsDetections()
@@ -36,11 +44,6 @@
             {
                 Debug.Log(hit.collider.name);
             }
-        }
-
-        public void TakeDamage(float damage)
-        {
-            Debug.Log("Ouch!! it hurt about " + damage + "from: " + name);
         }
     }
 }

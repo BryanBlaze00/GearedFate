@@ -3,51 +3,59 @@
     using System.Collections;
     using System.Linq;
     using UnityEngine;
+    using UnityEngine.Serialization;
 
     public class GSBomb : MonoBehaviour
     {
+        [FormerlySerializedAs("WindupTime")]
         [SerializeField]
-        private float WindupTime;
+        private float _windupTime;
 
+        [FormerlySerializedAs("BlastRadius")]
         [SerializeField]
-        private float BlastRadius;
+        private float _blastRadius;
 
+        [FormerlySerializedAs("Damage")]
         [SerializeField]
-        private float Damage;
+        private float _damage;
 
+        [FormerlySerializedAs("Animator")]
         [SerializeField]
-        private Animator Animator;
+        private Animator _animator;
 
+        [FormerlySerializedAs("rb")]
         [SerializeField]
-        private Rigidbody2D rb;
+        private Rigidbody2D _rb;
 
+        [FormerlySerializedAs("col")]
         [SerializeField]
-        private Collider2D col;
+        private Collider2D _col;
 
+        [FormerlySerializedAs("AudioSource")]
         [SerializeField]
-        private AudioSource AudioSource;
+        private AudioSource _audioSource;
 
         private void OnEnable()
         {
-            if (rb == null)
+            if (_rb == null)
             {
-                rb = GetComponent<Rigidbody2D>();
+                _rb = GetComponent<Rigidbody2D>();
             }
 
-            if (col == null)
+            if (_col == null)
             {
-                col = GetComponents<Collider2D>().First(x => !x.isTrigger);
+                _col = GetComponents<Collider2D>().First(x => !x.isTrigger);
             }
 
-            col.enabled = false;
-            if (Animator == null)
+            _col.enabled = false;
+            if (_animator == null)
             {
-                Animator = GetComponentInChildren<Animator>();
+                _animator = GetComponentInChildren<Animator>();
             }
 
-            if (AudioSource == null)
+            if (_audioSource == null)
             {
-                AudioSource = GetComponent<AudioSource>();
+                _audioSource = GetComponent<AudioSource>();
             }
 
             StartCoroutine(Explode());
@@ -56,24 +64,24 @@
 
         private IEnumerator Explode()
         {
-            Animator.speed = Animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / WindupTime;
-            yield return new WaitForSeconds(WindupTime - 0.15f); // yeah ok
+            _animator.speed = _animator.GetCurrentAnimatorClipInfo(0)[0].clip.length / _windupTime;
+            yield return new WaitForSeconds(_windupTime - 0.15f); // yeah ok
 
-            var hits = Physics2D.OverlapCircleAll(transform.position, BlastRadius, LayerMask.GetMask("Player"))
+            var hits = Physics2D.OverlapCircleAll(transform.position, _blastRadius, LayerMask.GetMask("Player"))
                 .Where(x => !x.isTrigger); // the player's feet
-            col.enabled = false;
+            _col.enabled = false;
             foreach (var hit in hits)
             {
                 if (hit.TryGetComponent<Player>(out var player))
                 {
                     Debug.Log("Bomb hit player");
-                    player.TakeDamage(Damage);
+                    player.TakeDamage(_damage);
                 }
             }
 
-            if (AudioSource != null)
+            if (_audioSource != null)
             {
-                AudioSource.Play();
+                _audioSource.Play();
             }
 
             yield return new WaitForSeconds(1.5f); // make sure explosion finished
@@ -91,16 +99,16 @@
             {
                 const float grav = -9f;
                 vY += grav * Time.fixedDeltaTime;
-                Animator.transform.localPosition += new Vector3(0, vY * Time.fixedDeltaTime);
-                col.enabled = Animator.transform.localPosition.y < 0.3f &&
+                _animator.transform.localPosition += new Vector3(0, vY * Time.fixedDeltaTime);
+                _col.enabled = _animator.transform.localPosition.y < 0.3f &&
                     time > 0.5f; // collide near ground but not at the start (the initial throw)
-                if (Animator.transform.localPosition.y <= 0f)
+                if (_animator.transform.localPosition.y <= 0f)
                 {
-                    rb.linearVelocity /= 1.3f;
+                    _rb.linearVelocity /= 1.3f;
                     if (bouncesLeft == 0)
                     {
-                        Animator.transform.localPosition *= new Vector2(1, 0);
-                        col.enabled = true;
+                        _animator.transform.localPosition *= new Vector2(1, 0);
+                        _col.enabled = true;
                         yield break;
                     }
 
@@ -110,7 +118,7 @@
 
                 if (bouncesLeft == 0)
                 {
-                    rb.linearVelocity = Vector2.zero;
+                    _rb.linearVelocity = Vector2.zero;
                 }
 
                 yield return new WaitForFixedUpdate();

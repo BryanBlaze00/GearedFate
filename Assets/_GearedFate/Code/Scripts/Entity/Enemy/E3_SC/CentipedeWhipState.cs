@@ -8,6 +8,10 @@
     {
         private readonly int _animId;
 
+        private readonly List<float> _angles = new ();
+
+        private readonly List<Vector2> _initialPositions = new ();
+
         // How much it rotates per second
         private float _range = 120;
 
@@ -16,10 +20,6 @@
 
         // how long it takes to whip from left to right
         private float _frequency = 0.5f;
-
-        private readonly List<float> _angles = new ();
-
-        private readonly List<Vector2> _initialPositions = new ();
 
         private Vector2 _angleVector;
 

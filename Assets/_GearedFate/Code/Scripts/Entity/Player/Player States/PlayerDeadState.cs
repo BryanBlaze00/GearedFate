@@ -20,8 +20,8 @@ namespace BTG
         public override void OnEnter()
         {
             base.OnEnter();
-            player.RB.linearVelocity = Vector2.zero;
-            player.RB.Sleep();
+            Player.RB.linearVelocity = Vector2.zero;
+            Player.RB.Sleep();
             time = Time.time;
         }
 

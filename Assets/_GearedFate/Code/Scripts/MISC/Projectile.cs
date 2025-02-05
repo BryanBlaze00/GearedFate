@@ -11,13 +11,14 @@ namespace BTG
     /// </summary>
     public class Projectile : MonoBehaviour
     {
-        [field: SerializeField]
-        public ProjectileData Data { get; private set; }
+        private CoroutineHandle _coroutineHandle;
 
-        private CoroutineHandle coroutineHandle;
-        private Rigidbody2D rb;
+        private Rigidbody2D _rb;
 
         private int _unaffectedLayer = -1;
+
+        [field: SerializeField]
+        public ProjectileData Data { get; private set; }
 
         /// <summary>
         /// Set a layer of game objects that won't be affected by those projectiles.
@@ -30,10 +31,10 @@ namespace BTG
 
         private void OnEnable()
         {
-            coroutineHandle = Timing.RunCoroutine(_Disable().CancelWith(gameObject));
-            if (rb == null)
+            _coroutineHandle = Timing.RunCoroutine(Disable().CancelWith(gameObject));
+            if (_rb == null)
             {
-                rb = GetComponent<Rigidbody2D>();
+                _rb = GetComponent<Rigidbody2D>();
             }
         }
 
@@ -50,7 +51,7 @@ namespace BTG
             Debug.Log("Projectile hit");
             damageable.TakeDamage(Data.Damage);
             gameObject.SetActive(false);
-            Timing.KillCoroutines(coroutineHandle);
+            Timing.KillCoroutines(_coroutineHandle);
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -58,7 +59,7 @@ namespace BTG
             OnTriggerEnter2D(collision.collider);
         }
 
-        private IEnumerator<float> _Disable()
+        private IEnumerator<float> Disable()
         {
             yield return Timing.WaitForSeconds(5f);
             gameObject.SetActive(false);

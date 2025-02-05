@@ -4,8 +4,7 @@
     {
         private readonly int _animId;
 
-        public CentipedeDeadState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId,
-            SteamCentipede steamCentipede)
+        public CentipedeDeadState(FiniteStateMachine<SteamCentipede.CentipedeState> fsm, int animationId, SteamCentipede steamCentipede)
             : base(fsm, steamCentipede)
         {
             _animId = animationId;

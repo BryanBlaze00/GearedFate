@@ -4,7 +4,8 @@
 
     public class RMDeathState : RMBaseState
     {
-        public RMDeathState(FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm,
+        public RMDeathState(
+            FiniteStateMachine<RustedMarionette.RustedMarionetteState> fsm,
             RustedMarionette marionette,
             int highAnimId,
             int lowAnimId)

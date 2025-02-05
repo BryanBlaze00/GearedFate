@@ -7,34 +7,24 @@ namespace BTG
     /// </summary>
     public class PlayerBaseState : BaseState<Player.State>
     {
-        protected static PlayerInputHandler Input { get; private set; }
-
-        protected readonly Player player;
-        protected readonly PlayerData data;
-        private readonly int animId;
+        private readonly Player _player;
+        private readonly PlayerData _data;
+        private readonly int _animId;
 
         public PlayerBaseState(FiniteStateMachine<Player.State> fsm, Player player, PlayerData data, int animId)
             : base(fsm)
         {
-            this.player = player;
-            this.data = data;
-            this.animId = animId;
+            _player = player;
+            _data = data;
+            this._animId = animId;
             Input = player.Input;
         }
 
-        public override void OnEnter()
-        {
-            player.Anim.Play(animId, 0, 0);
-            OnCheck();
-        }
+        protected static PlayerInputHandler Input { get; private set; }
 
-        public override void OnExit()
-        {
-        } // => player.Anim.SetBool(animId, false);
+        protected Player Player => _player;
 
-        public override void OnFrameUpdate()
-        {
-        }
+        protected PlayerData Data => _data;
 
         protected bool AttackCheck
         {
@@ -42,7 +32,7 @@ namespace BTG
             {
                 if (Input.AttackPressed)
                 {
-                    Fsm.SwitchState(player.states[player.CurrentAbility]);
+                    Fsm.SwitchState(Player[Player.CurrentAbility]);
                     return true;
                 }
 
@@ -54,14 +44,28 @@ namespace BTG
         {
             get
             {
-                if (Input.DashPressed && ((PlayerDashState)player.states[Player.State.Dash]).CanDash)
+                if (Input.DashPressed && ((PlayerDashState)Player[Player.State.Dash]).CanDash)
                 {
-                    Fsm.SwitchState(player.states[Player.State.Dash]);
+                    Fsm.SwitchState(Player[Player.State.Dash]);
                     return true;
                 }
 
                 return false;
             }
+        }
+
+        public override void OnEnter()
+        {
+            Player.Anim.Play(_animId, 0, 0);
+            OnCheck();
+        }
+
+        public override void OnExit()
+        {
+        } // => player.Anim.SetBool(animId, false);
+
+        public override void OnFrameUpdate()
+        {
         }
 
         /* Previous Controls

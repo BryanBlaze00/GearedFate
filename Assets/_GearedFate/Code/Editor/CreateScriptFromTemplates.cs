@@ -5,7 +5,6 @@
 
     public static class CreateScriptFromTemplates
     {
-
         private const string ROOTPATH = "Assets/_GearedFate/Code/Editor/Templates/";
         private const string PLACEHOLDERRNS = "#ROOTNAMESPACE#";
         private const string PLACEHOLDERCR = "#COPYRIGHT#";

@@ -7,7 +7,7 @@ namespace BTG
     /// <summary>
     /// RandomUtility class to provide random utility functions.
     /// </summary>
-    public static class RandomUtilily
+    public static class RandomUtility
     {
         /// <summary>
         /// Returns a random integer between min [inclusive] and max [inclusive].

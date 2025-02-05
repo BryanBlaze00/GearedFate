@@ -2,16 +2,19 @@
 {
     using System.Linq;
     using UnityEngine;
+    using UnityEngine.Serialization;
 
     public class BossStartTrigger : MonoBehaviour
     {
-        public MonoBehaviour Boss;
+        [FormerlySerializedAs("Boss")]
+        [SerializeField]
+        private MonoBehaviour _boss;
 
         public void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.TryGetComponent(out Player _))
             {
-                Boss.gameObject.SetActive(true);
+                _boss.gameObject.SetActive(true);
                 gameObject.SetActive(false);
             }
         }
@@ -23,19 +26,19 @@
                 sr.enabled = false;
             }
 
-            if (Boss == null)
+            if (_boss == null)
             {
-                Boss = (MonoBehaviour)FindObjectsByType<MonoBehaviour>(
+                _boss = (MonoBehaviour)FindObjectsByType<MonoBehaviour>(
                     FindObjectsInactive.Include,
                     FindObjectsSortMode.None).OfType<IBoss>().FirstOrDefault();
             }
 
-            if (Boss == null)
+            if (_boss == null)
             {
                 Debug.LogError(nameof(BossStartTrigger) + " doesn't have a boss");
             }
 
-            Boss.gameObject.SetActive(false);
+            _boss.gameObject.SetActive(false);
         }
     }
 }

@@ -26,14 +26,6 @@
             Marionette.OnHitTaken += HandleHitTaken;
         }
 
-        private void HandleHitTaken()
-        {
-            if (Time.time > _enterTime + _timeBeforeStateChange)
-            {
-                Fsm.SwitchState(Marionette._states[RustedMarionette.RustedMarionetteState.Idle]);
-            }
-        }
-
         public override void OnExit()
         {
             Marionette.OnHitTaken -= HandleHitTaken;
@@ -46,6 +38,14 @@
 
         public override void OnPhysicsUpdate()
         {
+        }
+
+        private void HandleHitTaken()
+        {
+            if (Time.time > _enterTime + _timeBeforeStateChange)
+            {
+                Fsm.SwitchState(Marionette[RustedMarionette.RustedMarionetteState.Idle]);
+            }
         }
     }
 }
