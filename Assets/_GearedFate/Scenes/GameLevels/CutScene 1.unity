@@ -1697,6 +1697,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CutsceneManager Panel
       objectReference: {fileID: 0}
+    - target: {fileID: 1584971533550513579, guid: 3b5583c86f8f2584d88cffb77000dd09, type: 3}
+      propertyPath: '_dialogueLines.Array.data[0]'
+      value: Un!t detectEd 0ut of @llignMent.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584971533550513579, guid: 3b5583c86f8f2584d88cffb77000dd09, type: 3}
+      propertyPath: '_dialogueLines.Array.data[1]'
+      value: Rec@ll!braTing w0rkshop prOt0cols.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584971533550513579, guid: 3b5583c86f8f2584d88cffb77000dd09, type: 3}
+      propertyPath: '_dialogueLines.Array.data[2]'
+      value: DefEct!ve $ystems mu$t be rEcycled @nd rEturned to $tati0n for rePr0ces$ing.
+      objectReference: {fileID: 0}
     - target: {fileID: 3300089852317415288, guid: 3b5583c86f8f2584d88cffb77000dd09, type: 3}
       propertyPath: _spriteArray.Array.size
       value: 6
