@@ -3454,6 +3454,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7383406835206342862, guid: 2b28b7b30aaec1c42b323cb623a645a8, type: 3}
+      propertyPath: m_NormalizedViewPortRect.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7383406835206342862, guid: 2b28b7b30aaec1c42b323cb623a645a8, type: 3}
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7383406835206342862, guid: 2b28b7b30aaec1c42b323cb623a645a8, type: 3}
+      propertyPath: m_NormalizedViewPortRect.height
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3837,7 +3849,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 2046260613}
   - {fileID: 2709052740272148902}
+  - {fileID: 660960490108441463}
   - {fileID: 1930151959}
   - {fileID: 974344988}
   - {fileID: 1091146954}
-  - {fileID: 660960490108441463}
