@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66d5ee917c6672943b0199939038274a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AutoUnparentOnAwake: 0
+  _autoUnparentOnAwake: 0
   _parentTransform: {fileID: 0}
   _exitLevelTrigger: {fileID: 8212295542845207875}
 --- !u!1001 &3829752765907849323

@@ -41,6 +41,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_GearedFate/Scenes/GameLevels/Credits.unity
     guid: bf90aaf95a1d1344ebeb7507fd26ed4c
+  - enabled: 1
+    path: Assets/_GearedFate/Scenes/GameLevels/Gameover.unity
+    guid: 6addba94dc94c7a428d43c7cb81c7327
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

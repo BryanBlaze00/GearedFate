@@ -47,7 +47,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 2040973fe9b3f8548a6efccf47dd1ba4, type: 3}
   m_Resource: {fileID: 8300000, guid: 2040973fe9b3f8548a6efccf47dd1ba4, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -240,9 +240,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f307bfcbadd23ae4ab11efb23bf984fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AutoUnparentOnAwake: 1
+  _autoUnparentOnAwake: 1
   audioSource: {fileID: 346121309199906307}
-  clips:
+  musicClips:
   - {fileID: 8300000, guid: 2040973fe9b3f8548a6efccf47dd1ba4, type: 3}
   - {fileID: 8300000, guid: 8f67732052e88424dba311f38e685920, type: 3}
   - {fileID: 8300000, guid: 5ff7d19d554619e41a13093c866c4b97, type: 3}
