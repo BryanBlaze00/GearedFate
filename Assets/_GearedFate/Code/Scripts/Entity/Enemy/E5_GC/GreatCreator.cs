@@ -10,7 +10,7 @@ namespace BTG
     using Random = UnityEngine.Random;
 
     /// <summary>
-    /// GearboundSentinel
+    /// The Great Creator AI.
     /// </summary>
     public class GreatCreator : MonoBehaviour, IDamagable, IBoss
     {
@@ -22,6 +22,8 @@ namespace BTG
         private Transform _spawnPos;
 
         private Transform _player;
+
+        private Door _door;
 
         public event Action OnHitTaken;
 
@@ -141,7 +143,7 @@ namespace BTG
 
             if (CurrentHealth == 0)
             {
-                Elevator.Instance.ActivateElevator();
+                _door.DoorUnlock();
             }
 
             OnHitTaken?.Invoke();
@@ -182,6 +184,7 @@ namespace BTG
             Agent.updateRotation = false;
             Agent.updateUpAxis = false;
             _player = FindFirstObjectByType<Player>().transform;
+            _door = FindFirstObjectByType<Door>();
 
             _states.Add(
                 GreatCreatorState.Idle,
