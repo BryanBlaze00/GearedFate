@@ -10,20 +10,30 @@ namespace BTG
     /// </summary>
     public class Door : MonoBehaviour
     {
+        [Header("Door Attributes")]
         [SerializeField]
         private bool _isLocked = false;
 
+        [Header("Triggers")]
         [SerializeField]
         private TriggerDetector _enterTrigger;
 
         [SerializeField]
         private TriggerDetector _exitTrigger;
 
+        [Header("Children Objects")]
         [SerializeField]
         private GameObject _closedChild;
 
         [SerializeField]
         private GameObject _openChild;
+
+        [Header("Sounds")]
+        [SerializeField]
+        private AudioClip _doorOpen;
+
+        [SerializeField]
+        private AudioClip _doorClose;
 
         private bool _isOpen = false;
 
@@ -55,8 +65,8 @@ namespace BTG
 
         private void OnEnable()
         {
-            _enterTrigger.onTriggerEnter2D.AddListener(WhenTriggerEnter);
-            _exitTrigger.onTriggerExit2D.AddListener(WhenTriggerExit);
+            _enterTrigger.OnTriggerDetectorEnter2D += WhenTriggerEnter;
+            _exitTrigger.OnTriggerDetectorExit2D += WhenTriggerExit;
         }
 
         private void Start()
@@ -67,13 +77,13 @@ namespace BTG
 
         private void OnDisable()
         {
-            _enterTrigger.onTriggerEnter2D.RemoveAllListeners();
-            _exitTrigger.onTriggerExit2D.RemoveAllListeners();
+            _enterTrigger.OnTriggerDetectorEnter2D -= WhenTriggerEnter;
+            _exitTrigger.OnTriggerDetectorExit2D -= WhenTriggerExit;
         }
 
         private void WhenTriggerEnter(Collider2D other)
         {
-            if (other.TryGetComponent(out Player _) && !_isLocked)
+            if (other.CompareTag("MovableCollider") && !_isLocked)
             {
                 OpenDoor();
             }
@@ -81,7 +91,7 @@ namespace BTG
 
         private void WhenTriggerExit(Collider2D other)
         {
-            if (other.TryGetComponent(out Player _) && !_isLocked)
+            if (other.CompareTag("MovableCollider") && !_isLocked)
             {
                 CloseDoor();
                 _isLocked = true;
@@ -90,6 +100,12 @@ namespace BTG
 
         private void OpenDoor()
         {
+            if (_isOpen)
+            {
+                return;
+            }
+
+            AudioManager.Instance.PlaySFX(_doorOpen);
             _closedChild.SetActive(false);
             _openChild.SetActive(true);
             _isOpen = true;
@@ -97,6 +113,12 @@ namespace BTG
 
         private void CloseDoor()
         {
+            if (!_isOpen)
+            {
+                return;
+            }
+
+            AudioManager.Instance.PlaySFX(_doorClose);
             _closedChild.SetActive(true);
             _openChild.SetActive(false);
             _isOpen = false;

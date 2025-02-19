@@ -1,5 +1,6 @@
 ﻿// Copyright (c) BTG. All rights reserved.
 
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,38 +13,26 @@ using UnityEngine.Events;
 public class TriggerDetector : MonoBehaviour
 {
    [SerializeField]
-#pragma warning disable SA1401 // Fields should be private
-#pragma warning disable SA1307 // Accessible fields should begin with upper-case letter
-   public UnityEvent<Collider2D> onTriggerEnter2D;
-#pragma warning restore SA1307 // Accessible fields should begin with upper-case letter
-#pragma warning restore SA1401 // Fields should be private
+   public event Action<Collider2D> OnTriggerDetectorEnter2D;
 
    [SerializeField]
-#pragma warning disable SA1401 // Fields should be private
-#pragma warning disable SA1307 // Accessible fields should begin with upper-case letter
-   public UnityEvent<Collider2D> onTriggerStay2D;
-#pragma warning restore SA1307 // Accessible fields should begin with upper-case letter
-#pragma warning restore SA1401 // Fields should be private
+   public event Action<Collider2D> OnTriggerDetectorStay2D;
 
    [SerializeField]
-#pragma warning disable SA1401 // Fields should be private
-#pragma warning disable SA1307 // Accessible fields should begin with upper-case letter
-   public UnityEvent<Collider2D> onTriggerExit2D;
-#pragma warning restore SA1307 // Accessible fields should begin with upper-case letter
-#pragma warning restore SA1401 // Fields should be private
+   public event Action<Collider2D> OnTriggerDetectorExit2D;
 
    private void OnTriggerEnter2D(Collider2D collision)
    {
-      onTriggerEnter2D?.Invoke(collision);
+      OnTriggerDetectorEnter2D?.Invoke(collision);
    }
 
    private void OnTriggerStay2D(Collider2D collision)
    {
-      onTriggerStay2D?.Invoke(collision);
+      OnTriggerDetectorStay2D?.Invoke(collision);
    }
 
    private void OnTriggerExit2D(Collider2D collision)
    {
-      onTriggerExit2D?.Invoke(collision);
+      OnTriggerDetectorExit2D?.Invoke(collision);
    }
 }

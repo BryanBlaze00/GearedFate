@@ -265,15 +265,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f94d6c5ab927ef49afd9e463fa8005d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onTriggerEnter2D:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay2D:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit2D:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &4527033116448014522
 GameObject:
   m_ObjectHideFlags: 0
@@ -452,15 +443,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f94d6c5ab927ef49afd9e463fa8005d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onTriggerEnter2D:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerStay2D:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit2D:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &5595444018955157733
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,6 +496,8 @@ MonoBehaviour:
   _exitTrigger: {fileID: 7904099340724485048}
   _closedChild: {fileID: 8663397130471197603}
   _openChild: {fileID: 7896982219094440036}
+  _doorOpen: {fileID: 8300000, guid: 32f8583b823b7b1479bdf8e88228358b, type: 3}
+  _doorClose: {fileID: 8300000, guid: 76699c9a9c20a9843b58ba3370c2db26, type: 3}
 --- !u!1 &5879828717545130021
 GameObject:
   m_ObjectHideFlags: 0
