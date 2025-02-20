@@ -13,14 +13,18 @@ namespace BTG
         [Header("Game Over Settings")]
         [Header("Button Settings")]
         [SerializeField]
-        private Button _retryButton;
+        private Button _menuButton;
 
         [SerializeField]
-        private Button _menuButton;
+        private Button _retryButton;
 
         [Header("Avatar Settings")]
         [SerializeField]
         private GameObject _avatar;
+
+        [Header("Audio Clip")]
+        [SerializeField]
+        private AudioClip _gameoverSFX;
 
         private UISpriteAnimation _avatarAnim;
 
@@ -34,6 +38,8 @@ namespace BTG
         private void Start()
         {
             _avatarAnim.PlayOnce(false);
+            AudioManager.Instance.StopMusic();
+            AudioManager.Instance.PlaySFX(_gameoverSFX);
         }
 
         private void GoMain()

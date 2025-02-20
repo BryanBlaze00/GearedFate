@@ -3,9 +3,9 @@ using BTG;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-/**
- * This class is responsible for making the object transparent when the player enters the trigger.
- */
+/// <summary>
+/// This class is responsible for making the object transparent when the player enters the trigger.
+/// </summary>
 public class TransparentDetection : MonoBehaviour
 {
     [Range(0, 1)]

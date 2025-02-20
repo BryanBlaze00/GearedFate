@@ -3,39 +3,125 @@
 namespace BTG
 {
     using UnityEngine;
+    using UnityEngine.Events;
 
     /// <summary>
-    /// Door
+    /// Classic Door.
     /// </summary>
     public class Door : MonoBehaviour
     {
+        [Header("Door Attributes")]
         [SerializeField]
-        private GameObject closedChild;
+        private bool _isLocked = false;
+
+        [Header("Triggers")]
         [SerializeField]
-        private GameObject openChild;
+        private TriggerDetector _enterTrigger;
+
+        [SerializeField]
+        private TriggerDetector _exitTrigger;
+
+        [Header("Children Objects")]
+        [SerializeField]
+        private GameObject _closedChild;
+
+        [SerializeField]
+        private GameObject _openChild;
+
+        [Header("Sounds")]
+        [SerializeField]
+        private AudioClip _doorOpen;
+
+        [SerializeField]
+        private AudioClip _doorClose;
+
+        private bool _isOpen = false;
+
+        private UnityEvent onTriggerEnter2D;
+
+        /// <summary>
+        /// Lock the door.
+        /// </summary>
+        public void DoorLock()
+        {
+            _isLocked = true;
+            if (_isOpen)
+            {
+                CloseDoor();
+            }
+        }
+
+        /// <summary>
+        /// Unlock the door.
+        /// </summary>
+        public void DoorUnlock()
+        {
+            _isLocked = false;
+            if (!_isOpen)
+            {
+                OpenDoor();
+            }
+        }
+
+        private void OnEnable()
+        {
+            _enterTrigger.OnTriggerDetectorEnter2D += WhenTriggerEnter;
+            _exitTrigger.OnTriggerDetectorExit2D += WhenTriggerExit;
+        }
 
         private void Start()
         {
-            closedChild.SetActive(true);
-            openChild.SetActive(false);
+            _closedChild.SetActive(true);
+            _openChild.SetActive(false);
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        private void OnDisable()
         {
-            if (other.TryGetComponent(out Player _))
+            _enterTrigger.OnTriggerDetectorEnter2D -= WhenTriggerEnter;
+            _exitTrigger.OnTriggerDetectorExit2D -= WhenTriggerExit;
+        }
+
+        private void WhenTriggerEnter(Collider2D other)
+        {
+            if (other.CompareTag("MovableCollider") && !_isLocked)
             {
-                closedChild.SetActive(false);
-                openChild.SetActive(true);
+                OpenDoor();
             }
         }
 
-        private void OnTriggerExit2D(Collider2D other)
+        private void WhenTriggerExit(Collider2D other)
         {
-            if (other.TryGetComponent(out Player _))
+            if (other.CompareTag("MovableCollider") && !_isLocked)
             {
-                closedChild.SetActive(true);
-                openChild.SetActive(false);
+                CloseDoor();
+                _isLocked = true;
             }
+        }
+
+        private void OpenDoor()
+        {
+            if (_isOpen)
+            {
+                return;
+            }
+
+            AudioManager.Instance.PlaySFX(_doorOpen);
+            _closedChild.SetActive(false);
+            _openChild.SetActive(true);
+            _isOpen = true;
+        }
+
+        private void CloseDoor()
+        {
+            if (!_isOpen)
+            {
+                return;
+            }
+
+            AudioManager.Instance.PlaySFX(_doorClose);
+            _closedChild.SetActive(true);
+            _openChild.SetActive(false);
+            _isOpen = false;
         }
     }
 }

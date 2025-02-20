@@ -33,7 +33,7 @@ namespace BTG
         {
             if (Time.time > time + 3f)
             {
-                GameManager.Instance.LoadMainMenu();
+                GameManager.Instance.LoadGameOver();
             }
         }
 

@@ -47,9 +47,9 @@ namespace BTG
         }
 
         /// <summary>
-        /// Option to reset the sprite.
+        /// True/False option to reset the sprite to default image.
         /// </summary>
-        /// <param name="option"></param>
+        /// <param name="option"> True/False. </param>
         public void PlayOnce(bool option)
         {
             StartCoroutine(PlayAnimOnce(option));
@@ -78,10 +78,6 @@ namespace BTG
             }
         }
 
-        /// <summary>
-        /// Play the UI animation in a loop.
-        /// </summary>
-        /// <returns> Loops itself. </returns>
         private IEnumerator PlayAnimUI()
         {
             yield return new WaitForSeconds(_speed);
